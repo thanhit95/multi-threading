@@ -2,6 +2,13 @@
 PROBLEM: Find the integer in the range 1 to 100000 that has the largest number of divisors.
 
 This source code file contains the solution using multi threads.
+
+There are 2 phases:
+- Phase 1:  Each worker finds result on a specific range.
+            This phase uses multiple threads.
+
+- Phase 2:  Based on multiple results from workers, main function get the final result with maximum numDiv.
+            This phase use a single thread (main function).
 */
 
 #include <iostream>
