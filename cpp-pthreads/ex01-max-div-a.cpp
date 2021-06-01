@@ -1,5 +1,5 @@
 /*
-PROBLEM: Find the integer in the range 1 to 50000 that has the largest number of divisors.
+PROBLEM: Find the integer in the range 1 to 100000 that has the largest number of divisors.
 
 This source code file contains the solution without using multi threads.
 */
@@ -11,7 +11,7 @@ using namespace std;
 
 int main() {
     constexpr int RANGE_START = 1;
-    constexpr int RANGE_STOP = 50000;
+    constexpr int RANGE_STOP = 100000;
 
     int resValue = 0;
     int resNumDiv = 0;  // number of divisors of result
