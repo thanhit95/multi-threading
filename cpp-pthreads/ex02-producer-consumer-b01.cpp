@@ -55,8 +55,8 @@ struct GlobalArg {
 
 
 
-void* producer(void *voidArg) {
-    auto arg = (GlobalArg*)voidArg;
+void* producer(void *argVoid) {
+    auto arg = (GlobalArg*)argVoid;
     auto pqProduct = arg->pqProduct;
     auto psem = arg->psem;
 
@@ -77,8 +77,8 @@ void* producer(void *voidArg) {
 
 
 
-void *consumer(void *voidArg) {
-    auto arg = (GlobalArg*)voidArg;
+void *consumer(void *argVoid) {
+    auto arg = (GlobalArg*)argVoid;
     auto pqProduct = arg->pqProduct;
     auto psem = arg->psem;
 
@@ -108,17 +108,17 @@ int main() {
     GlobalSemaphore sem;
     sem.init(0, 1);
 
+    int ret = 0;
+
     GlobalArg globalArg;
     globalArg.pqProduct = &qProduct;
     globalArg.psem = &sem;
 
-    int ret = 0;
-
     ret = pthread_create(&pidProduder, nullptr, producer, (void*)&globalArg);
     ret = pthread_create(&pidConsumer, nullptr, consumer, (void*)&globalArg);
 
-    pthread_join(pidProduder, nullptr);
-    pthread_join(pidConsumer, nullptr);
+    ret = pthread_join(pidProduder, nullptr);
+    ret = pthread_join(pidConsumer, nullptr);
 
     return 0;
 }

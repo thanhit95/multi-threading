@@ -64,8 +64,8 @@ int main() {
     ret = pthread_create(&pidProduder, nullptr, producer, (void*)&qProduct);
     ret = pthread_create(&pidConsumer, nullptr, consumer, (void*)&qProduct);
 
-    pthread_join(pidProduder, nullptr);
-    pthread_join(pidConsumer, nullptr);
+    ret = pthread_join(pidProduder, nullptr);
+    ret = pthread_join(pidConsumer, nullptr);
 
     return 0;
 }
