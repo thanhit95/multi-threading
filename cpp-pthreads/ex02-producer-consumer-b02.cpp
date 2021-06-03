@@ -51,7 +51,7 @@ struct GlobalSemaphore {
 struct GlobalArg {
     queue<int> *pqProduct;
     GlobalSemaphore *psem;
-    int dataAddIndex = 0;
+    int dataAddFactor = 0;
 };
 
 
@@ -66,7 +66,7 @@ void* producer(void *voidArg) {
     for (;; ++i) {
         psem->waitEmptyCount();
 
-        pqProduct->push(i + arg->dataAddIndex);
+        pqProduct->push(i + arg->dataAddFactor);
         sleep(1);
 
         psem->postFillCount();
@@ -116,18 +116,14 @@ int main() {
 
     int ret = 0;
 
+    GlobalArg globalArg0, globalArg1;
+    globalArg0 = globalArg1 = globalArg;
+    globalArg0.dataAddFactor = 0;
+    globalArg1.dataAddFactor = 1000;
 
-    GlobalArg globalArg01 = globalArg;
-    globalArg01.dataAddIndex = 0;
-    ret = pthread_create(&pidProduder[0], nullptr, producer, (void*)&globalArg01);
-
-    GlobalArg globalArg02 = globalArg;
-    globalArg02.dataAddIndex = 1000;
-    ret = pthread_create(&pidProduder[1], nullptr, producer, (void*)&globalArg02);
-
-
+    ret = pthread_create(&pidProduder[0], nullptr, producer, (void*)&globalArg0);
+    ret = pthread_create(&pidProduder[1], nullptr, producer, (void*)&globalArg1);
     ret = pthread_create(&pidConsumer, nullptr, consumer, (void*)&globalArg);
-
 
     pthread_join(pidProduder[0], nullptr);
     pthread_join(pidProduder[1], nullptr);
