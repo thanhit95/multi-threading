@@ -22,7 +22,7 @@ void* funcA(void *param) {
         pthread_mutex_lock(&countMutex);
 
         // wait while funcB() operates on count,
-        // mutex unlocked if condition varialbe in funcB() signaled
+        // mutex unlocked if condition variable in funcB() signaled
         pthread_cond_wait(&conditionVariable, &countMutex);
 
         ++count;
