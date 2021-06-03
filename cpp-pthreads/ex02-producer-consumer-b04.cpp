@@ -116,7 +116,7 @@ int main() {
     int ret = 0;
 
 
-    // ARGUMENT PREPARATION
+    // PREPARE ARGUMENTS
     GlobalArg argProd[NUM_PRODUCERS];
     for (int i = 0; i < NUM_PRODUCERS; ++i) {
         argProd[i].pqProduct = &qProduct;
@@ -129,9 +129,9 @@ int main() {
     argCon.psem = &sem;
 
 
-    // CREATING THREADS
+    // CREATE THREADS
     for (int i = 0; i < NUM_PRODUCERS; ++i) {
-        ret = pthread_create(&pidProduder[0], nullptr, producer, (void*)&argProd[i]);
+        ret = pthread_create(&pidProduder[i], nullptr, producer, (void*)&argProd[i]);
     }
 
     for (int i = 0; i < NUM_CONSUMERS; ++i) {
@@ -139,7 +139,7 @@ int main() {
     }
 
 
-    // JOINING THREADS
+    // JOIN THREADS
     for (int i = 0; i < NUM_PRODUCERS; ++i) {
         ret = pthread_join(pidProduder[i], nullptr);
     }
