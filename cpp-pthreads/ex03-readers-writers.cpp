@@ -16,7 +16,7 @@ private:
 
 
 public:
-    RandomNumberGen(): dist(0, 100) {
+    RandomNumberGen(int minValue, int maxValue): dist(minValue, maxValue) {
         mt.seed(rd());
     }
 
@@ -113,23 +113,21 @@ void prepareArguments(
     RandomNumberGen *pNumberGen
 )
 {
-    std::random_device rd;
-    std::mt19937 mt(rd());
-    std::uniform_int_distribution<int> dist(0, 2);
+    RandomNumberGen delayTimeGen(0, 2);
 
     for (int i = 0; i < numReaders; ++i) {
         argReader[i].pResource = pResource;
         argReader[i].pSemResource = pSemResource;
         argReader[i].pReaderCount = pReaderCount;
         argReader[i].pMutexRc = pMutexRc;
-        argReader[i].delayTime = dist(mt);
+        argReader[i].delayTime = delayTimeGen.get();
     }
 
     for (int i = 0; i < numWriters; ++i) {
         argWriter[i].pResource = pResource;
         argWriter[i].pSemResource = pSemResource;
         argWriter[i].pNumberGen = pNumberGen;
-        argWriter[i].delayTime = dist(mt);
+        argWriter[i].delayTime = delayTimeGen.get();
     }
 }
 
@@ -151,7 +149,7 @@ int main() {
 
     int readerCount = 0;
 
-    RandomNumberGen numberGen;
+    RandomNumberGen numberGen(0, 100);
     int ret = 0;
 
 
