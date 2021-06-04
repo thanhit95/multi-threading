@@ -13,7 +13,7 @@ The difference between VERSION C and VERSION B is:
 #include <vector>
 #include <stdexcept>
 #include <pthread.h>
-#include "hires-clock.hpp"
+#include "mytool-hires-clock.hpp"
 using namespace std;
 
 

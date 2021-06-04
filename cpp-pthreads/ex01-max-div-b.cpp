@@ -17,7 +17,7 @@ There are 2 phases:
 #include <algorithm>
 #include <stdexcept>
 #include <pthread.h>
-#include "hires-clock.hpp"
+#include "mytool-hires-clock.hpp"
 using namespace std;
 
 
