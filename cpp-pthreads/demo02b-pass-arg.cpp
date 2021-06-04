@@ -1,9 +1,7 @@
 #include <iostream>
 #include <pthread.h>
 
-
-using std::cout;
-using std::endl;
+using namespace std;
 
 
 
@@ -11,14 +9,14 @@ void* printHello(void *p2id) {
     int id = *(int*)p2id;
 
     cout << "hello pthread with id = " << id << endl;
-    cout.flush();
 
     pthread_exit(nullptr);
+    return (void*)0;
 }
 
 
 
-int main(int argc, char **argv) {
+int main() {
     constexpr int NUM_THREADS = 5;
     pthread_t tid[NUM_THREADS];
     int argThread[NUM_THREADS];
@@ -26,11 +24,10 @@ int main(int argc, char **argv) {
 
     for (int i = 0; i < NUM_THREADS; ++i) {
         cout << "creating thread " << i << endl;
-        cout.flush();
 
         argThread[i] = i;
 
-        int ret = pthread_create(&tid[i], nullptr, printHello, (void*)&argThread[i]);
+        pthread_create(&tid[i], nullptr, printHello, (void*)&argThread[i]);
     }
 
 

@@ -9,26 +9,27 @@ If a thread is created as detached, it can never be joined.
 #include <pthread.h>
 #include <unistd.h>
 
-
-using std::cout;
-using std::endl;
+using namespace std;
 
 
 
-void* printHello(void* p2id) {
+void* printHello(void *p2id) {
     int id = *(int*)p2id;
 
-    cout << "sleeping in thread " << id << endl, cout.flush();
+    cout << "sleeping in thread " << id << endl;
     sleep(1);
 
-    cout << "thread with id " << id << " exiting..." << endl, cout.flush();
+    cout << "thread with id " << id << " exiting..." << endl;
+
     pthread_exit(nullptr);
+    return (void*)0;
 }
 
 
 
-int main(int argc, char **argv) {
+int main() {
     constexpr int NUM_THREADS = 3;
+
     pthread_t tid[NUM_THREADS];
     pthread_attr_t attr;
     int argThread[NUM_THREADS];
@@ -49,7 +50,7 @@ int main(int argc, char **argv) {
 
     for (int i = 0; i < NUM_THREADS; ++i) {
         int ret = pthread_join(tid[i], &status);
-        cout << "completed thread id " << i << " with status " << status << endl, cout.flush();
+        cout << "completed thread id " << i << " with status " << status << endl;
     }
 
 

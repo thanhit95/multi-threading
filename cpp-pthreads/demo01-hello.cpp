@@ -1,27 +1,25 @@
 #include <iostream>
 #include <pthread.h>
 
-
-using std::cout;
-using std::cerr;
-using std::endl;
+using namespace std;
 
 
 
-void* hello_POSIX_thread(void *param) {
-    char *message = (char*)param;
+void* hello_POSIX_thread(void *arg) {
+    char *message = (char*)arg;
     cout << message << endl;
-    cout.flush();
+
+    // pthread_exit(nullptr);
     return (void*)0;
 }
 
 
 
-int main(int argc, char **argv) {
+int main() {
     pthread_t tid1, tid2;
 
-    char const* message1 = "thread 01";
-    char const* message2 = "thread 02";
+    char const* message1 = "thread 1";
+    char const* message2 = "thread 2";
 
     int ret;
 

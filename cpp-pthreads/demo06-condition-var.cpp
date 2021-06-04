@@ -16,7 +16,7 @@ constexpr int COUNT_DONE = 10;
 
 
 // write numbers 1-3 and 8-10 as permitted by funcB()
-void* funcA(void *param) {
+void* funcA(void *) {
     for (;;) {
         // lock mutex and then wait for signal to relase mutex
         pthread_mutex_lock(&countMutex);
@@ -30,16 +30,19 @@ void* funcA(void *param) {
 
         pthread_mutex_unlock(&countMutex);
 
-        if (count >= COUNT_DONE)
+        if (count >= COUNT_DONE) {
             pthread_exit(nullptr);
+            return (void*)0;
+        }
     }
 
     pthread_exit(nullptr);
+    return (void*)0;
 }
 
 
 // write numbers 4-7
-void* funcB(void *param) {
+void* funcB(void *) {
     for (;;) {
         pthread_mutex_lock(&countMutex);
 
@@ -55,16 +58,19 @@ void* funcB(void *param) {
 
         pthread_mutex_unlock(&countMutex);
 
-        if (count >= COUNT_DONE)
+        if (count >= COUNT_DONE) {
             pthread_exit(nullptr);
+            return (void*)0;
+        }
     }
 
     pthread_exit(nullptr);
+    return (void*)0;
 }
 
 
 
-int main(int argc, char **argv) {
+int main() {
     pthread_t tid1, tid2;
     int ret;
 

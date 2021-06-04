@@ -44,8 +44,8 @@ struct WorkerResult {
 
 
 
-void* workerRoutine(void *voidArg) {
-    auto arg = (WorkerArg*)voidArg;
+void* workerRoutine(void *argVoid) {
+    auto arg = (WorkerArg*)argVoid;
     int start = arg->start;
     int end = arg->end;
 
@@ -66,6 +66,7 @@ void* workerRoutine(void *voidArg) {
     }
 
     auto res = new WorkerResult(resValue, resNumDiv);
+
     pthread_exit(res);
     return (void*)0;
 }

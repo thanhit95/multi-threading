@@ -14,9 +14,7 @@ Mutexes can be applied only to threads in a single process and do not work betwe
 #include <iostream>
 #include <pthread.h>
 
-
-using std::cout;
-using std::endl;
+using namespace std;
 
 
 
@@ -25,16 +23,18 @@ int count = 0;
 
 
 
-void* funcCounter(void *param) {
+void* funcCounter(void *) {
     pthread_mutex_lock(&mut);
     ++count;
     pthread_mutex_unlock(&mut);
+
     pthread_exit(nullptr);
+    return (void*)0;
 }
 
 
 
-int main(int argc, char **argv) {
+int main() {
     pthread_t tid1, tid2;
     int ret;
 

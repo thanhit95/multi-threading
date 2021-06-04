@@ -7,15 +7,16 @@ using std::endl;
 
 
 
-void *myFunc(void *param) {
+void *myFunc(void *) {
     cout << "thread id is " << pthread_self() << endl;
-    cout.flush();
+
     pthread_exit(nullptr);
+    return (void*)0;
 }
 
 
 
-int main(int argc, char **argv) {
+int main() {
     pthread_t tid1, tid2;
     int ret;
 
