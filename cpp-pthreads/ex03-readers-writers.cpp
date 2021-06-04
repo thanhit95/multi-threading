@@ -8,7 +8,7 @@ using namespace std;
 
 
 
-class RandomNumberGen {
+class RandIntGenerator {
 private:
     std::random_device rd;
     std::mt19937 mt;
@@ -16,7 +16,7 @@ private:
 
 
 public:
-    RandomNumberGen(int minValue, int maxValue): dist(minValue, maxValue) {
+    RandIntGenerator(int minValue, int maxValue): dist(minValue, maxValue) {
         mt.seed(rd());
     }
 
@@ -31,7 +31,7 @@ public:
 struct WriterArg {
     int *pResource;
     sem_t *pSemResource;
-    RandomNumberGen *pNumberGen;
+    RandIntGenerator *pRandInt;
     int delayTime;
 };
 
@@ -41,7 +41,7 @@ struct ReaderArg {
     int *pResource;
     sem_t *pSemResource;
     int *pReaderCount;
-    pthread_mutex_t *pMutexRc;
+    pthread_mutex_t *pMutReaderCount;
     int delayTime;
 };
 
@@ -53,7 +53,7 @@ void* writerFunc(void *argVoid) {
 
     sem_wait(arg->pSemResource);
 
-    int data = arg->pNumberGen->get();
+    int data = arg->pRandInt->get();
     *(arg->pResource) = data;
     cout << "write " << data << endl;
 
@@ -71,14 +71,14 @@ void* readerFunc(void *argVoid) {
 
 
     // inrease reader count
-    pthread_mutex_lock(arg->pMutexRc);
+    pthread_mutex_lock(arg->pMutReaderCount);
 
     ( *(arg->pReaderCount) ) += 1;
 
     if (1 == *(arg->pReaderCount))
         sem_wait(arg->pSemResource);
 
-    pthread_mutex_unlock(arg->pMutexRc);
+    pthread_mutex_unlock(arg->pMutReaderCount);
 
 
     // do the reading
@@ -87,14 +87,14 @@ void* readerFunc(void *argVoid) {
 
 
     // decrease reader count
-    pthread_mutex_lock(arg->pMutexRc);
+    pthread_mutex_lock(arg->pMutReaderCount);
 
     ( *(arg->pReaderCount) ) -= 1;
 
     if (0 == *(arg->pReaderCount))
         sem_post(arg->pSemResource);
 
-    pthread_mutex_unlock(arg->pMutexRc);
+    pthread_mutex_unlock(arg->pMutReaderCount);
 
 
     pthread_exit(nullptr);
@@ -109,24 +109,24 @@ void prepareArguments(
     int *pResource,
     sem_t *pSemResource,
     int *pReaderCount,
-    pthread_mutex_t *pMutexRc,
-    RandomNumberGen *pNumberGen
+    pthread_mutex_t *pMutReaderCount,
+    RandIntGenerator *pRandInt
 )
 {
-    RandomNumberGen delayTimeGen(0, 2);
+    RandIntGenerator delayTimeGen(0, 2);
 
     for (int i = 0; i < numReaders; ++i) {
         argReader[i].pResource = pResource;
         argReader[i].pSemResource = pSemResource;
         argReader[i].pReaderCount = pReaderCount;
-        argReader[i].pMutexRc = pMutexRc;
+        argReader[i].pMutReaderCount = pMutReaderCount;
         argReader[i].delayTime = delayTimeGen.get();
     }
 
     for (int i = 0; i < numWriters; ++i) {
         argWriter[i].pResource = pResource;
         argWriter[i].pSemResource = pSemResource;
-        argWriter[i].pNumberGen = pNumberGen;
+        argWriter[i].pRandInt = pRandInt;
         argWriter[i].delayTime = delayTimeGen.get();
     }
 }
@@ -145,11 +145,11 @@ int main() {
     sem_t semResource;
     sem_init(&semResource, 0, 1);
 
-    pthread_mutex_t mutexRc = PTHREAD_MUTEX_INITIALIZER;
+    pthread_mutex_t mutexReaderCount = PTHREAD_MUTEX_INITIALIZER;
 
     int readerCount = 0;
 
-    RandomNumberGen numberGen(0, 100);
+    RandIntGenerator randInt(0, 100);
     int ret = 0;
 
 
@@ -159,8 +159,8 @@ int main() {
 
     prepareArguments(argReader, argWriter, NUM_READERS, NUM_WRITERS,
                      &resource, &semResource,
-                     &readerCount, &mutexRc,
-                     &numberGen);
+                     &readerCount, &mutexReaderCount,
+                     &randInt);
 
 
     // CREATE THREADS
