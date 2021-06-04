@@ -1,5 +1,5 @@
-#ifndef _HI_RES_CLOCK_HPP_
-#define _HI_RES_CLOCK_HPP_
+#ifndef _MYTOOL_HIRES_CLOCK_HPP_
+#define _MYTOOL_HIRES_CLOCK_HPP_
 
 
 
@@ -49,4 +49,4 @@ public:
 
 
 
-#endif // _HI_RES_CLOCK_HPP_
+#endif // _MYTOOL_HIRES_CLOCK_HPP_
