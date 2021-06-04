@@ -1,30 +1,11 @@
 #include <iostream>
-#include <random>
 #include <unistd.h>
 #include <pthread.h>
 #include <semaphore.h>
+#include "mytool-random.hpp"
 
 using namespace std;
-
-
-
-class RandIntGenerator {
-private:
-    std::random_device rd;
-    std::mt19937 mt;
-    std::uniform_int_distribution<int> dist;
-
-
-public:
-    RandIntGenerator(int minValue, int maxValue): dist(minValue, maxValue) {
-        mt.seed(rd());
-    }
-
-
-    int get() {
-        return dist(mt);
-    }
-};
+using namespace mytool;
 
 
 
