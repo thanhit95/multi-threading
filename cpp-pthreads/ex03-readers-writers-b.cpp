@@ -209,5 +209,9 @@ int main() {
     }
 
 
+    // CLEAN UP
+    pthread_mutex_destroy(&mutexReaderCount);
+
+
     return 0;
 }

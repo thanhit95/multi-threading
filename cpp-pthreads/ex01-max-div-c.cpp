@@ -27,6 +27,10 @@ private:
 public:
     FinalResult() { }
 
+    ~FinalResult() {
+        pthread_mutex_destroy(&mutex);
+    }
+
     void update(int value, int numDiv) {
         pthread_mutex_lock(&mutex);
 

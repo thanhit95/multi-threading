@@ -50,6 +50,9 @@ int main() {
     ret = pthread_join(tid2, nullptr);
 
 
+    pthread_mutex_destroy(&mut);
+
+
     cout << "count = " << count << endl;
     return 0;
 }
