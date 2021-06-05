@@ -1,4 +1,4 @@
-# MULTIPLE THREADS IN PRACTICE
+# MULTIPLE THREADING IN PRACTICE
 
 ## DESCRIPTION
 
@@ -34,6 +34,7 @@ This repo is licensed under the [3-Clause BSD License](LICENSE.txt).
 Multithreaded programs can improve performance compared to original programs (which use only a single thread).
 
 Multithreading is used as an underlying technique in various fields:
+
 - Web browsers (Chrome, Edge, Firefox...).
 - Web servers.
 - Graphics editors (Adobe Photoshop, Corel Draw...).
