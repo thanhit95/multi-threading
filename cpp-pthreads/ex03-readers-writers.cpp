@@ -1,3 +1,25 @@
+/*
+THE READERS-WRITERS PROBLEM
+
+
+PROBLEM STATEMENT
+    Consider a situation where we have a file shared between many people.
+
+    If one of the people tries editing the file, no other person should be reading or writing
+    at the same time, otherwise changes will not be visible to him/her.
+    However if some person is reading the file, then others may read it at the same time.
+
+    Precisely in Computer Science we call this situation as the readers-writers problem.
+
+    What's the problem here?
+    - One set of data is shared among a number of processes.
+    - Once a writer is ready, it performs its write. Only one writer may write at a time.
+    - If a process is writing, no other process can read it.
+    - If at least one reader is reading, no other process can write.
+
+*/
+
+
 #include <iostream>
 #include <unistd.h>
 #include <pthread.h>
