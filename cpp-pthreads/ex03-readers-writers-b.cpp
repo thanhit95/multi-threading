@@ -161,8 +161,8 @@ int main() {
     constexpr int NUM_READERS = 8;
     constexpr int NUM_WRITERS = 8;
 
-    pthread_t pidReader[NUM_READERS];
-    pthread_t pidWriter[NUM_WRITERS];
+    pthread_t tidReader[NUM_READERS];
+    pthread_t tidWriter[NUM_WRITERS];
 
     sem_t semResource;
     sem_t semServiceQueue;
@@ -191,21 +191,21 @@ int main() {
 
     // CREATE THREADS
     for (int i = 0; i < NUM_READERS; ++i) {
-        ret = pthread_create(&pidReader[i], nullptr, readerFunc, (void*)&argReader[i]);
+        ret = pthread_create(&tidReader[i], nullptr, readerFunc, (void*)&argReader[i]);
     }
 
     for (int i = 0; i < NUM_WRITERS; ++i) {
-        ret = pthread_create(&pidWriter[i], nullptr, writerFunc, (void*)&argWriter[i]);
+        ret = pthread_create(&tidWriter[i], nullptr, writerFunc, (void*)&argWriter[i]);
     }
 
 
     // JOIN THREADS
     for (int i = 0; i < NUM_READERS; ++i) {
-        ret = pthread_join(pidReader[i], nullptr);
+        ret = pthread_join(tidReader[i], nullptr);
     }
 
     for (int i = 0; i < NUM_WRITERS; ++i) {
-        ret = pthread_join(pidWriter[i], nullptr);
+        ret = pthread_join(tidWriter[i], nullptr);
     }
 
 

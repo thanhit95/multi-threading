@@ -96,11 +96,11 @@ void* workerRoutine(void *argVoid) {
 void prepare(
     int rangeStart, int rangeEnd,
     int numThreads,
-    vector<pthread_t> &pid,
+    vector<pthread_t> &tid,
     vector<shared_ptr<WorkerArg>> &workerArg,
     FinalResult *ptrFinalRes
 ) {
-    pid.resize(numThreads);
+    tid.resize(numThreads);
     workerArg.resize(numThreads);
 
     int rangeBlock = (rangeEnd - rangeStart + 1) / numThreads;
@@ -126,9 +126,9 @@ int main() {
 
     FinalResult finalResult;
 
-    vector<pthread_t> pid;
+    vector<pthread_t> tid;
     vector<shared_ptr<WorkerArg>> workerArg;
-    prepare(RANGE_START, RANGE_STOP, NUM_THREADS, pid, workerArg, &finalResult);
+    prepare(RANGE_START, RANGE_STOP, NUM_THREADS, tid, workerArg, &finalResult);
 
     int ret = 0;
 
@@ -137,7 +137,7 @@ int main() {
 
 
     for (int i = 0; i < NUM_THREADS; ++i) {
-        ret = pthread_create(&pid[i], nullptr, workerRoutine, (void*)workerArg[i].get());
+        ret = pthread_create(&tid[i], nullptr, workerRoutine, (void*)workerArg[i].get());
 
         if (ret)
             throw runtime_error("error creating a thread");
@@ -145,7 +145,7 @@ int main() {
 
 
     for (int i = 0; i < NUM_THREADS; ++i) {
-        ret = pthread_join(pid[i], nullptr);
+        ret = pthread_join(tid[i], nullptr);
     }
 
 

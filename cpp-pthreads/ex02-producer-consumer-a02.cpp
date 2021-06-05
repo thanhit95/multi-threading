@@ -56,19 +56,19 @@ void *consumer(void *arg) {
 
 
 int main() {
-    pthread_t pidProduder[2];
-    pthread_t pidConsumer;
+    pthread_t tidProduder[2];
+    pthread_t tidConsumer;
     BlockingQueue<int> qProduct;
 
     int ret = 0;
 
-    ret = pthread_create(&pidProduder[0], nullptr, producer, (void*)&qProduct);
-    ret = pthread_create(&pidProduder[1], nullptr, producer, (void*)&qProduct);
-    ret = pthread_create(&pidConsumer, nullptr, consumer, (void*)&qProduct);
+    ret = pthread_create(&tidProduder[0], nullptr, producer, (void*)&qProduct);
+    ret = pthread_create(&tidProduder[1], nullptr, producer, (void*)&qProduct);
+    ret = pthread_create(&tidConsumer, nullptr, consumer, (void*)&qProduct);
 
-    ret = pthread_join(pidProduder[0], nullptr);
-    ret = pthread_join(pidProduder[1], nullptr);
-    ret = pthread_join(pidConsumer, nullptr);
+    ret = pthread_join(tidProduder[0], nullptr);
+    ret = pthread_join(tidProduder[1], nullptr);
+    ret = pthread_join(tidConsumer, nullptr);
 
     return 0;
 }

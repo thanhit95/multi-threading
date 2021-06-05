@@ -80,16 +80,16 @@ void *consumer(void *arg) {
 
 
 int main() {
-    pthread_t pidProduder, pidConsumer;
+    pthread_t tidProduder, tidConsumer;
     BlockingQueue<int> qProduct;
 
     int ret = 0;
 
-    ret = pthread_create(&pidProduder, nullptr, producer, (void*)&qProduct);
-    ret = pthread_create(&pidConsumer, nullptr, consumer, (void*)&qProduct);
+    ret = pthread_create(&tidProduder, nullptr, producer, (void*)&qProduct);
+    ret = pthread_create(&tidConsumer, nullptr, consumer, (void*)&qProduct);
 
-    ret = pthread_join(pidProduder, nullptr);
-    ret = pthread_join(pidConsumer, nullptr);
+    ret = pthread_join(tidProduder, nullptr);
+    ret = pthread_join(tidConsumer, nullptr);
 
     return 0;
 }

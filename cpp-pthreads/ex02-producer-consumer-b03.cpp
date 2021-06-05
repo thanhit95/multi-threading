@@ -103,8 +103,8 @@ void *consumer(void *argVoid) {
 
 
 int main() {
-    pthread_t pidProduder[2];
-    pthread_t pidConsumer;
+    pthread_t tidProduder[2];
+    pthread_t tidConsumer;
 
     queue<int> qProduct;
     GlobalSemaphore sem;
@@ -123,13 +123,13 @@ int main() {
     argProd1.dataAddFactor = 1000;
 
 
-    ret = pthread_create(&pidProduder[0], nullptr, producer, (void*)&argProd0);
-    ret = pthread_create(&pidProduder[1], nullptr, producer, (void*)&argProd1);
-    ret = pthread_create(&pidConsumer, nullptr, consumer, (void*)&argCon);
+    ret = pthread_create(&tidProduder[0], nullptr, producer, (void*)&argProd0);
+    ret = pthread_create(&tidProduder[1], nullptr, producer, (void*)&argProd1);
+    ret = pthread_create(&tidConsumer, nullptr, consumer, (void*)&argCon);
 
-    ret = pthread_join(pidProduder[0], nullptr);
-    ret = pthread_join(pidProduder[1], nullptr);
-    ret = pthread_join(pidConsumer, nullptr);
+    ret = pthread_join(tidProduder[0], nullptr);
+    ret = pthread_join(tidProduder[1], nullptr);
+    ret = pthread_join(tidConsumer, nullptr);
 
     return 0;
 }

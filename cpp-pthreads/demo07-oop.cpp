@@ -7,7 +7,7 @@ using namespace std;
 
 class Task {
 private:
-    pthread_t pid;
+    pthread_t tid;
 public:
     int index;
 
@@ -25,13 +25,13 @@ public:
 
 
     int start() {
-        int ret = pthread_create(&pid, nullptr, work, (void*)this);
+        int ret = pthread_create(&tid, nullptr, work, (void*)this);
         return ret;
     }
 
 
     int join() {
-        int ret = pthread_join(pid, nullptr);
+        int ret = pthread_join(tid, nullptr);
         return ret;
     }
 

@@ -106,8 +106,8 @@ int main() {
     constexpr int NUM_PRODUCERS = 3;
     constexpr int NUM_CONSUMERS = 2;
 
-    pthread_t pidProduder[NUM_PRODUCERS];
-    pthread_t pidConsumer[NUM_CONSUMERS];
+    pthread_t tidProduder[NUM_PRODUCERS];
+    pthread_t tidConsumer[NUM_CONSUMERS];
 
     queue<int> qProduct;
     GlobalSemaphore sem;
@@ -131,21 +131,21 @@ int main() {
 
     // CREATE THREADS
     for (int i = 0; i < NUM_PRODUCERS; ++i) {
-        ret = pthread_create(&pidProduder[i], nullptr, producer, (void*)&argProd[i]);
+        ret = pthread_create(&tidProduder[i], nullptr, producer, (void*)&argProd[i]);
     }
 
     for (int i = 0; i < NUM_CONSUMERS; ++i) {
-        ret = pthread_create(&pidConsumer[i], nullptr, consumer, (void*)&argCon);
+        ret = pthread_create(&tidConsumer[i], nullptr, consumer, (void*)&argCon);
     }
 
 
     // JOIN THREADS
     for (int i = 0; i < NUM_PRODUCERS; ++i) {
-        ret = pthread_join(pidProduder[i], nullptr);
+        ret = pthread_join(tidProduder[i], nullptr);
     }
 
     for (int i = 0; i < NUM_CONSUMERS; ++i) {
-        ret = pthread_join(pidConsumer[i], nullptr);
+        ret = pthread_join(tidConsumer[i], nullptr);
     }
 
 

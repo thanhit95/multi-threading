@@ -102,7 +102,7 @@ void *consumer(void *argVoid) {
 
 
 int main() {
-    pthread_t pidProduder, pidConsumer;
+    pthread_t tidProduder, tidConsumer;
 
     queue<int> qProduct;
     GlobalSemaphore sem;
@@ -114,11 +114,11 @@ int main() {
     globalArg.pqProduct = &qProduct;
     globalArg.psem = &sem;
 
-    ret = pthread_create(&pidProduder, nullptr, producer, (void*)&globalArg);
-    ret = pthread_create(&pidConsumer, nullptr, consumer, (void*)&globalArg);
+    ret = pthread_create(&tidProduder, nullptr, producer, (void*)&globalArg);
+    ret = pthread_create(&tidConsumer, nullptr, consumer, (void*)&globalArg);
 
-    ret = pthread_join(pidProduder, nullptr);
-    ret = pthread_join(pidConsumer, nullptr);
+    ret = pthread_join(tidProduder, nullptr);
+    ret = pthread_join(tidConsumer, nullptr);
 
     return 0;
 }
