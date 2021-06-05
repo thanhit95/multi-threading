@@ -187,8 +187,8 @@ int main() {
 
 
     // CLEAN UP
-    pthread_mutex_destroy(&mutexReaderCount);
-    sem_destroy(&semResource);
+    ret = pthread_mutex_destroy(&mutexReaderCount);
+    ret = sem_destroy(&semResource);
 
 
     return 0;

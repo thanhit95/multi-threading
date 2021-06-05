@@ -115,7 +115,7 @@ int main() {
 
     // CLEAN UP
     for (int i = 0; i < NUM_PHILOSOPHERS; ++i) {
-        sem_destroy(&chopstick[i]);
+        ret = sem_destroy(&chopstick[i]);
     }
 
     return 0;

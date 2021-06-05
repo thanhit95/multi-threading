@@ -80,7 +80,7 @@ int main() {
     ret = pthread_join(tid1, nullptr);
     ret = pthread_join(tid2, nullptr);
 
-    pthread_mutex_destroy(&countMutex);
+    ret = pthread_mutex_destroy(&countMutex);
 
     return 0;
 }
