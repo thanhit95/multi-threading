@@ -1,3 +1,50 @@
+/*
+THE READERS-WRITERS PROBLEM
+
+
+PROBLEM STATEMENT
+    The dining philosophers problem states that there are 5 philosophers sharing a circular table
+    and they eat and think alternatively.
+    There is a bowl of rice for each of the philosophers and 5 chopsticks.
+    A philosopher needs both their right and left chopstick to eat.
+    A hungry philosopher may only eat if there are both chopsticks available.
+    Otherwise a philosopher puts down their chopstick and begin thinking again.
+
+
+SOLUTION
+    A solution of the dining philosophers problem is to use a semaphore to represent a chopstick.
+    A chopstick can be picked up by executing a wait operation on the semaphore
+    and released by executing a signal semaphore.
+
+    The structure of a random philosopher i is given as follows:
+    while true do
+        wait( chopstick[i] );
+        wait( chopstick[ (i+1) % 5] );
+
+        EATING THE RICE
+
+        signal( chopstick[i] );
+        signal( chopstick[ (i+1) % 5] );
+
+        THINKING
+
+    What's the problem here?
+    - Deadlock.
+    - Starvation.
+
+    The above solution makes sure that no two neighboring philosophers can eat at the same time.
+    But this solution can lead to a deadlock.
+    This may happen if all the philosophers pick their left chopstick simultaneously.
+    Then none of them can eat and deadlock occurs.
+
+    Some of the ways to avoid deadlock are as follows:
+    - An even philosopher should pick the right chopstick and then the left chopstick
+    while an odd philosopher should pick the left chopstick and then the right chopstick.
+    - A philosopher should only be allowed to pick their chopstick if both are available at the same time.
+
+*/
+
+
 #include <iostream>
 #include <pthread.h>
 #include <semaphore.h>
