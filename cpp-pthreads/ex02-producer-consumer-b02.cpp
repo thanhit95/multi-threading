@@ -131,5 +131,7 @@ int main() {
     ret = pthread_join(tidProduder[1], nullptr);
     ret = pthread_join(tidConsumer, nullptr);
 
+
+    sem.destroy();
     return 0;
 }

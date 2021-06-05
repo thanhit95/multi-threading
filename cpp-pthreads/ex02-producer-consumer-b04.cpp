@@ -149,5 +149,6 @@ int main() {
     }
 
 
+    sem.destroy();
     return 0;
 }

@@ -92,6 +92,7 @@ int main() {
     int ret = 0;
 
 
+    // PREPARE ARGUMENTS
     for (int i = 0; i < NUM_PHILOSOPHERS; ++i) {
         sem_init(&chopstick[i], 0, 1); // set semaphore = 1
         funcArg[i].chopstick = chopstick;
@@ -100,13 +101,21 @@ int main() {
     }
 
 
+    // CREATE THREADS
     for (int i = 0; i < NUM_PHILOSOPHERS; ++i) {
         ret = pthread_create(&tid[i], nullptr, funcPhilosopher, (void*)&funcArg[i]);
     }
 
 
+    // JOIN THREADS
     for (int i = 0; i < NUM_PHILOSOPHERS; ++i) {
         ret = pthread_join(tid[i], nullptr);
+    }
+
+
+    // CLEAN UP
+    for (int i = 0; i < NUM_PHILOSOPHERS; ++i) {
+        sem_destroy(&chopstick[i]);
     }
 
     return 0;

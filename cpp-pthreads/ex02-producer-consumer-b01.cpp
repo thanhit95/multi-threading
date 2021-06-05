@@ -120,5 +120,6 @@ int main() {
     ret = pthread_join(tidProduder, nullptr);
     ret = pthread_join(tidConsumer, nullptr);
 
+    sem.destroy();
     return 0;
 }
