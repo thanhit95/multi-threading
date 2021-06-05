@@ -1,5 +1,5 @@
 /*
-PRODUCER - CONSUMER PROBLEM
+THE PRODUCER-CONSUMER PROBLEM
 
 SOLUTION TYPE B - USING SEMAPHORE
     version b03: 2 fast producers, 1 slow consumer
