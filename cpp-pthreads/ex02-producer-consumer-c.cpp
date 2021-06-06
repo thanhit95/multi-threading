@@ -139,12 +139,13 @@ int main() {
 
     Monitor<int> monitor;
     queue<int> qProduct;
+    constexpr int MAX_QUEUE_SIZE = 6;
 
     int ret = 0;
 
 
     // PREPARE ARGUMENTS
-    monitor.init(6, &qProduct);
+    monitor.init(MAX_QUEUE_SIZE, &qProduct);
 
 
     // CREATE THREADS
