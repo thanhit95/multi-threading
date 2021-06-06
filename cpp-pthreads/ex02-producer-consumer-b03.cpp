@@ -77,7 +77,7 @@ void* producer(void *argVoid) {
 
 
 
-void *consumer(void *argVoid) {
+void* consumer(void *argVoid) {
     auto arg = (GlobalArg*)argVoid;
     auto pqProduct = arg->pqProduct;
     auto psem = arg->psem;

@@ -32,7 +32,7 @@ void* producer(void *arg) {
 
 
 
-void *consumer(void *arg) {
+void* consumer(void *arg) {
     auto pqProduct = (BlockingQueue<int>*)arg;
 
     int data;

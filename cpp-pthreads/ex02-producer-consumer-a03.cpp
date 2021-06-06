@@ -39,7 +39,7 @@ void* producer(void *arg) {
 
 
 
-void *consumer(void *argVoid) {
+void* consumer(void *argVoid) {
     auto arg = (ConsumerArg*)argVoid;
     auto pqProduct = arg->pqProduct;
 
