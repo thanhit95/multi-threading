@@ -15,6 +15,7 @@ SOLUTION TYPE C - USING MONITOR
 using namespace std;
 
 
+
 template <typename T>
 class Monitor {
 private:
