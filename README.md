@@ -45,3 +45,13 @@ Multithreading is used as an underlying technique in various fields:
 - And more...
 
 In fact, multithreading is extremely important in the current software industry. It lets you do concurrency. It solves asynchronous problems.
+
+&nbsp;
+
+---
+
+&nbsp;
+
+## REFERENCES
+
+Please read [references.md](references.md).
