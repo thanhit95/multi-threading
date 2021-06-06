@@ -31,17 +31,17 @@ This repo is licensed under the [3-Clause BSD License](LICENSE.txt).
 
 ### WHY MULTIPLE THREADS
 
-Multithreaded programs can improve performance compared to original programs (which use only a single thread).
+Multithreaded programs can improve performance compared to traditional simple programs (which use only a single thread).
 
 Multithreading is used as an underlying technique in various fields:
 
 - Web browsers (Chrome, Edge, Firefox...).
 - Web servers.
-- Graphics editors (Adobe Photoshop, Corel Draw...).
+- Graphic editors (Adobe Photoshop, Corel Draw...).
 - Computer games.
 - Database management systems.
 - Networking programming.
 - Video encoders.
 - And more...
 
-In fact, multithreading is extremely important in the current software industry. It let you do concurrency. It solves asynchronous problems.
+In fact, multithreading is extremely important in the current software industry. It lets you do concurrency. It solves asynchronous problems.
