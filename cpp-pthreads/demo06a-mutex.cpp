@@ -24,7 +24,7 @@ int count = 0;
 
 
 
-void* funcCounter(void *) {
+void* routineCounter(void *) {
     sleep(1);
 
     pthread_mutex_lock(&mut);
@@ -50,7 +50,7 @@ int main() {
 
 
     for (auto &tidItem : tid) {
-        ret = pthread_create(&tidItem, nullptr, funcCounter, nullptr);
+        ret = pthread_create(&tidItem, nullptr, routineCounter, nullptr);
     }
 
 

@@ -18,7 +18,7 @@ int count = 0;
 
 
 
-void* funcCounter(void *) {
+void* routineCounter(void *) {
     int ret = 0;
     sleep(1);
 
@@ -78,7 +78,7 @@ int main() {
 
 
     for (auto &tidItem : tid) {
-        ret = pthread_create(&tidItem, nullptr, funcCounter, nullptr);
+        ret = pthread_create(&tidItem, nullptr, routineCounter, nullptr);
     }
 
 

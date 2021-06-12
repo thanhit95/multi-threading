@@ -6,7 +6,7 @@ using namespace std;
 
 
 
-void* printHello(void *p2id) {
+void* routine(void *p2id) {
     int id = *(int*)p2id;
 
     cout << "sleeping in thread " << id << endl;
@@ -35,7 +35,7 @@ int main() {
 
     for (int i = 0; i < NUM_THREADS; ++i) {
         argThread[i] = i;
-        int ret = pthread_create(&tid[i], &attr, printHello, (void*)&argThread[i]);
+        int ret = pthread_create(&tid[i], &attr, routine, (void*)&argThread[i]);
     }
 
 
