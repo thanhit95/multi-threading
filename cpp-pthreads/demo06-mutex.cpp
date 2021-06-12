@@ -13,6 +13,7 @@ Mutexes can be applied only to threads in a single process and do not work betwe
 
 #include <iostream>
 #include <pthread.h>
+#include <unistd.h>
 
 using namespace std;
 
@@ -24,8 +25,13 @@ int count = 0;
 
 
 void* funcCounter(void *) {
+    sleep(1);
+
     pthread_mutex_lock(&mut);
-    ++count;
+
+    for (int i = 0; i < 1000; ++i)
+        ++count;
+
     pthread_mutex_unlock(&mut);
 
     pthread_exit(nullptr);
@@ -35,19 +41,22 @@ void* funcCounter(void *) {
 
 
 int main() {
-    pthread_t tid1, tid2;
-    int ret;
+    constexpr int NUM_THREADS = 3;
+    pthread_t tid[NUM_THREADS];
+    int ret = 0;
 
 
     count = 0;
 
 
-    ret = pthread_create(&tid1, nullptr, funcCounter, nullptr);
-    ret = pthread_create(&tid2, nullptr, funcCounter, nullptr);
+    for (auto &tidItem : tid) {
+        ret = pthread_create(&tidItem, nullptr, funcCounter, nullptr);
+    }
 
 
-    ret = pthread_join(tid1, nullptr);
-    ret = pthread_join(tid2, nullptr);
+    for (auto &tidItem : tid) {
+        ret = pthread_join(tidItem, nullptr);
+    }
 
 
     ret = pthread_mutex_destroy(&mut);
