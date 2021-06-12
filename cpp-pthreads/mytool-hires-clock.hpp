@@ -26,19 +26,19 @@ public:
 
     static duration<double>
     getTimeSpan(
-        const high_resolution_clock::time_point &t1,
-        const high_resolution_clock::time_point &t2)
+        const high_resolution_clock::time_point &tp1,
+        const high_resolution_clock::time_point &tp2)
     {
-        auto res = duration_cast<duration<double>>(t2 - t1);
+        auto res = duration_cast<duration<double>>(tp2 - tp1);
         return res;
     }
 
 
     static duration<double>
-    getTimeSpan(const high_resolution_clock::time_point &tBefore)
+    getTimeSpan(const high_resolution_clock::time_point &tpBefore)
     {
-        auto tCurrent = HiResClock::now();
-        auto res = HiResClock::getTimeSpan(tBefore, tCurrent);
+        auto tpCurrent = HiResClock::now();
+        auto res = HiResClock::getTimeSpan(tpBefore, tpCurrent);
         return res;
     }
 };
