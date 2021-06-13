@@ -33,7 +33,7 @@ SOLUTION TYPE A - USING BLOCKING QUEUE
 #include <iostream>
 #include <pthread.h>
 #include <unistd.h>
-#include "BlockingCollection.hpp"
+#include "extool-blocking-collection.hpp"
 
 using namespace std;
 using namespace code_machina;
