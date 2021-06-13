@@ -5,6 +5,7 @@
 - [Columbia University, W4118 Operating Systems I (Junfeng Yang), lecture 8 (threads)](http://www.cs.columbia.edu/~junfeng/12sp-w4118/lectures/l08-thread.pdf)
 - <http://math.hws.edu/javanotes/c12/exercises.html>
 - <https://hpc-tutorials.llnl.gov/posix/>
+- <https://en.wikipedia.org/wiki/Race_condition>
 
 &nbsp;
 
@@ -14,6 +15,7 @@
 - <https://stackoverflow.com/questions/3513045/conditional-variable-vs-semaphore>
 - <https://docs.python.org/3/library/threading.html#rlock-objects>
 - <https://www.baeldung.com/java-binary-semaphore-vs-reentrant-lock>
+- <https://www.ibm.com/docs/en/aix/7.2?topic=programming-using-mutexes>
 
 &nbsp;
 
