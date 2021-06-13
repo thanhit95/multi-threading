@@ -12,6 +12,8 @@
 
 - <https://www.baeldung.com/cs/semaphore-vs-mutex>
 - <https://stackoverflow.com/questions/3513045/conditional-variable-vs-semaphore>
+- <https://docs.python.org/3/library/threading.html#rlock-objects>
+- <https://www.baeldung.com/java-binary-semaphore-vs-reentrant-lock>
 
 &nbsp;
 
