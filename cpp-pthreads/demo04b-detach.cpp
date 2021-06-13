@@ -9,15 +9,15 @@ using namespace std;
 void* routine(void *arg) {
     int ret = 0;
 
-    cout << "tid is starting..." << endl;
+    cout << "routine is starting..." << endl;
 
     if ( ret = pthread_detach(pthread_self()) ) {
-        cout << "error: cannot detach thread tid" << endl;
+        cout << "error: cannot detach routine" << endl;
     }
 
     sleep(2);
 
-    cout << "tid is exiting..." << endl;
+    cout << "routine is exiting..." << endl;
 
     pthread_exit(nullptr);
     return (void*)0;
