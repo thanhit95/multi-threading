@@ -22,8 +22,7 @@ void* func(void *arg) {
 
 
 
-int main()
-{
+int main() {
     pthread_t tid;
 
     signal(SIGSEGV, signalHandler); // register signal handler before going multithread
