@@ -14,6 +14,9 @@
 - Mutex:
     - <https://www.ibm.com/docs/en/aix/7.2?topic=programming-using-mutexes>
 
+- Barrier:
+    - <http://dotnetpattern.com/threading-barrier>
+
 - Read/write lock:
     - <https://docs.python.org/3/library/threading.html#rlock-objects>
     - <https://www.ibm.com/docs/en/aix/7.2?topic=programming-using-readwrite-locks>
