@@ -20,7 +20,18 @@ private:
 
 
 public:
-    RandIntGenerator(int minValue, int maxValue): dist(minValue, maxValue) {
+    RandIntGenerator() {
+        init(0, 1);
+    }
+
+
+    RandIntGenerator(int minValue, int maxValue) {
+        init(minValue, maxValue);
+    }
+
+
+    void init(int minValue, int maxValue) {
+        dist = std::uniform_int_distribution<int>(minValue, maxValue);
         mt.seed(rd());
     }
 
