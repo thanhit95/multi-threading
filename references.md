@@ -14,6 +14,9 @@
 - Mutex:
     - <https://www.ibm.com/docs/en/aix/7.2?topic=programming-using-mutexes>
 
+- Reentrant lock:
+    - <https://stackoverflow.com/questions/11821801/why-use-a-reentrantlock-if-one-can-use-synchronizedthis>
+
 - Barrier:
     - <http://dotnetpattern.com/threading-barrier>
 
