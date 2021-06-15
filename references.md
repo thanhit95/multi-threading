@@ -5,6 +5,7 @@
 - [Columbia University, W4118 Operating Systems I (Junfeng Yang), lecture 8 (threads)](http://www.cs.columbia.edu/~junfeng/12sp-w4118/lectures/l08-thread.pdf)
 - <http://math.hws.edu/javanotes/c12/exercises.html>
 - <https://hpc-tutorials.llnl.gov/posix/>
+- <https://docs.oracle.com/cd/E19455-01/806-5257/>
 - <https://en.wikipedia.org/wiki/Race_condition>
 
 &nbsp;
