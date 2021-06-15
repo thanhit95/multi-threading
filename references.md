@@ -13,22 +13,22 @@
 ## Synchronization
 
 - Mutex:
-    - <https://www.ibm.com/docs/en/aix/7.2?topic=programming-using-mutexes>
+  - <https://www.ibm.com/docs/en/aix/7.2?topic=programming-using-mutexes>
 
 - Reentrant lock:
-    - <https://stackoverflow.com/questions/11821801/why-use-a-reentrantlock-if-one-can-use-synchronizedthis>
+  - <https://stackoverflow.com/questions/11821801/why-use-a-reentrantlock-if-one-can-use-synchronizedthis>
 
 - Barrier:
-    - <http://dotnetpattern.com/threading-barrier>
+  - <http://dotnetpattern.com/threading-barrier>
 
 - Read/write lock:
-    - <https://docs.python.org/3/library/threading.html#rlock-objects>
-    - <https://www.ibm.com/docs/en/aix/7.2?topic=programming-using-readwrite-locks>
+  - <https://docs.python.org/3/library/threading.html#rlock-objects>
+  - <https://www.ibm.com/docs/en/aix/7.2?topic=programming-using-readwrite-locks>
 
 - Comparison:
-    - <https://www.baeldung.com/cs/semaphore-vs-mutex>
-    - <https://www.baeldung.com/java-binary-semaphore-vs-reentrant-lock>
-    - <https://stackoverflow.com/questions/3513045/conditional-variable-vs-semaphore>
+  - <https://www.baeldung.com/cs/semaphore-vs-mutex>
+  - <https://www.baeldung.com/java-binary-semaphore-vs-reentrant-lock>
+  - <https://stackoverflow.com/questions/3513045/conditional-variable-vs-semaphore>
 
 &nbsp;
 
