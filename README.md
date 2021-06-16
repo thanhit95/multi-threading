@@ -88,6 +88,6 @@ Article references:
 
 ## REFERENCES
 
-All references for my repo.
+All general references in my repo.
 
 Read here: [references.md](references.md).
