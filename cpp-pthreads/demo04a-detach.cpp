@@ -46,7 +46,8 @@ int main() {
     // }
 
 
-    sleep(3); // if I comment this statement, the thread routine will be forced into terminating with main thread
+    // If I comment this statement, the thread routine will be forced into terminating with main thread
+    sleep(3);
 
 
     cout << "program is terminating" << endl;
