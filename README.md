@@ -8,7 +8,7 @@ This repo shows my practice dealing with multi-threaded problems.
 
 ## AUTHOR & LICENSE
 
-Author: Thanh Trung Nguyen
+Author: Thanh Nguyen
 
 - Email: thanh.it1995@gmail.com
 - Facebook: <https://www.facebook.com/thanh.it95>
@@ -20,14 +20,19 @@ This repo is licensed under the [3-Clause BSD License](LICENSE.txt).
 ## REPO STRUCTURE
 
 - ```cpp-pthreads```: C++ POSIX threads.
+- ```cpp-std```: C++ std threads.
 
 &nbsp;
 
 ---
 
-&nbsp;
+## ARTICLES AND LEARNING NOTES
 
-## ARTICLES
+Read here: [articles-notes.md](articles-notes.md).
+
+In the main README, I present an article: "Why Multithreading".
+
+&nbsp;
 
 ### WHY MULTITHREADING
 
@@ -68,7 +73,12 @@ Benefits of multithreading:
 
 In fact, multithreading is extremely important in the current software industry. It lets you do concurrency. It solves asynchronous problems.
 
-<sub>Reference: Oracle Documentation Home, Multithreaded Programming Guide, Benefiting From Multithreading.</sub>
+&nbsp;
+
+Article references:
+
+- [Oracle Documentation Home, Multithreaded Programming Guide, Chapter 1 Covering Multithreading Basics, Benefiting From Multithreading](https://docs.oracle.com/cd/E19455-01/806-5257/6je9h032d/index.html)
+- [Oracle Documentation Home, JDK 1.1 for Solaris Developer's Guide, Chapter 2 Multithreading, Benefits of Multithreading](https://docs.oracle.com/cd/E19455-01/806-3461/6jck06gqj/index.html)
 
 &nbsp;
 
@@ -78,4 +88,6 @@ In fact, multithreading is extremely important in the current software industry.
 
 ## REFERENCES
 
-Please read [references.md](references.md).
+All references for my repo.
+
+Read here: [references.md](references.md).
