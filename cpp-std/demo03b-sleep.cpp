@@ -33,8 +33,8 @@ int main() {
     cout << "foo will sleep until " << getStrTimePoint(tpWakeUpFoo) << endl;
     cout << "bar will sleep until " << getStrTimePoint(tpWakeUpBar) << endl;
 
-    auto thFoo = thread(routine, "foo", tpWakeUpFoo);
-    auto thBar = thread(routine, "bar", tpWakeUpBar);
+    auto thFoo = std::thread(routine, "foo", tpWakeUpFoo);
+    auto thBar = std::thread(routine, "bar", tpWakeUpBar);
 
     thFoo.join();
     thBar.join();

@@ -16,8 +16,8 @@ void routine(string name) {
 
 
 int main() {
-    auto th1 = thread(routine, "foo");
-    auto th2 = thread(routine, "bar");
+    auto th1 = std::thread(routine, "foo");
+    auto th2 = std::thread(routine, "bar");
 
     th1.join();
     th2.join();

@@ -14,8 +14,8 @@ void routine() {
 
 
 int main() {
-    auto th1 = thread(routine);
-    auto th2 = thread(routine);
+    auto th1 = std::thread(routine);
+    auto th2 = std::thread(routine);
 
     cout << "th1 id: " << th1.get_id() << endl;
     cout << "th2 id: " << th2.get_id() << endl;

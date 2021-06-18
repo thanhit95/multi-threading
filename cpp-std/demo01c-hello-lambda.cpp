@@ -11,8 +11,8 @@ int main() {
         cout << message << endl;
     };
 
-    thread th1(lambda, "ham");
-    thread th2(lambda, "eggs");
+    std::thread th1(lambda, "ham");
+    std::thread th2(lambda, "eggs");
 
     th1.join();
     th2.join();

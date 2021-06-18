@@ -39,8 +39,8 @@ int main() {
     auto tpNow = sysclock::now();
     auto tpWakeUp = tpNow + std::chrono::seconds(2);
 
-    auto thA = thread(routineA, tpWakeUp);
-    auto thB = thread(routineB, tpWakeUp);
+    auto thA = std::thread(routineA, tpWakeUp);
+    auto thB = std::thread(routineB, tpWakeUp);
 
     thA.join();
     thB.join();

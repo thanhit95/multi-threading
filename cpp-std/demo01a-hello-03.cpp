@@ -12,8 +12,8 @@ void helloThread(char const* message, int number) {
 
 
 int main() {
-    thread th1(helloThread, "ham", 19);
-    thread th2(helloThread, "eggs", 74);
+    std::thread th1(helloThread, "ham", 19);
+    std::thread th2(helloThread, "eggs", 74);
 
     th1.join();
     th2.join();

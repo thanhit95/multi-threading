@@ -28,10 +28,10 @@ int main() {
     string a = "foo";
     string b = "bar";
 
-    // auto th1 = thread(routine, a); // error
+    // auto th1 = std::thread(routine, a); // error
 
-    auto th1 = thread(routine, std::ref(a));
-    auto th2 = thread(routine, std::ref(b));
+    auto th1 = std::thread(routine, std::ref(a));
+    auto th2 = std::thread(routine, std::ref(b));
 
     th1.join();
     th2.join();

@@ -15,12 +15,12 @@ void routine(int index) {
 
 int main() {
     constexpr int NUM_THREADS = 4;
-    vector<thread> lstTh;
+    vector<std::thread> lstTh;
 
 
     for (int i = 0; i < NUM_THREADS; ++i) {
         lstTh.push_back(
-            thread(routine, i)
+            std::thread(routine, i)
         );
     }
 

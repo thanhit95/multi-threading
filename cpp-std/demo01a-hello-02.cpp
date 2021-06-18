@@ -12,8 +12,8 @@ void helloThread(int value) {
 
 
 int main() {
-    thread th1(helloThread, 1);
-    thread th2(helloThread, 2);
+    std::thread th1(helloThread, 1);
+    std::thread th2(helloThread, 2);
 
     th1.join();
     th2.join();

@@ -34,7 +34,7 @@ void routine() {
 int main() {
     flagStop.store(false);
 
-    auto th = thread(routine);
+    auto th = std::thread(routine);
 
     std::this_thread::sleep_for(std::chrono::seconds(3));
 

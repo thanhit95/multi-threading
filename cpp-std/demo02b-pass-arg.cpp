@@ -16,8 +16,8 @@ int main() {
     string a = "foo";
     string b = "bar";
 
-    auto th1 = thread(routine, a);
-    auto th2 = thread(routine, b);
+    auto th1 = std::thread(routine, a);
+    auto th2 = std::thread(routine, b);
 
     th1.join();
     th2.join();

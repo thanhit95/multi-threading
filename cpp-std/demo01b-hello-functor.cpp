@@ -18,8 +18,8 @@ public:
 int main() {
     Foo foo;
 
-    thread th1(foo, "ham");
-    thread th2(foo, "eggs");
+    std::thread th1(foo, "ham");
+    std::thread th2(foo, "eggs");
 
     th1.join();
     th2.join();

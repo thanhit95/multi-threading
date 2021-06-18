@@ -17,7 +17,7 @@ void routine() {
 
 
 int main() {
-    auto th = thread(routine);
+    auto th = std::thread(routine);
     th.detach();
 
 

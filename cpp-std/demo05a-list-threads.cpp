@@ -18,11 +18,11 @@ void routine(int index) {
 int main() {
     constexpr int NUM_THREADS = 5;
 
-    thread lstTh[NUM_THREADS];
+    std::thread lstTh[NUM_THREADS];
 
 
     for (int i = 0; i < NUM_THREADS; ++i) {
-        lstTh[i] = thread(routine, i);
+        lstTh[i] = std::thread(routine, i);
     }
 
 
