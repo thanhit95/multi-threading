@@ -21,27 +21,31 @@ class HiResClock {
     using clockns = chro::high_resolution_clock;
 
 public:
-    static clockns::time_point now()
+    static inline clockns::time_point now()
     {
         return clockns::now();
     }
 
 
-    static chro::duration<double>
+    template< typename duType=chro::duration<double> >
+    static inline
+    duType
     getTimeSpan(
         const clockns::time_point &tp1,
         const clockns::time_point &tp2)
     {
-        auto res = chro::duration_cast<chro::duration<double>>(tp2 - tp1);
+        auto res = chro::duration_cast<duType>(tp2 - tp1);
         return res;
     }
 
 
-    static chro::duration<double>
+    template< typename duType=chro::duration<double> >
+    static inline
+    duType
     getTimeSpan(const clockns::time_point &tpBefore)
     {
         auto tpCurrent = HiResClock::now();
-        auto res = HiResClock::getTimeSpan(tpBefore, tpCurrent);
+        auto res = HiResClock::getTimeSpan<duType>(tpBefore, tpCurrent);
         return res;
     }
 };
