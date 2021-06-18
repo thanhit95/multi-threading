@@ -1,12 +1,11 @@
 #include <iostream>
 #include <thread>
-
 using namespace std;
 
 
 
 void helloThread() {
-    cout << "hello" << endl;
+    cout << "Hello" << endl;
 }
 
 

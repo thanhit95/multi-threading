@@ -18,6 +18,7 @@ void routine(int index) {
 
 int main() {
     constexpr int NUM_THREADS = 5;
+
     vector<std::thread> lstTh;
 
 

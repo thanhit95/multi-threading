@@ -2,19 +2,12 @@
 #include <string>
 #include <thread>
 #include <chrono>
-
+#include "mytool-time.hpp"
 using namespace std;
 
 
 
 using sysclock = std::chrono::system_clock;
-
-
-
-char* getStrTimePoint(sysclock::time_point tp) {
-    std::time_t timeStamp = sysclock::to_time_t(tp);
-    return std::ctime(&timeStamp);
-}
 
 
 
@@ -30,8 +23,8 @@ int main() {
     auto tpWakeUpFoo = tpNow + std::chrono::seconds(7);
     auto tpWakeUpBar = tpNow + std::chrono::seconds(3);
 
-    cout << "foo will sleep until " << getStrTimePoint(tpWakeUpFoo) << endl;
-    cout << "bar will sleep until " << getStrTimePoint(tpWakeUpBar) << endl;
+    cout << "foo will sleep until " << mytool::getTimePointStr(tpWakeUpFoo) << endl;
+    cout << "bar will sleep until " << mytool::getTimePointStr(tpWakeUpBar) << endl;
 
     auto thFoo = std::thread(routine, "foo", tpWakeUpFoo);
     auto thBar = std::thread(routine, "bar", tpWakeUpBar);

@@ -1,13 +1,12 @@
 /*
-FORCE A THREAD TO TERMINATE
-(i.e. kill the thread)
+FORCING A THREAD TO TERMINATE
+(i.e. killing the thread)
 */
 
 
 #include <iostream>
 #include <thread>
 #include <atomic>
-
 using namespace std;
 
 
@@ -17,7 +16,7 @@ std::atomic_bool flagStop;
 
 
 void routine() {
-    cout << "running..." << endl;
+    cout << "Running..." << endl;
 
     while (1) {
         if (flagStop.load())
@@ -26,7 +25,7 @@ void routine() {
         std::this_thread::sleep_for(std::chrono::microseconds(500));
     }
 
-    cout << "done" << endl;
+    cout << "Done" << endl;
 }
 
 

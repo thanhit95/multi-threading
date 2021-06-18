@@ -1,14 +1,13 @@
 #include <iostream>
 #include <thread>
 #include <chrono>
-
 using namespace std;
 
 
 
 void routine() {
     std::this_thread::sleep_for(std::chrono::seconds(2));
-    cout << "thread id is " << std::this_thread::get_id() << endl;
+    cout << "Thread id is " << std::this_thread::get_id() << endl;
 }
 
 

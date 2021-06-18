@@ -23,10 +23,10 @@ void writeToFile(string fileName, string programName) {
 
 int main(int argc, char* argv[]) {
     if (argc < 3) {
-        cerr << "Please run program with 2 arguments to specify:" << endl;
-        cerr << "\tArgument 1: Waiting seconds (positive integer)" << endl;
-        cerr << "\tArgument 2: Program name (string)" << endl;
-        return 1;
+        cout << "Please run program with 2 arguments to specify:" << endl;
+        cout << "\tArgument 1: Waiting seconds (positive integer)" << endl;
+        cout << "\tArgument 2: Program name (string)" << endl;
+        return 0;
     }
 
 

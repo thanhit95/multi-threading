@@ -1,17 +1,16 @@
 #include <iostream>
 #include <thread>
 #include <chrono>
-
 using namespace std;
 
 
 
 void routine() {
-    cout << "routine is starting..." << endl;
+    cout << "Routine is starting..." << endl;
 
     std::this_thread::sleep_for(std::chrono::seconds(2));
 
-    cout << "routine is exiting..." << endl;
+    cout << "Routine is exiting..." << endl;
 }
 
 
@@ -25,6 +24,6 @@ int main() {
     std::this_thread::sleep_for(std::chrono::seconds(3));
 
 
-    cout << "program is terminating" << endl;
+    cout << "Program is terminating" << endl;
     return 0;
 }

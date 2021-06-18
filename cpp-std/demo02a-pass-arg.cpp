@@ -2,7 +2,6 @@
 #include <cstdio>
 #include <string>
 #include <thread>
-
 using namespace std;
 
 
