@@ -7,7 +7,7 @@ using namespace std;
 
 
 std::mutex mut;
-int count = 0;
+int counter = 0;
 
 
 
@@ -17,7 +17,7 @@ void routineCounter() {
     mut.lock();
 
     for (int i = 0; i < 1000; ++i)
-        ++count;
+        ++counter;
 
     mut.unlock();
 }
@@ -29,7 +29,7 @@ int main() {
     std::thread lstTh[NUM_THREADS];
 
 
-    count = 0;
+    counter = 0;
 
 
     for (auto &&th : lstTh) {
@@ -42,6 +42,6 @@ int main() {
     }
 
 
-    cout << "count = " << count << endl;
+    cout << "counter = " << counter << endl;
     return 0;
 }

@@ -14,7 +14,7 @@ using namespace std;
 
 
 std::mutex mut;
-int count = 0;
+int counter = 0;
 
 
 
@@ -24,7 +24,7 @@ void routineCounter() {
     std::lock_guard<std::mutex> lockGuard(mut);
 
     for (int i = 0; i < 1000; ++i)
-        ++count;
+        ++counter;
 
     // Once function exits, then destructor of lockGuard object will be called.
     // In destructor it unlocks the mutex.
@@ -37,7 +37,7 @@ int main() {
     std::thread lstTh[NUM_THREADS];
 
 
-    count = 0;
+    counter = 0;
 
 
     for (auto &&th : lstTh) {
@@ -50,6 +50,6 @@ int main() {
     }
 
 
-    cout << "count = " << count << endl;
+    cout << "counter = " << counter << endl;
     return 0;
 }
