@@ -15,7 +15,7 @@ using namespace std;
 
 
 
-auto semPackage = std::counting_semaphore(0);   // max value is 16, current value is 0
+auto semPackage = std::counting_semaphore(0);
 
 
 
