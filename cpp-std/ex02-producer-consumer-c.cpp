@@ -19,7 +19,7 @@ using namespace std;
 template <typename T>
 class Monitor {
 private:
-    std::queue<T> *q = nullptr;
+    std::queue<T>* q = nullptr;
     int maxQueueSize = 0;
 
     std::condition_variable condFull;
@@ -29,19 +29,19 @@ private:
 
 public:
     Monitor() = default;
-    Monitor(const Monitor &other) = delete;
-    Monitor(const Monitor &&other) = delete;
-    void operator=(const Monitor &other) = delete;
-    void operator=(const Monitor &&other) = delete;
+    Monitor(const Monitor& other) = delete;
+    Monitor(const Monitor&& other) = delete;
+    void operator=(const Monitor& other) = delete;
+    void operator=(const Monitor&& other) = delete;
 
 
-    void init(int maxQueueSize, std::queue<T> *q) {
+    void init(int maxQueueSize, std::queue<T>* q) {
         this->q = q;
         this->maxQueueSize = maxQueueSize;
     }
 
 
-    void add(const T &item) {
+    void add(const T& item) {
         std::unique_lock<std::mutex> mutLock(mut);
 
         while (q->size() == maxQueueSize) {
@@ -81,7 +81,7 @@ public:
 
 
 template <typename T>
-void producer(Monitor<T> *monitor, int dataAddValue) {
+void producer(Monitor<T>* monitor, int dataAddValue) {
     T i = 1;
 
     for (;; ++i) {
@@ -92,7 +92,7 @@ void producer(Monitor<T> *monitor, int dataAddValue) {
 
 
 template <typename T>
-void consumer(Monitor<T> *monitor) {
+void consumer(Monitor<T>* monitor) {
     T data = 0;
 
     for (;;) {

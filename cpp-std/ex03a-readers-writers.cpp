@@ -18,8 +18,8 @@ using TypeSemaphore = std::counting_semaphore<>;
 
 
 void funcWriter(
-    int *resource,
-    TypeSemaphore *semResource,
+    int* resource,
+    TypeSemaphore* semResource,
     int timeDelay
 ) {
     std::this_thread::sleep_for(std::chrono::seconds(timeDelay));
@@ -35,10 +35,10 @@ void funcWriter(
 
 
 void funcReader(
-    int *resource,
-    TypeSemaphore *semResource,
-    int *readerCount,
-    std::mutex *mutReaderCount,
+    int* resource,
+    TypeSemaphore* semResource,
+    int* readerCount,
+    std::mutex* mutReaderCount,
     int timeDelay
 ) {
     std::this_thread::sleep_for(std::chrono::seconds(timeDelay));

@@ -20,9 +20,9 @@ using TypeSemaphore = std::counting_semaphore<>;
 
 
 void producer(
-    TypeSemaphore *semFill,
-    TypeSemaphore *semEmpty,
-    queue<int> *qProduct,
+    TypeSemaphore* semFill,
+    TypeSemaphore* semEmpty,
+    queue<int>* qProduct,
     int dataAddValue
 ) {
     int i = 1;
@@ -40,9 +40,9 @@ void producer(
 
 
 void consumer(
-    TypeSemaphore *semFill,
-    TypeSemaphore *semEmpty,
-    queue<int> *qProduct
+    TypeSemaphore* semFill,
+    TypeSemaphore* semEmpty,
+    queue<int>* qProduct
 ) {
     int data = 0;
 

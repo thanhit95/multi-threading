@@ -7,7 +7,7 @@ using namespace std;
 
 
 
-void funcUserInput(char *buffer, std::condition_variable *cv) {
+void funcUserInput(char* buffer, std::condition_variable* cv) {
     cin.getline(buffer, 1024);
     cv->notify_one();
 }
@@ -17,7 +17,7 @@ void funcUserInput(char *buffer, std::condition_variable *cv) {
 /*
 Return true if no timeout. Otherwise, return false.
 */
-bool waitForTime(const int timeWait, std::condition_variable &cv, std::mutex &mut) {
+bool waitForTime(const int timeWait, std::condition_variable& cv, std::mutex& mut) {
     std::unique_lock<std::mutex> lk(mut);
     std::cv_status status = cv.wait_for(lk, std::chrono::seconds(timeWait));
 

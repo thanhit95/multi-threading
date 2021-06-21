@@ -57,7 +57,7 @@ public:
     }
 
 
-    void submit(ITask *task) {
+    void submit(ITask* task) {
         mutTaskPending.lock();
         taskPending.push(task);
         mutTaskPending.unlock();
@@ -107,7 +107,7 @@ public:
 
 
 private:
-    static void threadRoutine(ThreadPool *thisPtr, int indexThread) {
+    static void threadRoutine(ThreadPool* thisPtr, int indexThread) {
         auto&& mutTaskPending = thisPtr->mutTaskPending;
         auto&& condTaskPending = thisPtr->condTaskPending;
         auto&& taskPending = thisPtr->taskPending;

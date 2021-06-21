@@ -43,7 +43,7 @@ public:
 
 
 
-void workerRoutine(WorkerArg *arg, FinalResult *res) {
+void workerRoutine(WorkerArg* arg, FinalResult* res) {
     int resValue = 0;
     int resNumDiv = 0;
 
@@ -68,8 +68,8 @@ void workerRoutine(WorkerArg *arg, FinalResult *res) {
 void prepare(
     int rangeStart, int rangeEnd,
     int numThreads,
-    vector<std::thread> &lstTh,
-    vector<WorkerArg> &lstWorkerArg
+    vector<std::thread>& lstTh,
+    vector<WorkerArg>& lstWorkerArg
 ) {
     lstTh.resize(numThreads);
     lstWorkerArg.resize(numThreads);

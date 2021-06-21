@@ -15,7 +15,7 @@ using namespace code_machina;
 
 
 
-void producer(BlockingQueue<int> *qProduct) {
+void producer(BlockingQueue<int>* qProduct) {
     int i = 1;
 
     for (;; ++i) {
@@ -26,7 +26,7 @@ void producer(BlockingQueue<int> *qProduct) {
 
 
 
-void consumer(BlockingQueue<int> *qProduct) {
+void consumer(BlockingQueue<int>* qProduct) {
     int data;
     BlockingCollectionStatus status;
 

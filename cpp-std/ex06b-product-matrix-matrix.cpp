@@ -15,7 +15,7 @@ using matrix = std::vector<vectord>;
 
 
 
-void workerScalarProduct(double const *u, double const *v, int sizeVector, double *res) {
+void workerScalarProduct(double const* u, double const* v, int sizeVector, double* res) {
     double sum = 0;
 
     for (int i = sizeVector - 1; i >= 0; --i) {
@@ -27,7 +27,7 @@ void workerScalarProduct(double const *u, double const *v, int sizeVector, doubl
 
 
 
-void getTransposeMatrix(const matrix &input, matrix &output) {
+void getTransposeMatrix(const matrix& input, matrix& output) {
     int numRow = input.size();
     int numCol = input[0].size();
 
@@ -41,7 +41,7 @@ void getTransposeMatrix(const matrix &input, matrix &output) {
 
 
 
-void displayMatrix(const matrix &mat) {
+void displayMatrix(const matrix& mat) {
     int numRow = mat.size();
     int numCol = mat[0].size();
 
@@ -55,7 +55,7 @@ void displayMatrix(const matrix &mat) {
 
 
 
-void getProduct(const matrix &matA, const matrix &matB, matrix &result) {
+void getProduct(const matrix& matA, const matrix& matB, matrix& result) {
     // Assume that the size of A and B are both correct
     int sizeRowA = matA.size();
     int sizeColA = matA[0].size();

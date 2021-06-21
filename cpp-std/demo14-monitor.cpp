@@ -9,11 +9,11 @@ using namespace std;
 class Monitor {
 private:
     std::mutex mut;
-    int *pCounter = nullptr;
+    int* pCounter = nullptr;
 
 
 public:
-    void init(int *pCounter) {
+    void init(int* pCounter) {
         this->pCounter = pCounter;
     }
 
@@ -29,7 +29,7 @@ public:
 
 
 
-void routineCounter(Monitor *monitor) {
+void routineCounter(Monitor* monitor) {
     std::this_thread::sleep_for(std::chrono::seconds(1));
 
     for (int i = 0; i < 1000; ++i)

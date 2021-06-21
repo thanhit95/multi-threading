@@ -9,7 +9,7 @@ using namespace std;
 
 
 
-void worker(int arg, int *res) {
+void worker(int arg, int* res) {
     (*res) = arg * 2;
 }
 

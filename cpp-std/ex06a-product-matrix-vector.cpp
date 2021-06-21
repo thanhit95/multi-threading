@@ -15,7 +15,7 @@ using matrix = std::vector<vectord>;
 
 
 
-void workerScalarProduct(double const *u, double const *v, int sizeVector, double *res) {
+void workerScalarProduct(double const* u, double const* v, int sizeVector, double* res) {
     double sum = 0;
 
     for (int i = sizeVector - 1; i >= 0; --i) {
@@ -27,7 +27,7 @@ void workerScalarProduct(double const *u, double const *v, int sizeVector, doubl
 
 
 
-void getProduct(const matrix &mat, const vectord &vec, vectord &result) {
+void getProduct(const matrix& mat, const vectord& vec, vectord& result) {
     // Assume that the size of A and b are both correct
     int sizeRowMat = mat.size();
     int sizeColMat = mat[0].size();

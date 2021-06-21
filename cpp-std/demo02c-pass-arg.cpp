@@ -17,7 +17,7 @@ By wrapping reference arguments with the class template std::reference_wrapper
 
 
 
-void routine(string &msg) {
+void routine(string& msg) {
     cout << msg << endl;
 }
 

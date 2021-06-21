@@ -29,7 +29,7 @@ struct WorkerResult {
 
 
 
-void workerRoutine(WorkerArg *arg, WorkerResult *res) {
+void workerRoutine(WorkerArg* arg, WorkerResult* res) {
     int resValue = 0;
     int resNumDiv = 0;
 
@@ -54,9 +54,9 @@ void workerRoutine(WorkerArg *arg, WorkerResult *res) {
 void prepare(
     int rangeStart, int rangeEnd,
     int numThreads,
-    vector<std::thread> &lstTh,
-    vector<WorkerArg> &lstWorkerArg,
-    vector<WorkerResult> &lstWorkerRes
+    vector<std::thread>& lstTh,
+    vector<WorkerArg>& lstWorkerArg,
+    vector<WorkerResult>& lstWorkerRes
 ) {
     lstTh.resize(numThreads);
     lstWorkerArg.resize(numThreads);

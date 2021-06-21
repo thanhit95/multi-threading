@@ -5,7 +5,7 @@ using namespace std;
 
 
 
-void routine(const string &msg) {
+void routine(const string& msg) {
     cout << msg << endl;
 }
 
