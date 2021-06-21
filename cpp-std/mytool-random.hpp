@@ -42,10 +42,10 @@ public:
     }
 
 
-    RandInt(const RandInt &other) = default;
-    RandInt(RandInt &&other) = default;
-    RandInt& operator=(const RandInt &other) = default;
-    RandInt& operator=(RandInt &&other) = default;
+    RandInt(const RandInt& other) = default;
+    RandInt(RandInt&& other) = default;
+    RandInt& operator=(const RandInt& other) = default;
+    RandInt& operator=(RandInt&& other) = default;
 
 
 
