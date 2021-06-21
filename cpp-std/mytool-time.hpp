@@ -31,8 +31,8 @@ public:
     static inline
     duType
     getTimeSpan(
-        const clockns::time_point &tp1,
-        const clockns::time_point &tp2)
+        const clockns::time_point& tp1,
+        const clockns::time_point& tp2)
     {
         auto res = chro::duration_cast<duType>(tp2 - tp1);
         return res;
@@ -42,7 +42,7 @@ public:
     template< typename duType=chro::duration<double> >
     static inline
     duType
-    getTimeSpan(const clockns::time_point &tpBefore)
+    getTimeSpan(const clockns::time_point& tpBefore)
     {
         auto tpCurrent = HiResClock::now();
         auto res = HiResClock::getTimeSpan<duType>(tpBefore, tpCurrent);
