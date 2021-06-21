@@ -52,7 +52,7 @@ public:
 
 
 
-char* getTimePointStr(sysclock::time_point tp) {
+char* getTimePointStr(const sysclock::time_point& tp) {
     std::time_t timeStamp = sysclock::to_time_t(tp);
     return std::ctime(&timeStamp);
 }
@@ -80,7 +80,7 @@ class clock::time_point getTimePoint(
 // tp -= (x % numSeconds)
 template<class clock = sysclock>
 chro::time_point<clock>
-getTimePointFutureFloor(chro::time_point<clock> tp, int numSeconds) {
+getTimePointFutureFloor(const chro::time_point<clock>& tp, int numSeconds) {
     // auto tpFuture = tp + chro::seconds(2 * numSeconds);
     // auto durationFuture = tpFuture.time_since_epoch();
 
@@ -103,7 +103,6 @@ getTimePointFutureFloor(chro::time_point<clock> tp, int numSeconds) {
 
 
 } // namespace mytool
-
 
 
 
