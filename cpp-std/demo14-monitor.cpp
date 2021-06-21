@@ -49,12 +49,12 @@ int main() {
     monitor.init(&counter);
 
 
-    for (auto &&th : lstTh) {
+    for (auto&& th : lstTh) {
         th = std::thread(routineCounter, &monitor);
     }
 
 
-    for (auto &&th : lstTh) {
+    for (auto&& th : lstTh) {
         th.join();
     }
 

@@ -44,12 +44,12 @@ int main() {
 
 
     for (int i = 0; i < NUM_THREADS; ++i) {
-        auto &&argItem = arg[i];
+        auto&& argItem = arg[i];
         lstTh[i] = std::thread(processRequest, std::get<0>(argItem), std::get<1>(argItem));
     }
 
 
-    for (auto &&th : lstTh) {
+    for (auto&& th : lstTh) {
         th.join();
     }
 

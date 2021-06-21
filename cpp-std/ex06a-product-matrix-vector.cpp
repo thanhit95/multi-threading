@@ -40,12 +40,12 @@ void getProduct(const matrix &mat, const vectord &vec, vectord &result) {
     vector<std::thread> lstTh(sizeRowMat);
 
     for (int i = 0; i < sizeRowMat; ++i) {
-        auto &&u = mat[i].data();
-        auto &&v = vec.data();
+        auto&& u = mat[i].data();
+        auto&& v = vec.data();
         lstTh[i] = std::thread(workerScalarProduct, u, v, sizeVec, &result[i]);
     }
 
-    for (auto &&th : lstTh) {
+    for (auto&& th : lstTh) {
         th.join();
     }
 }

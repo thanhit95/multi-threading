@@ -42,7 +42,7 @@ int main() {
 
 
     // JOIN THREADS
-    for (auto &&th : lstTh) {
+    for (auto&& th : lstTh) {
         th.join();
     }
 

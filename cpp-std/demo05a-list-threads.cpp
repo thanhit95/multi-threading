@@ -26,7 +26,7 @@ int main() {
     }
 
 
-    for (auto &&th : lstTh) {
+    for (auto&& th : lstTh) {
         th.join();
     }
 

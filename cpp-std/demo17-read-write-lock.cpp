@@ -56,23 +56,23 @@ int main() {
 
 
     // CREATE THREADS
-    for (auto &&th : lstThRead) {
+    for (auto&& th : lstThRead) {
         int argIndex = randInt.get() % NUM_ARGS;
         th = std::thread(routineRead, arg[argIndex]);
     }
 
-    for (auto &&th : lstThWrite) {
+    for (auto&& th : lstThWrite) {
         int argIndex = randInt.get() % NUM_ARGS;
         th = std::thread(routineWrite, arg[argIndex]);
     }
 
 
     // JOIN THREADS
-    for (auto &&th : lstThRead) {
+    for (auto&& th : lstThRead) {
         th.join();
     }
 
-    for (auto &&th : lstThWrite) {
+    for (auto&& th : lstThWrite) {
         th.join();
     }
 

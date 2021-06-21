@@ -91,7 +91,7 @@ int main() {
 
 
     // CREATE THREADS
-    for (auto &&th: lstThReader) {
+    for (auto&& th: lstThReader) {
         th = std::thread(
             funcReader,
             &resource, &semResource, &readerCount, &mutReaderCount,
@@ -100,7 +100,7 @@ int main() {
         );
     }
 
-    for (auto &&th: lstThWriter) {
+    for (auto&& th: lstThWriter) {
         th = std::thread(
             funcWriter,
             &resource, &semResource,
@@ -111,11 +111,11 @@ int main() {
 
 
     // JOIN THREADS
-    for (auto &&th: lstThReader) {
+    for (auto&& th: lstThReader) {
         th.join();
     }
 
-    for (auto &&th: lstThWriter) {
+    for (auto&& th: lstThWriter) {
         th.join();
     }
 

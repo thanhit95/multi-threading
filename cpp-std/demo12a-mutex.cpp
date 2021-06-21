@@ -32,12 +32,12 @@ int main() {
     counter = 0;
 
 
-    for (auto &&th : lstTh) {
+    for (auto&& th : lstTh) {
         th = std::thread(routineCounter);
     }
 
 
-    for (auto &&th : lstTh) {
+    for (auto&& th : lstTh) {
         th.join();
     }
 

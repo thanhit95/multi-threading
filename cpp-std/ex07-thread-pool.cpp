@@ -97,7 +97,7 @@ public:
 
         condTaskPending.notify_all();
 
-        for (auto &&th : lstTh) {
+        for (auto&& th : lstTh) {
             th.join();
         }
 
@@ -108,11 +108,11 @@ public:
 
 private:
     static void threadRoutine(ThreadPool *thisPtr, int indexThread) {
-        auto &&mutTaskPending = thisPtr->mutTaskPending;
-        auto &&condTaskPending = thisPtr->condTaskPending;
-        auto &&taskPending = thisPtr->taskPending;
-        auto &&counterTaskRunning = thisPtr->counterTaskRunning;
-        auto &&forceThreadShutdown = thisPtr->forceThreadShutdown;
+        auto&& mutTaskPending = thisPtr->mutTaskPending;
+        auto&& condTaskPending = thisPtr->condTaskPending;
+        auto&& taskPending = thisPtr->taskPending;
+        auto&& counterTaskRunning = thisPtr->counterTaskRunning;
+        auto&& forceThreadShutdown = thisPtr->forceThreadShutdown;
 
         for (;;) {
             // WAITING FOR A PENDING TASK

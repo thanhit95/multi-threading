@@ -79,17 +79,17 @@ int main() {
         lstThProducer[i] = std::thread(producer, &semFill, &semEmpty, &qProduct, i * 1000);
     }
 
-    for (auto &&th : lstThConsumer) {
+    for (auto&& th : lstThConsumer) {
         th = std::thread(consumer, &semFill, &semEmpty, &qProduct);
     }
 
 
     // JOIN THREADS
-    for (auto &&th : lstThProducer) {
+    for (auto&& th : lstThProducer) {
         th.join();
     }
 
-    for (auto &&th : lstThConsumer) {
+    for (auto&& th : lstThConsumer) {
         th.join();
     }
 

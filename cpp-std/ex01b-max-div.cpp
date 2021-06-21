@@ -98,7 +98,7 @@ int main() {
         lstTh[i] = std::thread(workerRoutine, &lstWorkerArg[i], &lstWorkerRes[i]);
     }
 
-    for (auto &&th : lstTh) {
+    for (auto&& th : lstTh) {
         th.join();
     }
 

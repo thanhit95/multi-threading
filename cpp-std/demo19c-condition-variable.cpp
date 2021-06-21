@@ -35,7 +35,7 @@ int main() {
     std::thread lstThFoo[NUM_TH_FOO];
 
 
-    for (auto &&th : lstThFoo) {
+    for (auto&& th : lstThFoo) {
         th = std::thread(foo);
     }
 
@@ -44,7 +44,7 @@ int main() {
 
     thBar.join();
 
-    for (auto &&th : lstThFoo) {
+    for (auto&& th : lstThFoo) {
         th.join();
     }
 

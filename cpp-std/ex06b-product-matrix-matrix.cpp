@@ -73,16 +73,16 @@ void getProduct(const matrix &matA, const matrix &matB, matrix &result) {
 
     for (int i = 0; i < sizeRowA; ++i) {
         for (int j = 0; j < sizeColB; ++j) {
-            auto &&u = matA[i].data();
-            auto &&v = matBT[j].data();
-            auto &&sizeVector = sizeColA;
+            auto&& u = matA[i].data();
+            auto&& v = matBT[j].data();
+            auto&& sizeVector = sizeColA;
 
             lstTh[iSca] = std::thread(workerScalarProduct, u, v, sizeVector, &result[i][j]);
             ++iSca;
         }
     }
 
-    for (auto &&th : lstTh) {
+    for (auto&& th : lstTh) {
         th.join();
     }
 }
