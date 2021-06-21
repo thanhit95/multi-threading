@@ -1,9 +1,5 @@
 /*
 SEMAPHORE
-
-In an exam, each candidate is given a couple of 2 scratch papers.
-Write a program to illustrate this scene.
-The program will combine 2 scratch papers into one test package, concurrenly.
 */
 
 

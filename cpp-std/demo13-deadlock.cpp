@@ -1,26 +1,5 @@
 /*
-DEADLOCK DEMONSTRATION
-
-There are 2 workers "foo" and "bar".
-They try to access resource A and B (following by mutResourceA and mutResourceB).
-
-foo():
-    synchronized:
-        access resource A
-
-        synchronized:
-            access resource B
-
-
-bar():
-    synchronized:
-        access resource B
-
-        synchronized:
-            access resource A
-
-
-After first time accessing resource, foo and bar will wait other together ==> Deadlock occurs.
+DEADLOCK
 */
 
 

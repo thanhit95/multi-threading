@@ -1,27 +1,3 @@
-/*
-SEMAPHORE
-
-In an exam, each candidate is given a couple of 2 scratch papers.
-Write a program to illustrate this scene.
-The program will combine 2 scratch papers into one test package, concurrenly.
-
-The problem in version 01 is:
-    When "makeOnePaper" produces too fast, there are a lot of pending papers...
-
-This version 02 solves the problem:
-    Use a semaphore to restrict "makeOnePaper". Only make papers when a package is finished.
-*/
-
-
-/*
-SEMAPHORE
-
-In an exam, each candidate is given a couple of 2 scratch papers.
-Write a program to illustrate this scene.
-The program will combine 2 scratch papers into one test package, concurrenly.
-*/
-
-
 #include <iostream>
 #include <thread>
 #include <semaphore>
