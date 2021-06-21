@@ -132,14 +132,14 @@ private:
             taskPending.pop();
 
 
+            ++counterTaskRunning;
+
+
             lkTaskPending.unlock();
 
 
             // DO THE TASK
-            ++counterTaskRunning;
-
             task->run();
-
             --counterTaskRunning;
         }
     }
@@ -180,7 +180,7 @@ int main() {
         lstTasks[i].id = 'A' + i;
 
 
-    for (auto &&task : lstTasks)
+    for (auto&& task : lstTasks)
         threadPool.submit(&task);
 
     std::cout << "All tasks submitted" << std::endl;
