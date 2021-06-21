@@ -32,7 +32,12 @@ using namespace std;
 
 
 
-void foo(std::mutex &mutResourceA, std::mutex &mutResourceB) {
+std::mutex mutResourceA;
+std::mutex mutResourceB;
+
+
+
+void foo() {
     mutResourceA.lock();
     cout << "foo enters resource A" << endl;
 
@@ -47,7 +52,7 @@ void foo(std::mutex &mutResourceA, std::mutex &mutResourceB) {
 
 
 
-void bar(std::mutex &mutResourceA, std::mutex &mutResourceB) {
+void bar() {
     mutResourceB.lock();
     cout << "bar enters resource B" << endl;
 
@@ -63,10 +68,8 @@ void bar(std::mutex &mutResourceA, std::mutex &mutResourceB) {
 
 
 int main() {
-    std::mutex mutResourceA, mutResourceB;
-
-    auto thFoo = std::thread(foo, std::ref(mutResourceA), std::ref(mutResourceB));
-    auto thBar = std::thread(bar, std::ref(mutResourceA), std::ref(mutResourceB));
+    auto thFoo = std::thread(foo);
+    auto thBar = std::thread(bar);
 
     thFoo.join();
     thBar.join();
