@@ -1,9 +1,5 @@
 /*
 SEMAPHORE
-
-In an exam, each candidate is given a couple of 2 scratch papers.
-Write a program to illustrate this scene.
-The program will combine 2 scratch papers into one test package, concurrenly.
 */
 
 
@@ -11,20 +7,20 @@ The program will combine 2 scratch papers into one test package, concurrenly.
 #include <pthread.h>
 #include <semaphore.h>
 #include <unistd.h>
-
 using namespace std;
 
 
 
-sem_t semPaper;
+sem_t semPackage;
 
 
 
-void* makeOnePaper(void *) {
-    for (int i = 0; i < 5; ++i) {
-        cout << "make 1 paper" << endl;
-        sem_post(&semPaper);
+void* makeOnePaper(void*) {
+    for (int i = 0; i < 4; ++i) {
+        cout << "Make 1 paper" << endl;
         sleep(1);
+
+        sem_post(&semPackage);
     }
 
     pthread_exit(nullptr);
@@ -33,11 +29,11 @@ void* makeOnePaper(void *) {
 
 
 
-void* combineOnePackage(void *) {
-    for (int i = 0; i < 5; ++i) {
-        sem_wait(&semPaper);
-        sem_wait(&semPaper);
-        cout << "combine 2 papers into 1 package" << endl;
+void* combineOnePackage(void*) {
+    for (int i = 0; i < 4; ++i) {
+        sem_wait(&semPackage);
+        sem_wait(&semPackage);
+        cout << "Combine 2 papers into 1 package" << endl;
     }
 
     pthread_exit(nullptr);
@@ -50,7 +46,7 @@ int main() {
     pthread_t tidMakePaperA, tidMakePaperB, tidCombinePackage;
     int ret = 0;
 
-    ret = sem_init(&semPaper, 0, 0);
+    ret = sem_init(&semPackage, 0, 0);
 
     ret = pthread_create(&tidMakePaperA, nullptr, makeOnePaper, nullptr);
     ret = pthread_create(&tidMakePaperB, nullptr, makeOnePaper, nullptr);
@@ -60,6 +56,6 @@ int main() {
     ret = pthread_join(tidMakePaperB, nullptr);
     ret = pthread_join(tidCombinePackage, nullptr);
 
-    ret = sem_destroy(&semPaper);
+    ret = sem_destroy(&semPackage);
     return 0;
 }

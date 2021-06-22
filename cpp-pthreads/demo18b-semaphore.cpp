@@ -1,17 +1,5 @@
 /*
 SEMAPHORE
-
-A car is manufactured at each stop on a conveyor belt in a car factory.
-A car is constructed from thefollowing parts: chassis, tires.
-Thus there are 2 tasks in manufacturing a car.
-
-However, 4 tires cannot be added until the chassis is placed on the belt.
-
-There are:
-- 2 production lines (i.e. 2 threads) of making tires.
-- 1 production line (i.e. 1 thread) of making chassis.
-
-Write a program to illustrate this scene.
 */
 
 
@@ -19,7 +7,6 @@ Write a program to illustrate this scene.
 #include <pthread.h>
 #include <semaphore.h>
 #include <unistd.h>
-
 using namespace std;
 
 
@@ -29,16 +16,16 @@ sem_t semChassis;
 
 
 
-void* makeTire(void *) {
+void* makeTire(void*) {
     int ret = 0;
 
     for (int i = 0; i < 8; ++i) {
-        sem_wait(&semChassis);
+        sem_wait(&semTire);
 
-        cout << "make 1 tire" << endl;
+        cout << "Make 1 tire" << endl;
         sleep(1);
 
-        sem_post(&semTire);
+        sem_post(&semChassis);
     }
 
     pthread_exit(nullptr);
@@ -47,20 +34,20 @@ void* makeTire(void *) {
 
 
 
-void* makeChasis(void *) {
+void* makeChasis(void*) {
     for (int i = 0; i < 4; ++i) {
-        sem_wait(&semTire);
-        sem_wait(&semTire);
-        sem_wait(&semTire);
-        sem_wait(&semTire);
+        sem_wait(&semChassis);
+        sem_wait(&semChassis);
+        sem_wait(&semChassis);
+        sem_wait(&semChassis);
 
-        cout << "make 1 chasis" << endl;
+        cout << "Make 1 chasis" << endl;
         sleep(3);
 
-        sem_post(&semChassis);
-        sem_post(&semChassis);
-        sem_post(&semChassis);
-        sem_post(&semChassis);
+        sem_post(&semTire);
+        sem_post(&semTire);
+        sem_post(&semTire);
+        sem_post(&semTire);
     }
 
     pthread_exit(nullptr);
@@ -73,8 +60,8 @@ int main() {
     pthread_t tidTireA, tidTireB, tidChassis;
     int ret = 0;
 
-    ret = sem_init(&semTire, 0, 0);
-    ret = sem_init(&semChassis, 0, 4);
+    ret = sem_init(&semTire, 0, 4);
+    ret = sem_init(&semChassis, 0, 0);
 
     ret = pthread_create(&tidTireA, nullptr, makeTire, nullptr);
     ret = pthread_create(&tidTireB, nullptr, makeTire, nullptr);

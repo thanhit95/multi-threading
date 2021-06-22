@@ -1,15 +1,5 @@
 /*
 SEMAPHORE
-
-In an exam, each candidate is given a couple of 2 scratch papers.
-Write a program to illustrate this scene.
-The program will combine 2 scratch papers into one test package, concurrenly.
-
-The problem in version 01 is:
-    When "makeOnePaper" produces too fast, there are a lot of pending papers...
-
-This version 02 solves the problem:
-    Use a semaphore to restrict "makeOnePaper". Only make papers when a package is finished.
 */
 
 
@@ -17,22 +7,22 @@ This version 02 solves the problem:
 #include <pthread.h>
 #include <semaphore.h>
 #include <unistd.h>
-
 using namespace std;
 
 
 
-sem_t semPaper;
 sem_t semPackage;
+sem_t semPaper;
 
 
 
-void* makeOnePaper(void *) {
-    for (int i = 0; i < 5; ++i) {
-        sem_wait(&semPackage);
+void* makeOnePaper(void*) {
+    for (int i = 0; i < 4; ++i) {
+        sem_wait(&semPaper);
 
-        cout << "make 1 paper" << endl;
-        sem_post(&semPaper);
+        cout << "Make 1 paper" << endl;
+
+        sem_post(&semPackage);
     }
 
     pthread_exit(nullptr);
@@ -41,16 +31,16 @@ void* makeOnePaper(void *) {
 
 
 
-void* combineOnePackage(void *) {
-    for (int i = 0; i < 5; ++i) {
-        sem_wait(&semPaper);
-        sem_wait(&semPaper);
+void* combineOnePackage(void*) {
+    for (int i = 0; i < 4; ++i) {
+        sem_wait(&semPackage);
+        sem_wait(&semPackage);
 
-        cout << "combine 2 papers into 1 package" << endl;
+        cout << "Combine 2 papers into 1 package" << endl;
         sleep(2);
 
-        sem_post(&semPackage);
-        sem_post(&semPackage);
+        sem_post(&semPaper);
+        sem_post(&semPaper);
     }
 
     pthread_exit(nullptr);
@@ -63,8 +53,8 @@ int main() {
     pthread_t tidMakePaperA, tidMakePaperB, tidCombinePackage;
     int ret = 0;
 
-    ret = sem_init(&semPaper, 0, 0);
-    ret = sem_init(&semPackage, 0, 2);
+    ret = sem_init(&semPackage, 0, 0);
+    ret = sem_init(&semPaper, 0, 2);
 
     ret = pthread_create(&tidMakePaperA, nullptr, makeOnePaper, nullptr);
     ret = pthread_create(&tidMakePaperB, nullptr, makeOnePaper, nullptr);
@@ -74,8 +64,8 @@ int main() {
     ret = pthread_join(tidMakePaperB, nullptr);
     ret = pthread_join(tidCombinePackage, nullptr);
 
-    ret = sem_destroy(&semPaper);
     ret = sem_destroy(&semPackage);
+    ret = sem_destroy(&semPaper);
 
     return 0;
 }
