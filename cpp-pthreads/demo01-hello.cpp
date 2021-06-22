@@ -1,15 +1,13 @@
 #include <iostream>
 #include <pthread.h>
-
 using namespace std;
 
 
 
-void* hello_POSIX_thread(void *arg) {
-    char *message = (char*)arg;
-    cout << message << endl;
+void* helloThread(void* arg) {
+    cout << "Hello" << endl;
 
-    // pthread_exit(nullptr);
+    pthread_exit(nullptr);
     return (void*)0;
 }
 
@@ -17,18 +15,14 @@ void* hello_POSIX_thread(void *arg) {
 
 int main() {
     pthread_t tid1, tid2;
+    int ret = 0;
 
-    char const* message1 = "thread 1";
-    char const* message2 = "thread 2";
-
-    int ret;
-
-    ret = pthread_create(&tid1, nullptr, hello_POSIX_thread, (void*)message1);
-    ret = pthread_create(&tid2, nullptr, hello_POSIX_thread, (void*)message2);
+    ret = pthread_create(&tid1, nullptr, helloThread, nullptr);
+    ret = pthread_create(&tid2, nullptr, helloThread, nullptr);
 
     /*
     if (ret) {
-        cerr << "error: unable to create thread" << ret << endl;
+        cerr << "Error: Unable to create thread" << ret << endl;
     }
     */
 

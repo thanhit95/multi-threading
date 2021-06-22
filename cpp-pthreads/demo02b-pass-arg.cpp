@@ -1,14 +1,13 @@
 #include <iostream>
 #include <pthread.h>
-
 using namespace std;
 
 
 
-void* printHello(void *p2id) {
-    int id = *(int*)p2id;
+void* printHello(void* ptrId) {
+    int id = *(int*)ptrId;
 
-    cout << "hello pthread with id = " << id << endl;
+    cout << "Hello pthread with id = " << id << endl;
 
     pthread_exit(nullptr);
     return (void*)0;
@@ -17,23 +16,20 @@ void* printHello(void *p2id) {
 
 
 int main() {
-    constexpr int NUM_THREADS = 5;
-    pthread_t tid[NUM_THREADS];
-    int argThread[NUM_THREADS];
+    pthread_t tid[2];
+    int arg[2];
+
+    int ret = 0;
 
 
-    for (int i = 0; i < NUM_THREADS; ++i) {
-        cout << "creating thread " << i << endl;
-
-        argThread[i] = i;
-
-        pthread_create(&tid[i], nullptr, printHello, (void*)&argThread[i]);
+    for (int i = 0; i < 2; ++i) {
+        arg[i] = i + 1;
+        ret = pthread_create(&tid[i], nullptr, printHello, (void*)&arg[i]);
     }
 
 
-    // wait for all child threads until they finish
-    for (int i = 0; i < NUM_THREADS; ++i)
-        pthread_join(tid[i], nullptr);
+    for (int i = 0; i < 2; ++i)
+        ret = pthread_join(tid[i], nullptr);
 
 
     return 0;
