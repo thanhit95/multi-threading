@@ -6,11 +6,11 @@ using namespace std;
 
 
 void* routine(void *arg) {
-    cout << "routine is starting..." << endl;
+    cout << "Routine is starting..." << endl;
 
     sleep(2);
 
-    cout << "routine is exiting..." << endl;
+    cout << "Routine is exiting..." << endl;
 
     pthread_exit(nullptr);
     return (void*)0;
@@ -27,14 +27,14 @@ int main() {
     ret = pthread_detach(tid);
 
     if (ret) {
-        cout << "error: cannot detach routine" << endl;
+        cout << "Error: Cannot detach routine" << endl;
     }
 
 
     // ret = pthread_join(tid, nullptr);
 
     // if (ret) {
-    //     cout << "error: cannot join routine" << endl;
+    //     cout << "Error: Cannot join routine" << endl;
     // }
 
 
@@ -42,6 +42,6 @@ int main() {
     sleep(3);
 
 
-    cout << "program is terminating" << endl;
+    cout << "Program is terminating" << endl;
     return 0;
 }

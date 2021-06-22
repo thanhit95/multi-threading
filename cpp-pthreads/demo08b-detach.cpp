@@ -1,7 +1,6 @@
 #include <iostream>
 #include <pthread.h>
 #include <unistd.h>
-
 using namespace std;
 
 
@@ -9,15 +8,15 @@ using namespace std;
 void* routine(void *arg) {
     int ret = 0;
 
-    cout << "routine is starting..." << endl;
+    cout << "Routine is starting..." << endl;
 
     if ( ret = pthread_detach(pthread_self()) ) {
-        cout << "error: cannot detach routine" << endl;
+        cout << "Error: Cannot detach routine" << endl;
     }
 
     sleep(2);
 
-    cout << "routine is exiting..." << endl;
+    cout << "Routine is exiting..." << endl;
 
     pthread_exit(nullptr);
     return (void*)0;
@@ -33,6 +32,6 @@ int main() {
 
     sleep(3);
 
-    cout << "program is terminating" << endl;
+    cout << "Program is terminating" << endl;
     return 0;
 }
