@@ -1,8 +1,5 @@
 /*
 DATA RACE
-
-Data race specifically refers to the non-synchronized conflicting "memory accesses"
-(or actions, or operations) to the same memory location.
 */
 
 
@@ -25,7 +22,7 @@ int main() {
 
 
     ofstream ofs;
-    ofs.open("random-file.txt");
+    ofs.open("tmp-output.txt");
 
     if (ofs.fail()) {
         return 1;

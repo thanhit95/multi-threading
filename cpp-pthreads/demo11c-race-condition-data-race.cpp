@@ -1,12 +1,5 @@
 /*
 RACE CONDITION AND DATA RACE
-
-Ususally, race condition happens together with data race.
-For an example: Two or more threads can access shared data and they try to change it at the same time.
-
-Concurrent accesses to shared resources can lead to unexpected or erroneous behavior,
-so parts of the program where the shared resource is accessed need to be protected in ways that
-avoid the concurrent access. This protected section is the critical section or critical region.
 */
 
 
@@ -21,7 +14,7 @@ int counter = 0;
 
 
 
-void* routineA(void *) {
+void* routineA(void*) {
     sleep(1);
 
     while (counter < 10)
@@ -35,7 +28,7 @@ void* routineA(void *) {
 
 
 
-void* routineB(void *) {
+void* routineB(void*) {
     sleep(1);
 
     while (counter > -10)

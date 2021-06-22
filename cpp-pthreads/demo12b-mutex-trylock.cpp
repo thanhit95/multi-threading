@@ -1,6 +1,5 @@
 /*
 Lock with a nonblocking mutex
-
 Use pthread_mutex_trylock to attempt to lock the mutex pointed to by mutex.
 */
 
@@ -8,17 +7,16 @@ Use pthread_mutex_trylock to attempt to lock the mutex pointed to by mutex.
 #include <iostream>
 #include <pthread.h>
 #include <unistd.h>
-
 using namespace std;
 
 
 
 pthread_mutex_t mut = PTHREAD_MUTEX_INITIALIZER;
-int count = 0;
+int counter = 0;
 
 
 
-void* routineCounter(void *) {
+void* routineCounter(void*) {
     int ret = 0;
     sleep(1);
 
@@ -57,8 +55,8 @@ void* routineCounter(void *) {
         return (void*)0;
     }
 
-    for (int i = 0; i < 100; ++i)
-        ++count;
+    for (int i = 0; i < 1000; ++i)
+        ++counter;
 
     pthread_mutex_unlock(&mut);
 
@@ -70,26 +68,27 @@ void* routineCounter(void *) {
 
 int main() {
     constexpr int NUM_THREADS = 3;
-    pthread_t tid[NUM_THREADS];
+
+    pthread_t lstTid[NUM_THREADS];
     int ret = 0;
 
 
-    count = 0;
+    counter = 0;
 
 
-    for (auto &tidItem : tid) {
-        ret = pthread_create(&tidItem, nullptr, routineCounter, nullptr);
+    for (auto&& tid : lstTid) {
+        ret = pthread_create(&tid, nullptr, routineCounter, nullptr);
     }
 
 
-    for (auto &tidItem : tid) {
-        ret = pthread_join(tidItem, nullptr);
+    for (auto&& tid : lstTid) {
+        ret = pthread_join(tid, nullptr);
     }
 
 
     ret = pthread_mutex_destroy(&mut);
 
 
-    cout << "count = " << count << endl;
+    cout << "counter = " << counter << endl;
     return 0;
 }
