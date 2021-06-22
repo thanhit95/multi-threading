@@ -4,6 +4,7 @@
 
 
 #include <random>
+#include <limits>
 
 
 
@@ -12,7 +13,7 @@ namespace mytool
 
 
 
-class RandIntGenerator {
+class RandInt {
 private:
     std::random_device rd;
     std::mt19937 mt;
@@ -20,12 +21,12 @@ private:
 
 
 public:
-    RandIntGenerator() {
+    RandInt() {
         init(0, 1);
     }
 
 
-    RandIntGenerator(int minValue, int maxValue) {
+    RandInt(int minValue, int maxValue) {
         init(minValue, maxValue);
     }
 
@@ -39,7 +40,28 @@ public:
     int get() {
         return dist(mt);
     }
-}; // RandIntGenerator
+
+
+    RandInt(const RandInt& other) = default;
+    RandInt(RandInt&& other) = default;
+    RandInt& operator=(const RandInt& other) = default;
+    RandInt& operator=(RandInt&& other) = default;
+
+
+
+// STATIC
+private:
+    static RandInt publicRandInt;
+
+public:
+    static int staticGet() {
+        return publicRandInt.get();
+    }
+}; // RandInt
+
+
+
+RandInt RandInt::publicRandInt(1, std::numeric_limits<int>::max());
 
 
 
