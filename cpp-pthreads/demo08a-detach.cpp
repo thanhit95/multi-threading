@@ -1,14 +1,6 @@
-/*
-When a thread is created, one of its attributes defines whether it is joinable or detached.
-Only threads that are created as joinable can be joined.
-If a thread is created as detached, it can never be joined.
-*/
-
-
 #include <iostream>
 #include <pthread.h>
 #include <unistd.h>
-
 using namespace std;
 
 
