@@ -16,13 +16,13 @@ std::atomic_bool flagStop;
 
 
 void routine() {
-    cout << "Running..." << endl;
-
     while (1) {
         if (flagStop.load())
             break;
 
-        std::this_thread::sleep_for(std::chrono::microseconds(500));
+        cout << "Running..." << endl;
+
+        std::this_thread::sleep_for(std::chrono::seconds(1));
     }
 
     cout << "Done" << endl;
