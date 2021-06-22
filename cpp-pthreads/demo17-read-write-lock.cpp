@@ -1,13 +1,6 @@
 /*
 READ/WRITE LOCK
 
-In many situations, data is read more often than it is modified or written.
-In these cases, you can allow threads to read concurrently while holding the lock
-and allow only one thread to hold the lock when data is modified.
-A multiple-reader single-writer lock (or read/write lock) does this.
-A read/write lock is acquired either for reading or writing, and then is released.
-The thread that acquires the read-write lock must be the one that releases it.
-
 Lock for reading
     A thread can hold multiple concurrent read locks on the rwlock object
     (that is, successfully call the pthread_rwlock_rdlock subroutine n times).
@@ -34,31 +27,23 @@ Lock for writing
 #include <pthread.h>
 #include <unistd.h>
 #include "mytool-random.hpp"
-
 using namespace std;
 
 
 
+int resource = 0;
 pthread_rwlock_t rwlock = PTHREAD_RWLOCK_INITIALIZER;
-mytool::RandIntGenerator intGen;
 
 
 
-struct RoutineArg {
-    int *resource = nullptr;
-    int waitTime = 0;
-};
+void* routineRead(void* arg) {
+    auto timeWait = *(int*)arg;
 
-
-
-void* routineRead(void *argVoid) {
-    auto arg = (RoutineArg*)argVoid;
-    sleep(arg->waitTime);
+    sleep(timeWait);
 
     pthread_rwlock_rdlock(&rwlock);
 
-    int value = *(arg->resource);
-    cout << "routineRead: " << value << endl;
+    cout << "routineRead: " << resource << endl;
 
     pthread_rwlock_unlock(&rwlock);
 
@@ -68,15 +53,15 @@ void* routineRead(void *argVoid) {
 
 
 
-void* routineWrite(void *argVoid) {
-    auto arg = (RoutineArg*)argVoid;
-    sleep(arg->waitTime);
+void* routineWrite(void* arg) {
+    auto timeWait = *(int*)arg;
+
+    sleep(timeWait);
 
     pthread_rwlock_wrlock(&rwlock);
 
-    int value = intGen.get();
-    *(arg->resource) = value;
-    cout << "routineWrite: " << value << endl;
+    resource = mytool::RandInt::staticGet() % 100;
+    cout << "routineWrite: " << resource << endl;
 
     pthread_rwlock_unlock(&rwlock);
 
@@ -91,44 +76,40 @@ int main() {
     constexpr int NUM_THREADS_WRITE = 2;
     constexpr int NUM_ARGS = 3;
 
-    pthread_t tidRead[NUM_THREADS_READ];
-    pthread_t tidWrite[NUM_THREADS_WRITE];
+    pthread_t lstTidRead[NUM_THREADS_READ];
+    pthread_t lstTidWrite[NUM_THREADS_WRITE];
 
-    int resource = 0;
-    RoutineArg arg[NUM_ARGS];
+    int arg[NUM_ARGS];
+    mytool::RandInt randInt(1, 1000);
 
     int ret = 0;
 
 
     // INITIALIZE
-    // pthread_rwlock_init(&rwlock, nullptr);
-    intGen.init(1, 100);
-
-    for (auto &argItem : arg) {
-        argItem.resource = &resource;
-        argItem.waitTime = 1 + (intGen.get() % 4);
+    for (int i = 0; i < NUM_ARGS; ++i) {
+        arg[i] = i;
     }
 
 
     // CREATE THREADS
-    for (int i = 0; i < NUM_THREADS_READ; ++i) {
-        int argIndex = intGen.get() % NUM_ARGS;
-        ret = pthread_create(&tidRead[i], nullptr, routineRead, (void*)&arg[argIndex]);
+    for (auto&& tid : lstTidRead) {
+        int argIndex = randInt.get() % NUM_ARGS;
+        ret = pthread_create(&tid, nullptr, routineRead, &arg[argIndex]);
     }
 
-    for (int i = 0; i < NUM_THREADS_WRITE; ++i) {
-        int argIndex = intGen.get() % NUM_ARGS;
-        ret = pthread_create(&tidWrite[i], nullptr, routineWrite, (void*)&arg[argIndex]);
+    for (auto&& tid : lstTidWrite) {
+        int argIndex = randInt.get() % NUM_ARGS;
+        ret = pthread_create(&tid, nullptr, routineWrite, &arg[argIndex]);
     }
 
 
     // JOIN THREADS
-    for (int i = 0; i < NUM_THREADS_WRITE; ++i) {
-        ret = pthread_join(tidWrite[i], nullptr);
+    for (auto&& tid : lstTidRead) {
+        ret = pthread_join(tid, nullptr);
     }
 
-    for (int i = 0; i < NUM_THREADS_READ; ++i) {
-        ret = pthread_join(tidRead[i], nullptr);
+    for (auto&& tid : lstTidWrite) {
+        ret = pthread_join(tid, nullptr);
     }
 
 
