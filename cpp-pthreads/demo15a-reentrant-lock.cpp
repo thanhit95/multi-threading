@@ -1,5 +1,5 @@
 /*
-REENTRANT LOCK
+REENTRANT LOCK (RECURSIVE MUTEX)
 
 The function "getFactorial" will cause deadlock.
 */
@@ -7,7 +7,6 @@ The function "getFactorial" will cause deadlock.
 
 #include <iostream>
 #include <pthread.h>
-
 using namespace std;
 
 
@@ -31,7 +30,7 @@ int getFactorial(int n) {
 
 
 
-void* routine(void *arg) {
+void* routine(void* arg) {
     int n = *(int*)arg;
 
     int factorial = getFactorial(n);
