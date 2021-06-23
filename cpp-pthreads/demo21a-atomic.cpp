@@ -17,7 +17,7 @@ void* routine(void* arg) {
     sleep(1);
     counter += 1;
 
-    pthread_exit(nullptr);
+    pthread_exit(NULL);
     return (void*)0;
 }
 
@@ -27,11 +27,11 @@ int main() {
     pthread_t tidA, tidB;
     int ret = 0;
 
-    ret = pthread_create(&tidA, nullptr, routine, nullptr);
-    ret = pthread_create(&tidB, nullptr, routine, nullptr);
+    ret = pthread_create(&tidA, NULL, routine, NULL);
+    ret = pthread_create(&tidB, NULL, routine, NULL);
 
-    ret = pthread_join(tidA, nullptr);
-    ret = pthread_join(tidB, nullptr);
+    ret = pthread_join(tidA, NULL);
+    ret = pthread_join(tidB, NULL);
 
     printf("counter = %d \n", counter); // unpredictable result
     return 0;
