@@ -6,6 +6,51 @@ This file contains descriptions/notes of demo and exercise in the repo.
 
 &nbsp;
 
+## TABLE OF CONTENTS
+
+I am sorry that generated table of contents contains too many upper case stuff...
+
+- [NOTES OF DEMOS AND EXERCISES](#notes-of-demos-and-exercises)
+  - [DESCRIPTION](#description)
+  - [TABLE OF CONTENTS](#table-of-contents)
+  - [DEMOSTRATIONS](#demostrations)
+    - [DEMO 01 - HELLO](#demo-01---hello)
+    - [DEMO 02 - PASSING ARGUMENTS](#demo-02---passing-arguments)
+    - [DEMO 03 - SLEEP](#demo-03---sleep)
+    - [DEMO 08 - DETACH](#demo-08---detach)
+    - [DEMO 11A - RACE CONDITION](#demo-11a---race-condition)
+    - [DEMO 11B - DATA RACE](#demo-11b---data-race)
+    - [DEMO 11C - RACE CONDITION AND DATA RACE](#demo-11c---race-condition-and-data-race)
+    - [DEMO 12 - MUTEX](#demo-12---mutex)
+    - [DEMO 13 - DEADLOCK](#demo-13---deadlock)
+    - [DEMO 15 - REENTRANT LOCK (RECURSIVE MUTEX)](#demo-15---reentrant-lock-recursive-mutex)
+    - [DEMO 16 - BARRIER](#demo-16---barrier)
+    - [DEMO 17 - READ-WRITE LOCK](#demo-17---read-write-lock)
+    - [DEMO 18A - SEMAPHORE](#demo-18a---semaphore)
+      - [Version A01](#version-a01)
+      - [Version A02](#version-a02)
+      - [Version A03](#version-a03)
+    - [DEMO 18B - SEMAPHORE](#demo-18b---semaphore)
+  - [EXERCISES](#exercises)
+    - [EX01 - MAX DIV](#ex01---max-div)
+      - [Version A](#version-a)
+      - [Version B](#version-b)
+      - [Version C](#version-c)
+    - [EX02 - THE PRODUCER-CONSUMER PROBLEM](#ex02---the-producer-consumer-problem)
+    - [EX03 - THE READERS-WRITERS PROBLEM](#ex03---the-readers-writers-problem)
+      - [Problem statement](#problem-statement)
+      - [Problem variations](#problem-variations)
+        - [Second readers-writers problem](#second-readers-writers-problem)
+        - [Third readers-writers problem](#third-readers-writers-problem)
+    - [EX04 - THE DINING PHILOSOPHERS PROBLEM](#ex04---the-dining-philosophers-problem)
+      - [Problem statement](#problem-statement-1)
+      - [Solution](#solution)
+    - [EX06 - MATRIX PRODUCTION](#ex06---matrix-production)
+      - [Version A: Matrix-vector multiplication](#version-a-matrix-vector-multiplication)
+      - [Version B: Matrix-matrix production (dot product)](#version-b-matrix-matrix-production-dot-product)
+
+&nbsp;
+
 ---
 
 &nbsp;
