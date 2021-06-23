@@ -28,7 +28,7 @@ This repo is licensed under the [3-Clause BSD License](LICENSE.txt).
 
 ## ARTICLES AND LEARNING NOTES
 
-Read here: [articles-notes.md](articles-notes.md).
+Read here: [notes-articles.md](notes-articles.md).
 
 In the main README, I present an article: "Why Multithreading".
 
