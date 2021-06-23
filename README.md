@@ -30,7 +30,7 @@ This repo is licensed under the [3-Clause BSD License](LICENSE.txt).
 
 I **strongly recommend** learning the source code (demos and exercises) along with viewing notes/descriptions: [notes-demos-exercises.md](notes-demos-exercises.md).
 
-Also, you might have a look at "articles and learning notes" [notes-articles.md](notes-articles.md).
+Also, you might have a look at "articles and learning notes": [notes-articles.md](notes-articles.md).
 
 &nbsp;
 
