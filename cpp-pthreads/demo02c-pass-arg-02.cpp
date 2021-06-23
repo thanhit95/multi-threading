@@ -1,0 +1,44 @@
+/*
+Demo passing multiple arguments in pthread.
+Solution 02. Using std::tuple.
+*/
+
+
+#include <iostream>
+#include <string>
+#include <tuple>
+#include <pthread.h>
+using namespace std;
+
+
+
+void* routine(void* argVoid) {
+    auto arg = * (tuple<int,double,string> *)argVoid;
+
+    cout << std::get<0>(arg) << endl;
+    cout << std::get<1>(arg) << endl;
+    cout << std::get<2>(arg) << endl;
+
+    pthread_exit(nullptr);
+    return (void*)0;
+}
+
+
+
+int main() {
+    pthread_t tid;
+    tuple<int,double,string> arg;
+
+    int ret = 0;
+
+
+    // arg = std::make_tuple( 10, -2.4, "barrrrr" );
+    arg = { 10, -2.4, "barrrrr" };
+
+
+    ret = pthread_create(&tid, nullptr, routine, &arg);
+    ret = pthread_join(tid, nullptr);
+
+
+    return 0;
+}
