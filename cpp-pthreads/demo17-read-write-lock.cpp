@@ -31,7 +31,7 @@ using namespace std;
 
 
 
-int resource = 0;
+volatile int resource = 0;
 pthread_rwlock_t rwlock = PTHREAD_RWLOCK_INITIALIZER;
 
 

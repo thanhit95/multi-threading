@@ -7,7 +7,7 @@ using namespace std;
 
 
 
-int resource = 0;
+volatile int resource = 0;
 auto rwlock = std::shared_mutex();
 
 
