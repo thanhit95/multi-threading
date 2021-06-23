@@ -1,7 +1,11 @@
-#include <iostream>
+/*
+In this demo, I use raw C language (not C++).
+*/
+
+
+#include <stdio.h>
 #include <pthread.h>
 #include <unistd.h>
-using namespace std;
 
 
 
@@ -9,7 +13,7 @@ volatile int counter = 0;
 
 
 
-void* routine(void*) {
+void* routine(void* arg) {
     sleep(1);
     counter += 1;
 
@@ -29,6 +33,6 @@ int main() {
     ret = pthread_join(tidA, nullptr);
     ret = pthread_join(tidB, nullptr);
 
-    cout << "counter = " << counter << endl; // unpredictable result
+    printf("counter = %d \n", counter); // unpredictable result
     return 0;
 }
