@@ -8,6 +8,7 @@
 - <https://docs.oracle.com/cd/E19455-01/806-5257/>
 - <https://en.wikipedia.org/wiki/Race_condition>
 - <https://thispointer.com/category/multithreading/>
+- <https://docs.python.org/3/library/threading.html>
 
 &nbsp;
 
