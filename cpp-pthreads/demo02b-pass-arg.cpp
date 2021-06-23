@@ -24,7 +24,7 @@ int main() {
 
     for (int i = 0; i < 2; ++i) {
         arg[i] = i + 1;
-        ret = pthread_create(&tid[i], nullptr, printHello, (void*)&arg[i]);
+        ret = pthread_create(&tid[i], nullptr, printHello, &arg[i]);
     }
 
 

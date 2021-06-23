@@ -52,7 +52,7 @@ int main() {
     pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_RECURSIVE);
     pthread_mutex_init(&mut, &attr);
 
-    ret = pthread_create(&tid, nullptr, routine, (void*)&n);
+    ret = pthread_create(&tid, nullptr, routine, &n);
     ret = pthread_join(tid, nullptr);
 
     pthread_mutexattr_destroy(&attr);

@@ -62,9 +62,9 @@ int main() {
 
     int ret = 0;
 
-    ret = pthread_create(&tidProduder[0], nullptr, producer, (void*)&qProduct);
-    ret = pthread_create(&tidProduder[1], nullptr, producer, (void*)&qProduct);
-    ret = pthread_create(&tidConsumer, nullptr, consumer, (void*)&qProduct);
+    ret = pthread_create(&tidProduder[0], nullptr, producer, &qProduct);
+    ret = pthread_create(&tidProduder[1], nullptr, producer, &qProduct);
+    ret = pthread_create(&tidConsumer, nullptr, consumer, &qProduct);
 
     ret = pthread_join(tidProduder[0], nullptr);
     ret = pthread_join(tidProduder[1], nullptr);

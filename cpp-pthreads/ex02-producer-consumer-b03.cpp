@@ -123,9 +123,9 @@ int main() {
     argProd1.dataAddFactor = 1000;
 
 
-    ret = pthread_create(&tidProduder[0], nullptr, producer, (void*)&argProd0);
-    ret = pthread_create(&tidProduder[1], nullptr, producer, (void*)&argProd1);
-    ret = pthread_create(&tidConsumer, nullptr, consumer, (void*)&argCon);
+    ret = pthread_create(&tidProduder[0], nullptr, producer, &argProd0);
+    ret = pthread_create(&tidProduder[1], nullptr, producer, &argProd1);
+    ret = pthread_create(&tidConsumer, nullptr, consumer, &argCon);
 
     ret = pthread_join(tidProduder[0], nullptr);
     ret = pthread_join(tidProduder[1], nullptr);

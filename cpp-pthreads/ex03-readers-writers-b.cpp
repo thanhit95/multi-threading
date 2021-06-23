@@ -191,11 +191,11 @@ int main() {
 
     // CREATE THREADS
     for (int i = 0; i < NUM_READERS; ++i) {
-        ret = pthread_create(&tidReader[i], nullptr, readerFunc, (void*)&argReader[i]);
+        ret = pthread_create(&tidReader[i], nullptr, readerFunc, &argReader[i]);
     }
 
     for (int i = 0; i < NUM_WRITERS; ++i) {
-        ret = pthread_create(&tidWriter[i], nullptr, writerFunc, (void*)&argWriter[i]);
+        ret = pthread_create(&tidWriter[i], nullptr, writerFunc, &argWriter[i]);
     }
 
 

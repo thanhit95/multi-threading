@@ -114,8 +114,8 @@ int main() {
     globalArg.pqProduct = &qProduct;
     globalArg.psem = &sem;
 
-    ret = pthread_create(&tidProduder, nullptr, producer, (void*)&globalArg);
-    ret = pthread_create(&tidConsumer, nullptr, consumer, (void*)&globalArg);
+    ret = pthread_create(&tidProduder, nullptr, producer, &globalArg);
+    ret = pthread_create(&tidConsumer, nullptr, consumer, &globalArg);
 
     ret = pthread_join(tidProduder, nullptr);
     ret = pthread_join(tidConsumer, nullptr);

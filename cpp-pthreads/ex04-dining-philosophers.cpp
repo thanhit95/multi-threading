@@ -103,7 +103,7 @@ int main() {
 
     // CREATE THREADS
     for (int i = 0; i < NUM_PHILOSOPHERS; ++i) {
-        ret = pthread_create(&tid[i], nullptr, funcPhilosopher, (void*)&funcArg[i]);
+        ret = pthread_create(&tid[i], nullptr, funcPhilosopher, &funcArg[i]);
     }
 
 

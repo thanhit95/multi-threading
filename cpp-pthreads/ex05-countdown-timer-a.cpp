@@ -34,7 +34,7 @@ int main() {
     cout << "START!!!" << endl << endl;
 
 
-    ret = pthread_create(&tid, nullptr, timerFunc, (void*)&SECONDS);
+    ret = pthread_create(&tid, nullptr, timerFunc, &SECONDS);
 
 
     cin.getline(buffer, 1024);

@@ -35,7 +35,7 @@ int main() {
 
     for (int i = 0; i < NUM_THREADS; ++i) {
         argThread[i] = i;
-        int ret = pthread_create(&tid[i], &attr, routine, (void*)&argThread[i]);
+        int ret = pthread_create(&tid[i], &attr, routine, &argThread[i]);
     }
 
 

@@ -89,7 +89,7 @@ void getProduct(const matrix &mat, const vectord &vec, vectord &result) {
     }
 
     for (int i = 0; i < sizeRowMat; ++i) {
-        ret = pthread_create(&pid[i], nullptr, workerDoingScalarProduct, (void*)&args[i]);
+        ret = pthread_create(&pid[i], nullptr, workerDoingScalarProduct, &args[i]);
     }
 
     for (int i = 0; i < sizeRowMat; ++i) {

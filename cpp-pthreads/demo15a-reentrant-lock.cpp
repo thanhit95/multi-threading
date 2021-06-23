@@ -49,7 +49,7 @@ int main() {
     pthread_t tid;
     int ret = 0;
 
-    ret = pthread_create(&tid, nullptr, routine, (void*)&n);
+    ret = pthread_create(&tid, nullptr, routine, &n);
     ret = pthread_join(tid, nullptr);
 
     pthread_mutex_destroy(&mut);

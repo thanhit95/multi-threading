@@ -121,7 +121,7 @@ void getProduct(const matrix &matA, const matrix &matB, matrix &result) {
     iSca = 0;
     for (int i = 0; i < sizeRowA; ++i) {
         for (int j = 0; j < sizeColB; ++j) {
-            ret = pthread_create(&pid[iSca], nullptr, workerDoingScalarProduct, (void*)&args[iSca]);
+            ret = pthread_create(&pid[iSca], nullptr, workerDoingScalarProduct, &args[iSca]);
             ++iSca;
         }
     }

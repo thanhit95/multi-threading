@@ -28,7 +28,7 @@ int main() {
 
 
     for (int i = 0; i < 2; ++i)
-        ret = pthread_create(&tid[i], nullptr, printHello, (void*)&i);
+        ret = pthread_create(&tid[i], nullptr, printHello, &i);
 
 
     for (int i = 0; i < 2; ++i)

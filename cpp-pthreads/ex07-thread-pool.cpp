@@ -75,7 +75,7 @@ public:
         }
 
         for (int i = 0; i < numThreads; ++i) {
-            pthread_create(&lstTids[i], nullptr, threadRoutine, (void*)&lstArgs[i]);
+            pthread_create(&lstTids[i], nullptr, threadRoutine, &lstArgs[i]);
         }
     }
 

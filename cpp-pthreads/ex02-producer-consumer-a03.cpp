@@ -75,9 +75,9 @@ int main() {
     conArg0.idCon = 0;
     conArg1.idCon = 1;
 
-    ret = pthread_create(&tidProduder, nullptr, producer, (void*)&qProduct);
-    ret = pthread_create(&tidConsumer[0], nullptr, consumer, (void*)&conArg0);
-    ret = pthread_create(&tidConsumer[1], nullptr, consumer, (void*)&conArg1);
+    ret = pthread_create(&tidProduder, nullptr, producer, &qProduct);
+    ret = pthread_create(&tidConsumer[0], nullptr, consumer, &conArg0);
+    ret = pthread_create(&tidConsumer[1], nullptr, consumer, &conArg1);
 
     ret = pthread_join(tidProduder, nullptr);
     ret = pthread_join(tidConsumer[0], nullptr);
