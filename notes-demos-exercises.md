@@ -4,7 +4,11 @@
 
 This file contains descriptions/notes of demo and exercise in the repo.
 
+&nbsp;
+
 ---
+
+&nbsp;
 
 ## DEMOSTRATIONS
 
@@ -167,6 +171,225 @@ There are:
 
 Write a program to illustrate this scenario.
 
+&nbsp;
+
 ---
 
+&nbsp;
+
 ## EXERCISES
+
+### EX01 - MAX DIV
+
+Problem statement: Find the integer in the range 1 to 100000 that has the largest number of divisors.
+
+&nbsp;
+
+#### Version A
+
+The solution without multithreading.
+
+&nbsp;
+
+#### Version B
+
+This source code file contains the solution using multithreading.
+
+There are 2 phases:
+
+- Phase 1:
+  - Each worker finds result on a specific range.
+  - This phase uses multiple threads.
+
+- Phase 2:
+  - Based on multiple results from workers, main function get the final result with maximum numDiv.
+  - This phase uses a single thread (i.e. main function).
+
+&nbsp;
+
+#### Version C
+
+The difference between version C and version B is:
+
+- Each worker finds result on a specific range, and then update final result itself.
+- So, main function does nothing.
+
+&nbsp;
+
+### EX02 - THE PRODUCER-CONSUMER PROBLEM
+
+The producer–consumer problem (also known as the bounded-buffer problem) is a classic example of a multi-process synchronization problem. The first version of which was proposed by Edsger W. Dijkstra in 1965.
+
+In the producer-consumer problem, there is one producer that is producing something and there is one consumer that is consuming the products produced by the producer. The producers and consumers share the same memory buffer that is of fixed-size.
+
+The job of the producer is to generate the data, put it into the buffer, and again start generating data. While the job of the consumer is to consume the data from the buffer.
+
+In the later formulation of the problem, Dijkstra proposed multiple producers and consumers sharing a finite collection of buffers.
+
+**What are the problems here?**
+
+- The producer and consumer should not access the buffer at the same time.
+
+- The producer should produce data only when the buffer is not full.
+  - If the buffer is full, then the producer shouldn't be allowed to put any data into the buffer.
+
+- The consumer should consume data only when the buffer is not empty.
+  - If the buffer is empty, then the consumer shouldn't be allowed to take any data from the buffer.
+
+&nbsp;
+
+### EX03 - THE READERS-WRITERS PROBLEM
+
+#### Problem statement
+
+Consider a situation where we have a file shared between many people.
+
+If one of the people tries editing the file, no other person should be reading or writing at the same time, otherwise changes will not be visible to him/her. However if some person is reading the file, then others may read it at the same time.
+
+Precisely in Computer Science we call this situation as the readers-writers problem.
+
+**What are the problems here?**
+
+- One set of data is shared among a number of processes.
+- Once a writer is ready, it performs its write. Only one writer may write at a time.
+- If a process is writing, no other process can read it.
+- If at least one reader is reading, no other process can write.
+
+&nbsp;
+
+#### Problem variations
+
+##### Second readers-writers problem
+
+The first solution is suboptimal, because it is possible that a reader R1 might have the lock, a writer W be waiting for the lock, and then a reader R2 requests access.
+
+It would be unfair for R2 to jump in immediately, ahead of W; if that happened often enough, W would STARVE. Instead, W should start as soon as possible.
+
+This is the motivation for the second readers–writers problem, in which the constraint is added that no writer, once added to the queue, shall be kept waiting longer than absolutely necessary. This is also called writers-preference.
+
+##### Third readers-writers problem
+
+In fact, the solutions implied by both problem statements can result in starvation - the first one may starve writers in the queue, and the second one may starve readers.
+
+Therefore, the third readers–writers problem is sometimes proposed, which adds the constraint that no thread shall be allowed to starve; that is, the operation of obtaining a lock on the shared data will always terminate in a bounded amount of time.
+
+Solution:
+
+- The idea is using a semaphore "serviceQueue" to preserve ordering of requests (signaling must be FIFO).
+
+&nbsp;
+
+### EX04 - THE DINING PHILOSOPHERS PROBLEM
+
+#### Problem statement
+
+The dining philosophers problem states that there are 5 philosophers sharing a circular table and they eat and think alternatively. There is a bowl of rice for each of the philosophers and 5 chopsticks.
+
+A philosopher needs both their right and left chopstick to eat.
+
+A hungry philosopher may only eat if there are both chopsticks available.
+
+Otherwise a philosopher puts down their chopstick and begin thinking again.
+
+&nbsp;
+
+#### Solution
+
+A solution of the dining philosophers problem is to use a semaphore to represent a chopstick.
+
+A chopstick can be picked up by executing a wait operation on the semaphore and released by executing a signal semaphore.
+
+The structure of a random philosopher ```i``` is given as follows:
+
+```pseudocode
+while true do
+    wait( chopstick[i] );
+    wait( chopstick[ (i+1) % 5] );
+
+    EATING THE RICE
+
+    signal( chopstick[i] );
+    signal( chopstick[ (i+1) % 5] );
+
+    THINKING
+```
+
+**What are the problems here?**
+
+- Deadlock.
+- Starvation.
+
+The above solution makes sure that no two neighboring philosophers can eat at the same time. But this solution can lead to a deadlock. This may happen if all the philosophers pick their left chopstick simultaneously. Then none of them can eat and deadlock occurs.
+
+Some of the ways to avoid deadlock are as follows:
+
+- An even philosopher should pick the right chopstick and then the left chopstick while an odd philosopher should pick the left chopstick and then the right chopstick.
+- A philosopher should only be allowed to pick their chopstick if both are available at the same time.
+
+&nbsp;
+
+### EX06 - MATRIX PRODUCTION
+
+#### Version A: Matrix-vector multiplication
+
+For an example:
+
+Matrix A:
+
+```text
+|   1   2   3   |
+|   4   5   6   |
+|   7   8   9   |
+```
+
+Vector b:
+
+```text
+|   3   |
+|   -1  |
+|   0   |
+```
+
+The multiplication of A and b is the vector:
+
+```text
+|   1   |
+|   7   |
+|   13  |
+```
+
+**Solution:**
+
+- Separate matrix A into list of rows.
+- For each row, calculate scalar product with vector b.
+- We can process each row individually. Therefore multithreading will get the job done.
+
+&nbsp;
+
+#### Version B: Matrix-matrix production (dot product)
+
+For an example:
+
+Matrix A:
+
+```text
+|   1   3   5   |
+|   2   4   6   |
+```
+
+Matrix B:
+
+```text
+|   1   0   1   0   |
+|   0   1   0   1   |
+|   1   0   0   -2  |
+```
+
+The result of dot(A, B) is the matrix:
+
+```text
+|   6   3   1   -7  |
+|   8   4   2   -8  |
+```
+
+&nbsp;
