@@ -26,11 +26,11 @@ This repo is licensed under the [3-Clause BSD License](LICENSE.txt).
 
 ---
 
-## ARTICLES AND LEARNING NOTES
+## THE NOTES AND ARTICLES
 
-Read here: [notes-articles.md](notes-articles.md).
+I **strongly recommend** learning the source code (demos and exercises) along with viewing notes/descriptions: [notes-demos-exercises.md](notes-demos-exercises.md).
 
-In the main README, I present an article: "Why Multithreading".
+Also, you might have a look at "articles and learning notes" [notes-articles.md](notes-articles.md).
 
 &nbsp;
 
@@ -72,6 +72,10 @@ Benefits of multithreading:
   - In addition, sharing large amounts of data through separate threads of execution within the same address space provides extremely high-bandwidth, low-latency communication between separate tasks within an application.
 
 In fact, multithreading is extremely important in the current software industry. It lets you do concurrency. It solves asynchronous problems.
+
+&nbsp;
+
+If you want to explore more articles, read here: [notes-articles.md](notes-articles.md).
 
 &nbsp;
 
