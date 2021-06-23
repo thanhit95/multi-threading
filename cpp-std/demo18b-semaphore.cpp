@@ -31,7 +31,7 @@ void makeChassis() {
         semChassis.acquire();
         semChassis.acquire();
 
-        cout << "Make 1 chasis" << endl;
+        cout << "Make 1 chassis" << endl;
         std::this_thread::sleep_for(std::chrono::seconds(3));
 
         semTire.release();

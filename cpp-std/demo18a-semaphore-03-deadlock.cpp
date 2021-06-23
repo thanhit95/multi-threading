@@ -32,7 +32,7 @@ void combineOnePackage() {
         std::this_thread::sleep_for(std::chrono::seconds(2));
 
         semPaper.release();
-        // missing one statement: semPaper.release() ==> DEADLOCK
+        // Missing one statement: semPaper.release() ==> DEADLOCK
     }
 }
 

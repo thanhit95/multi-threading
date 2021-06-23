@@ -34,14 +34,14 @@ void* makeTire(void*) {
 
 
 
-void* makeChasis(void*) {
+void* makeChassis(void*) {
     for (int i = 0; i < 4; ++i) {
         sem_wait(&semChassis);
         sem_wait(&semChassis);
         sem_wait(&semChassis);
         sem_wait(&semChassis);
 
-        cout << "Make 1 chasis" << endl;
+        cout << "Make 1 chassis" << endl;
         sleep(3);
 
         sem_post(&semTire);
@@ -65,7 +65,7 @@ int main() {
 
     ret = pthread_create(&tidTireA, nullptr, makeTire, nullptr);
     ret = pthread_create(&tidTireB, nullptr, makeTire, nullptr);
-    ret = pthread_create(&tidChassis, nullptr, makeChasis, nullptr);
+    ret = pthread_create(&tidChassis, nullptr, makeChassis, nullptr);
 
     ret = pthread_join(tidTireA, nullptr);
     ret = pthread_join(tidTireB, nullptr);
