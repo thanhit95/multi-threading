@@ -1,60 +1,17 @@
 /*
 THE DINING PHILOSOPHERS PROBLEM
-
-
-PROBLEM STATEMENT
-    The dining philosophers problem states that there are 5 philosophers sharing a circular table
-    and they eat and think alternatively.
-    There is a bowl of rice for each of the philosophers and 5 chopsticks.
-    A philosopher needs both their right and left chopstick to eat.
-    A hungry philosopher may only eat if there are both chopsticks available.
-    Otherwise a philosopher puts down their chopstick and begin thinking again.
-
-
-SOLUTION
-    A solution of the dining philosophers problem is to use a semaphore to represent a chopstick.
-    A chopstick can be picked up by executing a wait operation on the semaphore
-    and released by executing a signal semaphore.
-
-    The structure of a random philosopher i is given as follows:
-    while true do
-        wait( chopstick[i] );
-        wait( chopstick[ (i+1) % 5] );
-
-        EATING THE RICE
-
-        signal( chopstick[i] );
-        signal( chopstick[ (i+1) % 5] );
-
-        THINKING
-
-    What's the problem here?
-    - Deadlock.
-    - Starvation.
-
-    The above solution makes sure that no two neighboring philosophers can eat at the same time.
-    But this solution can lead to a deadlock.
-    This may happen if all the philosophers pick their left chopstick simultaneously.
-    Then none of them can eat and deadlock occurs.
-
-    Some of the ways to avoid deadlock are as follows:
-    - An even philosopher should pick the right chopstick and then the left chopstick
-    while an odd philosopher should pick the left chopstick and then the right chopstick.
-    - A philosopher should only be allowed to pick their chopstick if both are available at the same time.
-
 */
 
 
 #include <iostream>
 #include <pthread.h>
-#include <semaphore.h>
-
+#include <unistd.h>
 using namespace std;
 
 
 
 struct FuncArg {
-    sem_t *chopstick;
+    pthread_mutex_t* chopstick;
     int numPhilo;
     int idPhiLo;
 };
@@ -68,13 +25,15 @@ void* funcPhilosopher(void *argVoid) {
     int n = arg->numPhilo;
     int i = arg->idPhiLo;
 
-    sem_wait(&chopstick[i]);
-    sem_wait(&chopstick[(i + 1) % n]);
+    sleep(1);
 
-    cout << "philosopher #" << i << " is eating the rice" << endl;
+    pthread_mutex_lock(&chopstick[i]);
+    pthread_mutex_lock(&chopstick[(i + 1) % n]);
 
-    sem_post(&chopstick[i]);
-    sem_post(&chopstick[(i + 1) % n]);
+    cout << "Philosopher #" << i << " is eating the rice" << endl;
+
+    pthread_mutex_unlock(&chopstick[i]);
+    pthread_mutex_unlock(&chopstick[(i + 1) % n]);
 
     pthread_exit(nullptr);
     return nullptr;
@@ -86,24 +45,24 @@ int main() {
     constexpr int NUM_PHILOSOPHERS = 5;
 
     pthread_t tid[NUM_PHILOSOPHERS];
-    sem_t chopstick[NUM_PHILOSOPHERS];
-    FuncArg funcArg[NUM_PHILOSOPHERS];
+    pthread_mutex_t chopstick[NUM_PHILOSOPHERS];
+    FuncArg arg[NUM_PHILOSOPHERS];
 
     int ret = 0;
 
 
     // PREPARE ARGUMENTS
     for (int i = 0; i < NUM_PHILOSOPHERS; ++i) {
-        sem_init(&chopstick[i], 0, 1); // set semaphore = 1
-        funcArg[i].chopstick = chopstick;
-        funcArg[i].numPhilo = NUM_PHILOSOPHERS;
-        funcArg[i].idPhiLo = i;
+        chopstick[i] = PTHREAD_MUTEX_INITIALIZER;
+        arg[i].chopstick = chopstick;
+        arg[i].numPhilo = NUM_PHILOSOPHERS;
+        arg[i].idPhiLo = i;
     }
 
 
     // CREATE THREADS
     for (int i = 0; i < NUM_PHILOSOPHERS; ++i) {
-        ret = pthread_create(&tid[i], nullptr, funcPhilosopher, &funcArg[i]);
+        ret = pthread_create(&tid[i], nullptr, funcPhilosopher, &arg[i]);
     }
 
 
@@ -115,7 +74,7 @@ int main() {
 
     // CLEAN UP
     for (int i = 0; i < NUM_PHILOSOPHERS; ++i) {
-        ret = sem_destroy(&chopstick[i]);
+        ret = pthread_mutex_destroy(&chopstick[i]);
     }
 
     return 0;
