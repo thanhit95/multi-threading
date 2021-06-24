@@ -2,7 +2,7 @@
 THE PRODUCER-CONSUMER PROBLEM
 
 SOLUTION TYPE B - USING SEMAPHORE
-    version b01: 1 slow producer, 1 fast consumer
+    Version B01: 1 slow producer, 1 fast consumer
 */
 
 
@@ -16,59 +16,59 @@ using namespace std;
 
 
 struct GlobalSemaphore {
-    sem_t fillCount;    // item produced
-    sem_t emptyCount;   // remaining space in queue
+    sem_t semFill;      // item produced
+    sem_t semEmpty;     // remaining space in queue
 
-    void init(int fillCount, int emptyCount) {
-        sem_init(&this->fillCount, 0, fillCount);
-        sem_init(&this->emptyCount, 0, emptyCount);
+    void init(int semFillValue, int semEmptyValue) {
+        sem_init(&semFill, 0, semFillValue);
+        sem_init(&semEmpty, 0, semEmptyValue);
     }
 
     void destroy() {
-        sem_destroy(&fillCount);
-        sem_destroy(&emptyCount);
+        sem_destroy(&semFill);
+        sem_destroy(&semEmpty);
     }
 
-    void waitFillCount() {
-        sem_wait(&fillCount);
+    void waitFill() {
+        sem_wait(&semFill);
     }
 
-    void waitEmptyCount() {
-        sem_wait(&emptyCount);
+    void waitEmpty() {
+        sem_wait(&semEmpty);
     }
 
-    void postFillCount() {
-        sem_post(&fillCount);
+    void postFill() {
+        sem_post(&semFill);
     }
 
-    void postEmptyCount() {
-        sem_post(&emptyCount);
+    void postEmpty() {
+        sem_post(&semEmpty);
     }
 };
 
 
 
 struct GlobalArg {
-    queue<int> *pqProduct;
-    GlobalSemaphore *psem;
+    queue<int>* qProduct;
+    GlobalSemaphore* sem;
 };
 
 
 
-void* producer(void *argVoid) {
+void* producer(void* argVoid) {
     auto arg = (GlobalArg*)argVoid;
-    auto pqProduct = arg->pqProduct;
-    auto psem = arg->psem;
+    auto qProduct = arg->qProduct;
+    auto sem = arg->sem;
 
     int i = 1;
 
     for (;; ++i) {
-        psem->waitEmptyCount();
+        sem->waitEmpty();
 
-        pqProduct->push(i);
+        qProduct->push(i);
         sleep(1);
 
-        psem->postFillCount();
+        sem->postFill();
     }
 
     pthread_exit(nullptr);
@@ -77,22 +77,22 @@ void* producer(void *argVoid) {
 
 
 
-void* consumer(void *argVoid) {
+void* consumer(void* argVoid) {
     auto arg = (GlobalArg*)argVoid;
-    auto pqProduct = arg->pqProduct;
-    auto psem = arg->psem;
+    auto qProduct = arg->qProduct;
+    auto sem = arg->sem;
 
-    int data;
+    int data = 0;
 
     for (;;) {
-        psem->waitFillCount();
+        sem->waitFill();
 
-        data = pqProduct->front();
-        pqProduct->pop();
+        data = qProduct->front();
+        qProduct->pop();
 
-        cout << "consumer " << data << endl;
+        cout << "Consumer " << data << endl;
 
-        psem->postEmptyCount();
+        sem->postEmpty();
     }
 
     pthread_exit(nullptr);
@@ -102,24 +102,26 @@ void* consumer(void *argVoid) {
 
 
 int main() {
-    pthread_t tidProduder, tidConsumer;
-
-    queue<int> qProduct;
     GlobalSemaphore sem;
-    sem.init(0, 1);
+    queue<int> qProduct;
+    pthread_t tidProducer, tidConsumer;
 
     int ret = 0;
 
-    GlobalArg globalArg;
-    globalArg.pqProduct = &qProduct;
-    globalArg.psem = &sem;
 
-    ret = pthread_create(&tidProduder, nullptr, producer, &globalArg);
+    sem.init(0, 1);
+    GlobalArg globalArg = { &qProduct, &sem };
+
+
+    ret = pthread_create(&tidProducer, nullptr, producer, &globalArg);
     ret = pthread_create(&tidConsumer, nullptr, consumer, &globalArg);
 
-    ret = pthread_join(tidProduder, nullptr);
+    ret = pthread_join(tidProducer, nullptr);
     ret = pthread_join(tidConsumer, nullptr);
 
+
     sem.destroy();
+
+
     return 0;
 }

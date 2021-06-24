@@ -2,7 +2,7 @@
 THE PRODUCER-CONSUMER PROBLEM
 
 SOLUTION TYPE B - USING SEMAPHORE
-    version b02: 2 slow producers, 1 fast consumer
+    Version B02: 2 slow producers, 1 fast consumer
 */
 
 
@@ -16,60 +16,60 @@ using namespace std;
 
 
 struct GlobalSemaphore {
-    sem_t fillCount;    // item produced
-    sem_t emptyCount;   // remaining space in queue
+    sem_t semFill;      // item produced
+    sem_t semEmpty;     // remaining space in queue
 
-    void init(int fillCount, int emptyCount) {
-        sem_init(&this->fillCount, 0, fillCount);
-        sem_init(&this->emptyCount, 0, emptyCount);
+    void init(int semFillValue, int semEmptyValue) {
+        sem_init(&semFill, 0, semFillValue);
+        sem_init(&semEmpty, 0, semEmptyValue);
     }
 
     void destroy() {
-        sem_destroy(&fillCount);
-        sem_destroy(&emptyCount);
+        sem_destroy(&semFill);
+        sem_destroy(&semEmpty);
     }
 
-    void waitFillCount() {
-        sem_wait(&fillCount);
+    void waitFill() {
+        sem_wait(&semFill);
     }
 
-    void waitEmptyCount() {
-        sem_wait(&emptyCount);
+    void waitEmpty() {
+        sem_wait(&semEmpty);
     }
 
-    void postFillCount() {
-        sem_post(&fillCount);
+    void postFill() {
+        sem_post(&semFill);
     }
 
-    void postEmptyCount() {
-        sem_post(&emptyCount);
+    void postEmpty() {
+        sem_post(&semEmpty);
     }
 };
 
 
 
 struct GlobalArg {
-    queue<int> *pqProduct;
-    GlobalSemaphore *psem;
-    int dataAddFactor = 0;
+    queue<int>* qProduct;
+    GlobalSemaphore* sem;
+    int dataAddValue;
 };
 
 
 
-void* producer(void *argVoid) {
+void* producer(void* argVoid) {
     auto arg = (GlobalArg*)argVoid;
-    auto pqProduct = arg->pqProduct;
-    auto psem = arg->psem;
+    auto qProduct = arg->qProduct;
+    auto sem = arg->sem;
 
     int i = 1;
 
     for (;; ++i) {
-        psem->waitEmptyCount();
+        sem->waitEmpty();
 
-        pqProduct->push(i + arg->dataAddFactor);
+        qProduct->push(i + arg->dataAddValue);
         sleep(1);
 
-        psem->postFillCount();
+        sem->postFill();
     }
 
     pthread_exit(nullptr);
@@ -78,22 +78,22 @@ void* producer(void *argVoid) {
 
 
 
-void* consumer(void *argVoid) {
+void* consumer(void* argVoid) {
     auto arg = (GlobalArg*)argVoid;
-    auto pqProduct = arg->pqProduct;
-    auto psem = arg->psem;
+    auto qProduct = arg->qProduct;
+    auto sem = arg->sem;
 
-    int data;
+    int data = 0;
 
     for (;;) {
-        psem->waitFillCount();
+        sem->waitFill();
 
-        data = pqProduct->front();
-        pqProduct->pop();
+        data = qProduct->front();
+        qProduct->pop();
 
-        cout << "consumer " << data << endl;
+        cout << "Consumer " << data << endl;
 
-        psem->postEmptyCount();
+        sem->postEmpty();
     }
 
     pthread_exit(nullptr);
@@ -103,35 +103,32 @@ void* consumer(void *argVoid) {
 
 
 int main() {
-    pthread_t tidProduder[2];
-    pthread_t tidConsumer;
-
-    queue<int> qProduct;
     GlobalSemaphore sem;
-    sem.init(0, 1);
+    queue<int> qProduct;
+    pthread_t tidProducerA, tidProducerB, tidConsumer;
 
+    GlobalArg argCon, argProA, argProB;
     int ret = 0;
 
 
-    GlobalArg argCon;
-    argCon.pqProduct = &qProduct;
-    argCon.psem = &sem;
+    sem.init(0, 1);
 
-    GlobalArg argProd0, argProd1;
-    argProd0 = argProd1 = argCon;
-    argProd0.dataAddFactor = 0;
-    argProd1.dataAddFactor = 1000;
+    argCon = argProA = argProB = { &qProduct, &sem, 0 };
+    argProA.dataAddValue = 0;
+    argProA.dataAddValue = 1000;
 
 
-    ret = pthread_create(&tidProduder[0], nullptr, producer, &argProd0);
-    ret = pthread_create(&tidProduder[1], nullptr, producer, &argProd1);
+    ret = pthread_create(&tidProducerA, nullptr, producer, &argProA);
+    ret = pthread_create(&tidProducerB, nullptr, producer, &argProB);
     ret = pthread_create(&tidConsumer, nullptr, consumer, &argCon);
 
-    ret = pthread_join(tidProduder[0], nullptr);
-    ret = pthread_join(tidProduder[1], nullptr);
+    ret = pthread_join(tidProducerA, nullptr);
+    ret = pthread_join(tidProducerB, nullptr);
     ret = pthread_join(tidConsumer, nullptr);
 
 
     sem.destroy();
+
+
     return 0;
 }

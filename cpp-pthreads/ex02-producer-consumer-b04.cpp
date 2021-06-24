@@ -2,7 +2,7 @@
 THE PRODUCER-CONSUMER PROBLEM
 
 SOLUTION TYPE B - USING SEMAPHORE
-    version b04: multi fast producers, multi slow consumers
+    Version B04: multiple fast producers, multiple slow consumers
 */
 
 
@@ -16,59 +16,59 @@ using namespace std;
 
 
 struct GlobalSemaphore {
-    sem_t fillCount;    // item produced
-    sem_t emptyCount;   // remaining space in queue
+    sem_t semFill;      // item produced
+    sem_t semEmpty;     // remaining space in queue
 
-    void init(int fillCount, int emptyCount) {
-        sem_init(&this->fillCount, 0, fillCount);
-        sem_init(&this->emptyCount, 0, emptyCount);
+    void init(int semFillValue, int semEmptyValue) {
+        sem_init(&semFill, 0, semFillValue);
+        sem_init(&semEmpty, 0, semEmptyValue);
     }
 
     void destroy() {
-        sem_destroy(&fillCount);
-        sem_destroy(&emptyCount);
+        sem_destroy(&semFill);
+        sem_destroy(&semEmpty);
     }
 
-    void waitFillCount() {
-        sem_wait(&fillCount);
+    void waitFill() {
+        sem_wait(&semFill);
     }
 
-    void waitEmptyCount() {
-        sem_wait(&emptyCount);
+    void waitEmpty() {
+        sem_wait(&semEmpty);
     }
 
-    void postFillCount() {
-        sem_post(&fillCount);
+    void postFill() {
+        sem_post(&semFill);
     }
 
-    void postEmptyCount() {
-        sem_post(&emptyCount);
+    void postEmpty() {
+        sem_post(&semEmpty);
     }
 };
 
 
 
 struct GlobalArg {
-    queue<int> *pqProduct;
-    GlobalSemaphore *psem;
-    int dataAddFactor = 0;
+    queue<int>* qProduct;
+    GlobalSemaphore* sem;
+    int dataAddValue;
 };
 
 
 
-void* producer(void *argVoid) {
+void* producer(void* argVoid) {
     auto arg = (GlobalArg*)argVoid;
-    auto pqProduct = arg->pqProduct;
-    auto psem = arg->psem;
+    auto qProduct = arg->qProduct;
+    auto sem = arg->sem;
 
     int i = 1;
 
     for (;; ++i) {
-        psem->waitEmptyCount();
+        sem->waitEmpty();
 
-        pqProduct->push(i + arg->dataAddFactor);
+        qProduct->push(i + arg->dataAddValue);
 
-        psem->postFillCount();
+        sem->postFill();
     }
 
     pthread_exit(nullptr);
@@ -77,23 +77,23 @@ void* producer(void *argVoid) {
 
 
 
-void* consumer(void *argVoid) {
+void* consumer(void* argVoid) {
     auto arg = (GlobalArg*)argVoid;
-    auto pqProduct = arg->pqProduct;
-    auto psem = arg->psem;
+    auto qProduct = arg->qProduct;
+    auto sem = arg->sem;
 
-    int data;
+    int data = 0;
 
     for (;;) {
-        psem->waitFillCount();
+        sem->waitFill();
 
-        data = pqProduct->front();
-        pqProduct->pop();
+        data = qProduct->front();
+        qProduct->pop();
 
-        cout << "consumer " << data << endl;
+        cout << "Consumer " << data << endl;
         sleep(1);
 
-        psem->postEmptyCount();
+        sem->postEmpty();
     }
 
     pthread_exit(nullptr);
@@ -106,49 +106,54 @@ int main() {
     constexpr int NUM_PRODUCERS = 3;
     constexpr int NUM_CONSUMERS = 2;
 
-    pthread_t tidProduder[NUM_PRODUCERS];
-    pthread_t tidConsumer[NUM_CONSUMERS];
-
-    queue<int> qProduct;
     GlobalSemaphore sem;
-    sem.init(0, 6);
+    queue<int> qProduct;
+
+    pthread_t lstTidProducer[NUM_PRODUCERS];
+    pthread_t lstTidConsumer[NUM_CONSUMERS];
 
     int ret = 0;
 
 
+    sem.init(0, 6);
+
+
     // PREPARE ARGUMENTS
-    GlobalArg argProd[NUM_PRODUCERS];
+    GlobalArg argPro[NUM_PRODUCERS];
+    GlobalArg argCon;
+
     for (int i = 0; i < NUM_PRODUCERS; ++i) {
-        argProd[i].pqProduct = &qProduct;
-        argProd[i].psem = &sem;
-        argProd[i].dataAddFactor = i * 1000;
+        argPro[i].qProduct = &qProduct;
+        argPro[i].sem = &sem;
+        argPro[i].dataAddValue = i * 1000;
     }
 
-    GlobalArg argCon;
-    argCon.pqProduct = &qProduct;
-    argCon.psem = &sem;
+    argCon.qProduct = &qProduct;
+    argCon.sem = &sem;
 
 
     // CREATE THREADS
     for (int i = 0; i < NUM_PRODUCERS; ++i) {
-        ret = pthread_create(&tidProduder[i], nullptr, producer, &argProd[i]);
+        ret = pthread_create(&lstTidProducer[i], nullptr, producer, &argPro[i]);
     }
 
     for (int i = 0; i < NUM_CONSUMERS; ++i) {
-        ret = pthread_create(&tidConsumer[i], nullptr, consumer, &argCon);
+        ret = pthread_create(&lstTidConsumer[i], nullptr, consumer, &argCon);
     }
 
 
     // JOIN THREADS
     for (int i = 0; i < NUM_PRODUCERS; ++i) {
-        ret = pthread_join(tidProduder[i], nullptr);
+        ret = pthread_join(lstTidProducer[i], nullptr);
     }
 
     for (int i = 0; i < NUM_CONSUMERS; ++i) {
-        ret = pthread_join(tidConsumer[i], nullptr);
+        ret = pthread_join(lstTidConsumer[i], nullptr);
     }
 
 
     sem.destroy();
+
+
     return 0;
 }
