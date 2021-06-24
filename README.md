@@ -28,9 +28,31 @@ This repo is licensed under the [3-Clause BSD License](LICENSE.txt).
 
 ## THE NOTES AND ARTICLES
 
-I **strongly recommend** learning the source code (demos and exercises) along with viewing notes/descriptions: [notes-demos-exercises.md](notes-demos-exercises.md).
+The notes and articles are the additional resources for the source code, which guides you for better research, step by step. You may consider it the comment/description at the beginning of the source code.
 
-Also, you might have a look at "articles and learning notes": [notes-articles.md](notes-articles.md).
+```text
+      ORIGINAL SOURCE CODE FILE                          SOURCE CODE FILE                  NOTES_AND_ARTICLES
+--------------------------------------        --------------------------------------     -----------------------
+|                                    |        |                                    |     |                     |
+| /* THE COMMENTS... */              |        |                                    |     |    THE COMMENTS     |
+|                                    |        |                                    |     |                     |
+| #include <iostream>                |        | #include <iostream>                |     |                     |
+| using namespace std;               |        | using namespace std;               |     |                     |
+|                                    |  ===>  |                                    |  +  |                     |
+| int main() {                       |        | int main() {                       |     |                     |
+|   cout << "Hello thread" << endl;  |        |   cout << "Hello thread" << endl;  |     |                     |
+|   return 0;                        |        |   return 0;                        |     |                     |
+| }                                  |        | }                                  |     |                     |
+|                                    |        |                                    |     |                     |
+--------------------------------------        --------------------------------------     -----------------------
+```
+
+There are 2 notes:
+
+- [notes-demos-exercises.md](notes-demos-exercises.md): The notes that go aloing with original source code.
+- [notes-articles.md](notes-articles.md): Extra helpful notes during my research.
+
+For your best result, I **strongly recommend** that you read [notes-demos-exercises.md](notes-demos-exercises.md) while enjoying source code (demos and exercises).
 
 &nbsp;
 
