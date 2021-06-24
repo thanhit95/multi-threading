@@ -27,7 +27,7 @@ void producer(BlockingQueue<int>* qProduct) {
 
 
 void consumer(BlockingQueue<int>* qProduct) {
-    int data;
+    int data = 0;
     BlockingCollectionStatus status;
 
     for (;;) {
