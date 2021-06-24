@@ -1,12 +1,7 @@
-/*
-PROBLEM: Find the integer in the range 1 to 100000 that has the largest number of divisors.
-
-This source code file contains the solution without using multi threads.
-*/
-
 #include <iostream>
-#include "mytool-hires-clock.hpp"
+#include "mytool-time.hpp"
 using namespace std;
+
 
 
 int main() {
@@ -17,6 +12,7 @@ int main() {
     int resNumDiv = 0;  // number of divisors of result
 
     auto tpStart = mytool::HiResClock::now();
+
 
     for (int i = RANGE_START; i <= RANGE_STOP; ++i) {
         int numDiv = 0;
@@ -30,6 +26,7 @@ int main() {
             resValue = i;
         }
     }
+
 
     auto timeSpan = mytool::HiResClock::getTimeSpan(tpStart);
 
