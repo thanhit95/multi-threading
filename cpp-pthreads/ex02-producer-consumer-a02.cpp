@@ -2,7 +2,7 @@
 THE PRODUCER-CONSUMER PROBLEM
 
 SOLUTION TYPE A - USING BLOCKING QUEUE
-    version a02: 2 slow producers, 1 fast consumer
+    Version A02: 2 slow producers, 1 fast consumer
 */
 
 
@@ -10,19 +10,18 @@ SOLUTION TYPE A - USING BLOCKING QUEUE
 #include <pthread.h>
 #include <unistd.h>
 #include "extool-blocking-collection.hpp"
-
 using namespace std;
 using namespace code_machina;
 
 
 
-void* producer(void *arg) {
-    auto pqProduct = (BlockingQueue<int>*)arg;
+void* producer(void* arg) {
+    auto qProduct = (BlockingQueue<int>*)arg;
 
     int i = 1;
 
     for (;; ++i) {
-        pqProduct->add(i);
+        qProduct->add(i);
         sleep(1);
     }
 
@@ -32,20 +31,20 @@ void* producer(void *arg) {
 
 
 
-void* consumer(void *arg) {
-    auto pqProduct = (BlockingQueue<int>*)arg;
+void* consumer(void* arg) {
+    auto qProduct = (BlockingQueue<int>*)arg;
 
     int data;
     BlockingCollectionStatus status;
 
     for (;;) {
-        status = pqProduct->take(data);
+        status = qProduct->take(data);
 
-        if (status == BlockingCollectionStatus::Ok) {
-            cout << "consumer " << data << endl;
+        if (BlockingCollectionStatus::Ok == status) {
+            cout << "Consumer " << data << endl;
         }
         else {
-            cerr << "consumer error" << endl;
+            cerr << "Consumer error" << endl;
         }
     }
 
@@ -56,18 +55,18 @@ void* consumer(void *arg) {
 
 
 int main() {
-    pthread_t tidProduder[2];
+    pthread_t tidProducerA, tidProducerB;
     pthread_t tidConsumer;
     BlockingQueue<int> qProduct;
 
     int ret = 0;
 
-    ret = pthread_create(&tidProduder[0], nullptr, producer, &qProduct);
-    ret = pthread_create(&tidProduder[1], nullptr, producer, &qProduct);
+    ret = pthread_create(&tidProducerA, nullptr, producer, &qProduct);
+    ret = pthread_create(&tidProducerB, nullptr, producer, &qProduct);
     ret = pthread_create(&tidConsumer, nullptr, consumer, &qProduct);
 
-    ret = pthread_join(tidProduder[0], nullptr);
-    ret = pthread_join(tidProduder[1], nullptr);
+    ret = pthread_join(tidProducerA, nullptr);
+    ret = pthread_join(tidProducerB, nullptr);
     ret = pthread_join(tidConsumer, nullptr);
 
     return 0;

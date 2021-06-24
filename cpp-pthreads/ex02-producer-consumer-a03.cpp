@@ -2,34 +2,34 @@
 THE PRODUCER-CONSUMER PROBLEM
 
 SOLUTION TYPE A - USING BLOCKING QUEUE
-    version a03: 1 slow producers, 2 fast consumer
+    Version A03: 1 slow producers, 2 fast consumer
 */
 
 
 #include <iostream>
+#include <string>
 #include <pthread.h>
 #include <unistd.h>
 #include "extool-blocking-collection.hpp"
-
 using namespace std;
 using namespace code_machina;
 
 
 
 struct ConsumerArg {
-    BlockingQueue<int> *pqProduct;
-    int idCon;
+    string name;
+    BlockingQueue<int> *qProduct;
 };
 
 
 
-void* producer(void *arg) {
-    auto pqProduct = (BlockingQueue<int>*)arg;
+void* producer(void* arg) {
+    auto qProduct = (BlockingQueue<int>*)arg;
 
     int i = 1;
 
     for (;; ++i) {
-        pqProduct->add(i);
+        qProduct->add(i);
         sleep(1);
     }
 
@@ -39,21 +39,21 @@ void* producer(void *arg) {
 
 
 
-void* consumer(void *argVoid) {
+void* consumer(void* argVoid) {
     auto arg = (ConsumerArg*)argVoid;
-    auto pqProduct = arg->pqProduct;
+    auto qProduct = arg->qProduct;
 
     int data;
     BlockingCollectionStatus status;
 
     for (;;) {
-        status = pqProduct->take(data);
+        status = qProduct->take(data);
 
-        if (status == BlockingCollectionStatus::Ok) {
-            cout << "consumer" << arg->idCon << " " << data << endl;
+        if (BlockingCollectionStatus::Ok == status) {
+            cout << "Consumer " << arg->name << ": " << data << endl;
         }
         else {
-            cerr << "consumer error" << endl;
+            cerr << "Consumer error" << endl;
         }
     }
 
@@ -64,24 +64,22 @@ void* consumer(void *argVoid) {
 
 
 int main() {
-    pthread_t tidProduder;
-    pthread_t tidConsumer[2];
+    pthread_t tidProducer;
+    pthread_t tidConsumerFoo, tidConsumerBar;
     BlockingQueue<int> qProduct;
 
     int ret = 0;
 
-    ConsumerArg conArg0, conArg1;
-    conArg0.pqProduct = conArg1.pqProduct = &qProduct;
-    conArg0.idCon = 0;
-    conArg1.idCon = 1;
+    ConsumerArg argFoo = { "foo", &qProduct };
+    ConsumerArg argBar = { "bar", &qProduct };
 
-    ret = pthread_create(&tidProduder, nullptr, producer, &qProduct);
-    ret = pthread_create(&tidConsumer[0], nullptr, consumer, &conArg0);
-    ret = pthread_create(&tidConsumer[1], nullptr, consumer, &conArg1);
+    ret = pthread_create(&tidProducer, nullptr, producer, &qProduct);
+    ret = pthread_create(&tidConsumerFoo, nullptr, consumer, &argFoo);
+    ret = pthread_create(&tidConsumerBar, nullptr, consumer, &argBar);
 
-    ret = pthread_join(tidProduder, nullptr);
-    ret = pthread_join(tidConsumer[0], nullptr);
-    ret = pthread_join(tidConsumer[1], nullptr);
+    ret = pthread_join(tidProducer, nullptr);
+    ret = pthread_join(tidConsumerFoo, nullptr);
+    ret = pthread_join(tidConsumerBar, nullptr);
 
     return 0;
 }
