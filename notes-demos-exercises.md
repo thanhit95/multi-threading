@@ -8,7 +8,7 @@ This file contains descriptions/notes of demo and exercise in the repo.
 
 ## TABLE OF CONTENTS
 
-I am sorry that generated table of contents contains too many upper case stuff...
+I am sorry that generated table of contents contains too many uppercase stuff...
 
 - [NOTES OF DEMOS AND EXERCISES](#notes-of-demos-and-exercises)
   - [DESCRIPTION](#description)
