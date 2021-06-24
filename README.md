@@ -31,20 +31,20 @@ This repo is licensed under the [3-Clause BSD License](LICENSE.txt).
 The notes and articles are the additional resources for the source code, which guides you for better research, step by step. You may consider it the comment/description at the beginning of the source code.
 
 ```text
-      ORIGINAL SOURCE CODE FILE                          SOURCE CODE FILE                  NOTES_AND_ARTICLES
---------------------------------------        --------------------------------------     -----------------------
-|                                    |        |                                    |     |                     |
-| /* THE COMMENTS... */              |        |                                    |     |    THE COMMENTS     |
-|                                    |        |                                    |     |                     |
-| #include <iostream>                |        | #include <iostream>                |     |                     |
-| using namespace std;               |        | using namespace std;               |     |                     |
-|                                    |  ===>  |                                    |  +  |                     |
-| int main() {                       |        | int main() {                       |     |                     |
-|   cout << "Hello thread" << endl;  |        |   cout << "Hello thread" << endl;  |     |                     |
-|   return 0;                        |        |   return 0;                        |     |                     |
-| }                                  |        | }                                  |     |                     |
-|                                    |        |                                    |     |                     |
---------------------------------------        --------------------------------------     -----------------------
+    ORIGINAL SOURCE CODE FILE                     SOURCE CODE FILE                NOTES AND ARTICLES
+---------------------------------        ---------------------------------     -----------------------
+|                               |        |                               |     |                     |
+| /* THE COMMENTS... */         |        |                               |     |    THE COMMENTS     |
+|                               |        |                               |     |                     |
+| #include <iostream>           |        | #include <iostream>           |     |                     |
+| using namespace std;          |        | using namespace std;          |     |                     |
+|                               |  ===>  |                               |  +  |                     |
+| int main() {                  |        | int main() {                  |     |                     |
+|   cout << "Hello thread \n";  |        |   cout << "Hello thread \n";  |     |                     |
+|   return 0;                   |        |   return 0;                   |     |                     |
+| }                             |        | }                             |     |                     |
+|                               |        |                               |     |                     |
+---------------------------------        ---------------------------------     -----------------------
 ```
 
 There are 2 notes:
