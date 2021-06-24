@@ -1,8 +1,8 @@
 /*
 THE PRODUCER-CONSUMER PROBLEM
 
-SOLUTION TYPE C - USING MONITOR
-    multi fast producers, multi slow consumers
+SOLUTION TYPE C - USING CONDITION VARIABLE & MONITOR
+    multiple fast producers, multiple slow consumers
 */
 
 
@@ -19,8 +19,9 @@ using namespace std;
 template <typename T>
 class Monitor {
 private:
-    std::queue<T> *q = nullptr;
+    std::queue<T>* q = nullptr;
     int maxQueueSize = 0;
+
     pthread_cond_t condFull = PTHREAD_COND_INITIALIZER;
     pthread_cond_t condEmpty = PTHREAD_COND_INITIALIZER;
     pthread_mutex_t mut = PTHREAD_MUTEX_INITIALIZER;
@@ -34,7 +35,7 @@ public:
     void operator=(const Monitor &&other) = delete;
 
 
-    void init(int maxQueueSize, std::queue<T> *q) {
+    void init(int maxQueueSize, std::queue<T>* q) {
         destroy();
 
         this->q = q;
@@ -54,7 +55,7 @@ public:
     }
 
 
-    void add(const T &item) {
+    void add(const T& item) {
         pthread_mutex_lock(&mut);
 
         while (q->size() == maxQueueSize) {
@@ -94,16 +95,23 @@ public:
 
 
 template <typename T>
-void* producer(void *argVoid) {
-    Monitor<T> *monitor = (Monitor<T>*)argVoid;
+struct ProducerArg {
+    Monitor<T>* monitor;
+    int dataAddValue;
+};
 
-    mytool::RandIntGenerator intGen(0, 9);
-    int dataAddFactor = intGen.get() * 1000;
+
+
+template <typename T>
+void* producer(void* argVoid) {
+    auto arg = (ProducerArg<T>*)argVoid;
+    auto monitor = arg->monitor;
+    auto dataAddValue = arg->dataAddValue;
 
     int i = 1;
 
     for (;; ++i) {
-        monitor->add(i + dataAddFactor);
+        monitor->add(i + dataAddValue);
     }
 
     pthread_exit(nullptr);
@@ -113,14 +121,14 @@ void* producer(void *argVoid) {
 
 
 template <typename T>
-void* consumer(void *argVoid) {
-    Monitor<T> *monitor = (Monitor<T>*)argVoid;
+void* consumer(void* argVoid) {
+    auto monitor = (Monitor<T>*)argVoid;
 
-    int data;
+    int data = 0;
 
     for (;;) {
         data = monitor->remove();
-        cout << "consumer " << data << endl;
+        cout << "Consumer " << data << endl;
         sleep(1);
     }
 
@@ -131,15 +139,16 @@ void* consumer(void *argVoid) {
 
 
 int main() {
-    constexpr int NUM_PRODUCERS = 3;
-    constexpr int NUM_CONSUMERS = 2;
-
-    pthread_t tidProduder[NUM_PRODUCERS];
-    pthread_t tidConsumer[NUM_CONSUMERS];
-
     Monitor<int> monitor;
     queue<int> qProduct;
     constexpr int MAX_QUEUE_SIZE = 6;
+
+    constexpr int NUM_PRODUCERS = 3;
+    constexpr int NUM_CONSUMERS = 2;
+
+    pthread_t lstTidProducer[NUM_PRODUCERS];
+    pthread_t lstTidConsumer[NUM_CONSUMERS];
+    ProducerArg<int> argPro[NUM_PRODUCERS];
 
     int ret = 0;
 
@@ -147,27 +156,32 @@ int main() {
     // PREPARE ARGUMENTS
     monitor.init(MAX_QUEUE_SIZE, &qProduct);
 
+    for (int i = 0; i < NUM_PRODUCERS; ++i)
+        argPro[i] = { &monitor, i * 1000 };
+
 
     // CREATE THREADS
     for (int i = 0; i < NUM_PRODUCERS; ++i) {
-        ret = pthread_create(&tidProduder[i], nullptr, producer<int>, &monitor);
+        ret = pthread_create(&lstTidProducer[i], nullptr, producer<int>, &argPro[i]);
     }
 
     for (int i = 0; i < NUM_CONSUMERS; ++i) {
-        ret = pthread_create(&tidConsumer[i], nullptr, consumer<int>, &monitor);
+        ret = pthread_create(&lstTidConsumer[i], nullptr, consumer<int>, &monitor);
     }
 
 
     // JOIN THREADS
     for (int i = 0; i < NUM_PRODUCERS; ++i) {
-        ret = pthread_join(tidProduder[i], nullptr);
+        ret = pthread_join(lstTidProducer[i], nullptr);
     }
 
     for (int i = 0; i < NUM_CONSUMERS; ++i) {
-        ret = pthread_join(tidConsumer[i], nullptr);
+        ret = pthread_join(lstTidConsumer[i], nullptr);
     }
 
 
     monitor.destroy();
+
+
     return 0;
 }
