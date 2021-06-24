@@ -9,10 +9,10 @@ using namespace std;
 
 
 struct WorkerArg {
-    int valueStart;
-    int valueEnd;
+    int iStart;
+    int iEnd;
 
-    WorkerArg(int valueStart = 0, int valueEnd = 0): valueStart(valueStart), valueEnd(valueEnd)
+    WorkerArg(int iStart = 0, int iEnd = 0): iStart(iStart), iEnd(iEnd)
     {
     }
 };
@@ -47,7 +47,7 @@ void workerRoutine(WorkerArg* arg, FinalResult* res) {
     int resValue = 0;
     int resNumDiv = 0;
 
-    for (int i = arg->valueStart; i <= arg->valueEnd; ++i) {
+    for (int i = arg->iStart; i <= arg->iEnd; ++i) {
         int numDiv = 0;
 
         for (int j = i / 2; j > 0; --j)
