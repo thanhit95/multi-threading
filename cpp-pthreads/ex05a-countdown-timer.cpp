@@ -6,7 +6,7 @@ using namespace std;
 
 
 
-char *buffer = nullptr;
+char* buffer = nullptr;
 
 pthread_mutex_t mut = PTHREAD_MUTEX_INITIALIZER;
 pthread_cond_t cond = PTHREAD_COND_INITIALIZER;

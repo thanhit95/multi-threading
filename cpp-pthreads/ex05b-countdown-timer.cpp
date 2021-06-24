@@ -6,11 +6,11 @@ using namespace std;
 
 
 
-char *buffer = nullptr;
+char* buffer = nullptr;
 
 
 
-void* userInputFunc(void *argVoid) {
+void* userInputFunc(void*) {
     cin.getline(buffer, 1024);
 
     pthread_exit(nullptr);

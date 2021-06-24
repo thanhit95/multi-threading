@@ -16,7 +16,7 @@ struct WriterArg {
     int* resource;
     sem_t* semResource;
     int timeDelay;
-    sem_t *semServiceQueue;
+    sem_t* semServiceQueue;
 };
 
 
@@ -27,7 +27,7 @@ struct ReaderArg {
     int* readerCount;
     pthread_mutex_t* mutReaderCount;
     int timeDelay;
-    sem_t *semServiceQueue;
+    sem_t* semServiceQueue;
 };
 
 
