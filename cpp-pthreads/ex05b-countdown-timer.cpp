@@ -2,14 +2,15 @@
 #include <pthread.h>
 #include <unistd.h>
 #include <time.h>
-
 using namespace std;
 
 
 
-void* userInputFunc(void *argVoid) {
-    char buffer[1024] = { 0 };
+char *buffer = nullptr;
 
+
+
+void* userInputFunc(void *argVoid) {
     cin.getline(buffer, 1024);
 
     pthread_exit(nullptr);
@@ -21,12 +22,13 @@ void* userInputFunc(void *argVoid) {
 int main() {
     constexpr int SECONDS = 5;
 
-    pthread_t tid;
+    char buff[1024] = { 0 };
+    buffer = buff;
 
+    pthread_t tid;
     timespec ts;
 
-    char buffer[1024] = { 0 };
-    int ret;
+    int ret = 0;
 
 
     cout << "You have " << SECONDS << " seconds to write anything you like in one line." << endl;
@@ -35,11 +37,11 @@ int main() {
     cout << "START!!!" << endl << endl;
 
 
+    ret = pthread_create(&tid, nullptr, userInputFunc, nullptr);
+
+
     clock_gettime(CLOCK_REALTIME, &ts);
     ts.tv_sec += SECONDS;
-
-
-    ret = pthread_create(&tid, nullptr, userInputFunc, nullptr);
 
 
     if (ret = pthread_timedjoin_np(tid, nullptr, &ts)) {
