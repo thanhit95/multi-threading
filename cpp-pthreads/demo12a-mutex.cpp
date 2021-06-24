@@ -21,7 +21,7 @@ void* routineCounter(void*) {
     pthread_mutex_unlock(&mut);
 
     pthread_exit(nullptr);
-    return (void*)0;
+    return nullptr;
 }
 
 

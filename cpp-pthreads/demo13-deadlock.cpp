@@ -28,7 +28,7 @@ void* foo(void*) {
     pthread_mutex_unlock(&mutResourceA);
 
     pthread_exit(nullptr);
-    return (void*)0;
+    return nullptr;
 }
 
 
@@ -46,7 +46,7 @@ void* bar(void*) {
     pthread_mutex_unlock(&mutResourceB);
 
     pthread_exit(nullptr);
-    return (void*)0;
+    return nullptr;
 }
 
 

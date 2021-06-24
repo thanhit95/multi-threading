@@ -8,7 +8,7 @@ void* helloThread(void* arg) {
     cout << "Hello" << endl;
 
     pthread_exit(nullptr);
-    return (void*)0;
+    return nullptr;
 }
 
 

@@ -27,7 +27,7 @@ void* producer(void *arg) {
     }
 
     pthread_exit(nullptr);
-    return (void*)0;
+    return nullptr;
 }
 
 
@@ -50,7 +50,7 @@ void* consumer(void *arg) {
     }
 
     pthread_exit(nullptr);
-    return (void*)0;
+    return nullptr;
 }
 
 

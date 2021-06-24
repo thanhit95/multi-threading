@@ -17,7 +17,7 @@ void* func(void *arg) {
     cout << "foo" << endl;
     sleep(5);
     pthread_exit(nullptr);
-    return (void*)0;
+    return nullptr;
 }
 
 

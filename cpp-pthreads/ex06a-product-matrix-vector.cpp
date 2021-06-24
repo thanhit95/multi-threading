@@ -58,7 +58,7 @@ void* workerDoingScalarProduct(void *argVoid) {
     *(arg->ptrResult) = sum;
 
     pthread_exit(nullptr);
-    return (void*)0;
+    return nullptr;
 }
 
 

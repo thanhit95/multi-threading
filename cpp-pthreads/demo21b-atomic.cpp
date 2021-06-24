@@ -19,7 +19,7 @@ void* routine(void* arg) {
     atomic_fetch_add(&counter, 1);
 
     pthread_exit(NULL);
-    return (void*)0;
+    return NULL;
 }
 
 

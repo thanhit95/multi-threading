@@ -13,7 +13,7 @@ void* routine(void* arg) {
     cout << name << " wakes up" << endl;
 
     pthread_exit(nullptr);
-    return (void*)0;
+    return nullptr;
 }
 
 

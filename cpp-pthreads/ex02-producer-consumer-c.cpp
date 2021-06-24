@@ -107,7 +107,7 @@ void* producer(void *argVoid) {
     }
 
     pthread_exit(nullptr);
-    return (void*)0;
+    return nullptr;
 }
 
 
@@ -125,7 +125,7 @@ void* consumer(void *argVoid) {
     }
 
     pthread_exit(nullptr);
-    return (void*)0;
+    return nullptr;
 }
 
 

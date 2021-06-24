@@ -52,7 +52,7 @@ void* routineCounter(void*) {
         */
 
         pthread_exit(nullptr);
-        return (void*)0;
+        return nullptr;
     }
 
     for (int i = 0; i < 1000; ++i)
@@ -61,7 +61,7 @@ void* routineCounter(void*) {
     pthread_mutex_unlock(&mut);
 
     pthread_exit(nullptr);
-    return (void*)0;
+    return nullptr;
 }
 
 

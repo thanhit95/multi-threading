@@ -22,7 +22,7 @@ void* markDiv2(void*) {
         a[i] = 1;
 
     pthread_exit(nullptr);
-    return (void*)0;
+    return nullptr;
 }
 
 
@@ -32,7 +32,7 @@ void* markDiv3(void*) {
         a[i] = 1;
 
     pthread_exit(nullptr);
-    return (void*)0;
+    return nullptr;
 }
 
 

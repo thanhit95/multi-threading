@@ -17,7 +17,7 @@ void* printHello(void* ptrId) {
     cout << "Hello pthread with id = " << id << endl;
 
     pthread_exit(nullptr);
-    return (void*)0;
+    return nullptr;
 }
 
 

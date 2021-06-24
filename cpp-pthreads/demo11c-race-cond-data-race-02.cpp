@@ -23,7 +23,7 @@ void* routineA(void*) {
     cout << "A won !!!" << endl;
 
     pthread_exit(nullptr);
-    return (void*)0;
+    return nullptr;
 }
 
 
@@ -37,7 +37,7 @@ void* routineB(void*) {
     cout << "B won !!!" << endl;
 
     pthread_exit(nullptr);
-    return (void*)0;
+    return nullptr;
 }
 
 

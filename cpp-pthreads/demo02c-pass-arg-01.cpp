@@ -27,7 +27,7 @@ void* routine(void* argVoid) {
     cout << arg->z << endl;
 
     pthread_exit(nullptr);
-    return (void*)0;
+    return nullptr;
 }
 
 

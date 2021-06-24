@@ -21,7 +21,7 @@ void* foo(void*) {
     pthread_mutex_unlock(&mut);
 
     pthread_exit(nullptr);
-    return (void*)0;
+    return nullptr;
 }
 
 
@@ -33,7 +33,7 @@ void* bar(void*) {
     }
 
     pthread_exit(nullptr);
-    return (void*)0;
+    return nullptr;
 }
 
 

@@ -22,7 +22,7 @@ void* worker(void* argVoid) {
     *(arg->res) = arg->value * 2;
 
     pthread_exit(nullptr);
-    return (void*)0;
+    return nullptr;
 }
 
 

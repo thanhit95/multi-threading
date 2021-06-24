@@ -36,7 +36,7 @@ void* routine(void* arg) {
     cout << "Factorial of " << n << " is " << factorial << endl;
 
     pthread_exit(nullptr);
-    return (void*)0;
+    return nullptr;
 }
 
 

@@ -18,7 +18,7 @@ void* routine(void* arg) {
     counter += 1;
 
     pthread_exit(NULL);
-    return (void*)0;
+    return NULL;
 }
 
 

@@ -92,7 +92,7 @@ void* workerRoutine(void *argVoid) {
     finalRes->update(resValue, resNumDiv);
 
     pthread_exit(nullptr);
-    return (void*)0;
+    return nullptr;
 }
 
 

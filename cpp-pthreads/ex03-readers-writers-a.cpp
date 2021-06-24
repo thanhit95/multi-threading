@@ -63,7 +63,7 @@ void* writerFunc(void *argVoid) {
     sem_post(arg->pSemResource);
 
     pthread_exit(nullptr);
-    return (void*)0;
+    return nullptr;
 }
 
 
@@ -101,7 +101,7 @@ void* readerFunc(void *argVoid) {
 
 
     pthread_exit(nullptr);
-    return (void*)0;
+    return nullptr;
 }
 
 

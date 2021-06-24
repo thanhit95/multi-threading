@@ -13,7 +13,7 @@ void* userInputFunc(void *argVoid) {
     cin.getline(buffer, 1024);
 
     pthread_exit(nullptr);
-    return (void*)0;
+    return nullptr;
 }
 
 

@@ -20,7 +20,7 @@ void* routine(void* argVoid) {
     cout << std::get<2>(arg) << endl;
 
     pthread_exit(nullptr);
-    return (void*)0;
+    return nullptr;
 }
 
 

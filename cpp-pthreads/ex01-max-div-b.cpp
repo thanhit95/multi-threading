@@ -68,7 +68,7 @@ void* workerRoutine(void *argVoid) {
     auto res = new WorkerResult(resValue, resNumDiv);
 
     pthread_exit(res);
-    return (void*)0;
+    return nullptr;
 }
 
 

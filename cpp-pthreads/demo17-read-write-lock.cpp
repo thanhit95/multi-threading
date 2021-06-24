@@ -48,7 +48,7 @@ void* routineRead(void* arg) {
     pthread_rwlock_unlock(&rwlock);
 
     pthread_exit(nullptr);
-    return (void*)0;
+    return nullptr;
 }
 
 
@@ -66,7 +66,7 @@ void* routineWrite(void* arg) {
     pthread_rwlock_unlock(&rwlock);
 
     pthread_exit(nullptr);
-    return (void*)0;
+    return nullptr;
 }
 
 

@@ -19,7 +19,7 @@ void* routine(void *arg) {
     cout << "Routine is exiting..." << endl;
 
     pthread_exit(nullptr);
-    return (void*)0;
+    return nullptr;
 }
 
 

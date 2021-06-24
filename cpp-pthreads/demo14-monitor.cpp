@@ -46,7 +46,7 @@ void* routineCounter(void* arg) {
         monitor->increaseCounter();
 
     pthread_exit(nullptr);
-    return (void*)0;
+    return nullptr;
 }
 
 

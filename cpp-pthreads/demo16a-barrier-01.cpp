@@ -29,7 +29,7 @@ void* processRequest(void* argVoid) {
     cout << "Done " << userName << endl;
 
     pthread_exit(nullptr);
-    return (void*)0;
+    return nullptr;
 }
 
 

@@ -24,7 +24,7 @@ void* makeOnePaper(void*) {
     }
 
     pthread_exit(nullptr);
-    return (void*)0;
+    return nullptr;
 }
 
 
@@ -37,7 +37,7 @@ void* combineOnePackage(void*) {
     }
 
     pthread_exit(nullptr);
-    return (void*)0;
+    return nullptr;
 }
 
 

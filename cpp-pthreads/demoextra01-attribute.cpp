@@ -15,7 +15,7 @@ void* routine(void *p2id) {
     cout << "thread with id " << id << " exiting..." << endl;
 
     pthread_exit(nullptr);
-    return (void*)0;
+    return nullptr;
 }
 
 

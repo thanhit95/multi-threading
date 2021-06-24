@@ -14,7 +14,7 @@ void* timerFunc(void *argVoid) {
     cout << "\n\nTIMEOUT!!! \n" << endl;
 
     pthread_exit(nullptr);
-    return (void*)0;
+    return nullptr;
 }
 
 

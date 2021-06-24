@@ -43,7 +43,7 @@ private:
         cout << thisPtr->index << endl;
 
         pthread_exit(nullptr);
-        return (void*)0;
+        return nullptr;
     }
 };
 

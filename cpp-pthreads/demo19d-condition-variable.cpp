@@ -33,12 +33,12 @@ void* foo(void*) {
 
         if (counter >= COUNT_DONE) {
             pthread_exit(nullptr);
-            return (void*)0;
+            return nullptr;
         }
     }
 
     pthread_exit(nullptr);
-    return (void*)0;
+    return nullptr;
 }
 
 
@@ -62,12 +62,12 @@ void* eggs(void*) {
 
         if (counter >= COUNT_DONE) {
             pthread_exit(nullptr);
-            return (void*)0;
+            return nullptr;
         }
     }
 
     pthread_exit(nullptr);
-    return (void*)0;
+    return nullptr;
 }
 
 

@@ -77,7 +77,7 @@ void* funcPhilosopher(void *argVoid) {
     sem_post(&chopstick[(i + 1) % n]);
 
     pthread_exit(nullptr);
-    return (void*)0;
+    return nullptr;
 }
 
 

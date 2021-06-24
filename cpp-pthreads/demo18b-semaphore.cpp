@@ -29,7 +29,7 @@ void* makeTire(void*) {
     }
 
     pthread_exit(nullptr);
-    return (void*)0;
+    return nullptr;
 }
 
 
@@ -51,7 +51,7 @@ void* makeChassis(void*) {
     }
 
     pthread_exit(nullptr);
-    return (void*)0;
+    return nullptr;
 }
 
 

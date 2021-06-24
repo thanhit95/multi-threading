@@ -19,7 +19,7 @@ void* foo(void*) {
     counter += 1;
 
     pthread_exit(nullptr);
-    return (void*)0;
+    return nullptr;
 }
 
 
@@ -29,7 +29,7 @@ void* bar(void*) {
     counter += 2;
 
     pthread_exit(nullptr);
-    return (void*)0;
+    return nullptr;
 }
 
 
