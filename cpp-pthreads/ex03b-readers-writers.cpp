@@ -1,5 +1,6 @@
 /*
 THE READERS-WRITERS PROBLEM
+Solution for the third readers-writers problem
 */
 
 
