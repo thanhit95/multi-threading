@@ -29,17 +29,18 @@ I am sorry that generated table of contents contains too many uppercase stuff...
     - [DEMO 11C - RACE CONDITION AND DATA RACE](#demo-11c---race-condition-and-data-race)
     - [DEMO 12 - MUTEX](#demo-12---mutex)
     - [DEMO 13 - DEADLOCK](#demo-13---deadlock)
-    - [DEMO 14 - MONITOR](#demo-14---monitor)
-    - [DEMO 15 - REENTRANT LOCK (RECURSIVE MUTEX)](#demo-15---reentrant-lock-recursive-mutex)
-    - [DEMO 16 - BARRIER](#demo-16---barrier)
-    - [DEMO 17 - READ-WRITE LOCK](#demo-17---read-write-lock)
-    - [DEMO 18A - SEMAPHORE](#demo-18a---semaphore)
+    - [DEMO 14 - SYNCHRONIZED](#demo-14---synchronized)
+    - [DEMO 15 - MONITOR](#demo-15---monitor)
+    - [DEMO 16 - REENTRANT LOCK (RECURSIVE MUTEX)](#demo-16---reentrant-lock-recursive-mutex)
+    - [DEMO 17 - BARRIER AND LATCH](#demo-17---barrier-and-latch)
+    - [DEMO 18 - READ-WRITE LOCK](#demo-18---read-write-lock)
+    - [DEMO 19A - SEMAPHORE](#demo-19a---semaphore)
       - [Version A01](#version-a01)
       - [Version A02](#version-a02)
       - [Version A03](#version-a03)
-    - [DEMO 18B - SEMAPHORE](#demo-18b---semaphore)
-    - [DEMO 19 - CONDITION VARIABLE](#demo-19---condition-variable)
-    - [DEMO 20 - VOLATILE and DEMO 21 - ATOMIC](#demo-20---volatile-and-demo-21---atomic)
+    - [DEMO 19B - SEMAPHORE](#demo-19b---semaphore)
+    - [DEMO 20 - CONDITION VARIABLE](#demo-20---condition-variable)
+    - [DEMO 21 & 22 - VOLATILE AND ATOMIC](#demo-21--22---volatile-and-atomic)
   - [EXERCISES](#exercises)
     - [EX01 - MAX DIV](#ex01---max-div)
       - [Version A](#version-a)
@@ -225,7 +226,13 @@ After foo accessing A and bar accessing B, foo and bar might wait other together
 
 &nbsp;
 
-### DEMO 14 - MONITOR
+### DEMO 14 - SYNCHRONIZED
+
+Update later.
+
+&nbsp;
+
+### DEMO 15 - MONITOR
 
 Monitor: Concurrent programming meets object-oriented programming.
 
@@ -234,7 +241,9 @@ Monitor: Concurrent programming meets object-oriented programming.
 
 A monitor is a thread-safe class, object, or module that wraps around a mutex in order to safely allow access to a method or variable by more than one thread.
 
-### DEMO 15 - REENTRANT LOCK (RECURSIVE MUTEX)
+&nbsp;
+
+### DEMO 16 - REENTRANT LOCK (RECURSIVE MUTEX)
 
 The reason for using reentrant lock is to avoid a deadlock due to e.g. recursion.
 
@@ -244,7 +253,7 @@ In the locked state, some thread owns the lock; in the unlocked state, no thread
 
 &nbsp;
 
-### DEMO 16 - BARRIER
+### DEMO 17 - BARRIER AND LATCH
 
 In cases where you must wait for a number of tasks to be completed before an overall task can proceed, barrier synchronization can be used.
 
@@ -255,7 +264,7 @@ There are two types of barriers:
 
 &nbsp;
 
-### DEMO 17 - READ-WRITE LOCK
+### DEMO 18 - READ-WRITE LOCK
 
 In many situations, data is read more often than it is modified or written. In these cases, you can allow threads to read concurrently while holding the lock and allow only one thread to hold the lock when data is modified. A multiple-reader single-writer lock (or read/write lock) does this.
 
@@ -263,7 +272,7 @@ A read/write lock is acquired either for reading or writing, and then is release
 
 &nbsp;
 
-### DEMO 18A - SEMAPHORE
+### DEMO 19A - SEMAPHORE
 
 #### Version A01
 
@@ -291,7 +300,7 @@ The problem in this version is DEADLOCK, due to a mistake of semaphore synchroni
 
 &nbsp;
 
-### DEMO 18B - SEMAPHORE
+### DEMO 19B - SEMAPHORE
 
 A car is manufactured at each stop on a conveyor belt in a car factory.
 
@@ -306,13 +315,13 @@ Write a program to illustrate this scenario.
 
 &nbsp;
 
-### DEMO 19 - CONDITION VARIABLE
+### DEMO 20 - CONDITION VARIABLE
 
 Condition variables are synchronization primitives that enable threads to wait until a particular condition occurs. Condition variables are user-mode objects that cannot be shared across processes.
 
 &nbsp;
 
-### DEMO 20 - VOLATILE and DEMO 21 - ATOMIC
+### DEMO 21 & 22 - VOLATILE AND ATOMIC
 
 Please read article "Volatile vs Atomic" for better understanding.
 
