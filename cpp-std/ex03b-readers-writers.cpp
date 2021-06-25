@@ -18,7 +18,7 @@ using TypeSemaphore = std::counting_semaphore<>;
 
 
 void funcWriter(
-    int* resource,
+    volatile int* resource,
     TypeSemaphore* semResource,
     TypeSemaphore* semServiceQueue,
     int timeDelay
@@ -36,7 +36,7 @@ void funcWriter(
 
 
 void funcReader(
-    int* resource,
+    volatile int* resource,
     TypeSemaphore* semResource,
     int* readerCount,
     std::mutex* mutReaderCount,
@@ -74,7 +74,8 @@ void funcReader(
 
 
 int main() {
-    int resource = 0;
+    volatile int resource = 0;
+
     TypeSemaphore semResource(1);
 
     int readerCount = 0;

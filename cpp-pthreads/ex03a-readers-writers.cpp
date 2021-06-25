@@ -13,7 +13,7 @@ using namespace std;
 
 
 struct WriterArg {
-    int* resource;
+    volatile int* resource;
     sem_t* semResource;
     int timeDelay;
 };
@@ -21,7 +21,7 @@ struct WriterArg {
 
 
 struct ReaderArg {
-    int* resource;
+    volatile int* resource;
     sem_t* semResource;
     int* readerCount;
     pthread_mutex_t* mutReaderCount;
@@ -89,7 +89,7 @@ void* readerFunc(void* argVoid) {
 void prepareArguments(
     ReaderArg argReader[], WriterArg argWriter[],
     int numReaders, int numWriters,
-    int* resource,
+    volatile int* resource,
     sem_t* semResource,
     int* readerCount,
     pthread_mutex_t* mutReaderCount
@@ -113,7 +113,8 @@ void prepareArguments(
 
 
 int main() {
-    int resource = 0;
+    volatile int resource = 0;
+
     sem_t semResource;
     sem_init(&semResource, 0, 1);
 
