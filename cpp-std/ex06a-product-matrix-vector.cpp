@@ -32,7 +32,6 @@ void getProduct(const matrix& mat, const vectord& vec, vectord& result) {
     int sizeRowMat = mat.size();
     int sizeColMat = mat[0].size();
     int sizeVec = vec.size();
-    int ret = 0;
 
     result.clear();
     result.resize(sizeRowMat, 0);
