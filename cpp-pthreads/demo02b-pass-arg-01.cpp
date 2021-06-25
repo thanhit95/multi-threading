@@ -1,5 +1,5 @@
 /*
-Demo passing multiple arguments in pthread.
+PASSING MULTIPLE ARGUMENTS IN PTHREADS
 Solution 01. Creating a custom struct.
 */
 
