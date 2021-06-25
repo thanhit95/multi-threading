@@ -17,12 +17,19 @@ I am sorry that generated table of contents contains too many uppercase stuff...
     - [DEMO 01 - HELLO](#demo-01---hello)
     - [DEMO 02 - PASSING ARGUMENTS](#demo-02---passing-arguments)
     - [DEMO 03 - SLEEP](#demo-03---sleep)
+    - [DEMO 04 - ID](#demo-04---id)
+    - [DEMO 05 - LIST OF MULTIPLE THREADS](#demo-05---list-of-multiple-threads)
+    - [DEMO 06 - TERMINATE](#demo-06---terminate)
+    - [DEMO 07 - RETURN VALUE](#demo-07---return-value)
     - [DEMO 08 - DETACH](#demo-08---detach)
+    - [DEMO 09 - YIELD](#demo-09---yield)
+    - [DEMO 10 - THREAD POOL](#demo-10---thread-pool)
     - [DEMO 11A - RACE CONDITION](#demo-11a---race-condition)
     - [DEMO 11B - DATA RACE](#demo-11b---data-race)
     - [DEMO 11C - RACE CONDITION AND DATA RACE](#demo-11c---race-condition-and-data-race)
     - [DEMO 12 - MUTEX](#demo-12---mutex)
     - [DEMO 13 - DEADLOCK](#demo-13---deadlock)
+    - [DEMO 14 - MONITOR](#demo-14---monitor)
     - [DEMO 15 - REENTRANT LOCK (RECURSIVE MUTEX)](#demo-15---reentrant-lock-recursive-mutex)
     - [DEMO 16 - BARRIER](#demo-16---barrier)
     - [DEMO 17 - READ-WRITE LOCK](#demo-17---read-write-lock)
@@ -31,6 +38,8 @@ I am sorry that generated table of contents contains too many uppercase stuff...
       - [Version A02](#version-a02)
       - [Version A03](#version-a03)
     - [DEMO 18B - SEMAPHORE](#demo-18b---semaphore)
+    - [DEMO 19 - CONDITION VARIABLE](#demo-19---condition-variable)
+    - [DEMO 20 - VOLATILE and DEMO 21 - ATOMIC](#demo-20---volatile-and-demo-21---atomic)
   - [EXERCISES](#exercises)
     - [EX01 - MAX DIV](#ex01---max-div)
       - [Version A](#version-a)
@@ -45,6 +54,7 @@ I am sorry that generated table of contents contains too many uppercase stuff...
     - [EX04 - THE DINING PHILOSOPHERS PROBLEM](#ex04---the-dining-philosophers-problem)
       - [Problem statement](#problem-statement-1)
       - [Solution](#solution)
+    - [EX05 - COUNTDOWN TIMER](#ex05---countdown-timer)
     - [EX06 - MATRIX PRODUCTION](#ex06---matrix-production)
       - [Version A: Matrix-vector multiplication](#version-a-matrix-vector-multiplication)
       - [Version B: Matrix-matrix production (dot product)](#version-b-matrix-matrix-production-dot-product)
@@ -80,9 +90,50 @@ Making a thread sleep for a while.
 
 &nbsp;
 
+### DEMO 04 - ID
+
+Getting thread id.
+
+&nbsp;
+
+### DEMO 05 - LIST OF MULTIPLE THREADS
+
+Handling a list of multiple threads.
+
+&nbsp;
+
+### DEMO 06 - TERMINATE
+
+Forcing a thread to terminate (i.e. killing the thread).
+
+Sometimes, we want to force a thread to terminate (for convenient).
+However, for careful practice, the thread should terminate by itself, not by external factors.
+
+&nbsp;
+
+### DEMO 07 - RETURN VALUE
+
+You learn how to return value from a thread, and how to use that value for future tasks.
+
+&nbsp;
+
 ### DEMO 08 - DETACH
 
 When a thread is created, one of its attributes defines whether it is joinable or detached. Only threads that are created as joinable can be joined. If a thread is created as detached, it can never be joined.
+
+&nbsp;
+
+### DEMO 09 - YIELD
+
+Yield is an action that occurs in a computer program during multithreading, of forcing a processor to relinquish control of the current running thread, and sending it to the end of the running queue, of the same scheduling priority.
+
+&nbsp;
+
+### DEMO 10 - THREAD POOL
+
+How learn how to use thread pool and how thread pool works.
+
+A thread pool is a software design pattern for achieving concurrency of execution in a computer program. Often also called a replicated workers or worker-crew model, a thread pool maintains multiple threads waiting for tasks to be allocated for concurrent execution by the supervising program. By maintaining a pool of threads, the model increases performance and avoids latency in execution due to frequent creation and destruction of threads for short-lived tasks.
 
 &nbsp;
 
@@ -174,6 +225,15 @@ After foo accessing A and bar accessing B, foo and bar might wait other together
 
 &nbsp;
 
+### DEMO 14 - MONITOR
+
+Monitor: Concurrent programming meets object-oriented programming.
+
+- When concurrent programming became a big deal, object-oriented programming too.
+- People started to think about ways to make concurrent programming more structured.
+
+A monitor is a thread-safe class, object, or module that wraps around a mutex in order to safely allow access to a method or variable by more than one thread.
+
 ### DEMO 15 - REENTRANT LOCK (RECURSIVE MUTEX)
 
 The reason for using reentrant lock is to avoid a deadlock due to e.g. recursion.
@@ -187,6 +247,11 @@ In the locked state, some thread owns the lock; in the unlocked state, no thread
 ### DEMO 16 - BARRIER
 
 In cases where you must wait for a number of tasks to be completed before an overall task can proceed, barrier synchronization can be used.
+
+There are two types of barriers:
+
+- Cyclic barrier: A general, *reusable barrier*.
+- Count down latch: There is no possibility to increase or reset the counter, which makes the latch a *single-use barrier*.
 
 &nbsp;
 
@@ -238,6 +303,18 @@ There are:
 - 1 production line (i.e. 1 thread) of making chassis.
 
 Write a program to illustrate this scenario.
+
+&nbsp;
+
+### DEMO 19 - CONDITION VARIABLE
+
+Condition variables are synchronization primitives that enable threads to wait until a particular condition occurs. Condition variables are user-mode objects that cannot be shared across processes.
+
+&nbsp;
+
+### DEMO 20 - VOLATILE and DEMO 21 - ATOMIC
+
+Please read article "Volatile vs Atomic" for better understanding.
 
 &nbsp;
 
@@ -393,6 +470,12 @@ Some of the ways to avoid deadlock are as follows:
 
 - An even philosopher should pick the right chopstick and then the left chopstick while an odd philosopher should pick the left chopstick and then the right chopstick.
 - A philosopher should only be allowed to pick their chopstick if both are available at the same time.
+
+&nbsp;
+
+### EX05 - COUNTDOWN TIMER
+
+Simple countdown timer implementation.
 
 &nbsp;
 
