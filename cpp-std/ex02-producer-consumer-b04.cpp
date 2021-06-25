@@ -1,8 +1,8 @@
 /*
 THE PRODUCER-CONSUMER PROBLEM
 
-SOLUTION TYPE B - USING SEMAPHORE
-    Version B04: multiple fast producers, multiple slow consumers
+SOLUTION TYPE B: USING SEMAPHORE
+    Version B04: Multiple fast producers, multiple slow consumers
 */
 
 
