@@ -1,3 +1,8 @@
+/*
+MUTEX (Mutual Exclusion)
+*/
+
+
 #include <iostream>
 #include <thread>
 #include <mutex>

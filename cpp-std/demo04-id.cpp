@@ -1,3 +1,8 @@
+/*
+GETTING THREAD ID
+*/
+
+
 #include <iostream>
 #include <thread>
 #include <chrono>

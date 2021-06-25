@@ -1,5 +1,6 @@
 /*
 SEMAPHORE
+Version A: Paper and packages
 */
 
 

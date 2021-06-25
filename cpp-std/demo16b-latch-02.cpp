@@ -1,3 +1,9 @@
+/*
+BARRIER
+Version B: Count down latch
+*/
+
+
 #include <iostream>
 #include <string>
 #include <tuple>

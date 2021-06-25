@@ -1,3 +1,9 @@
+/*
+PASSING ARGUMENTS
+Version A02: Solving the problem
+*/
+
+
 #include <iostream>
 #include <pthread.h>
 using namespace std;

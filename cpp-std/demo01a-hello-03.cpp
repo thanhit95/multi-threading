@@ -1,3 +1,9 @@
+/*
+HELLO WORLD VERSION MULTITHREADING
+Version A01: Using functions
+*/
+
+
 #include <iostream>
 #include <thread>
 using namespace std;

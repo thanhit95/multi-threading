@@ -1,7 +1,6 @@
 /*
 DATA RACE
-
-Version 02 - multithreading.
+Version 02: Multithreading
 */
 
 

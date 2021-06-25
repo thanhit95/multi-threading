@@ -1,5 +1,7 @@
 /*
-PASSING ARGUMENTS - PROBLEM
+PASSING ARGUMENTS
+Version A01: The problem
+
     The id in statement "hello pthread with id = " might be DUPLICATED !!!
     Reason: Passing the address of variable i, so that all thread printHello use same value of i.
 */

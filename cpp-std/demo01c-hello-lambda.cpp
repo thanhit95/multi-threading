@@ -1,3 +1,9 @@
+/*
+HELLO WORLD VERSION MULTITHREADING
+Version B: Using lambda
+*/
+
+
 #include <iostream>
 #include <string>
 #include <thread>

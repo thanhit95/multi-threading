@@ -1,3 +1,8 @@
+/*
+ATOMIC
+*/
+
+
 #include <iostream>
 #include <thread>
 #include <chrono>

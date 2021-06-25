@@ -1,3 +1,9 @@
+/*
+SEMAPHORE
+Version B: Tires and chassis
+*/
+
+
 #include <iostream>
 #include <thread>
 #include <semaphore>

@@ -1,4 +1,6 @@
 /*
+MUTEX (Mutual Exclusion)
+
 std::lock_guard is a class template, which implements the RAII for mutex.
 It wraps the mutex inside it’s object and locks the attached mutex in its constructor.
 When it’s destructor is called it releases the mutex.

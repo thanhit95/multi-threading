@@ -1,3 +1,9 @@
+/*
+SEMAPHORE
+Version A: Paper and packages
+*/
+
+
 #include <iostream>
 #include <thread>
 #include <semaphore>

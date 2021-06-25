@@ -1,3 +1,9 @@
+/*
+BARRIER
+Version A: Cyclic barrier
+*/
+
+
 #include <iostream>
 #include <string>
 #include <tuple>

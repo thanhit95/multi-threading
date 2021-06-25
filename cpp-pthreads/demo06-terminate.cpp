@@ -1,6 +1,5 @@
 /*
-FORCING A THREAD TO TERMINATE
-(i.e. killing the thread)
+FORCING A THREAD TO TERMINATE (i.e. killing the thread)
 */
 
 

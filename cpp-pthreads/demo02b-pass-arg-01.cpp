@@ -1,6 +1,6 @@
 /*
 PASSING MULTIPLE ARGUMENTS IN PTHREADS
-Solution 01. Creating a custom struct.
+Solution 01: Creating a custom struct
 */
 
 

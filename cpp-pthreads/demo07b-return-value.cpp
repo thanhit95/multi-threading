@@ -1,5 +1,6 @@
 /*
 GETTING RETURNED VALUES FROM THREADS
+Version A: Values returned via pthread_exit
 */
 
 

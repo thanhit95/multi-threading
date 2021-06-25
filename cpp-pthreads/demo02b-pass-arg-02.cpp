@@ -1,6 +1,6 @@
 /*
 PASSING MULTIPLE ARGUMENTS IN PTHREADS
-Solution 02. Using std::tuple.
+Solution 02: Using std::tuple
 */
 
 
