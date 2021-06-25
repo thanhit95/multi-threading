@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
-#include <set>
 #include <queue>
+#include <atomic>
 #include <pthread.h>
 #include <unistd.h>
 
@@ -20,173 +20,134 @@ public:
 
 
 
-class ThreadPool;
-
-
-
-struct ThreadArg {
-    ITask *task = nullptr;
-    int index = -1;
-    ThreadPool *ptr = nullptr;
-};
-
-
-
 class ThreadPool {
 private:
     int numThreads = 0;
-    std::vector<pthread_t> lstTids;
-    std::vector<ThreadArg> lstArgs;
-    std::set<int> indexFreeThreads;
-    std::queue<ITask*> pendingTasks;
-    bool doneAllTasks;
+    std::vector<pthread_t> lstTh;
+    std::queue<ITask*> taskPending;
+    std::atomic_int32_t counterTaskRunning;
+    bool forceThreadShutdown;
 
-    pthread_mutex_t mutPendingTasks = PTHREAD_MUTEX_INITIALIZER;
-    pthread_mutex_t mutIndexFreeThreads = PTHREAD_MUTEX_INITIALIZER;
-    pthread_cond_t condPendingTasks = PTHREAD_COND_INITIALIZER;
-
-    /* mutPendingTasks is used for both pendingTasks and doneAllTasks */
+    pthread_mutex_t mutTaskPending = PTHREAD_MUTEX_INITIALIZER;
+    pthread_cond_t condTaskPending = PTHREAD_COND_INITIALIZER;
 
 
 public:
     ThreadPool() = default;
-    ThreadPool(const ThreadPool &other) = delete;
-    ThreadPool(const ThreadPool &&other) = delete;
-    void operator=(const ThreadPool &other) = delete;
-    void operator=(const ThreadPool &&other) = delete;
+    ThreadPool(const ThreadPool& other) = delete;
+    ThreadPool(const ThreadPool&& other) = delete;
+    void operator=(const ThreadPool& other) = delete;
+    void operator=(const ThreadPool&& other) = delete;
 
 
     void init(int numThreads) {
-        destroy();
+        int ret = 0;
+
+        shutdown();
+
+        mutTaskPending = PTHREAD_MUTEX_INITIALIZER;
+        condTaskPending = PTHREAD_COND_INITIALIZER;
 
         this->numThreads = numThreads;
-        lstTids.resize(numThreads);
-        lstArgs.resize(numThreads);
-        mutPendingTasks = PTHREAD_MUTEX_INITIALIZER;
-        mutIndexFreeThreads = PTHREAD_MUTEX_INITIALIZER;
-        condPendingTasks = PTHREAD_COND_INITIALIZER;
-        doneAllTasks = false;
+        lstTh.resize(numThreads);
+        counterTaskRunning.store(0);
+        forceThreadShutdown = false;
 
-        for (int i = 0; i < numThreads; ++i) {
-            indexFreeThreads.insert(i);
-            lstArgs[i].index = i;
-            lstArgs[i].task = nullptr;
-            lstArgs[i].ptr = this;
-        }
-
-        for (int i = 0; i < numThreads; ++i) {
-            pthread_create(&lstTids[i], nullptr, threadRoutine, &lstArgs[i]);
+        for (auto&& th : lstTh) {
+            ret = pthread_create(&th, nullptr, threadRoutine, this);
         }
     }
 
 
-    void destroy() {
-        numThreads = 0;
-        lstTids.clear();
-        lstArgs.clear();
-        indexFreeThreads.clear();
-        std::queue<ITask*>().swap(pendingTasks); // clear queue
-        pthread_mutex_destroy(&mutPendingTasks);
-        pthread_mutex_destroy(&mutIndexFreeThreads);
-        pthread_cond_destroy(&condPendingTasks);
-    }
+    void submit(ITask* task) {
+        pthread_mutex_lock(&mutTaskPending);
+        taskPending.push(task);
+        pthread_mutex_unlock(&mutTaskPending);
 
-
-    void submit(ITask *task) {
-        pthread_mutex_lock(&mutPendingTasks);
-        pendingTasks.push(task);
-        pthread_mutex_unlock(&mutPendingTasks);
-
-        pthread_cond_signal(&condPendingTasks);  // notify a threadRoutine, it will be waked up...
+        pthread_cond_signal(&condTaskPending);
     }
 
 
     void waitTaskDone() {
         bool done = false;
-        int ret = 0;
 
         for (;;) {
-            pthread_mutex_lock(&mutPendingTasks);
-            pthread_mutex_lock(&mutIndexFreeThreads);
+            pthread_mutex_lock(&mutTaskPending);
 
-            if (0 == pendingTasks.size() &&
-                numThreads == indexFreeThreads.size()) {
-                doneAllTasks = true;
+            if (0 == taskPending.size() && 0 == counterTaskRunning.load()) {
+                done = true;
             }
 
-            pthread_mutex_unlock(&mutIndexFreeThreads);
-            pthread_mutex_unlock(&mutPendingTasks);
+            pthread_mutex_unlock(&mutTaskPending);
 
-            if (doneAllTasks) {
+            if (done) {
                 break;
             }
+
+            pthread_yield();
+        }
+    }
+
+
+    void shutdown() {
+        pthread_mutex_lock(&mutTaskPending);
+
+        forceThreadShutdown = true;
+        std::queue<ITask*>().swap(taskPending);
+
+        pthread_mutex_unlock(&mutTaskPending);
+
+        pthread_cond_broadcast(&condTaskPending);
+
+        for (auto&& th : lstTh) {
+            pthread_join(th, nullptr);
         }
 
-        // for (int i = 0; i < lstTids.size(); ++i) {
-        //     // std::cout << "wating for joining thread index " << i << std::endl;
-        //     pthread_mutex_unlock(&mutPendingTasks);
-        //     pthread_cond_signal(&condPendingTasks);
-        //     ret = pthread_join(lstTids[i], nullptr);
-        // }
+        numThreads = 0;
+        lstTh.clear();
 
-        for (int i = 0; i < lstTids.size(); ++i) {
-            ret = pthread_cancel(lstTids[i]);
-        }
+        pthread_mutex_destroy(&mutTaskPending);
+        pthread_cond_destroy(&condTaskPending);
     }
 
 
 private:
-    static bool checkRoutineDone(bool done, pthread_mutex_t *mutPendingTasks) {
-        if (false == done)
-            return false;
-
-        pthread_mutex_unlock(mutPendingTasks);
-        return true;
-    }
-
-
-    static void* threadRoutine(void *argVoid) {
-        auto arg = (ThreadArg*)argVoid;
-        auto mutPendingTasks = &arg->ptr->mutPendingTasks;
-        auto condPendingTasks = &arg->ptr->condPendingTasks;
-        auto mutIndexFreeThreads = &arg->ptr->mutIndexFreeThreads;
-        auto pendingTasks = &arg->ptr->pendingTasks;
-        auto indexFreeThreads = &arg->ptr->indexFreeThreads;
-        auto doneAllTasks = &arg->ptr->doneAllTasks;
+    static void* threadRoutine(void* argVoid) {
+        auto thisPtr = (ThreadPool*)argVoid;
+        auto&& mutTaskPending = thisPtr->mutTaskPending;
+        auto&& condTaskPending = thisPtr->condTaskPending;
+        auto&& taskPending = thisPtr->taskPending;
+        auto&& counterTaskRunning = thisPtr->counterTaskRunning;
+        auto&& forceThreadShutdown = thisPtr->forceThreadShutdown;
 
         for (;;) {
             // WAITING FOR A PENDING TASK
-            pthread_mutex_lock(mutPendingTasks);
+            pthread_mutex_lock(&mutTaskPending);
 
-            if (checkRoutineDone(*doneAllTasks, mutPendingTasks)) break;
-
-            while (pendingTasks->size() == 0 and false == (*doneAllTasks)) {
-                pthread_cond_wait(condPendingTasks, mutPendingTasks);
+            while (taskPending.size() == 0 and false == forceThreadShutdown) {
+                pthread_cond_wait(&condTaskPending, &mutTaskPending);
             }
 
-            if (checkRoutineDone(*doneAllTasks, mutPendingTasks)) break;
+            if (forceThreadShutdown) {
+                pthread_mutex_unlock(&mutTaskPending);
+                break;
+            }
 
 
             // GET THE TASK FROM THE PENDING QUEUE
-            auto task = pendingTasks->front();
-            pendingTasks->pop();
+            auto task = taskPending.front();
+            taskPending.pop();
 
-            // pthread_mutex_unlock(mutPendingTasks);  // WRONG!!!
+
+            ++counterTaskRunning;
+
+
+            pthread_mutex_unlock(&mutTaskPending);
 
 
             // DO THE TASK
-            pthread_mutex_lock(mutIndexFreeThreads);
-            indexFreeThreads->erase(arg->index);
-            pthread_mutex_unlock(mutIndexFreeThreads);
-
-            // THE POSITION OF BELOW STATEMENT IS EXTREMELY IMPORTANT
-            pthread_mutex_unlock(mutPendingTasks);
-
             task->run();
-
-            pthread_mutex_lock(mutIndexFreeThreads);
-            indexFreeThreads->insert(arg->index);
-            pthread_mutex_unlock(mutIndexFreeThreads);
+            --counterTaskRunning;
         }
 
         pthread_exit(nullptr);
@@ -202,7 +163,7 @@ private:
 
 class MyTask : public ITask {
 public:
-    int id;
+    char id;
 
 public:
     void run() override {
@@ -218,16 +179,18 @@ int main() {
     constexpr int NUM_THREADS = 2;
     constexpr int NUM_TASKS = 5;
 
+
     ThreadPool threadPool;
+    threadPool.init(NUM_THREADS);
+
+
     std::vector<MyTask> lstTasks(NUM_TASKS);
 
     for (int i = 0; i < NUM_TASKS; ++i)
-        lstTasks[i].id = i + 1;
+        lstTasks[i].id = 'A' + i;
 
 
-    threadPool.init(NUM_THREADS);
-
-    for (auto &task : lstTasks)
+    for (auto&& task : lstTasks)
         threadPool.submit(&task);
 
     std::cout << "All tasks submitted" << std::endl;
@@ -235,6 +198,10 @@ int main() {
 
     threadPool.waitTaskDone();
     std::cout << "All tasks completed" << std::endl;
+
+
+    threadPool.shutdown();
+
 
     return 0;
 }
