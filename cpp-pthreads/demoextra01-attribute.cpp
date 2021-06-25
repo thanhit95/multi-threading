@@ -1,18 +1,17 @@
 #include <iostream>
 #include <pthread.h>
 #include <unistd.h>
-
 using namespace std;
 
 
 
-void* routine(void *p2id) {
-    int id = *(int*)p2id;
+void* routine(void* ptrId) {
+    int id = *(int*)ptrId;
 
-    cout << "sleeping in thread " << id << endl;
+    cout << "Sleeping in thread " << id << endl;
     sleep(1);
 
-    cout << "thread with id " << id << " exiting..." << endl;
+    cout << "Thread with id " << id << " exiting..." << endl;
 
     pthread_exit(nullptr);
     return nullptr;
@@ -25,7 +24,9 @@ int main() {
 
     pthread_t tid[NUM_THREADS];
     pthread_attr_t attr;
-    int argThread[NUM_THREADS];
+    int arg[NUM_THREADS];
+
+    int ret = 0;
 
 
     // initialize and set thread joinable
@@ -34,20 +35,20 @@ int main() {
 
 
     for (int i = 0; i < NUM_THREADS; ++i) {
-        argThread[i] = i;
-        int ret = pthread_create(&tid[i], &attr, routine, &argThread[i]);
+        arg[i] = i;
+        ret = pthread_create(&tid[i], &attr, routine, &arg[i]);
     }
 
 
-    void* status;
+    void* status = nullptr;
 
     for (int i = 0; i < NUM_THREADS; ++i) {
-        int ret = pthread_join(tid[i], &status);
+        ret = pthread_join(tid[i], &status);
         cout << "completed thread id " << i << " with status " << status << endl;
     }
 
 
-    pthread_attr_destroy(&attr);
+    ret = pthread_attr_destroy(&attr);
 
 
     return 0;

@@ -13,9 +13,10 @@ void signalHandler(int sig) {
 
 
 
-void* func(void *arg) {
+void* func(void* arg) {
     cout << "foo" << endl;
     sleep(5);
+
     pthread_exit(nullptr);
     return nullptr;
 }

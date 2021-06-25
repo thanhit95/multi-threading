@@ -1,6 +1,5 @@
 #include <iostream>
 #include <pthread.h>
-
 using namespace std;
 
 
@@ -13,10 +12,10 @@ public:
 
 
 public:
-    Task(const Task &other) = delete;
-    Task(const Task &&other) = delete;
-    void operator=(const Task &other) = delete;
-    void operator=(const Task &&other) = delete;
+    Task(const Task& other) = delete;
+    Task(const Task&& other) = delete;
+    void operator=(const Task& other) = delete;
+    void operator=(const Task&& other) = delete;
 
 
     Task(int index = -1): index(index) {
@@ -37,7 +36,7 @@ public:
 
 
 private:
-    static void* work(void *arg) {
+    static void* work(void* arg) {
         auto thisPtr = (Task*)arg;
 
         cout << thisPtr->index << endl;
