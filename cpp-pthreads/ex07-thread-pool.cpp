@@ -31,7 +31,7 @@ private:
     std::vector<pthread_t> lstTh;
     std::queue<ITask*> taskPending;
     std::atomic_int32_t counterTaskRunning;
-    bool forceThreadShutdown;
+    volatile bool forceThreadShutdown;
 
     pthread_mutex_t mutTaskPending = PTHREAD_MUTEX_INITIALIZER;
     pthread_cond_t condTaskPending = PTHREAD_COND_INITIALIZER;

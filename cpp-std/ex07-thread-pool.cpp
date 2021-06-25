@@ -33,7 +33,7 @@ private:
     std::vector<std::thread> lstTh;
     std::queue<ITask*> taskPending;
     std::atomic_int32_t counterTaskRunning;
-    bool forceThreadShutdown;
+    volatile bool forceThreadShutdown;
 
     std::mutex mutTaskPending;
     std::condition_variable condTaskPending;
