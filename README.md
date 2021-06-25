@@ -49,7 +49,7 @@ The notes and articles are the additional resources for the source code, which g
 
 There are 2 notes:
 
-- [notes-demos-exercises.md](notes-demos-exercises.md): The notes that go aloing with original source code.
+- [notes-demos-exercises.md](notes-demos-exercises.md): The notes that go along with original source code.
 - [notes-articles.md](notes-articles.md): Extra helpful notes during my research.
 
 For your best result, I **strongly recommend** that you read [notes-demos-exercises.md](notes-demos-exercises.md) while enjoying source code (demos and exercises).
