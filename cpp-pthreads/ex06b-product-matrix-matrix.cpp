@@ -1,53 +1,43 @@
 /*
 MATRIX-MATRIX MULTIPLICATION (DOT PRODUCT)
-
-For an example:
-
-Matrix A:
-|   1   3   5   |
-|   2   4   6   |
-
-Matrix B:
-|   1   0   1   0   |
-|   0   1   0   1   |
-|   1   0   0   -2  |
-
-The result of dot(A, B) is the matrix:
-|   6   3   1   -7  |
-|   8   4   2   -8  |
-
 */
 
 
 #include <iostream>
 #include <vector>
 #include <pthread.h>
-
 using namespace std;
 
 
 
+using vectord = std::vector<double>;
+using matrix = std::vector<vectord>;
+
+
+
 struct WorkerArg {
-    double const *a;
-    double const *b;
-    int sizeVector;
-    double *ptrResult;
+    double const* u = nullptr;
+    double const* v = nullptr;
+    int sizeVector = 0;
+    double* res = nullptr;
 };
 
 
 
-void* workerDoingScalarProduct(void *argVoid) {
+void* workerScalarProduct(void* argVoid) {
     auto arg = (WorkerArg*)argVoid;
-    auto a = arg->a;
-    auto b = arg->b;
+    auto u = arg->u;
+    auto v = arg->v;
+    auto sizeVector = arg->sizeVector;
+    auto res = arg->res;
 
     double sum = 0;
 
-    for (int i = arg->sizeVector - 1; i >= 0; --i) {
-        sum += a[i] * b[i];
+    for (int i = sizeVector - 1; i >= 0; --i) {
+        sum += u[i] * v[i];
     }
 
-    *(arg->ptrResult) = sum;
+    (*res) = sum;
 
     pthread_exit(nullptr);
     return nullptr;
@@ -55,12 +45,7 @@ void* workerDoingScalarProduct(void *argVoid) {
 
 
 
-typedef vector<double> vectord;
-typedef vector<vectord> matrix;
-
-
-
-void getTransposeMatrix(const matrix &input, matrix &output) {
+void getTransposeMatrix(const matrix& input, matrix& output) {
     int numRow = input.size();
     int numCol = input[0].size();
 
@@ -74,7 +59,7 @@ void getTransposeMatrix(const matrix &input, matrix &output) {
 
 
 
-void displayMatrix(const matrix &mat) {
+void displayMatrix(const matrix& mat) {
     int numRow = mat.size();
     int numCol = mat[0].size();
 
@@ -88,15 +73,12 @@ void displayMatrix(const matrix &mat) {
 
 
 
-void getProduct(const matrix &matA, const matrix &matB, matrix &result) {
-    // assume that the size of A and B are both correct
+void getProduct(const matrix& matA, const matrix& matB, matrix& result) {
+    // Assume that the size of A and B are both correct
     int sizeRowA = matA.size();
     int sizeColA = matA[0].size();
     int sizeColB = matB[0].size();
     int sizeTotal = sizeRowA * sizeColB;
-
-    int iSca = 0;
-    int ret = 0;
 
     result.clear();
     result.assign(sizeRowA, vectord(sizeColB, 0));
@@ -104,30 +86,28 @@ void getProduct(const matrix &matA, const matrix &matB, matrix &result) {
     matrix matBT;
     getTransposeMatrix(matB, matBT);
 
-    vector<pthread_t> pid(sizeTotal);
-    vector<WorkerArg> args(sizeTotal);
+    vector<pthread_t> lstTid(sizeTotal);
+    vector<WorkerArg> arg(sizeTotal);
 
-    iSca = 0;
+    int iSca = 0;
+    int ret = 0;
+
     for (int i = 0; i < sizeRowA; ++i) {
         for (int j = 0; j < sizeColB; ++j) {
-            args[iSca].a = matA[i].data();
-            args[iSca].b = matBT[j].data();
-            args[iSca].sizeVector = sizeColA;
-            args[iSca].ptrResult = &result[i][j];
+            auto&& u = matA[i].data();
+            auto&& v = matBT[j].data();
+            auto&& sizeVector = sizeColA;
+
+            arg[iSca] = { u, v, sizeVector, &result[i][j] };
+
+            ret = pthread_create(&lstTid[iSca], nullptr, workerScalarProduct, &arg[iSca]);
+
             ++iSca;
         }
     }
 
-    iSca = 0;
-    for (int i = 0; i < sizeRowA; ++i) {
-        for (int j = 0; j < sizeColB; ++j) {
-            ret = pthread_create(&pid[iSca], nullptr, workerDoingScalarProduct, &args[iSca]);
-            ++iSca;
-        }
-    }
-
-    for (int i = 0; i < pid.size(); ++i) {
-        ret = pthread_join(pid[i], nullptr);
+    for (auto&& tid : lstTid) {
+        ret = pthread_join(tid, nullptr);
     }
 }
 
@@ -149,5 +129,6 @@ int main() {
     getProduct(A, B, result);
 
     displayMatrix(result);
+
     return 0;
 }
