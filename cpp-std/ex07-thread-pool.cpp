@@ -1,6 +1,5 @@
 #include <iostream>
 #include <vector>
-#include <set>
 #include <queue>
 #include <thread>
 #include <mutex>
@@ -37,10 +36,10 @@ private:
 
 public:
     ThreadPool() = default;
-    ThreadPool(const ThreadPool &other) = delete;
-    ThreadPool(const ThreadPool &&other) = delete;
-    void operator=(const ThreadPool &other) = delete;
-    void operator=(const ThreadPool &&other) = delete;
+    ThreadPool(const ThreadPool& other) = delete;
+    ThreadPool(const ThreadPool&& other) = delete;
+    void operator=(const ThreadPool& other) = delete;
+    void operator=(const ThreadPool&& other) = delete;
 
 
     void init(int numThreads) {
@@ -51,8 +50,8 @@ public:
         counterTaskRunning.store(0);
         forceThreadShutdown = false;
 
-        for (int i = 0; i < numThreads; ++i) {
-            lstTh[i] = std::thread(threadRoutine, this, i);
+        for (auto&& th : lstTh) {
+            th = std::thread(threadRoutine, this);
         }
     }
 
@@ -107,7 +106,7 @@ public:
 
 
 private:
-    static void threadRoutine(ThreadPool* thisPtr, int indexThread) {
+    static void threadRoutine(ThreadPool* thisPtr) {
         auto&& mutTaskPending = thisPtr->mutTaskPending;
         auto&& condTaskPending = thisPtr->condTaskPending;
         auto&& taskPending = thisPtr->taskPending;
@@ -123,6 +122,7 @@ private:
             }
 
             if (forceThreadShutdown) {
+                // lkTaskPending.unlock(); // remember this statement
                 break;
             }
 
