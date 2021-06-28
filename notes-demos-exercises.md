@@ -28,8 +28,8 @@ I am sorry that generated table of contents contains too many uppercase stuff...
     - [DEMO 11B - DATA RACE](#demo-11b---data-race)
     - [DEMO 11C - RACE CONDITION AND DATA RACE](#demo-11c---race-condition-and-data-race)
     - [DEMO 12 - MUTEX](#demo-12---mutex)
-    - [DEMO 13 - DEADLOCK](#demo-13---deadlock)
-    - [DEMO 14 - SYNCHRONIZED](#demo-14---synchronized)
+    - [DEMO 13 - SYNCHRONIZED](#demo-13---synchronized)
+    - [DEMO 14 - DEADLOCK](#demo-14---deadlock)
     - [DEMO 15 - MONITOR](#demo-15---monitor)
     - [DEMO 16 - REENTRANT LOCK (RECURSIVE MUTEX)](#demo-16---reentrant-lock-recursive-mutex)
     - [DEMO 17 - BARRIER AND LATCH](#demo-17---barrier-and-latch)
@@ -198,7 +198,13 @@ One can apply a mutex to protect a segment of memory ("critical region") from ot
 
 &nbsp;
 
-### DEMO 13 - DEADLOCK
+### DEMO 13 - SYNCHRONIZED
+
+Update later.
+
+&nbsp;
+
+### DEMO 14 - DEADLOCK
 
 There are 2 workers "foo" and "bar".
 
@@ -223,12 +229,6 @@ bar():
 ```
 
 After foo accessing A and bar accessing B, foo and bar might wait other together ==> Deadlock occurs.
-
-&nbsp;
-
-### DEMO 14 - SYNCHRONIZED
-
-Update later.
 
 &nbsp;
 
