@@ -19,7 +19,7 @@ This repo is licensed under the [3-Clause BSD License](LICENSE.txt).
 
 ## REPO STRUCTURE
 
-- ```cpp-pthreads```: C++ POSIX threads.
+- ```cpp-pthread```: C++ POSIX threads.
 - ```cpp-std```: C++ std threads.
 
 &nbsp;
