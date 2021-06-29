@@ -23,24 +23,25 @@ I am sorry that generated table of contents contains too many uppercase stuff...
     - [DEMO 07 - RETURN VALUE](#demo-07---return-value)
     - [DEMO 08 - DETACH](#demo-08---detach)
     - [DEMO 09 - YIELD](#demo-09---yield)
-    - [DEMO 10 - THREAD POOL](#demo-10---thread-pool)
-    - [DEMO 11A - RACE CONDITION](#demo-11a---race-condition)
-    - [DEMO 11B - DATA RACE](#demo-11b---data-race)
-    - [DEMO 11C - RACE CONDITION AND DATA RACE](#demo-11c---race-condition-and-data-race)
-    - [DEMO 12 - MUTEX](#demo-12---mutex)
-    - [DEMO 13 - SYNCHRONIZED](#demo-13---synchronized)
-    - [DEMO 14 - DEADLOCK](#demo-14---deadlock)
-    - [DEMO 15 - MONITOR](#demo-15---monitor)
-    - [DEMO 16 - REENTRANT LOCK (RECURSIVE MUTEX)](#demo-16---reentrant-lock-recursive-mutex)
-    - [DEMO 17 - BARRIER AND LATCH](#demo-17---barrier-and-latch)
-    - [DEMO 18 - READ-WRITE LOCK](#demo-18---read-write-lock)
-    - [DEMO 19A - SEMAPHORE](#demo-19a---semaphore)
+    - [DEMO 10 - FUTURE](#demo-10---future)
+    - [DEMO 11 - THREAD POOL](#demo-11---thread-pool)
+    - [DEMO 12A - RACE CONDITION](#demo-12a---race-condition)
+    - [DEMO 12B - DATA RACE](#demo-12b---data-race)
+    - [DEMO 12C - RACE CONDITION AND DATA RACE](#demo-12c---race-condition-and-data-race)
+    - [DEMO 13 - MUTEX](#demo-13---mutex)
+    - [DEMO 14 - SYNCHRONIZED](#demo-14---synchronized)
+    - [DEMO 15 - DEADLOCK](#demo-15---deadlock)
+    - [DEMO 16 - MONITOR](#demo-16---monitor)
+    - [DEMO 17 - REENTRANT LOCK (RECURSIVE MUTEX)](#demo-17---reentrant-lock-recursive-mutex)
+    - [DEMO 18 - BARRIER AND LATCH](#demo-18---barrier-and-latch)
+    - [DEMO 19 - READ-WRITE LOCK](#demo-19---read-write-lock)
+    - [DEMO 20A - SEMAPHORE](#demo-20a---semaphore)
       - [Version A01](#version-a01)
       - [Version A02](#version-a02)
       - [Version A03](#version-a03)
-    - [DEMO 19B - SEMAPHORE](#demo-19b---semaphore)
-    - [DEMO 20 - CONDITION VARIABLE](#demo-20---condition-variable)
-    - [DEMO 21 & 22 - VOLATILE AND ATOMIC](#demo-21--22---volatile-and-atomic)
+    - [DEMO 20B - SEMAPHORE](#demo-20b---semaphore)
+    - [DEMO 21 - CONDITION VARIABLE](#demo-21---condition-variable)
+    - [DEMO 22 & 23 - VOLATILE AND ATOMIC](#demo-22--23---volatile-and-atomic)
   - [EXERCISES](#exercises)
     - [EX01 - MAX DIV](#ex01---max-div)
       - [Version A](#version-a)
@@ -130,7 +131,13 @@ Yield is an action that occurs in a computer program during multithreading, of f
 
 &nbsp;
 
-### DEMO 10 - THREAD POOL
+### DEMO 10 - FUTURE
+
+Update later.
+
+&nbsp;
+
+### DEMO 11 - THREAD POOL
 
 How learn how to use thread pool and how thread pool works.
 
@@ -138,7 +145,7 @@ A thread pool is a software design pattern for achieving concurrency of executio
 
 &nbsp;
 
-### DEMO 11A - RACE CONDITION
+### DEMO 12A - RACE CONDITION
 
 A race condition or race hazard is the condition of an electronics, software, or other system where the system's substantive behavior is dependent on the sequence or timing of other uncontrollable events.
 
@@ -146,7 +153,7 @@ This program illustrates race condition: Each time you run the program, the resu
 
 &nbsp;
 
-### DEMO 11B - DATA RACE
+### DEMO 12B - DATA RACE
 
 Data race specifically refers to the non-synchronized conflicting "memory accesses" (or actions, or operations) to the same memory location.
 
@@ -175,7 +182,7 @@ About the source code, there are two versions:
 
 &nbsp;
 
-### DEMO 11C - RACE CONDITION AND DATA RACE
+### DEMO 12C - RACE CONDITION AND DATA RACE
 
 Many people are confused about race condition and data race.
 
@@ -188,7 +195,7 @@ Concurrent accesses to shared resources can lead to unexpected or erroneous beha
 
 &nbsp;
 
-### DEMO 12 - MUTEX
+### DEMO 13 - MUTEX
 
 Mutexes are used to prevent data inconsistencies due to race conditions.
 
@@ -198,13 +205,13 @@ One can apply a mutex to protect a segment of memory ("critical region") from ot
 
 &nbsp;
 
-### DEMO 13 - SYNCHRONIZED
+### DEMO 14 - SYNCHRONIZED
 
 Update later.
 
 &nbsp;
 
-### DEMO 14 - DEADLOCK
+### DEMO 15 - DEADLOCK
 
 There are 2 workers "foo" and "bar".
 
@@ -232,7 +239,7 @@ After foo accessing A and bar accessing B, foo and bar might wait other together
 
 &nbsp;
 
-### DEMO 15 - MONITOR
+### DEMO 16 - MONITOR
 
 Monitor: Concurrent programming meets object-oriented programming.
 
@@ -243,7 +250,7 @@ A monitor is a thread-safe class, object, or module that wraps around a mutex in
 
 &nbsp;
 
-### DEMO 16 - REENTRANT LOCK (RECURSIVE MUTEX)
+### DEMO 17 - REENTRANT LOCK (RECURSIVE MUTEX)
 
 The reason for using reentrant lock is to avoid a deadlock due to e.g. recursion.
 
@@ -253,7 +260,7 @@ In the locked state, some thread owns the lock; in the unlocked state, no thread
 
 &nbsp;
 
-### DEMO 17 - BARRIER AND LATCH
+### DEMO 18 - BARRIER AND LATCH
 
 In cases where you must wait for a number of tasks to be completed before an overall task can proceed, barrier synchronization can be used.
 
@@ -264,7 +271,7 @@ There are two types of barriers:
 
 &nbsp;
 
-### DEMO 18 - READ-WRITE LOCK
+### DEMO 19 - READ-WRITE LOCK
 
 In many situations, data is read more often than it is modified or written. In these cases, you can allow threads to read concurrently while holding the lock and allow only one thread to hold the lock when data is modified. A multiple-reader single-writer lock (or read/write lock) does this.
 
@@ -272,7 +279,7 @@ A read/write lock is acquired either for reading or writing, and then is release
 
 &nbsp;
 
-### DEMO 19A - SEMAPHORE
+### DEMO 20A - SEMAPHORE
 
 #### Version A01
 
@@ -300,7 +307,7 @@ The problem in this version is DEADLOCK, due to a mistake of semaphore synchroni
 
 &nbsp;
 
-### DEMO 19B - SEMAPHORE
+### DEMO 20B - SEMAPHORE
 
 A car is manufactured at each stop on a conveyor belt in a car factory.
 
@@ -315,13 +322,13 @@ Write a program to illustrate this scenario.
 
 &nbsp;
 
-### DEMO 20 - CONDITION VARIABLE
+### DEMO 21 - CONDITION VARIABLE
 
 Condition variables are synchronization primitives that enable threads to wait until a particular condition occurs. Condition variables are user-mode objects that cannot be shared across processes.
 
 &nbsp;
 
-### DEMO 21 & 22 - VOLATILE AND ATOMIC
+### DEMO 22 & 23 - VOLATILE AND ATOMIC
 
 Please read article "Volatile vs Atomic" for better understanding.
 
