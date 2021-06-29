@@ -172,9 +172,9 @@ public:
 
 public:
     void run() override {
-        std::cout << "Task " << id << " starting" << std::endl;
+        std::cout << "Task " << id << " is starting" << std::endl;
         sleep(3);
-        std::cout << "Task " << id << " completed" << std::endl;
+        std::cout << "Task " << id << " is completed" << std::endl;
     }
 };
 
@@ -198,11 +198,11 @@ int main() {
     for (auto&& task : lstTasks)
         threadPool.submit(&task);
 
-    std::cout << "All tasks submitted" << std::endl;
+    std::cout << "All tasks are submitted" << std::endl;
 
 
     threadPool.waitTaskDone();
-    std::cout << "All tasks completed" << std::endl;
+    std::cout << "All tasks are completed" << std::endl;
 
 
     threadPool.shutdown();
