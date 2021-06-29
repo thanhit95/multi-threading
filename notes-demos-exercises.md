@@ -273,9 +273,9 @@ There are two types of barriers:
 
 ### DEMO 19 - READ-WRITE LOCK
 
-In many situations, data is read more often than it is modified or written. In these cases, you can allow threads to read concurrently while holding the lock and allow only one thread to hold the lock when data is modified. A multiple-reader single-writer lock (or read/write lock) does this.
+In many situations, data is read more often than it is modified or written. In these cases, you can allow threads to read concurrently while holding the lock and allow only one thread to hold the lock when data is modified. A multiple-reader single-writer lock (or read-write lock) does this.
 
-A read/write lock is acquired either for reading or writing, and then is released. The thread that acquires the read-write lock must be the one that releases it.
+A read-write lock is acquired either for reading or writing, and then is released. The thread that acquires the read-write lock must be the one that releases it.
 
 &nbsp;
 
