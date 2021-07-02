@@ -18,12 +18,12 @@ std::mutex mutResourceB;
 
 void foo() {
     mutResourceA.lock();
-    cout << "foo enters resource A" << endl;
+    cout << "foo entered resource A" << endl;
 
     std::this_thread::sleep_for(std::chrono::seconds(1));
 
     mutResourceB.lock();
-    cout << "foo enters resource B" << endl;
+    cout << "foo entered resource B" << endl;
     mutResourceB.unlock();
 
     mutResourceA.unlock();
@@ -33,12 +33,12 @@ void foo() {
 
 void bar() {
     mutResourceB.lock();
-    cout << "bar enters resource B" << endl;
+    cout << "bar entered resource B" << endl;
 
     std::this_thread::sleep_for(std::chrono::seconds(1));
 
     mutResourceA.lock();
-    cout << "bar enters resource A" << endl;
+    cout << "bar entered resource A" << endl;
     mutResourceA.unlock();
 
     mutResourceB.unlock();

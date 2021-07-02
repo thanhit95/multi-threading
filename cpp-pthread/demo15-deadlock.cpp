@@ -17,12 +17,12 @@ pthread_mutex_t mutResourceB = PTHREAD_MUTEX_INITIALIZER;
 
 void* foo(void*) {
     pthread_mutex_lock(&mutResourceA);
-    cout << "foo enters resource A" << endl;
+    cout << "foo entered resource A" << endl;
 
     sleep(1);
 
     pthread_mutex_lock(&mutResourceB);
-    cout << "foo enters resource B" << endl;
+    cout << "foo entered resource B" << endl;
     pthread_mutex_unlock(&mutResourceB);
 
     pthread_mutex_unlock(&mutResourceA);
@@ -35,12 +35,12 @@ void* foo(void*) {
 
 void* bar(void*) {
     pthread_mutex_lock(&mutResourceB);
-    cout << "bar enters resource B" << endl;
+    cout << "bar entered resource B" << endl;
 
     sleep(1);
 
     pthread_mutex_lock(&mutResourceA);
-    cout << "bar enters resource A" << endl;
+    cout << "bar entered resource A" << endl;
     pthread_mutex_unlock(&mutResourceA);
 
     pthread_mutex_unlock(&mutResourceB);
