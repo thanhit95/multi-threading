@@ -10,7 +10,7 @@ using namespace std;
 
 
 
-volatile int stopped = false;
+volatile bool stopped = false;
 
 
 
