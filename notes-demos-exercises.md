@@ -139,7 +139,7 @@ Update later.
 
 ### DEMO 11 - THREAD POOL
 
-How learn how to use thread pool and how thread pool works.
+You learn how to use thread pool and how thread pool works.
 
 A thread pool is a software design pattern for achieving concurrency of execution in a computer program. Often also called a replicated workers or worker-crew model, a thread pool maintains multiple threads waiting for tasks to be allocated for concurrent execution by the supervising program. By maintaining a pool of threads, the model increases performance and avoids latency in execution due to frequent creation and destruction of threads for short-lived tasks.
 
