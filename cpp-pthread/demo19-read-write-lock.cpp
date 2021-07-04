@@ -72,8 +72,8 @@ void* routineWrite(void* arg) {
 
 
 int main() {
-    constexpr int NUM_THREADS_READ = 7;
-    constexpr int NUM_THREADS_WRITE = 2;
+    constexpr int NUM_THREADS_READ = 10;
+    constexpr int NUM_THREADS_WRITE = 4;
     constexpr int NUM_ARGS = 3;
 
     pthread_t lstTidRead[NUM_THREADS_READ];
