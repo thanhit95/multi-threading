@@ -59,6 +59,7 @@ I am sorry that generated table of contents contains too many uppercase stuff...
     - [EX05 - MATRIX PRODUCTION](#ex05---matrix-production)
       - [Version A: Matrix-vector multiplication](#version-a-matrix-vector-multiplication)
       - [Version B: Matrix-matrix production (dot product)](#version-b-matrix-matrix-production-dot-product)
+    - [EX06 - THREAD POOL IMPLEMENTATION](#ex06---thread-pool-implementation)
 
 &nbsp;
 
@@ -551,5 +552,9 @@ The result of dot(A, B) is the matrix:
 |   6   3   1   -7  |
 |   8   4   2   -8  |
 ```
+
+&nbsp;
+
+### EX06 - THREAD POOL IMPLEMENTATION
 
 &nbsp;
