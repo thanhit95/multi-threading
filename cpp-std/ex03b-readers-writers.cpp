@@ -26,7 +26,11 @@ void funcWriter(
 ) {
     std::this_thread::sleep_for(std::chrono::seconds(timeDelay));
 
+    semServiceQueue->acquire();
+
     semResource->acquire();
+
+    semServiceQueue->release();
 
     (*resource) = mytool::RandInt::staticGet() % 100;
     cout << "Write " << (*resource) << endl;
@@ -47,6 +51,9 @@ void funcReader(
     std::this_thread::sleep_for(std::chrono::seconds(timeDelay));
 
 
+    semServiceQueue->acquire();
+
+
     // inrease reader count
     mutReaderCount->lock();
     (*readerCount) += 1;
@@ -55,6 +62,9 @@ void funcReader(
         semResource->acquire();
 
     mutReaderCount->unlock();
+
+
+    semServiceQueue->release();
 
 
     // do the reading
