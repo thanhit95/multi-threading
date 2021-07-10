@@ -56,8 +56,7 @@ I am sorry that generated table of contents contains too many uppercase stuff...
     - [EX04 - THE DINING PHILOSOPHERS PROBLEM](#ex04---the-dining-philosophers-problem)
       - [Problem statement](#problem-statement-1)
       - [Solution](#solution)
-    - [EX05 - COUNTDOWN TIMER](#ex05---countdown-timer)
-    - [EX06 - MATRIX PRODUCTION](#ex06---matrix-production)
+    - [EX05 - MATRIX PRODUCTION](#ex05---matrix-production)
       - [Version A: Matrix-vector multiplication](#version-a-matrix-vector-multiplication)
       - [Version B: Matrix-matrix production (dot product)](#version-b-matrix-matrix-production-dot-product)
 
@@ -489,13 +488,7 @@ Some of the ways to avoid deadlock are as follows:
 
 &nbsp;
 
-### EX05 - COUNTDOWN TIMER
-
-Simple countdown timer implementation.
-
-&nbsp;
-
-### EX06 - MATRIX PRODUCTION
+### EX05 - MATRIX PRODUCTION
 
 #### Version A: Matrix-vector multiplication
 
