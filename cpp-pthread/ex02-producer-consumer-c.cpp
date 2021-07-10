@@ -141,8 +141,8 @@ void* consumer(void* argVoid) {
 int main() {
     Monitor<int> monitor;
     queue<int> qProduct;
-    constexpr int MAX_QUEUE_SIZE = 6;
 
+    constexpr int MAX_QUEUE_SIZE = 6;
     constexpr int NUM_PRODUCERS = 3;
     constexpr int NUM_CONSUMERS = 2;
 
