@@ -116,12 +116,12 @@ int main() {
     }
 
 
-    auto timeSpan = mytool::HiResClock::getTimeSpan(tpStart);
+    auto timeElapsed = mytool::HiResClock::getTimeSpan(tpStart);
 
 
     cout << "The integer which has largest number of divisors is " << finalRes.value << endl;
     cout << "The largest number of divisor is " << finalRes.numDiv << endl;
-    cout << "Time elapsed = " << timeSpan.count() << endl;
+    cout << "Time elapsed = " << timeElapsed.count() << endl;
 
     return 0;
 }
