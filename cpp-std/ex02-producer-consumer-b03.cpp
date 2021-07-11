@@ -62,7 +62,7 @@ void consumer(
 
 int main() {
     TypeSemaphore semFill(0);   // item produced
-    TypeSemaphore semEmpty(4);  // remaining space in queue
+    TypeSemaphore semEmpty(1);  // remaining space in queue
 
     queue<int> qProduct;
 

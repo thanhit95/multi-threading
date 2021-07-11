@@ -115,7 +115,7 @@ int main() {
     int ret = 0;
 
 
-    sem.init(0, 6);
+    sem.init(0, 1);
 
 
     // PREPARE ARGUMENTS
