@@ -1,12 +1,13 @@
 /*
  * DEADLOCK
+ * Version B
  */
 
 package demo15;
 
 
 
-public class Program {
+public class ProgramB {
 
     public static void main(String[] args) throws InterruptedException {
         final Object resourceA = "resourceA";
