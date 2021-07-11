@@ -1,3 +1,8 @@
+/*
+MAXIMUM NUMBER OF DIVISORS
+*/
+
+
 #include <iostream>
 #include "mytool-time.hpp"
 using namespace std;
