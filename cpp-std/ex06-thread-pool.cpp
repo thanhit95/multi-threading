@@ -122,7 +122,7 @@ private:
             // WAITING FOR A PENDING TASK
             std::unique_lock<std::mutex> lkTaskPending(mutTaskPending);
 
-            while (taskPending.size() == 0 and false == forceThreadShutdown) {
+            while (0 == taskPending.size() && false == forceThreadShutdown) {
                 condTaskPending.wait(lkTaskPending);
             }
 
