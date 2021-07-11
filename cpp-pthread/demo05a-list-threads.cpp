@@ -1,5 +1,6 @@
 /*
 DEMO LIST OF MUTIPLE THREADS
+Version A: Using the standard array
 */
 
 

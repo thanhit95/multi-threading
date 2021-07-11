@@ -1,6 +1,6 @@
 /*
 HELLO WORLD VERSION MULTITHREADING
-Version B: Using lambda
+Version C: Using lambda
 */
 
 

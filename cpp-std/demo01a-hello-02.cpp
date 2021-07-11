@@ -1,6 +1,6 @@
 /*
 HELLO WORLD VERSION MULTITHREADING
-Version A01: Using functions
+Version A02: Using functions with passing an argument
 */
 
 

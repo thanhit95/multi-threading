@@ -1,5 +1,6 @@
 /*
 DEMO LIST OF MUTIPLE THREADS
+Version B: Using the std::vector
 */
 
 
