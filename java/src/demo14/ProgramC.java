@@ -27,7 +27,7 @@ public class ProgramC {
 
         System.out.println("counter = " + MyTaskC.counter);
         /*
-         * We are sure that counter = 3000
+         * We are sure that counter = 30000
          */
     }
 
@@ -48,7 +48,7 @@ class MyTaskC extends Thread {
     private static synchronized void incCounter() {
         try { Thread.sleep(500); } catch (InterruptedException e) { }
 
-        for (int i = 0; i < 1000; ++i) {
+        for (int i = 0; i < 10000; ++i) {
             ++counter;
         }
     }

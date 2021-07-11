@@ -38,7 +38,7 @@ public class ProgramB01 {
 
         System.out.println("counter = " + MyTaskB01.counter);
         /*
-         * We are NOT sure that counter = 3000
+         * We are NOT sure that counter = 30000
          */
     }
 
@@ -54,7 +54,7 @@ class MyTaskB01 extends Thread {
     public synchronized void run() {
         try { Thread.sleep(500); } catch (InterruptedException e) { }
 
-        for (int i = 0; i < 1000; ++i) {
+        for (int i = 0; i < 10000; ++i) {
             ++counter;
         }
     }

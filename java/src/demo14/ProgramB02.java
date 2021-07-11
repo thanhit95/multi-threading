@@ -30,7 +30,7 @@ public class ProgramB02 {
 
         System.out.println("counter = " + MyTaskB02.counter);
         /*
-         * We are sure that counter = 3000
+         * We are sure that counter = 30000
          */
     }
 
@@ -46,7 +46,7 @@ class MyTaskB02 implements Runnable {
     public synchronized void run() {
         try { Thread.sleep(500); } catch (InterruptedException e) { }
 
-        for (int i = 0; i < 1000; ++i) {
+        for (int i = 0; i < 10000; ++i) {
             ++counter;
         }
     }

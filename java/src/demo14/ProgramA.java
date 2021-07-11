@@ -27,7 +27,7 @@ public class ProgramA {
 
         System.out.println("counter = " + MyTaskA.counter);
         /*
-         * We are sure that counter = 3000
+         * We are sure that counter = 30000
          */
     }
 
@@ -52,7 +52,7 @@ class MyTaskA extends Thread {
          */
 
         synchronized(this) {
-            for (int i = 0; i < 1000; ++i) {
+            for (int i = 0; i < 10000; ++i) {
                 ++counter;
             }
         }
