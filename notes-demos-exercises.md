@@ -31,6 +31,8 @@ I am sorry that generated table of contents contains too many uppercase stuff...
     - [DEMO 13 - MUTEX](#demo-13---mutex)
     - [DEMO 14 - SYNCHRONIZED](#demo-14---synchronized)
     - [DEMO 15 - DEADLOCK](#demo-15---deadlock)
+      - [Version A](#version-a)
+      - [Version B](#version-b)
     - [DEMO 16 - MONITOR](#demo-16---monitor)
     - [DEMO 17 - REENTRANT LOCK (RECURSIVE MUTEX)](#demo-17---reentrant-lock-recursive-mutex)
     - [DEMO 18 - BARRIER AND LATCH](#demo-18---barrier-and-latch)
@@ -44,8 +46,8 @@ I am sorry that generated table of contents contains too many uppercase stuff...
     - [DEMO 22 & 23 - VOLATILE AND ATOMIC](#demo-22--23---volatile-and-atomic)
   - [EXERCISES](#exercises)
     - [EX01 - MAX DIV](#ex01---max-div)
-      - [Version A](#version-a)
-      - [Version B](#version-b)
+      - [Version A](#version-a-1)
+      - [Version B](#version-b-1)
       - [Version C](#version-c)
     - [EX02 - THE PRODUCER-CONSUMER PROBLEM](#ex02---the-producer-consumer-problem)
     - [EX03 - THE READERS-WRITERS PROBLEM](#ex03---the-readers-writers-problem)
@@ -212,6 +214,14 @@ Update later.
 &nbsp;
 
 ### DEMO 15 - DEADLOCK
+
+#### Version A
+
+A simple demo of deadlock: Forgetting to release mutex.
+
+&nbsp;
+
+#### Version B
 
 There are 2 workers "foo" and "bar".
 
