@@ -9,56 +9,34 @@ package demo12c;
 public class Program02 {
 
     public static void main(String[] args) throws InterruptedException {
-        var thA = new TaskCountToWin('A');
-        var thB = new TaskCountToWin('B');
+        var thA = new Thread(() -> {
+            try { Thread.sleep(30); } catch (InterruptedException e) { }
+
+            while (Global.counter < 10)
+                ++Global.counter;
+
+            System.out.println("A won !!!");
+        });
+
+
+        var thB = new Thread(() -> {
+            try { Thread.sleep(30); } catch (InterruptedException e) { }
+
+            while (Global.counter > -10)
+                --Global.counter;
+
+            System.out.println("B won !!!");
+        });
+
 
         thA.start();
         thB.start();
-
-        thA.join();
-        thB.join();
     }
 
 }
 
 
 
-class TaskCountToWin extends Thread {
+class Global {
     static int counter = 0;
-
-
-    char taskType;
-
-
-    public TaskCountToWin(char taskType) {
-        this.taskType = taskType;
-    }
-
-
-    @Override
-    public void run() {
-        try { Thread.sleep(30); }
-        catch (InterruptedException e) { }
-
-        if (taskType == 'A')
-            routineA();
-        else
-            routineB();
-    }
-
-
-    private void routineA() {
-        while (counter < 10)
-            ++counter;
-
-        System.out.println("A won !!!");
-    }
-
-
-    private void routineB() {
-        while (counter < 10)
-            ++counter;
-
-        System.out.println("B won !!!");
-    }
 }
