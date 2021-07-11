@@ -53,8 +53,8 @@ public class MyThreadPoolV2 {
 
             synchronized (taskRunning) {
                 synchronized (taskPending) {
-                    if (taskPending.size() == 0 && taskRunning.size() == 0
-                                                && counterTaskRunning.availablePermits() == 0)
+                    if (0 == taskPending.size() && 0 == taskRunning.size()
+                                                && 0 == counterTaskRunning.availablePermits())
                         break;
                 }
             }
@@ -98,7 +98,7 @@ public class MyThreadPoolV2 {
             for (;;) {
                 // WAITING FOR A PENDING TASK
                 synchronized (taskPending) {
-                    while (taskPending.size() == 0 && false == thisPtr.forceThreadShutdown) {
+                    while (0 == taskPending.size() && false == thisPtr.forceThreadShutdown) {
                         taskPending.wait();
                     }
 

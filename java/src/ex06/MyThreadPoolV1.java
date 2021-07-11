@@ -93,7 +93,7 @@ public class MyThreadPoolV1 {
             for (;;) {
                 // WAITING FOR A PENDING TASK
                 synchronized (taskPending) {
-                    while (taskPending.size() == 0 && false == thisPtr.forceThreadShutdown) {
+                    while (0 == taskPending.size() && false == thisPtr.forceThreadShutdown) {
                         taskPending.wait();
                     }
 
