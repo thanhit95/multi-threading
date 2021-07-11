@@ -106,11 +106,11 @@ int main() {
     queue<int> qProduct;
     pthread_t tidProducer, tidConsumer;
 
+    GlobalArg globalArg = { &qProduct, &sem };
     int ret = 0;
 
 
     sem.init(0, 1);
-    GlobalArg globalArg = { &qProduct, &sem };
 
 
     ret = pthread_create(&tidProducer, nullptr, producer, &globalArg);

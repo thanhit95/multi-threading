@@ -113,6 +113,7 @@ int main() {
 
     sem.init(0, 1);
 
+
     argCon = argProA = argProB = { &qProduct, &sem, 0 };
     argProA.dataAddValue = 0;
     argProA.dataAddValue = 1000;
