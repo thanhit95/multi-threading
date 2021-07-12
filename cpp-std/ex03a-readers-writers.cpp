@@ -18,67 +18,61 @@ using TypeSemaphore = std::counting_semaphore<>;
 
 
 
-void funcWriter(
-    volatile int* resource,
-    TypeSemaphore* semResource,
-    int timeDelay
-) {
+struct GlobalData {
+    volatile int resource = 0;
+    TypeSemaphore semResource = TypeSemaphore(1);
+
+    int readerCount = 0;
+    std::mutex mutReaderCount;
+};
+
+
+
+void funcWriter(GlobalData* g, int timeDelay) {
     std::this_thread::sleep_for(std::chrono::seconds(timeDelay));
 
-    semResource->acquire();
+    g->semResource.acquire();
 
-    (*resource) = mytool::RandInt::staticGet() % 100;
-    cout << "Write " << (*resource) << endl;
+    g->resource = mytool::RandInt::staticGet() % 100;
+    cout << "Write " << g->resource << endl;
 
-    semResource->release();
+    g->semResource.release();
 }
 
 
 
-void funcReader(
-    volatile int* resource,
-    TypeSemaphore* semResource,
-    int* readerCount,
-    std::mutex* mutReaderCount,
-    int timeDelay
-) {
+void funcReader(GlobalData* g, int timeDelay) {
     std::this_thread::sleep_for(std::chrono::seconds(timeDelay));
 
 
     // inrease reader count
-    mutReaderCount->lock();
-    (*readerCount) += 1;
+    g->mutReaderCount.lock();
+    g->readerCount += 1;
 
-    if (1 == (*readerCount))
-        semResource->acquire();
+    if (1 == g->readerCount)
+        g->semResource.acquire();
 
-    mutReaderCount->unlock();
+    g->mutReaderCount.unlock();
 
 
     // do the reading
-    int data = (*resource);
-    cout << "Read " << data << endl;
+    cout << "Read " << g->resource << endl;
 
 
     // decrease reader count
-    mutReaderCount->lock();
-    (*readerCount) -= 1;
+    g->mutReaderCount.lock();
+    g->readerCount -= 1;
 
-    if (0 == (*readerCount))
-        semResource->release();
+    if (0 == g->readerCount)
+        g->semResource.release();
 
-    mutReaderCount->unlock();
+    g->mutReaderCount.unlock();
 }
 
 
 
 int main() {
-    volatile int resource = 0;
-
-    TypeSemaphore semResource(1);
-
-    int readerCount = 0;
-    std::mutex mutReaderCount;
+    GlobalData globalData;
 
 
     constexpr int NUM_READERS = 8;
@@ -90,19 +84,11 @@ int main() {
 
     // CREATE THREADS
     for (auto&& th: lstThReader) {
-        th = std::thread(
-            funcReader,
-            &resource, &semResource, &readerCount, &mutReaderCount,
-            mytool::RandInt::staticGet() % 3
-        );
+        th = std::thread(funcReader, &globalData, mytool::RandInt::staticGet() % 3);
     }
 
     for (auto&& th: lstThWriter) {
-        th = std::thread(
-            funcWriter,
-            &resource, &semResource,
-            mytool::RandInt::staticGet() % 3
-        );
+        th = std::thread(funcWriter, &globalData, mytool::RandInt::staticGet() % 3);
     }
 
 
