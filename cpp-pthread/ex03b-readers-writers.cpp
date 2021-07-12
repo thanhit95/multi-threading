@@ -13,41 +13,41 @@ using namespace std;
 
 
 
-struct WriterArg {
-    volatile int* resource;
-    sem_t* semResource;
-    int timeDelay;
-    sem_t* semServiceQueue;
+struct GlobalData {
+    volatile int resource = 0;
+    sem_t semResource;
+
+    int readerCount = 0;
+    pthread_mutex_t mutReaderCount = PTHREAD_MUTEX_INITIALIZER;
+
+    sem_t semServiceQueue;
 };
 
 
 
-struct ReaderArg {
-    volatile int* resource;
-    sem_t* semResource;
-    int* readerCount;
-    pthread_mutex_t* mutReaderCount;
+struct ThreadArg {
+    GlobalData* g;
     int timeDelay;
-    sem_t* semServiceQueue;
 };
 
 
 
 void* writerFunc(void* argVoid) {
-    auto arg = (WriterArg*)argVoid;
+    auto arg = (ThreadArg*)argVoid;
+    GlobalData* g = arg->g;
+
     sleep(arg->timeDelay);
 
-    sem_wait(arg->semServiceQueue);
+    sem_wait(&g->semServiceQueue);
 
-    sem_wait(arg->semResource);
+    sem_wait(&g->semResource);
 
-    sem_post(arg->semServiceQueue);
+    sem_post(&g->semServiceQueue);
 
-    int data = mytool::RandInt::staticGet() % 100;
-    *(arg->resource) = data;
-    cout << "Write " << data << endl;
+    g->resource = mytool::RandInt::staticGet() % 100;
+    cout << "Write " << g->resource << endl;
 
-    sem_post(arg->semResource);
+    sem_post(&g->semResource);
 
     pthread_exit(nullptr);
     return nullptr;
@@ -56,37 +56,38 @@ void* writerFunc(void* argVoid) {
 
 
 void* readerFunc(void* argVoid) {
-    auto arg = (ReaderArg*)argVoid;
+    auto arg = (ThreadArg*)argVoid;
+    GlobalData* g = arg->g;
+
     sleep(arg->timeDelay);
 
 
     // inrease reader count
-    sem_wait(arg->semServiceQueue);
-    pthread_mutex_lock(arg->mutReaderCount);
+    sem_wait(&g->semServiceQueue);
+    pthread_mutex_lock(&g->mutReaderCount);
 
-    ( *(arg->readerCount) ) += 1;
+    g->readerCount += 1;
 
-    if (1 == *(arg->readerCount))
-        sem_wait(arg->semResource);
+    if (1 == g->readerCount)
+        sem_wait(&g->semResource);
 
-    pthread_mutex_unlock(arg->mutReaderCount);
-    sem_post(arg->semServiceQueue);
+    pthread_mutex_unlock(&g->mutReaderCount);
+    sem_post(&g->semServiceQueue);
 
 
     // do the reading
-    int data = *(arg->resource);
-    cout << "Read " << data << endl;
+    cout << "Read " << g->resource << endl;
 
 
     // decrease reader count
-    pthread_mutex_lock(arg->mutReaderCount);
+    pthread_mutex_lock(&g->mutReaderCount);
 
-    ( *(arg->readerCount) ) -= 1;
+    g->readerCount -= 1;
 
-    if (0 == *(arg->readerCount))
-        sem_post(arg->semResource);
+    if (0 == g->readerCount)
+        sem_post(&g->semResource);
 
-    pthread_mutex_unlock(arg->mutReaderCount);
+    pthread_mutex_unlock(&g->mutReaderCount);
 
 
     pthread_exit(nullptr);
@@ -95,46 +96,19 @@ void* readerFunc(void* argVoid) {
 
 
 
-void prepareArguments(
-    ReaderArg argReader[], WriterArg argWriter[],
-    int numReaders, int numWriters,
-    volatile int* resource,
-    sem_t* semResource,
-    int* readerCount,
-    pthread_mutex_t* mutReaderCount,
-    sem_t* semServiceQueue
-)
-{
-    for (int i = 0; i < numReaders; ++i) {
-        argReader[i].resource = resource;
-        argReader[i].semResource = semResource;
-        argReader[i].readerCount = readerCount;
-        argReader[i].mutReaderCount = mutReaderCount;
-        argReader[i].timeDelay = mytool::RandInt::staticGet() % 3;
-        argReader[i].semServiceQueue = semServiceQueue;
-    }
-
-    for (int i = 0; i < numWriters; ++i) {
-        argWriter[i].resource = resource;
-        argWriter[i].semResource = semResource;
-        argWriter[i].timeDelay = mytool::RandInt::staticGet() % 3;
-        argWriter[i].semServiceQueue = semServiceQueue;
+void prepareArg(ThreadArg arg[], int numArg, GlobalData* g) {
+    for (int i = 0; i < numArg; ++i) {
+        arg[i].g = g;
+        arg[i].timeDelay = mytool::RandInt::staticGet() % 3;
     }
 }
 
 
 
 int main() {
-    volatile int resource = 0;
-
-    sem_t semResource;
-    sem_init(&semResource, 0, 1);
-
-    int readerCount = 0;
-    pthread_mutex_t mutexReaderCount = PTHREAD_MUTEX_INITIALIZER;
-
-    sem_t semServiceQueue;
-    sem_init(&semServiceQueue, 0, 1);
+    GlobalData globalData;
+    sem_init(&globalData.semResource, 0, 1);
+    sem_init(&globalData.semServiceQueue, 0, 1);
 
 
     constexpr int NUM_READERS = 8;
@@ -147,13 +121,11 @@ int main() {
 
 
     // PREPARE ARGUMENTS
-    ReaderArg argReader[NUM_READERS];
-    WriterArg argWriter[NUM_WRITERS];
+    ThreadArg argReader[NUM_READERS];
+    ThreadArg argWriter[NUM_WRITERS];
 
-    prepareArguments(argReader, argWriter, NUM_READERS, NUM_WRITERS,
-                     &resource, &semResource,
-                     &readerCount, &mutexReaderCount,
-                     &semServiceQueue);
+    prepareArg(argReader, NUM_READERS, &globalData);
+    prepareArg(argWriter, NUM_WRITERS, &globalData);
 
 
     // CREATE THREADS
@@ -177,9 +149,9 @@ int main() {
 
 
     // CLEAN UP
-    ret = pthread_mutex_destroy(&mutexReaderCount);
-    ret = sem_destroy(&semResource);
-    ret = sem_destroy(&semServiceQueue);
+    ret = sem_destroy(&globalData.semResource);
+    ret = pthread_mutex_destroy(&globalData.mutReaderCount);
+    ret = sem_destroy(&globalData.semServiceQueue);
 
 
     return 0;
