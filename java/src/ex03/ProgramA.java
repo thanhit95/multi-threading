@@ -50,12 +50,12 @@ public class ProgramA {
         var rand = new Random();
         Thread.sleep(1000 * timeDelay);
 
-        Global.semResource.acquire();
+        Global.mutResource.acquire();
 
         Global.resource = rand.nextInt(100);
         System.out.println("Write " + Global.resource);
 
-        Global.semResource.release();
+        Global.mutResource.release();
     }
 
 
@@ -67,7 +67,7 @@ public class ProgramA {
             Global.readerCount += 1;
 
             if (1 == Global.readerCount)
-                Global.semResource.acquire();
+                Global.mutResource.acquire();
         }
 
 
@@ -81,14 +81,14 @@ public class ProgramA {
             Global.readerCount -= 1;
 
             if (0 == Global.readerCount)
-                Global.semResource.release();
+                Global.mutResource.release();
         }
     }
 
 
 
     class Global {
-        static Semaphore semResource = new Semaphore(1);
+        static Semaphore mutResource = new Semaphore(1);
         static Object mutReaderCount = new Object();
 
         static volatile int resource = 0;
