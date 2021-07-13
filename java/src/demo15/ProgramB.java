@@ -15,12 +15,12 @@ public class ProgramB {
 
 
         var foo = new Thread(() -> {
-            synchronized(resourceA) {
+            synchronized (resourceA) {
                 System.out.println("foo entered resource A");
 
                 try { Thread.sleep(1000); } catch (InterruptedException e) { }
 
-                synchronized(resourceB) {
+                synchronized (resourceB) {
                     System.out.println("foo entered resource B");
                 }
             }
@@ -28,12 +28,12 @@ public class ProgramB {
 
 
         var bar = new Thread(() -> {
-            synchronized(resourceB) {
+            synchronized (resourceB) {
                 System.out.println("bar entered resource B");
 
                 try { Thread.sleep(1000); } catch (InterruptedException e) { }
 
-                synchronized(resourceA) {
+                synchronized (resourceA) {
                     System.out.println("bar entered resource A");
                 }
             }

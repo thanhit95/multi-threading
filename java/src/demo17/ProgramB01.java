@@ -18,10 +18,10 @@ public class ProgramB01 {
 
 
         new Thread(() -> {
-            synchronized(resource) {
+            synchronized (resource) {
                 System.out.println("First time acquiring the resource");
 
-                synchronized(resource) {
+                synchronized (resource) {
                     System.out.println("Second time acquiring the resource");
                 }
             }

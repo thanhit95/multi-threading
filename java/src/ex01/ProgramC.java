@@ -95,7 +95,7 @@ public class ProgramC {
         public int numDiv = 0;
 
         public void update(int value, int numDiv) {
-            synchronized(this) {
+            synchronized (this) {
                 if (this.numDiv < numDiv) {
                     this.numDiv = numDiv;
                     this.value = value;

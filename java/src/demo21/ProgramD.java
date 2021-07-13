@@ -32,7 +32,7 @@ class Foo extends Thread {
     @Override
     public void run() {
         for (;;) {
-            synchronized(Global.conditionVar) {
+            synchronized (Global.conditionVar) {
                 try {
                     Global.conditionVar.wait();
 
@@ -58,7 +58,7 @@ class Eggs extends Thread {
     @Override
     public void run() {
         for (;;) {
-            synchronized(Global.conditionVar) {
+            synchronized (Global.conditionVar) {
                 if (Global.counter < Global.COUNT_HALT_01 || Global.counter > Global.COUNT_HALT_02) {
                     Global.conditionVar.notify();
                 }

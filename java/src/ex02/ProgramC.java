@@ -86,7 +86,7 @@ class Monitor<T> {
 
 
     public void add(T item) throws InterruptedException {
-        synchronized(condFull) {
+        synchronized (condFull) {
             while (q.size() == maxQueueSize) {
                 condFull.wait();
             }
@@ -105,7 +105,7 @@ class Monitor<T> {
     public T remove() throws InterruptedException {
         T item = null;
 
-        synchronized(condEmpty) {
+        synchronized (condEmpty) {
             while (q.size() == 0) {
                 condEmpty.wait();
             }

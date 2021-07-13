@@ -16,7 +16,7 @@ public class ProgramA {
             try {
                 System.out.println("foo is waiting...");
 
-                synchronized(conditionVar) {
+                synchronized (conditionVar) {
                     // foo must own the conditionVar before using it
                     conditionVar.wait();
                 }
@@ -32,7 +32,7 @@ public class ProgramA {
         Runnable bar = () -> {
             try { Thread.sleep(3000); } catch (InterruptedException e) { }
 
-            synchronized(conditionVar) {
+            synchronized (conditionVar) {
                 // bar must own the conditionVar before using it
                 conditionVar.notify();
             }

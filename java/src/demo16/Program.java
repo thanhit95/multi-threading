@@ -55,7 +55,7 @@ class Monitor {
     }
 
     public void increaseCounter() {
-        synchronized(counter) {
+        synchronized (counter) {
             ++counter.value;
         }
     }

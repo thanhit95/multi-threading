@@ -16,7 +16,7 @@ public class ProgramB {
             try {
                 System.out.println("foo is waiting...");
 
-                synchronized(conditionVar) {
+                synchronized (conditionVar) {
                     conditionVar.wait();
                 }
 
@@ -32,7 +32,7 @@ public class ProgramB {
             for (int i = 0; i < 3; ++i) {
                 try { Thread.sleep(2000); } catch (InterruptedException e) { }
 
-                synchronized(conditionVar) {
+                synchronized (conditionVar) {
                     conditionVar.notify();
                 }
             }

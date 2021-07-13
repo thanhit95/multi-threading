@@ -44,14 +44,14 @@ class MyTaskA extends Thread {
         try { Thread.sleep(1000); } catch (InterruptedException e) { }
 
         /*
-         * synchronized(this) means that on "this" object,
+         * synchronized (this) means that on "this" object,
          *                    only and only one thread can excute the enclosed block at one time.
          *
          * "this" is the monitor object, the code inside the block gets synchronized on the monitor object.
          * Simply put, only one thread per monitor object can execute inside that block of code.
          */
 
-        synchronized(this) {
+        synchronized (this) {
             for (int i = 0; i < 10000; ++i) {
                 ++counter;
             }

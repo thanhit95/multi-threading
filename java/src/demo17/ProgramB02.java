@@ -37,7 +37,7 @@ class MyTaskB extends Thread {
     public void run() {
         try { Thread.sleep(1000); } catch (InterruptedException e) { }
 
-        synchronized(lock) {
+        synchronized (lock) {
             System.out.println("First time %c acquiring the lock".formatted(name));
 
             synchronized (lock) {
