@@ -7,7 +7,6 @@ Solution for the third readers-writers problem
 #include <iostream>
 #include <unistd.h>
 #include <pthread.h>
-#include <semaphore.h>
 #include "mytool-random.hpp"
 using namespace std;
 
@@ -15,12 +14,12 @@ using namespace std;
 
 struct GlobalData {
     volatile int resource = 0;
-    sem_t semResource;
-
     int readerCount = 0;
+
+    pthread_mutex_t mutResource = PTHREAD_MUTEX_INITIALIZER;
     pthread_mutex_t mutReaderCount = PTHREAD_MUTEX_INITIALIZER;
 
-    sem_t semServiceQueue;
+    pthread_mutex_t mutServiceQueue = PTHREAD_MUTEX_INITIALIZER;
 };
 
 
@@ -38,16 +37,16 @@ void* writerFunc(void* argVoid) {
 
     sleep(arg->timeDelay);
 
-    sem_wait(&g->semServiceQueue);
+    pthread_mutex_lock(&g->mutServiceQueue);
 
-    sem_wait(&g->semResource);
+    pthread_mutex_lock(&g->mutResource);
 
-    sem_post(&g->semServiceQueue);
+    pthread_mutex_unlock(&g->mutServiceQueue);
 
     g->resource = mytool::RandInt::staticGet() % 100;
     cout << "Write " << g->resource << endl;
 
-    sem_post(&g->semResource);
+    pthread_mutex_unlock(&g->mutResource);
 
     pthread_exit(nullptr);
     return nullptr;
@@ -63,16 +62,16 @@ void* readerFunc(void* argVoid) {
 
 
     // inrease reader count
-    sem_wait(&g->semServiceQueue);
+    pthread_mutex_lock(&g->mutServiceQueue);
     pthread_mutex_lock(&g->mutReaderCount);
 
     g->readerCount += 1;
 
     if (1 == g->readerCount)
-        sem_wait(&g->semResource);
+        pthread_mutex_lock(&g->mutResource);
 
     pthread_mutex_unlock(&g->mutReaderCount);
-    sem_post(&g->semServiceQueue);
+    pthread_mutex_unlock(&g->mutServiceQueue);
 
 
     // do the reading
@@ -85,7 +84,7 @@ void* readerFunc(void* argVoid) {
     g->readerCount -= 1;
 
     if (0 == g->readerCount)
-        sem_post(&g->semResource);
+        pthread_mutex_unlock(&g->mutResource);
 
     pthread_mutex_unlock(&g->mutReaderCount);
 
@@ -107,8 +106,6 @@ void prepareArg(ThreadArg arg[], int numArg, GlobalData* g) {
 
 int main() {
     GlobalData globalData;
-    sem_init(&globalData.semResource, 0, 1);
-    sem_init(&globalData.semServiceQueue, 0, 1);
 
 
     constexpr int NUM_READERS = 8;
@@ -149,9 +146,9 @@ int main() {
 
 
     // CLEAN UP
-    ret = sem_destroy(&globalData.semResource);
+    ret = pthread_mutex_destroy(&globalData.mutResource);
     ret = pthread_mutex_destroy(&globalData.mutReaderCount);
-    ret = sem_destroy(&globalData.semServiceQueue);
+    ret = pthread_mutex_destroy(&globalData.mutServiceQueue);
 
 
     return 0;
