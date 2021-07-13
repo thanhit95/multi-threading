@@ -1,6 +1,6 @@
 /*
 BLOCKING QUEUE IMPLEMENTATION
-Version B: General blocking queue
+Version B02: General blocking queue / underlying mechanism: condition variable
 */
 
 
@@ -30,7 +30,7 @@ private:
 
 
 public:
-    BlockingQueue<T>(int capacity) {
+    BlockingQueue(int capacity) {
         if (capacity <= 0)
             throw std::invalid_argument("capacity must be a positive integer");
 
@@ -38,7 +38,7 @@ public:
     }
 
 
-    ~BlockingQueue<T>() {
+    ~BlockingQueue() {
         pthread_cond_destroy(&condEmpty);
         pthread_cond_destroy(&condFull);
         pthread_mutex_destroy(&mutEmpty);
