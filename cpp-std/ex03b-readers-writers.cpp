@@ -49,7 +49,7 @@ void funcReader(GlobalData* g, int timeDelay) {
     g->mutServiceQueue.lock();
 
 
-    // inrease reader count
+    // Increase reader count
     g->mutReaderCount.lock();
     g->readerCount += 1;
 
@@ -62,11 +62,11 @@ void funcReader(GlobalData* g, int timeDelay) {
     g->mutServiceQueue.unlock();
 
 
-    // do the reading
+    // Do the reading
     cout << "Read " << g->resource << endl;
 
 
-    // decrease reader count
+    // Decrease reader count
     g->mutReaderCount.lock();
     g->readerCount -= 1;
 

@@ -70,7 +70,7 @@ public class ProgramB {
         Global.mutServiceQueue.acquire();
 
 
-        // inrease reader count
+        // Increase reader count
         synchronized (Global.mutReaderCount) {
             Global.readerCount += 1;
 
@@ -82,12 +82,12 @@ public class ProgramB {
         Global.mutServiceQueue.release();
 
 
-        // do the reading
+        // Do the reading
         int data = Global.resource;
         System.out.println("Read " + data);
 
 
-        // decrease reader count
+        // Decrease reader count
         synchronized (Global.mutReaderCount) {
             Global.readerCount -= 1;
 

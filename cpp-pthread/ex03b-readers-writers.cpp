@@ -61,7 +61,7 @@ void* readerFunc(void* argVoid) {
     sleep(arg->timeDelay);
 
 
-    // inrease reader count
+    // Increase reader count
     pthread_mutex_lock(&g->mutServiceQueue);
     pthread_mutex_lock(&g->mutReaderCount);
 
@@ -74,11 +74,11 @@ void* readerFunc(void* argVoid) {
     pthread_mutex_unlock(&g->mutServiceQueue);
 
 
-    // do the reading
+    // Do the reading
     cout << "Read " << g->resource << endl;
 
 
-    // decrease reader count
+    // Decrease reader count
     pthread_mutex_lock(&g->mutReaderCount);
 
     g->readerCount -= 1;

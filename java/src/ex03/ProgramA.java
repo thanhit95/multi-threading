@@ -62,7 +62,7 @@ public class ProgramA {
     private static void funcReader(int timeDelay) throws InterruptedException {
         Thread.sleep(1000 * timeDelay);
 
-        // inrease reader count
+        // Increase reader count
         synchronized (Global.mutReaderCount) {
             Global.readerCount += 1;
 
@@ -71,12 +71,12 @@ public class ProgramA {
         }
 
 
-        // do the reading
+        // Do the reading
         int data = Global.resource;
         System.out.println("Read " + data);
 
 
-        // decrease reader count
+        // Decrease reader count
         synchronized (Global.mutReaderCount) {
             Global.readerCount -= 1;
 

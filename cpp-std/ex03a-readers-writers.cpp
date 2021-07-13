@@ -40,7 +40,7 @@ void funcReader(GlobalData* g, int timeDelay) {
     std::this_thread::sleep_for(std::chrono::seconds(timeDelay));
 
 
-    // inrease reader count
+    // Increase reader count
     g->mutReaderCount.lock();
     g->readerCount += 1;
 
@@ -50,11 +50,11 @@ void funcReader(GlobalData* g, int timeDelay) {
     g->mutReaderCount.unlock();
 
 
-    // do the reading
+    // Do the reading
     cout << "Read " << g->resource << endl;
 
 
-    // decrease reader count
+    // Decrease reader count
     g->mutReaderCount.lock();
     g->readerCount -= 1;
 
