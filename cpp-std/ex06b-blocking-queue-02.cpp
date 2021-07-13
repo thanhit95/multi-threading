@@ -1,6 +1,6 @@
 /*
 BLOCKING QUEUE IMPLEMENTATION
-Version B: General blocking queue
+Version B02: General blocking queue / underlying mechanism: condition variable
 */
 
 
@@ -8,6 +8,7 @@ Version B: General blocking queue
 #include <list>
 #include <string>
 #include <thread>
+#include <mutex>
 #include <condition_variable>
 #include <chrono>
 #include <stdexcept>
@@ -31,7 +32,7 @@ private:
 
 
 public:
-    BlockingQueue<T>(int capacity) {
+    BlockingQueue(int capacity) {
         if (capacity <= 0)
             throw std::invalid_argument("capacity must be a positive integer");
 
@@ -43,7 +44,7 @@ public:
         {
             std::unique_lock<std::mutex> lk(mutFull);
 
-            while (capacity == lst.size()) {
+            while (capacity == (int)lst.size()) {
                 // queue is full, must wait for 'take'
                 condFull.wait(lk);
             }
