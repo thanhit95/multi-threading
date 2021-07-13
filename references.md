@@ -10,6 +10,7 @@
 - <https://thispointer.com/category/multithreading/>
 - <https://en.cppreference.com/w/cpp/thread>
 - <https://docs.python.org/3/library/threading.html>
+- <http://tutorials.jenkov.com/java-concurrency>
 
 &nbsp;
 
