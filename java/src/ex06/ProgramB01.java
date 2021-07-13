@@ -1,15 +1,16 @@
 /*
  * BLOCKING QUEUE IMPLEMENTATION
- * Version B: General blocking queue
+ * Version B01: General blocking queue / underlying mechanism: semaphore
  */
 
 package ex06;
 
 import java.util.LinkedList;
+import java.util.concurrent.Semaphore;
 
 
 
-public class ProgramB {
+public class ProgramB01 {
 
     public static void main(String[] args) {
         final var queue = new MyLinkedBlockingQueue<String>(2); // capacity = 2
@@ -54,63 +55,54 @@ public class ProgramB {
         }
     }
 
-}
+
+    //////////////////////////////////////////////
 
 
+    static class MyLinkedBlockingQueue<T> {
+        private Semaphore semRemain = null;
+        private Semaphore semFill = null;
 
-class MyLinkedBlockingQueue<T> {
-    private Object condEmpty = new Object();
-    private Object condFull = new Object();
-
-    int capacity = 0;
-    private LinkedList<T> lst = null;
-
-
-    public MyLinkedBlockingQueue(int capacity) {
-        if (capacity <= 0)
-            throw new IllegalArgumentException("capacity must be a positive integer");
-
-        this.capacity = capacity;
-        lst = new LinkedList<T>();
-    }
+        private int capacity = 0;
+        private LinkedList<T> lst = null;
 
 
-    public void put(T value) throws InterruptedException {
-        synchronized (condFull) {
-            while (capacity == lst.size()) {
-                // queue is full, must wait for 'take'
-                condFull.wait();
+        public MyLinkedBlockingQueue(int capacity) {
+            if (capacity <= 0)
+                throw new IllegalArgumentException("capacity must be a positive integer");
+
+            semRemain = new Semaphore(capacity);
+            semFill = new Semaphore(0);
+
+            this.capacity = capacity;
+            lst = new LinkedList<T>();
+        }
+
+
+        public void put(T value) throws InterruptedException {
+            semRemain.acquire();
+
+            synchronized (lst) {
+                lst.add(value);
             }
+
+            semFill.release();
         }
 
-        synchronized (lst) {
-            lst.add(value);
-        }
 
-        synchronized (condEmpty) {
-            condEmpty.notify();
-        }
-    }
+        public T take() throws InterruptedException {
+            T result = null;
 
+            semFill.acquire();
 
-    public T take() throws InterruptedException {
-        T result = null;
-
-        synchronized (condEmpty) {
-            while (0 == lst.size()) {
-                // queue is empty, must wait for 'put'
-                condEmpty.wait();
+            synchronized (lst) {
+                result = lst.remove();
             }
-        }
 
-        synchronized (lst) {
-            result = lst.remove();
-        }
+            semRemain.release();
 
-        synchronized (condFull) {
-            condFull.notify();
+            return result;
         }
-
-        return result;
     }
+
 }
