@@ -43,7 +43,8 @@ I am sorry that generated table of contents contains too many uppercase stuff...
       - [Version A03](#version-a03)
     - [DEMO 20B - SEMAPHORE](#demo-20b---semaphore)
     - [DEMO 21 - CONDITION VARIABLE](#demo-21---condition-variable)
-    - [DEMO 22 & 23 - VOLATILE AND ATOMIC](#demo-22--23---volatile-and-atomic)
+    - [DEMO 22 - BLOCKING QUEUE](#demo-22---blocking-queue)
+    - [DEMO 23 & 24 - VOLATILE AND ATOMIC](#demo-23--24---volatile-and-atomic)
   - [EXERCISES](#exercises)
     - [EX01 - MAX DIV](#ex01---max-div)
       - [Version A](#version-a-1)
@@ -61,7 +62,8 @@ I am sorry that generated table of contents contains too many uppercase stuff...
     - [EX05 - MATRIX PRODUCTION](#ex05---matrix-production)
       - [Version A: Matrix-vector multiplication](#version-a-matrix-vector-multiplication)
       - [Version B: Matrix-matrix production (dot product)](#version-b-matrix-matrix-production-dot-product)
-    - [EX06 - THREAD POOL IMPLEMENTATION](#ex06---thread-pool-implementation)
+    - [EX07 - BLOCKING QUEUE IMPLEMENTATION](#ex07---blocking-queue-implementation)
+    - [EX07 - THREAD POOL IMPLEMENTATION](#ex07---thread-pool-implementation)
 
 &nbsp;
 
@@ -338,7 +340,18 @@ Condition variables are synchronization primitives that enable threads to wait u
 
 &nbsp;
 
-### DEMO 22 & 23 - VOLATILE AND ATOMIC
+### DEMO 22 - BLOCKING QUEUE
+
+A blocking queue is a queue that blocks when you:
+
+- try to dequeue from it and the queue is empty, or...
+- try to enqueue items to it and the queue is already full.
+
+There is a special type of the blocking queue, that is "synchronous queue". A synchronous queue is a blocking queue with capacity = 0 (i.e. it does not store any value at all).
+
+&nbsp;
+
+### DEMO 23 & 24 - VOLATILE AND ATOMIC
 
 Please read article "Volatile vs Atomic" for better understanding.
 
@@ -565,6 +578,10 @@ The result of dot(A, B) is the matrix:
 
 &nbsp;
 
-### EX06 - THREAD POOL IMPLEMENTATION
+### EX07 - BLOCKING QUEUE IMPLEMENTATION
+
+&nbsp;
+
+### EX07 - THREAD POOL IMPLEMENTATION
 
 &nbsp;
