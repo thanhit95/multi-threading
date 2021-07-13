@@ -2,7 +2,7 @@
  * THREAD POOL IMPLEMENTATION
  */
 
-package ex06;
+package ex07;
 
 import java.util.ArrayList;
 
