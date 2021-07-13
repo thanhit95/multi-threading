@@ -1,6 +1,8 @@
 /*
 MUTEX (Mutual Exclusion)
 
+Without synchronization (by a mutex), we are not sure that result = 30000
+
 std::lock_guard is a class template, which implements the RAII for mutex.
 It wraps the mutex inside it’s object and locks the attached mutex in its constructor.
 When it’s destructor is called it releases the mutex.
@@ -25,7 +27,7 @@ void routineCounter() {
 
     std::lock_guard<std::mutex> lockGuard(mut);
 
-    for (int i = 0; i < 1000; ++i)
+    for (int i = 0; i < 10000; ++i)
         ++counter;
 
     // Once function exits, then destructor of lockGuard object will be called.

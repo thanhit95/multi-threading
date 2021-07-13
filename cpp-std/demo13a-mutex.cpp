@@ -1,5 +1,7 @@
 /*
 MUTEX (Mutual Exclusion)
+
+Without synchronization (by a mutex), we are not sure that result = 30000
 */
 
 
@@ -21,7 +23,7 @@ void routineCounter() {
 
     mut.lock();
 
-    for (int i = 0; i < 1000; ++i)
+    for (int i = 0; i < 10000; ++i)
         ++counter;
 
     mut.unlock();

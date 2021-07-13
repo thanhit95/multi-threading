@@ -1,5 +1,7 @@
 /*
 MUTEX (Mutual Exclusion)
+
+Without synchronization (by a mutex), we are not sure that result = 30000
 */
 
 
@@ -20,7 +22,7 @@ void* routineCounter(void*) {
 
     pthread_mutex_lock(&mut);
 
-    for (int i = 0; i < 1000; ++i)
+    for (int i = 0; i < 10000; ++i)
         ++counter;
 
     pthread_mutex_unlock(&mut);
