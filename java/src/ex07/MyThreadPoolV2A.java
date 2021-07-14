@@ -1,9 +1,11 @@
 /*
  * MY THREAD POOL
  *
- * Version 1:
- * - Simple thread pool.
- * - Method "waitTaskDone" consumes CPU (due to bad synchronization).
+ * Version 2A:
+ *   - Better synchronization.
+ *   - Method "waitTaskDone":
+ *       + uses a semaphore to synchronize.
+ *       + does not consume CPU (compared to version 1).
  */
 
 package ex07;
@@ -11,33 +13,32 @@ package ex07;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.Semaphore;
 import java.util.stream.IntStream;
 
 
 
-public class MyThreadPoolV1 {
+public class MyThreadPoolV2A {
 
     private int numThreads = 0;
     private List<Thread> lstTh = new LinkedList<>();
 
     private Queue<Runnable> taskPending = new LinkedList<>();
-    private AtomicInteger counterTaskRunning = new AtomicInteger();
+    private Queue<Runnable> taskRunning = new LinkedList<>();
+
+    private Semaphore counterTaskRunning = new Semaphore(0);
 
     private volatile boolean forceThreadShutdown = false;
 
 
 
-    public void init(int numThreads) {
+    public void init(int inpNumThreads) {
         shutdown();
 
-        this.numThreads = numThreads;
-        counterTaskRunning.set(0);
+        numThreads = inpNumThreads;
         forceThreadShutdown = false;
 
-        lstTh = IntStream.range(0, this.numThreads)
-                .mapToObj(i -> new Thread(() -> threadRoutine(this)))
-                .toList();
+        lstTh = IntStream.range(0, numThreads).mapToObj(i -> new Thread(() -> threadRoutine(this))).toList();
 
         lstTh.forEach(Thread::start);
     }
@@ -54,19 +55,22 @@ public class MyThreadPoolV1 {
 
 
     void waitTaskDone() {
-        boolean done = false;
-
         for (;;) {
-            synchronized (taskPending) {
-                if (0 == taskPending.size() && 0 == counterTaskRunning.get()) {
-                    done = true;
-                }
+            try {
+                counterTaskRunning.acquire();
+            }
+            catch (InterruptedException e) {
+                e.printStackTrace();
             }
 
-            if (done)
-                break;
-
-            Thread.yield();
+            synchronized (taskPending) {
+                synchronized (taskRunning) {
+                    if (0 == taskPending.size() && 0 == taskRunning.size()
+                                                /* && 0 == counterTaskRunning.availablePermits() */
+                    )
+                        break;
+                }
+            }
         }
     }
 
@@ -85,6 +89,9 @@ public class MyThreadPoolV1 {
 
             numThreads = 0;
             // lstTh.clear();
+
+            taskRunning.clear();
+            counterTaskRunning.release(counterTaskRunning.availablePermits());
         }
         catch (InterruptedException e) {
             e.printStackTrace();
@@ -93,16 +100,17 @@ public class MyThreadPoolV1 {
 
 
 
-    private static void threadRoutine(MyThreadPoolV1 thisPtr) {
+    private static void threadRoutine(MyThreadPoolV2A thisPtr) {
         var taskPending = thisPtr.taskPending;
+        var taskRunning = thisPtr.taskRunning;
         var counterTaskRunning = thisPtr.counterTaskRunning;
 
         Runnable task = null;
 
         try {
             for (;;) {
-                // WAIT FOR AN AVAILABLE PENDING TASK
                 synchronized (taskPending) {
+                    // WAIT FOR AN AVAILABLE PENDING TASK
                     while (0 == taskPending.size() && false == thisPtr.forceThreadShutdown) {
                         taskPending.wait();
                     }
@@ -114,12 +122,21 @@ public class MyThreadPoolV1 {
                     // GET THE TASK FROM THE PENDING QUEUE
                     task = taskPending.remove();
 
-                    counterTaskRunning.getAndIncrement();
+                    // PUSH IT TO THE RUNNING QUEUE
+                    synchronized (taskRunning) {
+                        taskRunning.add(task);
+                    }
                 }
 
                 // DO THE TASK
                 task.run();
-                counterTaskRunning.getAndDecrement();
+
+                // REMOVE IT FROM THE RUNNING QUEUE
+                synchronized (taskRunning) {
+                    taskRunning.remove(task);
+                }
+
+                counterTaskRunning.release();
             }
         }
         catch (InterruptedException e) {

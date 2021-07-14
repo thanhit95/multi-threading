@@ -1,5 +1,5 @@
 /*
- * THREAD POOL IMPLEMENTATION
+ * THREAD POOL & EXECUTOR SERVICE IMPLEMENTATION
  */
 
 package ex07;
@@ -10,12 +10,12 @@ import java.util.ArrayList;
 
 public class Program {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         final int NUM_THREADS = 2;
         final int NUM_TASKS = 5;
 
 
-        var threadPool = new MyThreadPoolV2();
+        var threadPool = new MyThreadPoolV2B();
         threadPool.init(NUM_THREADS);
 
 
