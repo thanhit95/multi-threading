@@ -81,6 +81,7 @@ public class MyThreadPoolV2B {
                             while (taskRunning.size() > 0)
                                 taskRunning.wait();
 
+                            // no pending task and no running task
                             break;
                         }
                     }
