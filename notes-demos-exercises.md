@@ -63,7 +63,7 @@ I am sorry that generated table of contents contains too many uppercase stuff...
       - [Version A: Matrix-vector multiplication](#version-a-matrix-vector-multiplication)
       - [Version B: Matrix-matrix production (dot product)](#version-b-matrix-matrix-production-dot-product)
     - [EX06 - BLOCKING QUEUE IMPLEMENTATION](#ex06---blocking-queue-implementation)
-    - [EX07 - THREAD POOL IMPLEMENTATION](#ex07---thread-pool-implementation)
+    - [EX07 - THREAD POOL & EXECUTOR SERVICE IMPLEMENTATION](#ex07---thread-pool--executor-service-implementation)
 
 &nbsp;
 
@@ -582,6 +582,6 @@ The result of dot(A, B) is the matrix:
 
 &nbsp;
 
-### EX07 - THREAD POOL IMPLEMENTATION
+### EX07 - THREAD POOL & EXECUTOR SERVICE IMPLEMENTATION
 
 &nbsp;
