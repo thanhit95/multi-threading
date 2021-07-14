@@ -1,18 +1,22 @@
 /*
-THREAD POOL IMPLEMENTATION
+MY THREAD POOL
+
+Version 1:
+- Simple thread pool.
+- Method "waitTaskDone" consumes CPU (due to bad synchronization).
 */
 
 
-#include <iostream>
+
+#ifndef _MY_THREAD_POOL_V1_HPP_
+#define _MY_THREAD_POOL_V1_HPP_
+
+
+
 #include <vector>
 #include <queue>
 #include <atomic>
 #include <pthread.h>
-#include <unistd.h>
-
-
-
-////////////////////////////////////////////////////////////////
 
 
 
@@ -25,29 +29,30 @@ public:
 
 
 
-class ThreadPool {
+class ThreadPoolV1 {
+
 private:
     int numThreads = 0;
     std::vector<pthread_t> lstTh;
-    std::queue<ITask*> taskPending;
-    std::atomic_int32_t counterTaskRunning;
-    volatile bool forceThreadShutdown;
 
+    std::queue<ITask*> taskPending;
     pthread_mutex_t mutTaskPending = PTHREAD_MUTEX_INITIALIZER;
     pthread_cond_t condTaskPending = PTHREAD_COND_INITIALIZER;
 
+    std::atomic_int32_t counterTaskRunning;
+
+    volatile bool forceThreadShutdown;
+
 
 public:
-    ThreadPool() = default;
-    ThreadPool(const ThreadPool& other) = delete;
-    ThreadPool(const ThreadPool&& other) = delete;
-    void operator=(const ThreadPool& other) = delete;
-    void operator=(const ThreadPool&& other) = delete;
+    ThreadPoolV1() = default;
+    ThreadPoolV1(const ThreadPoolV1& other) = delete;
+    ThreadPoolV1(const ThreadPoolV1&& other) = delete;
+    void operator=(const ThreadPoolV1& other) = delete;
+    void operator=(const ThreadPoolV1&& other) = delete;
 
 
     void init(int numThreads) {
-        int ret = 0;
-
         shutdown();
 
         mutTaskPending = PTHREAD_MUTEX_INITIALIZER;
@@ -59,7 +64,7 @@ public:
         forceThreadShutdown = false;
 
         for (auto&& th : lstTh) {
-            ret = pthread_create(&th, nullptr, threadRoutine, this);
+            pthread_create(&th, nullptr, threadRoutine, this);
         }
     }
 
@@ -118,15 +123,18 @@ public:
 
 private:
     static void* threadRoutine(void* argVoid) {
-        auto thisPtr = (ThreadPool*)argVoid;
+        auto thisPtr = (ThreadPoolV1*)argVoid;
+
+        auto&& taskPending = thisPtr->taskPending;
         auto&& mutTaskPending = thisPtr->mutTaskPending;
         auto&& condTaskPending = thisPtr->condTaskPending;
-        auto&& taskPending = thisPtr->taskPending;
+
         auto&& counterTaskRunning = thisPtr->counterTaskRunning;
         auto&& forceThreadShutdown = thisPtr->forceThreadShutdown;
 
+
         for (;;) {
-            // WAITING FOR A PENDING TASK
+            // WAIT FOR AN AVAILABLE PENDING TASK
             pthread_mutex_lock(&mutTaskPending);
 
             while (0 == taskPending.size() and false == forceThreadShutdown) {
@@ -138,75 +146,26 @@ private:
                 break;
             }
 
-
             // GET THE TASK FROM THE PENDING QUEUE
             auto task = taskPending.front();
             taskPending.pop();
 
-
             ++counterTaskRunning;
-
 
             pthread_mutex_unlock(&mutTaskPending);
 
-
             // DO THE TASK
             task->run();
+
             --counterTaskRunning;
         }
 
         pthread_exit(nullptr);
         return nullptr;
     }
+
 };
 
 
 
-////////////////////////////////////////////////////////////////
-
-
-
-class MyTask : public ITask {
-public:
-    char id;
-
-public:
-    void run() override {
-        std::cout << "Task " << id << " is starting" << std::endl;
-        sleep(3);
-        std::cout << "Task " << id << " is completed" << std::endl;
-    }
-};
-
-
-
-int main() {
-    constexpr int NUM_THREADS = 2;
-    constexpr int NUM_TASKS = 5;
-
-
-    ThreadPool threadPool;
-    threadPool.init(NUM_THREADS);
-
-
-    std::vector<MyTask> lstTasks(NUM_TASKS);
-
-    for (int i = 0; i < NUM_TASKS; ++i)
-        lstTasks[i].id = 'A' + i;
-
-
-    for (auto&& task : lstTasks)
-        threadPool.submit(&task);
-
-    std::cout << "All tasks are submitted" << std::endl;
-
-
-    threadPool.waitTaskDone();
-    std::cout << "All tasks are completed" << std::endl;
-
-
-    threadPool.shutdown();
-
-
-    return 0;
-}
+#endif // _MY_THREAD_POOL_V1_HPP_
