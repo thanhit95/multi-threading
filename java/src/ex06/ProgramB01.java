@@ -63,7 +63,9 @@ public class ProgramB01 {
         private Semaphore semRemain = null;
         private Semaphore semFill = null;
 
+        @SuppressWarnings("unused")
         private int capacity = 0;
+
         private LinkedList<T> lst = null;
 
 
