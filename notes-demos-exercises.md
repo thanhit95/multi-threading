@@ -386,7 +386,7 @@ There are 2 phases:
   - This phase uses multiple threads.
 
 - Phase 2:
-  - Based on multiple results from workers, main function get the final result with maximum numDiv.
+  - Based on multiple results from workers, main function gets the final result with maximum numDiv.
   - This phase uses a single thread (i.e. main function).
 
 &nbsp;
@@ -395,7 +395,7 @@ There are 2 phases:
 
 The difference between version C and version B is:
 
-- Each worker finds result on a specific range, and then update final result itself.
+- Each worker finds result on a specific range, and then updates final result itself.
 - So, main function does nothing.
 
 &nbsp;
