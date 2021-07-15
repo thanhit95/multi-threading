@@ -190,8 +190,10 @@ About the source code, there are two versions:
 
 Many people are confused about race condition and data race.
 
-- There is a case that race condition appears without data race. That is demo 11A.
-- There is also a case that data race appears without race condition. That is demo 11B.
+- There is a case that race condition appears without data race. That is demo 12A.
+- There is also a case that data race appears without race condition. That is demo 12B.
+
+*Small note: Looking from a deeper perspective, demo 12A still causes data race (that is... output console terminal, hahaha).*
 
 Ususally, race condition happens together with data race. A race condition often occurs when two or more threads need to perform operations on the same memory area (data race) but the results of computations depends on the order in which these operations are performed.
 
