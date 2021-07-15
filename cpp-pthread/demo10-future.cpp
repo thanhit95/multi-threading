@@ -8,6 +8,6 @@ using namespace std;
 
 
 int main() {
-    cout << "\"Future\" in POSIX threads is not supported by default." << endl;
+    cout << "\"Future\" in POSIX threading is not supported by default." << endl;
     return 0;
 }
