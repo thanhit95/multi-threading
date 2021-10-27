@@ -2,7 +2,7 @@
  * ATOMIC
 */
 
-package demo24;
+package demo25;
 
 import java.util.stream.IntStream;
 
