@@ -1,5 +1,6 @@
 /*
  * THREAD-LOCAL STORAGE
+ * The basic way to use thread-local storage.
 */
 
 package demo23;

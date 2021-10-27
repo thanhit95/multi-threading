@@ -1,3 +1,8 @@
+/*
+ * THREAD-LOCAL STORAGE
+ * Use ThreadLocal.withInitial for better initialization.
+*/
+
 package demo23;
 
 import java.util.stream.IntStream;
