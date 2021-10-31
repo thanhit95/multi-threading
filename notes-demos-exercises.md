@@ -44,7 +44,8 @@ I am sorry that generated table of contents contains too many uppercase stuff...
     - [DEMO 20B - SEMAPHORE](#demo-20b---semaphore)
     - [DEMO 21 - CONDITION VARIABLE](#demo-21---condition-variable)
     - [DEMO 22 - BLOCKING QUEUE](#demo-22---blocking-queue)
-    - [DEMO 23 & 24 - VOLATILE AND ATOMIC](#demo-23--24---volatile-and-atomic)
+    - [DEMO 23 - THREAD-LOCAL STORAGE](#demo-23---thread-local-storage)
+    - [DEMO 24 & 25 - VOLATILE AND ATOMIC](#demo-24--25---volatile-and-atomic)
   - [EXERCISES](#exercises)
     - [EX01 - MAX DIV](#ex01---max-div)
       - [Version A](#version-a-1)
@@ -353,7 +354,46 @@ There is a special type of the blocking queue, that is "synchronous queue". A sy
 
 &nbsp;
 
-### DEMO 23 & 24 - VOLATILE AND ATOMIC
+### DEMO 23 - THREAD-LOCAL STORAGE
+
+There are two main ways to solve the race condition & data race problem:
+
+- Way 1: Synchronization (mutex, semaphore, condition variable...).
+- Way 2: Non-synchronization / "*lock free*" (atomic, thread-local storage).
+
+In some cases, shared resources could be used individually for each thread. Every thread has its own copy of the shared resources. Therefore, race condition disappears.
+
+```text
+BEFORE:
+            X = 8          (X is shared resource)
+              |
+    ---------------------
+    |         |         |
+    v         v         v
+ ThreadA   ThreadB   ThreadC
+
+
+AFTER:
+    ---------------------
+    |         |         |
+    v         v         v
+ ThreadA   ThreadB   ThreadC
+  X = 8     X = 8     X = 8
+```
+
+Thread-local storage helps you to **avoid synchronization**, because synchronization might be dangerous and hard to handle.
+
+Application of thread-local storage:
+
+- Counter: Each thread does its own counting job. In the end, we can sum all the counters in threads.
+
+- Security: The random function often use an initialization seed. When multiple threads calling the random function, results may be the same for some threads. This may lead to security issues. Using synchronization of course solve this problem, but it is too overhead. In this case, using thread-local storage is great. Each thread use individual random function, which have different random seed.
+
+In the demo code, by using thread-local storage, each thread has its own counter. So, the counter in one thread is completely independent of each other.
+
+&nbsp;
+
+### DEMO 24 & 25 - VOLATILE AND ATOMIC
 
 Please read article "Volatile vs Atomic" for better understanding.
 
