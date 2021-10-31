@@ -1,5 +1,5 @@
 /*
- * GETTING THREAD ID
+ * GETTING THREAD'S ID
 */
 
 package demo04;
@@ -9,14 +9,19 @@ package demo04;
 public class Program {
 
     public static void main(String[] args) {
-        var foo = new Thread(() -> {
-            var id = Thread.currentThread().getId();
-            System.out.println("Thread id is " + id);
-        });
+        Runnable routine = () -> {
+            long id = Thread.currentThread().getId();
+            System.out.println(id);
+        };
 
-        System.out.println("foo id: " + foo.getId());
+        var foo = new Thread(routine);
+        var bar = new Thread(routine);
+
+        System.out.println("foo's id: " + foo.getId());
+        System.out.println("bar's id: " + bar.getId());
 
         foo.start();
+        bar.start();
     }
 
 }
