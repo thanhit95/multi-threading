@@ -1,6 +1,6 @@
 /*
  * HELLO WORLD VERSION MULTITHREADING
- * Version A01: Using class Thread / Stanrd way
+ * Version A01: Using class Thread / Standard way
 */
 
 package demo01a;
