@@ -4,43 +4,28 @@
 
 package demo07;
 
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-
-
-
 public class ProgramB {
 
-    public static void main(String[] args) throws InterruptedException, ExecutionException {
-        var cal = new SimpleCalculator();
-        System.out.println("Begin calculating");
+    public static void main(String[] args) throws InterruptedException {
+        int[] result = new int[2];
 
-        var futResult = cal.calculate(-9);
+        var thFoo = new Thread(() -> result[0] = doubleValue(5));
+        var thBar = new Thread(() -> result[1] = doubleValue(80));
 
-        var result = futResult.get();
+        thFoo.start();
+        thBar.start();
 
-        System.out.println(result);
+        // Wait until thFoo and thBar finish
+        thFoo.join();
+        thBar.join();
 
-        cal.shutdown();
+        System.out.println(result[0]);
+        System.out.println(result[1]);
     }
 
-}
 
-
-
-class SimpleCalculator {
-    private ExecutorService executor = Executors.newSingleThreadExecutor();
-
-    public Future<Integer> calculate(Integer input) {
-        return executor.submit(() -> {
-            Thread.sleep(3000);
-            return input * 2;
-        });
+    private static int doubleValue(int value) {
+        return value * 2;
     }
 
-    public void shutdown() {
-        executor.shutdown();
-    }
 }
