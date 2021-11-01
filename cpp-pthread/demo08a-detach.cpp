@@ -43,7 +43,8 @@ int main() {
     // }
 
 
-    // If I comment this statement, the thread routine will be forced into terminating with main thread
+    // If I comment this statement,
+    // the thread routine will be forced into terminating with main thread
     sleep(3);
 
 

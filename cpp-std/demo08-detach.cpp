@@ -25,7 +25,8 @@ int main() {
     th.detach();
 
 
-    // If I comment this statement, the thread routine will be forced into terminating with main thread
+    // If I comment this statement,
+    // the thread routine will be forced into terminating with main thread
     std::this_thread::sleep_for(std::chrono::seconds(3));
 
 

@@ -22,7 +22,8 @@ public class Program {
         th.start();
 
 
-        // If I comment this statement, the thread routine will be forced into terminating with main thread
+        // If I comment this statement,
+        // the thread routine will be forced into terminating with main thread
         Thread.sleep(3000);
 
 
