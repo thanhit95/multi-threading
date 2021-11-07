@@ -1,13 +1,14 @@
 /*
  * THREAD POOL
- * Version B02: Thread pool containing multiple threads / FixedThreadPool
+ * Version C02: Thread pool and Future
 */
 
 package demo10;
 
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.IntStream;
 
 
@@ -22,25 +23,46 @@ public class AppC02 {
         ExecutorService executor = Executors.newFixedThreadPool(NUM_THREADS);
 
 
-        IntStream.range(0, NUM_TASKS).forEach(i -> executor.submit(() -> {
-            char nameTask = (char) (i + 'A');
-
-            System.out.println("Task %c is starting".formatted(nameTask));
-
-            try { Thread.sleep(3000); } catch (InterruptedException e) { }
-
-            System.out.println("Task %c is completed".formatted(nameTask));
-        }));
+        // List<MyTask> todo
+        var todo = IntStream.range(0, NUM_TASKS).mapToObj(i -> new MyTask((char)(i + 'A'))).toList();
 
 
+        System.out.println("Begin to submit all tasks");
+        /*
+         * invokeAll() will not return until all the tasks are completed
+         * (i.e., all the Futures in your answers collection will report isDone() if asked)
+         */
+        // List<Future<Character>> answers
+        var answers = executor.invokeAll(todo);
+
+
+        System.out.println("All tasks are completed");
         executor.shutdown();
 
 
-        System.out.println("All tasks are submitted");
-
-        executor.awaitTermination(20, TimeUnit.SECONDS);
-
-        System.out.println("All tasks are completed");
+        answers.forEach(fut -> {
+            try {
+                System.out.println(fut.get());
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
+}
+
+
+
+class MyTask implements Callable<Character> {
+    char name;
+
+    public MyTask(char name) {
+        this.name = name;
+    }
+
+    @Override
+    public Character call() throws Exception {
+        try { Thread.sleep(1000); } catch (InterruptedException e) { }
+        return name;
+    }
 }

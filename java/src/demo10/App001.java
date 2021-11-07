@@ -1,5 +1,8 @@
 /*
- * FUTURE
+ * THREAD POOL
+ * Version "preparation"
+ *
+ * To get started with thread pool, first, introducing "future".
 */
 
 package demo10;
@@ -11,20 +14,21 @@ import java.util.concurrent.Future;
 
 
 
-public class AppA01 {
+public class App001 {
 
     public static void main(String[] args) throws InterruptedException, ExecutionException {
         ExecutorService executor = Executors.newSingleThreadExecutor();
 
-        Future<String> fut = executor.submit(() -> "foo");
-
-        while (fut.isDone() == false) {
-            Thread.sleep(500);
-        }
+        Future<String> task = executor.submit(() -> "foo");
 
         executor.shutdown();
 
-        String result = fut.get();
+        while (false == task.isDone()) {
+            // Waiting...
+            // Thread.sleep(500);
+        }
+
+        String result = task.get();
         System.out.println(result);
     }
 

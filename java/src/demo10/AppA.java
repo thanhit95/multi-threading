@@ -12,7 +12,7 @@ import java.util.concurrent.Executors;
 
 
 
-public class AppB {
+public class AppA {
 
     public static void main(String[] args) {
         ExecutorService executor = Executors.newSingleThreadExecutor();
