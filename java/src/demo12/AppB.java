@@ -6,7 +6,7 @@
  * Without synchronization (by a mutex), we are not sure that result = 30000
  */
 
-package demo13;
+package demo12;
 
 import java.util.concurrent.Semaphore;
 import java.util.stream.Stream;

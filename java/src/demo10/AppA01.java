@@ -11,7 +11,7 @@ import java.util.concurrent.Future;
 
 
 
-public class App {
+public class AppA01 {
 
     public static void main(String[] args) throws InterruptedException, ExecutionException {
         ExecutorService executor = Executors.newSingleThreadExecutor();

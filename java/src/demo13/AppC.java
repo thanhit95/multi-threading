@@ -1,24 +1,21 @@
 /*
  * SYNCHRONIZED
- * Version B: Synchronized instance method
+ * Version C: Synchronized static method
  */
 
-package demo14;
+package demo13;
 
 import java.util.stream.IntStream;
 
 
 
-public class AppB02 {
+public class AppC {
 
     public static void main(String[] args) throws InterruptedException {
         final int NUM_THREADS = 3;
 
 
-        var myTask = new MyTaskB02();
-
-
-        var lstTh = IntStream.range(0, NUM_THREADS).mapToObj(i -> new Thread(myTask)).toList();
+        var lstTh = IntStream.range(0, NUM_THREADS).mapToObj(i -> new MyTaskC()).toList();
 
 
         for (var th : lstTh)
@@ -28,7 +25,7 @@ public class AppB02 {
             th.join();
 
 
-        System.out.println("counter = " + MyTaskB02.counter);
+        System.out.println("counter = " + MyTaskC.counter);
         /*
          * We are sure that counter = 30000
          */
@@ -38,12 +35,17 @@ public class AppB02 {
 
 
 
-class MyTaskB02 implements Runnable {
+class MyTaskC extends Thread {
     static int counter = 0;
 
 
     @Override
-    public synchronized void run() {
+    public void run() {
+        incCounter();
+    }
+
+
+    private static synchronized void incCounter() {
         try { Thread.sleep(500); } catch (InterruptedException e) { }
 
         for (int i = 0; i < 10000; ++i) {

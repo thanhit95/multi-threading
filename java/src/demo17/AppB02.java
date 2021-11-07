@@ -1,48 +1,63 @@
 /*
- * REENTRANT LOCK (RECURSIVE MUTEX)
- * Version B02: Slightly hard example
+ * BARRIER
+ * Version B: Count down latch
+ *
+ * Note:
+ * - CyclicBarrier maintains a count of threads whereas CountDownLatch maintains a count of tasks.
+ * - CountDownLatch in Java is different from that one in C++.
 */
 
 package demo17;
 
-import java.util.stream.IntStream;
+import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
 
 
 public class AppB02 {
 
     public static void main(String[] args) throws InterruptedException {
-        final int NUM_THREADS = 3;
-
-        IntStream.range(0, NUM_THREADS).forEach(i -> new MyTaskB((char)(i + 'A')).start());
-    }
-
-}
+        var syncPoint = new CountDownLatch(3); // participant count = 3
 
 
-
-class MyTaskB extends Thread {
-    private static Object lock = new Object();
-
-
-    private char name;
-
-
-    public MyTaskB(char name) {
-        this.name = name;
-    }
+        var lstArgs = List.of(
+                new ThreadArg("foo", 1),
+                new ThreadArg("bar", 2),
+                new ThreadArg("ham", 3)
+        );
 
 
-    @Override
-    public void run() {
-        try { Thread.sleep(1000); } catch (InterruptedException e) { }
+        for (int repeatCount = 0; repeatCount < 2; ++repeatCount) {
+            var lstTh = lstArgs.stream().map(arg -> new Thread(() -> {
 
-        synchronized (lock) {
-            System.out.println("First time %c acquiring the lock".formatted(name));
+                try {
+                    Thread.sleep(1000 * arg.timeWait());
 
-            synchronized (lock) {
-                System.out.println("Second time %c acquiring the lock".formatted(name));
-            }
+                    System.out.println("Get request from " + arg.userName());
+
+                    syncPoint.countDown();
+
+                    syncPoint.await();
+
+                    System.out.println("Done " + arg.userName());
+                }
+                catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+            })).toList();
+
+
+            for (var th : lstTh)
+                th.start();
+
+            for (var th : lstTh)
+                th.join();
         }
     }
+
+
+
+    record ThreadArg(String userName, int timeWait) { }
+
 }

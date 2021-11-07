@@ -1,46 +1,54 @@
 /*
- * THREAD POOL
- * Version B02: Thread pool containing multiple threads / FixedThreadPool
+ * DATA RACE
+ * Version 02: Multithreading
 */
 
 package demo11;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
-import java.util.stream.IntStream;
+import java.util.Arrays;
 
 
 
 public class AppB02 {
 
     public static void main(String[] args) throws InterruptedException {
-        final int NUM_THREADS = 2;
-        final int NUM_TASKS = 5;
+        final int N = 8;
 
 
-        ExecutorService executor = Executors.newFixedThreadPool(NUM_THREADS);
+        var a = new boolean[N + 1];
+        Arrays.fill(a, false);
 
 
-        IntStream.range(0, NUM_TASKS).forEach(i -> executor.submit(() -> {
-            char nameTask = (char) (i + 'A');
+        var thDiv2 = new Thread(() -> {
+            for (int i = 2; i <= N; i += 2)
+                a[i] = true;
+        });
 
-            System.out.println("Task %c is starting".formatted(nameTask));
-
-            try { Thread.sleep(3000); } catch (InterruptedException e) { }
-
-            System.out.println("Task %c is completed".formatted(nameTask));
-        }));
-
-
-        executor.shutdown();
+        var thDiv3 = new Thread(() -> {
+            for (int i = 3; i <= N; i += 3)
+                a[i] = true;
+        });
 
 
-        System.out.println("All tasks are submitted");
+        thDiv2.start();
+        thDiv3.start();
+        thDiv2.join();
+        thDiv3.join();
 
-        executor.awaitTermination(20, TimeUnit.SECONDS);
 
-        System.out.println("All tasks are completed");
+        int result = countTrue(a, N);
+        System.out.println("Numbers of integers that are divisible by 2 or 3 is: " + result);
+    }
+
+
+    static int countTrue(boolean[] a, int N) {
+        int count = 0;
+
+        for (int i = 1; i <= N; ++i)
+            if (a[i])
+                ++count;
+
+        return count;
     }
 
 }

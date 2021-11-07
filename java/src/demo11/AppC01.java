@@ -1,49 +1,44 @@
 /*
- * THREAD POOL
- * Version C01: Thread pool and Future
- *
- * Future object allows a way for you to programatically manage the task, such as:
- * - Wait for the task to finish executing (and get result), with get method.
- * - Cancel the task prematurely, with the cancel method.
+ * RACE CONDITION AND DATA RACE
 */
 
 package demo11;
-
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.stream.IntStream;
 
 
 
 public class AppC01 {
 
-    public static void main(String[] args) {
-        final int NUM_THREADS = 2;
-        final int NUM_TASKS = 5;
+    public static void main(String[] args) throws InterruptedException {
+        var foo = new MyTask();
+        var bar = new MyTask();
 
+        foo.start();
+        bar.start();
 
-        ExecutorService executor = Executors.newFixedThreadPool(NUM_THREADS);
+        foo.join();
+        bar.join();
 
-
-        System.out.println("Begin to submit all tasks");
-
-
-        var lstFuture = IntStream.range(0, NUM_TASKS)
-                .mapToObj(i -> executor.submit(() -> (char)(i + 'A')))
-                .toList();
-
-
-        executor.shutdown();
-
-
-        lstFuture.forEach(fut -> {
-            try {
-                System.out.println(fut.get());
-            } catch (InterruptedException | ExecutionException e) {
-                e.printStackTrace();
-            }
-        });
+        System.out.println("counter = " + MyTask.counter);
+        /*
+        We are not sure that counter = 20
+        */
     }
 
+}
+
+
+
+class MyTask extends Thread {
+    static int counter = 0;
+
+
+    @Override
+    public void run() {
+        for (int i = 0; i < 10; ++i) {
+            try { Thread.sleep(30); }
+            catch (InterruptedException e) { }
+
+            counter += 1;
+        }
+    }
 }

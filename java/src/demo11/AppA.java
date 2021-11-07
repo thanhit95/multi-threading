@@ -1,26 +1,31 @@
 /*
- * THREAD POOL
- * Version A: Thread pool containing a single thread
- *
- * Note: The single thread executor is ideal for creating an event loop.
+ * RACE CONDITION
 */
 
 package demo11;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.stream.IntStream;
 
 
 
 public class AppA {
 
     public static void main(String[] args) {
-        ExecutorService executor = Executors.newSingleThreadExecutor();
+        final int NUM_THREADS = 4;
 
-        executor.submit(() -> System.out.println("Hello World"));
-        executor.submit(() -> System.out.println("Hello Multithreading"));
 
-        executor.shutdown();
+        var lstTh = IntStream.range(0, NUM_THREADS)
+                .mapToObj(i -> new Thread(() -> {
+
+                    try { Thread.sleep(1000); } catch (InterruptedException e) { }
+
+                    System.out.print(i);
+
+                }))
+                .toList();
+
+
+        lstTh.forEach(Thread::start);
     }
 
 }

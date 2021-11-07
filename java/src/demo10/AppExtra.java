@@ -13,7 +13,7 @@
  * https://www.baeldung.com/thread-pool-java-and-guava
 */
 
-package demo11;
+package demo10;
 
 import java.util.Arrays;
 import java.util.List;

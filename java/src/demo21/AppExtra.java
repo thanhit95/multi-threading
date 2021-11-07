@@ -7,7 +7,7 @@
  *            and vice versa.
  */
 
-package demo22;
+package demo21;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.SynchronousQueue;

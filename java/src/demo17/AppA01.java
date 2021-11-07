@@ -1,33 +1,53 @@
 /*
- * REENTRANT LOCK (RECURSIVE MUTEX)
- * Version A01: Simple example
- */
+ * BARRIER
+ * Version A: Cyclic barrier
+*/
 
 package demo17;
 
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
+import java.util.List;
+import java.util.concurrent.BrokenBarrierException;
+import java.util.concurrent.CyclicBarrier;
 
 
 
 public class AppA01 {
 
     public static void main(String[] args) {
-        Lock lk = new ReentrantLock();
+        var syncPoint = new CyclicBarrier(3); // participant count = 3
 
 
-        new Thread(() -> {
+        var lstArgs = List.of(
+                new ThreadArg("foo", 1),
+                new ThreadArg("bar", 2),
+                new ThreadArg("ham", 3)
+        );
 
-            lk.lock();
-            System.out.println("First time acquiring the resource");
 
-            lk.lock();
-            System.out.println("Second time acquiring the resource");
+        lstArgs.forEach(arg -> new Thread(() -> {
 
-            lk.unlock();
-            lk.unlock();
+            try {
+                Thread.sleep(1000 * arg.timeWait());
 
-        }).start();
+                System.out.println("Get request from " + arg.userName());
+
+                syncPoint.await();
+
+                System.out.println("Process request for " + arg.userName());
+
+                syncPoint.await();
+
+                System.out.println("Done " + arg.userName());
+            }
+            catch (InterruptedException | BrokenBarrierException e) {
+                e.printStackTrace();
+            }
+
+        }).start());
     }
+
+
+
+    record ThreadArg(String userName, int timeWait) { }
 
 }

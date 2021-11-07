@@ -1,64 +1,61 @@
 /*
- * BLOCKING QUEUE
- * Version B: Fast producer, slow consumer
- */
+ * THREAD-LOCAL STORAGE
+ * Use ThreadLocal.withInitial for better initialization.
+*/
 
 package demo22;
 
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.BlockingQueue;
+import java.util.stream.IntStream;
 
 
 
 public class AppB {
 
-    public static void main(String[] args) {
-        BlockingQueue<String> queue;
+    public static void main(String[] args) throws InterruptedException {
+        final int NUM_THREADS = 3;
 
 
-        // queue = new LinkedBlockingQueue<>();
-        queue = new ArrayBlockingQueue<>(2); // blocking queue with capacity = 2
+        var lstTh = IntStream.range(0, NUM_THREADS).mapToObj(t -> new Thread(() -> {
+            try { Thread.sleep(1000); } catch (InterruptedException e) { }
+
+            for (int i = 0; i < 1000; ++i)
+                MyTask.increaseCounter();
+
+            System.out.println("Thread " + t + " gives counter = " + MyTask.thlCounter.get().value);
+        })).toList();
 
 
-        new Thread(() -> producer(queue)).start();
-        new Thread(() -> consumer(queue)).start();
+        for (var th : lstTh)
+            th.start();
+
+        for (var th : lstTh)
+            th.join();
+
+
+        /*
+         * By using thread-local storage, each thread has its own counter.
+         * So, the counter in one thread is completely independent of each other.
+         *
+         * Thread-local storage helps us to AVOID SYNCHRONIZATION.
+         */
     }
 
 
-    private static void producer(BlockingQueue<String> queue) {
-        try {
-            queue.put("lorem");
-            queue.put("ipsum");
 
-            /*
-             * Due to reaching the maximum of capacity = 2, when executing queue.put("fooooooo"),
-             * this thread is going to sleep until the queue removes an element.
-             */
-
-            queue.put("fooooooo");
-        }
-        catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+    static class Counter {
+        public int value = 0;
     }
 
 
-    private static void consumer(BlockingQueue<String> queue) {
-        String data = "";
 
-        try {
-            Thread.sleep(2000);
+    static class MyTask {
+        public static ThreadLocal<Counter> thlCounter = ThreadLocal.withInitial(() -> {
+            return new Counter();
+        });
 
-            for (int i = 0; i < 3; ++i) {
-                System.out.println("\nWaiting for data...");
-
-                data = queue.take();
-
-                System.out.println("    " + data);
-            }
-        }
-        catch (InterruptedException e) {
-            e.printStackTrace();
+        public static void increaseCounter() {
+            Counter counter = thlCounter.get();
+            ++counter.value;
         }
     }
 

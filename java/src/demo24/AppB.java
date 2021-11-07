@@ -2,18 +2,20 @@
  * ATOMIC
 */
 
-package demo25;
+package demo24;
 
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
 
 
 
-public class AppA {
+public class AppB {
 
     public static void main(String[] args) throws InterruptedException {
         Runnable routine = () -> {
             try { Thread.sleep(1000); } catch (InterruptedException e) { }
-            Global.counter += 1;
+            Global.counter.incrementAndGet();
+            // Global.counter.addAndGet(1);
         };
 
 
@@ -28,13 +30,13 @@ public class AppA {
             th.join();
 
 
-        System.out.println("counter = " + Global.counter); // unpredictable result
+        System.out.println("counter = " + Global.counter); // counter = 1000
     }
 
 
 
     class Global {
-        public static volatile int counter = 0;
+        public static AtomicInteger counter = new AtomicInteger(0);
     }
 
 }

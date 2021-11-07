@@ -1,51 +1,57 @@
 /*
- * REENTRANT LOCK (RECURSIVE MUTEX)
- * Version A02: Slightly hard example
- */
+ * BARRIER
+ * Version A: Cyclic barrier
+*/
 
 package demo17;
 
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
-import java.util.stream.IntStream;
+import java.util.List;
+import java.util.concurrent.BrokenBarrierException;
+import java.util.concurrent.CyclicBarrier;
 
 
 
 public class AppA02 {
 
     public static void main(String[] args) {
-        final int NUM_THREADS = 3;
+        var syncPoint = new CyclicBarrier(2); // participant count = 2
 
-        IntStream.range(0, NUM_THREADS).forEach(i -> new MyTaskA((char)(i + 'A')).start());
+
+        var lstArgs = List.of(
+                new ThreadArg("foo", 1),
+                new ThreadArg("bar", 3),
+                new ThreadArg("ham", 3),
+                new ThreadArg("eggs", 10)
+        );
+
+
+        lstArgs.forEach(arg -> new Thread(() -> {
+
+            try {
+                Thread.sleep(1000 * arg.timeWait());
+
+                System.out.println("Get request from " + arg.userName());
+
+                syncPoint.await();
+
+                System.out.println("Process request for " + arg.userName());
+
+                syncPoint.await();
+
+                System.out.println("Done " + arg.userName());
+            }
+            catch (InterruptedException | BrokenBarrierException e) {
+                e.printStackTrace();
+            }
+
+        }).start());
+
+
+        // thread "eggs" will be FREEZED
     }
 
-}
 
 
+    record ThreadArg(String userName, int timeWait) { }
 
-class MyTaskA extends Thread {
-    private static Lock lk = new ReentrantLock();
-
-
-    private char name;
-
-
-    public MyTaskA(char name) {
-        this.name = name;
-    }
-
-
-    @Override
-    public void run() {
-        try { Thread.sleep(1000); } catch (InterruptedException e) { }
-
-        lk.lock();
-        System.out.println("First time %c acquiring the lock".formatted(name));
-
-        lk.lock();
-        System.out.println("Second time %c acquiring the lock".formatted(name));
-
-        lk.unlock();
-        lk.unlock();
-    }
 }

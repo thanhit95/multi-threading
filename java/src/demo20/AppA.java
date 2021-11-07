@@ -2,11 +2,11 @@
  * CONDITION VARIABLE
 */
 
-package demo21;
+package demo20;
 
 
 
-public class AppC {
+public class AppA {
 
     public static void main(String[] args) {
         var conditionVar = new Object();
@@ -17,6 +17,7 @@ public class AppC {
                 System.out.println("foo is waiting...");
 
                 synchronized (conditionVar) {
+                    // foo must own the conditionVar before using it
                     conditionVar.wait();
                 }
 
@@ -32,14 +33,13 @@ public class AppC {
             try { Thread.sleep(3000); } catch (InterruptedException e) { }
 
             synchronized (conditionVar) {
-                conditionVar.notifyAll();
+                // bar must own the conditionVar before using it
+                conditionVar.notify();
             }
         };
 
 
-        for (int i = 0; i < 3; ++i)
-            new Thread(foo).start();
-
+        new Thread(foo).start();
         new Thread(bar).start();
     }
 

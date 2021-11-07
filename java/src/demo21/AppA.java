@@ -1,46 +1,62 @@
 /*
- * CONDITION VARIABLE
-*/
+ * BLOCKING QUEUE
+ * Version A: Slow producer, fast consumer
+ */
 
 package demo21;
+
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 
 
 
 public class AppA {
 
     public static void main(String[] args) {
-        var conditionVar = new Object();
+        BlockingQueue<String> queue;
 
 
-        Runnable foo = () -> {
-            try {
-                System.out.println("foo is waiting...");
+        // queue = new LinkedBlockingQueue<>();
+        queue = new ArrayBlockingQueue<>(2); // blocking queue with capacity = 2
 
-                synchronized (conditionVar) {
-                    // foo must own the conditionVar before using it
-                    conditionVar.wait();
-                }
 
-                System.out.println("foo resumed");
+        new Thread(() -> producer(queue)).start();
+        new Thread(() -> consumer(queue)).start();
+    }
+
+
+    private static void producer(BlockingQueue<String> queue) {
+        try {
+            Thread.sleep(2000);
+            queue.put("lorem");
+
+            Thread.sleep(2000);
+            queue.put("ipsum");
+
+            Thread.sleep(2000);
+            queue.put("fooooooo");
+        }
+        catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    private static void consumer(BlockingQueue<String> queue) {
+        String data = "";
+
+        try {
+            for (int i = 0; i < 3; ++i) {
+                System.out.println("\nWaiting for data...");
+
+                data = queue.take();
+
+                System.out.println("    " + data);
             }
-            catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        };
-
-
-        Runnable bar = () -> {
-            try { Thread.sleep(3000); } catch (InterruptedException e) { }
-
-            synchronized (conditionVar) {
-                // bar must own the conditionVar before using it
-                conditionVar.notify();
-            }
-        };
-
-
-        new Thread(foo).start();
-        new Thread(bar).start();
+        }
+        catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 }

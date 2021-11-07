@@ -2,7 +2,7 @@
  * CONDITION VARIABLE
 */
 
-package demo21;
+package demo20;
 
 public class AppD {
 

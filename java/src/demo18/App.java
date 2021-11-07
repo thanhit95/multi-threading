@@ -2,7 +2,7 @@
  * READ-WRITE LOCK
 */
 
-package demo19;
+package demo18;
 
 import java.util.Random;
 import java.util.concurrent.locks.ReadWriteLock;

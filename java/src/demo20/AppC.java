@@ -6,7 +6,7 @@ package demo20;
 
 
 
-public class AppB {
+public class AppC {
 
     public static void main(String[] args) {
         var conditionVar = new Object();
@@ -29,12 +29,10 @@ public class AppB {
 
 
         Runnable bar = () -> {
-            for (int i = 0; i < 3; ++i) {
-                try { Thread.sleep(2000); } catch (InterruptedException e) { }
+            try { Thread.sleep(3000); } catch (InterruptedException e) { }
 
-                synchronized (conditionVar) {
-                    conditionVar.notify();
-                }
+            synchronized (conditionVar) {
+                conditionVar.notifyAll();
             }
         };
 

@@ -1,60 +1,43 @@
 /*
- * SYNCHRONIZED
- * Version A: Synchronized block
+ * DEADLOCK
+ * Version A
  */
 
 package demo14;
 
-import java.util.stream.IntStream;
+import java.util.concurrent.Semaphore;
 
 
 
 public class AppA {
 
     public static void main(String[] args) throws InterruptedException {
-        final int NUM_THREADS = 3;
+        var mutex = new Semaphore(1);
 
+        var thFoo = new Thread(() -> routine(mutex, "foo"));
+        var thBar = new Thread(() -> routine(mutex, "bar"));
 
-        var lstTh = IntStream.range(0, NUM_THREADS).mapToObj(i -> new MyTaskA()).toList();
+        thFoo.start();
+        thBar.start();
 
+        thFoo.join();
+        thBar.join();
 
-        for (var th : lstTh)
-            th.start();
-
-        for (var th : lstTh)
-            th.join();
-
-
-        System.out.println("counter = " + MyTaskA.counter);
-        /*
-         * We are sure that counter = 30000
-         */
+        System.out.println("You will never see this statement due to deadlock!");
     }
 
-}
 
-
-
-class MyTaskA extends Thread {
-    static int counter = 0;
-
-
-    @Override
-    public void run() {
-        try { Thread.sleep(1000); } catch (InterruptedException e) { }
-
-        /*
-         * synchronized (this) means that on "this" object,
-         *                    only and only one thread can excute the enclosed block at one time.
-         *
-         * "this" is the monitor object, the code inside the block gets synchronized on the monitor object.
-         * Simply put, only one thread per monitor object can execute inside that block of code.
-         */
-
-        synchronized (this) {
-            for (int i = 0; i < 10000; ++i) {
-                ++counter;
-            }
+    private static void routine(Semaphore mutex, String name) {
+        try {
+            mutex.acquire();
         }
+        catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println(name + " acquired resource");
+
+        // mutex.release(); // forget this statement ==> deadlock
     }
+
 }

@@ -14,7 +14,7 @@
  * This guarantees that changes to the state of the object are visible to all threads.
  */
 
-package demo14;
+package demo13;
 
 import java.util.stream.IntStream;
 

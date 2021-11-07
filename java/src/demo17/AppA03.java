@@ -3,7 +3,7 @@
  * Version A: Cyclic barrier
 */
 
-package demo18;
+package demo17;
 
 import java.util.List;
 import java.util.concurrent.BrokenBarrierException;
@@ -11,16 +11,18 @@ import java.util.concurrent.CyclicBarrier;
 
 
 
-public class AppA01 {
+public class AppA03 {
 
     public static void main(String[] args) {
-        var syncPoint = new CyclicBarrier(3); // participant count = 3
+        var syncPointA = new CyclicBarrier(2);
+        var syncPointB = new CyclicBarrier(2);
 
 
         var lstArgs = List.of(
                 new ThreadArg("foo", 1),
-                new ThreadArg("bar", 2),
-                new ThreadArg("ham", 3)
+                new ThreadArg("bar", 3),
+                new ThreadArg("ham", 3),
+                new ThreadArg("eggs", 10)
         );
 
 
@@ -31,11 +33,11 @@ public class AppA01 {
 
                 System.out.println("Get request from " + arg.userName());
 
-                syncPoint.await();
+                syncPointA.await();
 
                 System.out.println("Process request for " + arg.userName());
 
-                syncPoint.await();
+                syncPointB.await();
 
                 System.out.println("Done " + arg.userName());
             }
