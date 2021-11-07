@@ -18,7 +18,7 @@ import java.util.stream.IntStream;
 
 public class AppC01 {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException, ExecutionException {
         final int NUM_THREADS = 2;
         final int NUM_TASKS = 5;
 
@@ -29,7 +29,7 @@ public class AppC01 {
         System.out.println("Begin to submit all tasks");
 
 
-        var lstFuture = IntStream.range(0, NUM_TASKS)
+        var lstTask = IntStream.range(0, NUM_TASKS)
                 .mapToObj(i -> executor.submit(() -> (char)(i + 'A')))
                 .toList();
 
@@ -37,13 +37,9 @@ public class AppC01 {
         executor.shutdown();
 
 
-        lstFuture.forEach(fut -> {
-            try {
-                System.out.println(fut.get());
-            } catch (InterruptedException | ExecutionException e) {
-                e.printStackTrace();
-            }
-        });
+        for (var task : lstTask) {
+            System.out.println(task.get());
+        }
     }
 
 }

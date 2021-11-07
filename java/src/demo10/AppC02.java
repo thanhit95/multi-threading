@@ -15,7 +15,7 @@ import java.util.stream.IntStream;
 
 public class AppC02 {
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException, ExecutionException {
         final int NUM_THREADS = 2;
         final int NUM_TASKS = 5;
 
@@ -32,21 +32,17 @@ public class AppC02 {
          * invokeAll() will not return until all the tasks are completed
          * (i.e., all the Futures in your answers collection will report isDone() if asked)
          */
-        // List<Future<Character>> answers
-        var answers = executor.invokeAll(todo);
+        // List<Future<Character>> lstTask
+        var lstTask = executor.invokeAll(todo);
 
 
         System.out.println("All tasks are completed");
         executor.shutdown();
 
 
-        answers.forEach(fut -> {
-            try {
-                System.out.println(fut.get());
-            } catch (InterruptedException | ExecutionException e) {
-                e.printStackTrace();
-            }
-        });
+        for (var task : lstTask) {
+            System.out.println(task.get());
+        }
     }
 
 }
