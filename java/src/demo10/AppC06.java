@@ -13,7 +13,7 @@ import java.util.stream.IntStream;
 
 
 
-public class AppC6 {
+public class AppC06 {
 
     public static void main(String[] args) throws InterruptedException, ExecutionException {
         final int NUM_THREADS = 2;
