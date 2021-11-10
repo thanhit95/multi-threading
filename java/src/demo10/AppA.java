@@ -20,6 +20,9 @@ public class AppA {
         executor.submit(() -> System.out.println("Hello World"));
         executor.submit(() -> System.out.println("Hello Multithreading"));
 
+        Runnable rnn = () -> System.out.println("Hello Thread Pool");
+        executor.submit(rnn);
+
         executor.shutdown();
     }
 

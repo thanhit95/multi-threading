@@ -1,64 +1,37 @@
 /*
  * THREAD POOL
- * Version C02: Thread pool and Future
+ * Version C02: Thread pool and Future - Getting started
 */
 
 package demo10;
 
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.stream.IntStream;
+import java.util.concurrent.Future;
 
 
 
 public class AppC02 {
 
     public static void main(String[] args) throws InterruptedException, ExecutionException {
-        final int NUM_THREADS = 2;
-        final int NUM_TASKS = 5;
+        ExecutorService executor = Executors.newSingleThreadExecutor();
 
+        Future<Integer> task = executor.submit(() -> getSquared(7));
 
-        ExecutorService executor = Executors.newFixedThreadPool(NUM_THREADS);
-
-
-        // List<MyTask> todo
-        var todo = IntStream.range(0, NUM_TASKS).mapToObj(i -> new MyTask((char)(i + 'A'))).toList();
-
-
-        System.out.println("Begin to submit all tasks");
-        /*
-         * invokeAll() will not return until all the tasks are completed
-         * (i.e., all the Futures in your answers collection will report isDone() if asked)
-         */
-        // List<Future<Character>> lstTask
-        var lstTask = executor.invokeAll(todo);
-
-
-        System.out.println("All tasks are completed");
         executor.shutdown();
 
-
-        for (var task : lstTask) {
-            System.out.println(task.get());
+        while (false == task.isDone()) {
+            // Waiting...
         }
+
+        Integer result = task.get();
+        System.out.println(result);
     }
 
-}
 
-
-
-class MyTask implements Callable<Character> {
-    char name;
-
-    public MyTask(char name) {
-        this.name = name;
+    private static int getSquared(int x) {
+        return x * x;
     }
 
-    @Override
-    public Character call() throws Exception {
-        try { Thread.sleep(1000); } catch (InterruptedException e) { }
-        return name;
-    }
 }

@@ -1,8 +1,6 @@
 /*
  * THREAD POOL
- * Version "preparation"
- *
- * To get started with thread pool, first, introducing "future".
+ * Version C04: Thread pool and Future - Getting started
 */
 
 package demo10;
@@ -15,7 +13,7 @@ import java.util.concurrent.Future;
 
 
 
-public class App004 {
+public class AppC04 {
 
     public static void main(String[] args) throws InterruptedException, ExecutionException {
         ExecutorService executor = Executors.newSingleThreadExecutor();
@@ -33,12 +31,21 @@ public class App004 {
 
         executor.shutdown();
 
+        System.out.println("Calculating...");
+
         Integer result = task.get();
         System.out.println(result);
     }
 
 
     private static int getSquared(int x) {
+        // Calculating in three seconds...
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         return x * x;
     }
 

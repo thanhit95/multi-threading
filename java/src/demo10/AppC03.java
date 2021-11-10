@@ -1,8 +1,6 @@
 /*
  * THREAD POOL
- * Version "preparation"
- *
- * To get started with thread pool, first, introducing "future".
+ * Version C03: Thread pool and Future - Getting started
 */
 
 package demo10;
@@ -14,7 +12,7 @@ import java.util.concurrent.Future;
 
 
 
-public class App003 {
+public class AppC03 {
 
     public static void main(String[] args) throws InterruptedException, ExecutionException {
         ExecutorService executor = Executors.newSingleThreadExecutor();
