@@ -1,6 +1,6 @@
 /*
  * THREAD POOL
- * Version B02: Thread pool containing multiple threads / FixedThreadPool
+ * Version B02: Thread pool containing multiple threads - FixedThreadPool
 */
 
 package demo10;

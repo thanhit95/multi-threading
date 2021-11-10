@@ -1,6 +1,6 @@
 /*
  * THREAD POOL
- * Version C01: Thread pool and Future / Getting started
+ * Version C01: Thread pool and Future - Getting started
  *
  * Future object allows a way for you to programatically manage the task, such as:
  * - Wait for the task to finish executing (and get result), with get method.
