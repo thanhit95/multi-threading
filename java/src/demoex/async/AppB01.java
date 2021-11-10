@@ -5,7 +5,7 @@
  * because all 3 tasks are running simultaneously.
 */
 
-package demoex_async;
+package demoex.async;
 
 import java.time.Duration;
 import java.time.Instant;

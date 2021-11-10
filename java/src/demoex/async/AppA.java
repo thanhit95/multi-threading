@@ -2,7 +2,9 @@
  * ASYNCHRONOUS PROGRAMMING WITH FUTURE/TASK
 */
 
-package demoex_async;
+package demoex.async;
+
+
 
 public class AppA {
 

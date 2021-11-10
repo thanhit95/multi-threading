@@ -5,7 +5,7 @@
  * because each method "Future.get" pauses app until the task finishes.
 */
 
-package demoex_async;
+package demoex.async;
 
 import java.time.Duration;
 import java.time.Instant;

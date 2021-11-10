@@ -2,7 +2,7 @@
  * ASYNCHRONOUS PROGRAMMING WITH FUTURE/TASK
 */
 
-package demoex_async;
+package demoex.async;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;

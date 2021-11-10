@@ -8,7 +8,7 @@
  * From that definition, CompletableFuture can be called as "Promise".
 */
 
-package demoex_async;
+package demoex.async;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
