@@ -1,6 +1,6 @@
 /*
  * SEMAPHORE
- * Version A: Paper and packages
+ * Version A: Paper sheets and packages
 */
 
 package demo19;
@@ -18,7 +18,7 @@ public class AppA01 {
         Runnable makeOnePaper = () -> {
             for (int i = 0; i < 4; ++i) {
                 try {
-                    System.out.println("Make 1 paper");
+                    System.out.println("Make 1 sheet");
                     Thread.sleep(1000);
 
                     semPackage.release();
@@ -34,7 +34,7 @@ public class AppA01 {
             for (int i = 0; i < 4; ++i) {
                 try {
                     semPackage.acquire(2);
-                    System.out.println("Combine 2 papers into 1 package");
+                    System.out.println("Combine 2 sheets into 1 package");
                 }
                 catch (InterruptedException e) {
                     e.printStackTrace();

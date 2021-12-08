@@ -1,6 +1,6 @@
 /*
 SEMAPHORE
-Version A: Paper and packages
+Version A: Paper sheets and packages
 */
 
 
@@ -21,7 +21,7 @@ void* makeOnePaper(void*) {
     for (int i = 0; i < 4; ++i) {
         sem_wait(&semPaper);
 
-        cout << "Make 1 paper" << endl;
+        cout << "Make 1 sheet" << endl;
 
         sem_post(&semPackage);
     }
@@ -37,11 +37,11 @@ void* combineOnePackage(void*) {
         sem_wait(&semPackage);
         sem_wait(&semPackage);
 
-        cout << "Combine 2 papers into 1 package" << endl;
+        cout << "Combine 2 sheets into 1 package" << endl;
         sleep(2);
 
         sem_post(&semPaper);
-        // Missing one statement: sem_post(&semPaper) ==> DEADLOCK
+        // Missing one statement: sem_post(&semPaper) ==> DEADLOCK.
     }
 
     pthread_exit(nullptr);

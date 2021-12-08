@@ -1,6 +1,6 @@
 /*
 SEMAPHORE
-Version A: Paper and packages
+Version A: Paper sheets and packages
 */
 
 
@@ -21,7 +21,7 @@ void makeOnePaper() {
     for (int i = 0; i < 4; ++i) {
         semPaper.acquire();
 
-        cout << "Make 1 paper" << endl;
+        cout << "Make 1 sheet" << endl;
 
         semPackage.release();
     }
@@ -34,7 +34,7 @@ void combineOnePackage() {
         semPackage.acquire();
         semPackage.acquire();
 
-        cout << "Combine 2 papers into 1 package" << endl;
+        cout << "Combine 2 sheets into 1 package" << endl;
         std::this_thread::sleep_for(std::chrono::seconds(2));
 
         semPaper.release();

@@ -1,6 +1,6 @@
 /*
 SEMAPHORE
-Version A: Paper and packages
+Version A: Paper sheets and packages
 */
 
 
@@ -18,7 +18,7 @@ sem_t semPackage;
 
 void* makeOnePaper(void*) {
     for (int i = 0; i < 4; ++i) {
-        cout << "Make 1 paper" << endl;
+        cout << "Make 1 sheet" << endl;
         sleep(1);
 
         sem_post(&semPackage);
@@ -34,7 +34,7 @@ void* combineOnePackage(void*) {
     for (int i = 0; i < 4; ++i) {
         sem_wait(&semPackage);
         sem_wait(&semPackage);
-        cout << "Combine 2 papers into 1 package" << endl;
+        cout << "Combine 2 sheets into 1 package" << endl;
     }
 
     pthread_exit(nullptr);

@@ -1,6 +1,6 @@
 /*
 SEMAPHORE
-Version A: Paper and packages
+Version A: Paper sheets and packages
 */
 
 
@@ -18,7 +18,7 @@ auto semPackage = std::counting_semaphore(0);
 
 void makeOnePaper() {
     for (int i = 0; i < 4; ++i) {
-        cout << "Make 1 paper" << endl;
+        cout << "Make 1 sheet" << endl;
         std::this_thread::sleep_for(std::chrono::seconds(1));
 
         semPackage.release();
@@ -31,7 +31,7 @@ void combineOnePackage() {
     for (int i = 0; i < 4; ++i) {
         semPackage.acquire();
         semPackage.acquire();
-        cout << "Combine 2 papers into 1 package" << endl;
+        cout << "Combine 2 sheets into 1 package" << endl;
     }
 }
 

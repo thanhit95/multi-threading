@@ -1,6 +1,6 @@
 /*
  * SEMAPHORE
- * Version A: Paper and packages
+ * Version A: Paper sheets and packages
 */
 
 package demo19;
@@ -21,7 +21,7 @@ public class AppA02 {
                 try {
                     semPaper.acquire();
 
-                    System.out.println("Make 1 paper");
+                    System.out.println("Make 1 sheet");
 
                     semPackage.release();
                 }
@@ -38,7 +38,7 @@ public class AppA02 {
                 try {
                     semPackage.acquire(2);
 
-                    System.out.println("Combine 2 papers into 1 package");
+                    System.out.println("Combine 2 sheets into 1 package");
                     Thread.sleep(1000);
 
                     semPaper.release(2);
