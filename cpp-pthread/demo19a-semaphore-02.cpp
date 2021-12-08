@@ -13,13 +13,13 @@ using namespace std;
 
 
 sem_t semPackage;
-sem_t semPaper;
+sem_t semSheet;
 
 
 
-void* makeOnePaper(void*) {
+void* makeOneSheet(void*) {
     for (int i = 0; i < 4; ++i) {
-        sem_wait(&semPaper);
+        sem_wait(&semSheet);
 
         cout << "Make 1 sheet" << endl;
 
@@ -40,8 +40,8 @@ void* combineOnePackage(void*) {
         cout << "Combine 2 sheets into 1 package" << endl;
         sleep(2);
 
-        sem_post(&semPaper);
-        sem_post(&semPaper);
+        sem_post(&semSheet);
+        sem_post(&semSheet);
     }
 
     pthread_exit(nullptr);
@@ -51,22 +51,22 @@ void* combineOnePackage(void*) {
 
 
 int main() {
-    pthread_t tidMakePaperA, tidMakePaperB, tidCombinePackage;
+    pthread_t tidMakeSheetA, tidMakeSheetB, tidCombinePackage;
     int ret = 0;
 
     ret = sem_init(&semPackage, 0, 0);
-    ret = sem_init(&semPaper, 0, 2);
+    ret = sem_init(&semSheet, 0, 2);
 
-    ret = pthread_create(&tidMakePaperA, nullptr, makeOnePaper, nullptr);
-    ret = pthread_create(&tidMakePaperB, nullptr, makeOnePaper, nullptr);
+    ret = pthread_create(&tidMakeSheetA, nullptr, makeOneSheet, nullptr);
+    ret = pthread_create(&tidMakeSheetB, nullptr, makeOneSheet, nullptr);
     ret = pthread_create(&tidCombinePackage, nullptr, combineOnePackage, nullptr);
 
-    ret = pthread_join(tidMakePaperA, nullptr);
-    ret = pthread_join(tidMakePaperB, nullptr);
+    ret = pthread_join(tidMakeSheetA, nullptr);
+    ret = pthread_join(tidMakeSheetB, nullptr);
     ret = pthread_join(tidCombinePackage, nullptr);
 
     ret = sem_destroy(&semPackage);
-    ret = sem_destroy(&semPaper);
+    ret = sem_destroy(&semSheet);
 
     return 0;
 }

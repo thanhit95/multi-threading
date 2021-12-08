@@ -16,7 +16,7 @@ sem_t semPackage;
 
 
 
-void* makeOnePaper(void*) {
+void* makeOneSheet(void*) {
     for (int i = 0; i < 4; ++i) {
         cout << "Make 1 sheet" << endl;
         sleep(1);
@@ -44,17 +44,17 @@ void* combineOnePackage(void*) {
 
 
 int main() {
-    pthread_t tidMakePaperA, tidMakePaperB, tidCombinePackage;
+    pthread_t tidMakeSheetA, tidMakeSheetB, tidCombinePackage;
     int ret = 0;
 
     ret = sem_init(&semPackage, 0, 0);
 
-    ret = pthread_create(&tidMakePaperA, nullptr, makeOnePaper, nullptr);
-    ret = pthread_create(&tidMakePaperB, nullptr, makeOnePaper, nullptr);
+    ret = pthread_create(&tidMakeSheetA, nullptr, makeOneSheet, nullptr);
+    ret = pthread_create(&tidMakeSheetB, nullptr, makeOneSheet, nullptr);
     ret = pthread_create(&tidCombinePackage, nullptr, combineOnePackage, nullptr);
 
-    ret = pthread_join(tidMakePaperA, nullptr);
-    ret = pthread_join(tidMakePaperB, nullptr);
+    ret = pthread_join(tidMakeSheetA, nullptr);
+    ret = pthread_join(tidMakeSheetB, nullptr);
     ret = pthread_join(tidCombinePackage, nullptr);
 
     ret = sem_destroy(&semPackage);

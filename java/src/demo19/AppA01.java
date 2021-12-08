@@ -15,7 +15,7 @@ public class AppA01 {
         var semPackage = new Semaphore(0);
 
 
-        Runnable makeOnePaper = () -> {
+        Runnable makeOneSheet = () -> {
             for (int i = 0; i < 4; ++i) {
                 try {
                     System.out.println("Make 1 sheet");
@@ -43,8 +43,8 @@ public class AppA01 {
         };
 
 
-        new Thread(makeOnePaper).start();
-        new Thread(makeOnePaper).start();
+        new Thread(makeOneSheet).start();
+        new Thread(makeOneSheet).start();
         new Thread(combineOnePackage).start();
     }
 

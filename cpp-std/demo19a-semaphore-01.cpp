@@ -16,7 +16,7 @@ auto semPackage = std::counting_semaphore(0);
 
 
 
-void makeOnePaper() {
+void makeOneSheet() {
     for (int i = 0; i < 4; ++i) {
         cout << "Make 1 sheet" << endl;
         std::this_thread::sleep_for(std::chrono::seconds(1));
@@ -38,12 +38,12 @@ void combineOnePackage() {
 
 
 int main() {
-    auto thMakePaperA = std::thread(makeOnePaper);
-    auto thMakePaperB = std::thread(makeOnePaper);
+    auto thMakeSheetA = std::thread(makeOneSheet);
+    auto thMakeSheetB = std::thread(makeOneSheet);
     auto thCombinePackage = std::thread(combineOnePackage);
 
-    thMakePaperA.join();
-    thMakePaperB.join();
+    thMakeSheetA.join();
+    thMakeSheetB.join();
     thCombinePackage.join();
 
     return 0;

@@ -13,13 +13,13 @@ using namespace std;
 
 
 auto semPackage = std::counting_semaphore(0);
-auto semPaper = std::counting_semaphore(2);
+auto semSheet = std::counting_semaphore(2);
 
 
 
-void makeOnePaper() {
+void makeOneSheet() {
     for (int i = 0; i < 4; ++i) {
-        semPaper.acquire();
+        semSheet.acquire();
 
         cout << "Make 1 sheet" << endl;
 
@@ -37,20 +37,20 @@ void combineOnePackage() {
         cout << "Combine 2 sheets into 1 package" << endl;
         std::this_thread::sleep_for(std::chrono::seconds(2));
 
-        semPaper.release();
-        semPaper.release();
+        semSheet.release();
+        semSheet.release();
     }
 }
 
 
 
 int main() {
-    auto thMakePaperA = std::thread(makeOnePaper);
-    auto thMakePaperB = std::thread(makeOnePaper);
+    auto thMakeSheetA = std::thread(makeOneSheet);
+    auto thMakeSheetB = std::thread(makeOneSheet);
     auto thCombinePackage = std::thread(combineOnePackage);
 
-    thMakePaperA.join();
-    thMakePaperB.join();
+    thMakeSheetA.join();
+    thMakeSheetB.join();
     thCombinePackage.join();
 
     return 0;

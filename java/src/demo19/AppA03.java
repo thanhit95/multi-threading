@@ -13,13 +13,13 @@ public class AppA03 {
 
     public static void main(String[] args) {
         var semPackage = new Semaphore(0);
-        var semPaper = new Semaphore(2);
+        var semSheet = new Semaphore(2);
 
 
-        Runnable makeOnePaper = () -> {
+        Runnable makeOneSheet = () -> {
             for (int i = 0; i < 4; ++i) {
                 try {
-                    semPaper.acquire();
+                    semSheet.acquire();
 
                     System.out.println("Make 1 sheet");
 
@@ -41,8 +41,9 @@ public class AppA03 {
                     System.out.println("Combine 2 sheets into 1 package");
                     Thread.sleep(1000);
 
-                    semPaper.release(1);
-                    // Must be semPaper.release(2). Otherwise, DEADLOCK.
+                    semSheet.release(1);
+                    // The code causes DEADLOCK due to missing one release.
+                    // The code should be semSheet.release(2);
                 }
                 catch (InterruptedException e) {
                     e.printStackTrace();
@@ -51,8 +52,8 @@ public class AppA03 {
         };
 
 
-        new Thread(makeOnePaper).start();
-        new Thread(makeOnePaper).start();
+        new Thread(makeOneSheet).start();
+        new Thread(makeOneSheet).start();
         new Thread(combineOnePackage).start();
     }
 

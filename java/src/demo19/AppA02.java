@@ -13,13 +13,13 @@ public class AppA02 {
 
     public static void main(String[] args) {
         var semPackage = new Semaphore(0);
-        var semPaper = new Semaphore(2);
+        var semSheet = new Semaphore(2);
 
 
-        Runnable makeOnePaper = () -> {
+        Runnable makeOneSheet = () -> {
             for (int i = 0; i < 4; ++i) {
                 try {
-                    semPaper.acquire();
+                    semSheet.acquire();
 
                     System.out.println("Make 1 sheet");
 
@@ -41,7 +41,7 @@ public class AppA02 {
                     System.out.println("Combine 2 sheets into 1 package");
                     Thread.sleep(1000);
 
-                    semPaper.release(2);
+                    semSheet.release(2);
                 }
                 catch (InterruptedException e) {
                     e.printStackTrace();
@@ -50,8 +50,8 @@ public class AppA02 {
         };
 
 
-        new Thread(makeOnePaper).start();
-        new Thread(makeOnePaper).start();
+        new Thread(makeOneSheet).start();
+        new Thread(makeOneSheet).start();
         new Thread(combineOnePackage).start();
     }
 
