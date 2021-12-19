@@ -26,17 +26,19 @@ void* routine(void* arg) {
 
 
 int main() {
-    pthread_t tidA, tidB;
+    pthread_t lstTid[1000];
     int ret = 0;
 
-    atomic_init(&counter, 0);
+    for (int i = 0; i < 1000; ++i) {
+        ret = pthread_create(&lstTid[i], NULL, routine, NULL);
+    }
 
-    ret = pthread_create(&tidA, NULL, routine, NULL);
-    ret = pthread_create(&tidB, NULL, routine, NULL);
+    for (int i = 0; i < 1000; ++i) {
+        ret = pthread_join(lstTid[i], NULL);
+    }
 
-    ret = pthread_join(tidA, NULL);
-    ret = pthread_join(tidB, NULL);
+    // counter = 1000
+    printf("counter = %d \n", counter);
 
-    printf("counter = %d \n", counter); // counter = 2
     return 0;
 }

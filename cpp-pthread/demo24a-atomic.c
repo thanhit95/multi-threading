@@ -25,15 +25,19 @@ void* routine(void* arg) {
 
 
 int main() {
-    pthread_t tidA, tidB;
+    pthread_t lstTid[1000];
     int ret = 0;
 
-    ret = pthread_create(&tidA, NULL, routine, NULL);
-    ret = pthread_create(&tidB, NULL, routine, NULL);
+    for (int i = 0; i < 1000; ++i) {
+        ret = pthread_create(&lstTid[i], NULL, routine, NULL);
+    }
 
-    ret = pthread_join(tidA, NULL);
-    ret = pthread_join(tidB, NULL);
+    for (int i = 0; i < 1000; ++i) {
+        ret = pthread_join(lstTid[i], NULL);
+    }
 
-    printf("counter = %d \n", counter); // unpredictable result
+    // Unpredictable result
+    printf("counter = %d \n", counter);
+
     return 0;
 }

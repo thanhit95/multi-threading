@@ -4,6 +4,7 @@ ATOMIC
 
 
 #include <iostream>
+#include <vector>
 #include <thread>
 #include <atomic>
 #include <chrono>
@@ -25,12 +26,17 @@ void routine() {
 int main() {
     counter = 0;
 
-    auto thA = std::thread(routine);
-    auto thB = std::thread(routine);
+    vector<std::thread> lstTh;
 
-    thA.join();
-    thB.join();
+    for (int i = 0; i < 1000; ++i) {
+        lstTh.push_back(std::thread(routine));
+    }
 
-    cout << "counter = " << counter << endl; // counter = 2
+    for (auto&& th : lstTh) {
+        th.join();
+    }
+
+    // counter = 1000
+    cout << "counter = " << counter << endl;
     return 0;
 }
