@@ -33,10 +33,10 @@ public class AppC02 {
         thB.start();
     }
 
-}
 
 
+    static class Global {
+        public static int counter = 0;
+    }
 
-class Global {
-    static int counter = 0;
 }

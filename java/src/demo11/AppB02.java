@@ -41,7 +41,7 @@ public class AppB02 {
     }
 
 
-    static int countTrue(boolean[] a, int N) {
+    private static int countTrue(boolean[] a, int N) {
         int count = 0;
 
         for (int i = 1; i <= N; ++i)

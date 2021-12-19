@@ -11,17 +11,20 @@ public class AppC01 {
     public static void main(String[] args) throws InterruptedException {
         var foo = new MyTask();
         var bar = new MyTask();
+        var egg = new MyTask();
 
         foo.start();
         bar.start();
+        egg.start();
 
         foo.join();
         bar.join();
+        egg.join();
 
         System.out.println("counter = " + MyTask.counter);
         /*
-        We are not sure that counter = 20
-        */
+         * We are not sure that counter = 1500
+         */
     }
 
 }
@@ -34,8 +37,8 @@ class MyTask extends Thread {
 
     @Override
     public void run() {
-        for (int i = 0; i < 10; ++i) {
-            try { Thread.sleep(30); }
+        for (int i = 0; i < 500; ++i) {
+            try { Thread.sleep(3); }
             catch (InterruptedException e) { }
 
             counter += 1;
