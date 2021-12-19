@@ -21,14 +21,14 @@ constexpr int COUNT_DONE = 10;
 
 
 
-// Write numbers 1-3 and 8-10 as permitted by eggs()
+// Write numbers 1-3 and 8-10 as permitted by egg()
 void* foo(void*) {
     for (;;) {
         // Lock mutex and then wait for signal to relase mutex
         pthread_mutex_lock(&mut);
 
-        // Wait while eggs() operates on counter,
-        // Mutex unlocked if condition variable in eggs() signaled
+        // Wait while egg() operates on counter,
+        // Mutex unlocked if condition variable in egg() signaled
         pthread_cond_wait(&conditionVar, &mut);
 
         ++counter;
@@ -49,7 +49,7 @@ void* foo(void*) {
 
 
 // Write numbers 4-7
-void* eggs(void*) {
+void* egg(void*) {
     for (;;) {
         pthread_mutex_lock(&mut);
 
@@ -60,7 +60,7 @@ void* eggs(void*) {
         }
         else {
             ++counter;
-            cout << "eggs counter = " << counter << endl;
+            cout << "egg counter = " << counter << endl;
         }
 
         pthread_mutex_unlock(&mut);
@@ -82,7 +82,7 @@ int main() {
     int ret = 0;
 
     ret = pthread_create(&tidFoo, nullptr, foo, nullptr);
-    ret = pthread_create(&tidEggs, nullptr, eggs, nullptr);
+    ret = pthread_create(&tidEggs, nullptr, egg, nullptr);
 
     ret = pthread_join(tidFoo, nullptr);
     ret = pthread_join(tidEggs, nullptr);

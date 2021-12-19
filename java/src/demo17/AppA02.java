@@ -21,7 +21,7 @@ public class AppA02 {
                 new ThreadArg("foo", 1),
                 new ThreadArg("bar", 3),
                 new ThreadArg("ham", 3),
-                new ThreadArg("eggs", 10)
+                new ThreadArg("egg", 10)
         );
 
 
@@ -47,7 +47,7 @@ public class AppA02 {
         }).start());
 
 
-        // thread "eggs" will be FREEZED
+        // thread "egg" will be FREEZED
     }
 
 

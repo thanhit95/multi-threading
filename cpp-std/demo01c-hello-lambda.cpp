@@ -17,7 +17,7 @@ int main() {
     };
 
     std::thread th1(lambda, "ham");
-    std::thread th2(lambda, "eggs");
+    std::thread th2(lambda, "egg");
 
     th1.join();
     th2.join();

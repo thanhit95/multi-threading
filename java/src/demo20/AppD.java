@@ -8,7 +8,7 @@ public class AppD {
 
     public static void main(String[] args) {
         new Foo().start();
-        new Eggs().start();
+        new Egg().start();
     }
 
 }
@@ -27,7 +27,7 @@ class Global {
 
 
 
-// Write numbers 1-3 and 8-10 as permitted by eggs()
+// Write numbers 1-3 and 8-10 as permitted by egg()
 class Foo extends Thread {
     @Override
     public void run() {
@@ -54,7 +54,7 @@ class Foo extends Thread {
 
 
 // Write numbers 4-7
-class Eggs extends Thread {
+class Egg extends Thread {
     @Override
     public void run() {
         for (;;) {
@@ -64,7 +64,7 @@ class Eggs extends Thread {
                 }
                 else {
                     Global.counter += 1;
-                    System.out.println("eggs counter = " + Global.counter);
+                    System.out.println("egg counter = " + Global.counter);
                 }
 
                 if (Global.counter >= Global.COUNT_DONE) {

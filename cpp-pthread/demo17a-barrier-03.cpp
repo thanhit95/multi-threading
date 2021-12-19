@@ -51,7 +51,7 @@ int main() {
         { "foo", 1 },
         { "bar", 3 },
         { "ham", 3 },
-        { "eggs", 10 }
+        { "egg", 10 }
     };
 
     int ret = 0;

@@ -50,7 +50,7 @@ int main() {
         { "foo", 1 },
         { "bar", 3 },
         { "ham", 3 },
-        { "eggs", 10 }
+        { "egg", 10 }
     };
 
     int ret = 0;
@@ -65,7 +65,7 @@ int main() {
     }
 
 
-    // thread "eggs" will be FREEZED
+    // thread "egg" will be FREEZED
 
 
     for (auto&& tid : lstTid) {

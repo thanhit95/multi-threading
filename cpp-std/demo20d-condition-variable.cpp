@@ -23,14 +23,14 @@ constexpr int COUNT_DONE = 10;
 
 
 
-// Write numbers 1-3 and 8-10 as permitted by eggs()
+// Write numbers 1-3 and 8-10 as permitted by egg()
 void foo() {
     for (;;) {
         // Lock mutex and then wait for signal to relase mutex
         std::unique_lock<std::mutex> mutLock(mut);
 
-        // Wait while eggs() operates on counter,
-        // Mutex unlocked if condition variable in eggs() signaled
+        // Wait while egg() operates on counter,
+        // Mutex unlocked if condition variable in egg() signaled
         conditionVar.wait(mutLock);
 
         ++counter;
@@ -45,7 +45,7 @@ void foo() {
 
 
 // Write numbers 4-7
-void eggs() {
+void egg() {
     for (;;) {
         if (counter < COUNT_HALT_01 || counter > COUNT_HALT_02) {
             // Signal to free waiting thread by freeing the mutex
@@ -55,7 +55,7 @@ void eggs() {
         else {
             mut.lock();
             ++counter;
-            cout << "eggs counter = " << counter << endl;
+            cout << "egg counter = " << counter << endl;
             mut.unlock();
         }
 
@@ -69,7 +69,7 @@ void eggs() {
 
 int main() {
     auto thFoo = std::thread(foo);
-    auto thEggs = std::thread(eggs);
+    auto thEggs = std::thread(egg);
 
     thFoo.join();
     thEggs.join();
