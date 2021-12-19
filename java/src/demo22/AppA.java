@@ -52,14 +52,13 @@ public class AppA {
         public static ThreadLocal<Counter> thlCounter = new ThreadLocal<>();
 
         public static void increaseCounter() {
-            Counter counter = thlCounter.get();
-
-            if (null == counter) {
-                // first time getting counter in a thread
-                counter = new Counter();
-                thlCounter.set(counter);
+            // First time getting counter in a thread
+            if (null == thlCounter.get()) {
+                thlCounter.set(new Counter());
             }
 
+            // Now, we increase the counter
+            Counter counter = thlCounter.get();
             ++counter.value;
         }
     }
