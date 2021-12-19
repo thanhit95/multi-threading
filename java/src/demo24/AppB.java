@@ -30,7 +30,8 @@ public class AppB {
             th.join();
 
 
-        System.out.println("counter = " + Global.counter); // counter = 1000
+        // counter = 1000
+        System.out.println("counter = " + Global.counter);
     }
 
 

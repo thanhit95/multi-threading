@@ -28,7 +28,8 @@ public class AppA {
             th.join();
 
 
-        System.out.println("counter = " + Global.counter); // unpredictable result
+        // Unpredictable result
+        System.out.println("counter = " + Global.counter);
     }
 
 

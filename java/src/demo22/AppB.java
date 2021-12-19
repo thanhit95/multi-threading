@@ -21,15 +21,12 @@ public class AppB {
             for (int i = 0; i < 1000; ++i)
                 MyTask.increaseCounter();
 
-            System.out.println("Thread " + t + " gives counter = " + MyTask.thlCounter.get().value);
+            System.out.println("Thread " + t + " gives counter = " + MyTask.getCounter());
         })).toList();
 
 
         for (var th : lstTh)
             th.start();
-
-        for (var th : lstTh)
-            th.join();
 
 
         /*
@@ -49,10 +46,14 @@ public class AppB {
 
 
     static class MyTask {
-        public static ThreadLocal<Counter> thlCounter = ThreadLocal.withInitial(() -> new Counter());
+        private static ThreadLocal<Counter> thlCounter = ThreadLocal.withInitial(() -> new Counter());
+
+        public static int getCounter() {
+            return thlCounter.get().value;
+        }
 
         public static void increaseCounter() {
-            Counter counter = thlCounter.get();
+            var counter = thlCounter.get();
             ++counter.value;
         }
     }

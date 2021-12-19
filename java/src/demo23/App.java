@@ -24,10 +24,10 @@ public class App {
         }
     }
 
-}
 
 
+    class Global {
+        public static volatile boolean stopped = false;
+    }
 
-class Global {
-    public static volatile boolean stopped = false;
 }
