@@ -1,6 +1,6 @@
 /*
  * THREAD-LOCAL STORAGE
- * Use ThreadLocal.withInitial for better initialization.
+ * Avoiding synchronization using Thread-Local Storage
 */
 
 package demo22;
@@ -49,9 +49,7 @@ public class AppB {
 
 
     static class MyTask {
-        public static ThreadLocal<Counter> thlCounter = ThreadLocal.withInitial(() -> {
-            return new Counter();
-        });
+        public static ThreadLocal<Counter> thlCounter = ThreadLocal.withInitial(() -> new Counter());
 
         public static void increaseCounter() {
             Counter counter = thlCounter.get();

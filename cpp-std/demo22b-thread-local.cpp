@@ -1,6 +1,6 @@
 /*
 THREAD-LOCAL STORAGE
-The smart-pointer way to use thread-local storage.
+Avoiding synchronization using Thread-Local Storage
 */
 
 
@@ -8,25 +8,21 @@ The smart-pointer way to use thread-local storage.
 #include <vector>
 #include <thread>
 #include <chrono>
-#include <memory>
 using namespace std;
 
 
 
-thread_local std::shared_ptr<int> counter;
+thread_local int counter = 0;
 
 
 
 void routine(int t) {
     std::this_thread::sleep_for(std::chrono::seconds(1));
 
-    if (nullptr == counter.get())
-        counter.reset(new int);
-
     for (int i = 0; i < 1000; ++i)
-        ++(*counter);
+        ++counter;
 
-    cout << "Thread " << t << " gives counter = " << (*counter) << endl;
+    cout << "Thread " << t << " gives counter = " << counter << endl;
 }
 
 

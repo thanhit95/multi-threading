@@ -1,5 +1,7 @@
 /*
 THREAD-LOCAL STORAGE
+Avoiding synchronization using Thread-Local Storage
+
 The code is specific for gcc.
 */
 
