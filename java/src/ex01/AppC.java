@@ -66,19 +66,20 @@ public class AppC {
 
 
     private static List<WorkerArg> prepareArg(int rangeStart, int rangeEnd, int numThreads) {
-        int rangeBlock = (rangeEnd - rangeStart + 1) / numThreads;
-        int rangeA = 0, rangeB = 0;
+        int rangeA, rangeB, rangeBlock;
+
+        rangeBlock = (rangeEnd - rangeStart + 1) / numThreads;
+        rangeA = rangeStart;
 
         var lstWorkerArg = new ArrayList<WorkerArg>();
 
-        for (int i = 0; i < numThreads; ++i) {
-            rangeA = rangeB;
-            rangeB += rangeBlock;
+        for (int i = 0; i < numThreads; ++i, rangeA += rangeBlock) {
+            rangeB = rangeA + rangeBlock - 1;
 
             if (i == numThreads - 1)
-                rangeB = rangeEnd - 1;
+                rangeB = rangeEnd;
 
-            lstWorkerArg.add(new WorkerArg(rangeA, rangeB - 1));
+            lstWorkerArg.add(new WorkerArg(rangeA, rangeB));
         }
 
         return lstWorkerArg;

@@ -67,17 +67,18 @@ void prepare(
     lstWorkerArg.resize(numThreads);
     lstWorkerRes.resize(numThreads);
 
-    int rangeBlock = (rangeEnd - rangeStart + 1) / numThreads;
-    int rangeA = 0, rangeB = 0;
+    int rangeA, rangeB, rangeBlock;
 
-    for (int i = 0; i < numThreads; ++i) {
-        rangeA = rangeB;
-        rangeB += rangeBlock;
+    rangeBlock = (rangeEnd - rangeStart + 1) / numThreads;
+    rangeA = rangeStart;
+
+    for (int i = 0; i < numThreads; ++i, rangeA += rangeBlock) {
+        rangeB = rangeA + rangeBlock - 1;
 
         if (i == numThreads - 1)
-            rangeB = rangeEnd + 1;
+            rangeB = rangeEnd;
 
-        lstWorkerArg[i] = WorkerArg(rangeA, rangeB - 1);
+        lstWorkerArg[i] = WorkerArg(rangeA, rangeB);
     }
 }
 

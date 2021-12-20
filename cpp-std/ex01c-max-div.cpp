@@ -35,14 +35,13 @@ private:
 
 public:
     void update(int value, int numDiv) {
-        mut.lock();
+        // synchronize whole function
+        std::scoped_lock<std::mutex> lk(mut);
 
         if (this->numDiv < numDiv) {
             this->numDiv = numDiv;
             this->value = value;
         }
-
-        mut.unlock();
     }
 };
 
@@ -79,17 +78,18 @@ void prepare(
     lstTh.resize(numThreads);
     lstWorkerArg.resize(numThreads);
 
-    int rangeBlock = (rangeEnd - rangeStart + 1) / numThreads;
-    int rangeA = 0, rangeB = 0;
+    int rangeA, rangeB, rangeBlock;
 
-    for (int i = 0; i < numThreads; ++i) {
-        rangeA = rangeB;
-        rangeB += rangeBlock;
+    rangeBlock = (rangeEnd - rangeStart + 1) / numThreads;
+    rangeA = rangeStart;
+
+    for (int i = 0; i < numThreads; ++i, rangeA += rangeBlock) {
+        rangeB = rangeA + rangeBlock - 1;
 
         if (i == numThreads - 1)
-            rangeB = rangeEnd + 1;
+            rangeB = rangeEnd;
 
-        lstWorkerArg[i] = WorkerArg(rangeA, rangeB - 1);
+        lstWorkerArg[i] = WorkerArg(rangeA, rangeB);
     }
 }
 
