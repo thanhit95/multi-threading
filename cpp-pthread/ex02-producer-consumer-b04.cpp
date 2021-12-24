@@ -51,7 +51,7 @@ struct GlobalSemaphore {
 struct GlobalArg {
     queue<int>* qProduct;
     GlobalSemaphore* sem;
-    int dataAddValue;
+    int startValue;
 };
 
 
@@ -66,7 +66,7 @@ void* producer(void* argVoid) {
     for (;; ++i) {
         sem->waitEmpty();
 
-        qProduct->push(i + arg->dataAddValue);
+        qProduct->push(i + arg->startValue);
 
         sem->postFill();
     }
@@ -125,7 +125,7 @@ int main() {
     for (int i = 0; i < NUM_PRODUCERS; ++i) {
         argPro[i].qProduct = &qProduct;
         argPro[i].sem = &sem;
-        argPro[i].dataAddValue = i * 1000;
+        argPro[i].startValue = i * 1000;
     }
 
     argCon.qProduct = &qProduct;

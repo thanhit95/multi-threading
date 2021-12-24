@@ -81,11 +81,11 @@ public:
 
 
 template <typename T>
-void producer(Monitor<T>* monitor, int dataAddValue) {
+void producer(Monitor<T>* monitor, int startValue) {
     T i = 1;
 
     for (;; ++i) {
-        monitor->add(i + dataAddValue);
+        monitor->add(i + startValue);
     }
 }
 

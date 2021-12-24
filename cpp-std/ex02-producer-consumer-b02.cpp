@@ -23,14 +23,14 @@ void producer(
     TypeSemaphore* semFill,
     TypeSemaphore* semEmpty,
     queue<int>* qProduct,
-    int dataAddValue
+    int startValue
 ) {
     int i = 1;
 
     for (;; ++i) {
         semEmpty->acquire();
 
-        qProduct->push(i + dataAddValue);
+        qProduct->push(i + startValue);
         std::this_thread::sleep_for(std::chrono::seconds(1));
 
         semFill->release();

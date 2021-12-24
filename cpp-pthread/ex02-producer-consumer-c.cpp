@@ -97,7 +97,7 @@ public:
 template <typename T>
 struct ProducerArg {
     Monitor<T>* monitor;
-    int dataAddValue;
+    int startValue;
 };
 
 
@@ -106,12 +106,12 @@ template <typename T>
 void* producer(void* argVoid) {
     auto arg = (ProducerArg<T>*)argVoid;
     auto monitor = arg->monitor;
-    auto dataAddValue = arg->dataAddValue;
+    auto startValue = arg->startValue;
 
     int i = 1;
 
     for (;; ++i) {
-        monitor->add(i + dataAddValue);
+        monitor->add(i + startValue);
     }
 
     pthread_exit(nullptr);

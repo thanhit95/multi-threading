@@ -38,14 +38,14 @@ public class AppB04 {
 
 
     private static void funcProducer(Semaphore semFill, Semaphore semEmpty,
-                                     Queue<Integer> qProduct, int dataAddValue) {
+                                     Queue<Integer> qProduct, int startValue) {
         int i = 1;
 
         for (;; ++i) {
             try {
                 semEmpty.acquire();
 
-                qProduct.add(i + dataAddValue);
+                qProduct.add(i + startValue);
 
                 semFill.release();
             }

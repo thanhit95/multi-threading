@@ -38,12 +38,12 @@ public class AppC {
     }
 
 
-    private static void funcProducer(Monitor<Integer> monitor, int dataAddValue) {
+    private static void funcProducer(Monitor<Integer> monitor, int startValue) {
         int i = 1;
 
         for (;; ++i) {
             try {
-                monitor.add(i + dataAddValue);
+                monitor.add(i + startValue);
             }
             catch (InterruptedException e) {
                 e.printStackTrace();

@@ -51,7 +51,7 @@ struct GlobalSemaphore {
 struct GlobalArg {
     queue<int>* qProduct;
     GlobalSemaphore* sem;
-    int dataAddValue;
+    int startValue;
 };
 
 
@@ -66,7 +66,7 @@ void* producer(void* argVoid) {
     for (;; ++i) {
         sem->waitEmpty();
 
-        qProduct->push(i + arg->dataAddValue);
+        qProduct->push(i + arg->startValue);
         sleep(1);
 
         sem->postFill();
@@ -115,8 +115,8 @@ int main() {
 
 
     argCon = argProA = argProB = { &qProduct, &sem, 0 };
-    argProA.dataAddValue = 0;
-    argProA.dataAddValue = 1000;
+    argProA.startValue = 0;
+    argProB.startValue = 1000;
 
 
     ret = pthread_create(&tidProducerA, nullptr, producer, &argProA);
