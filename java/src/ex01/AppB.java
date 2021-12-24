@@ -41,13 +41,14 @@ public class AppB {
                 }
             }
 
-            lstWorkerRes.add(new WorkerResult(resValue, resNumDiv));
+            synchronized (lstWorkerRes) {
+                lstWorkerRes.add(new WorkerResult(resValue, resNumDiv));
+            }
 
         })).toList();
 
 
         var tpStart = Instant.now();
-
 
         for (var th : lstTh)
             th.start();
@@ -57,13 +58,23 @@ public class AppB {
 
         var finalRes = lstWorkerRes.stream().max((lhs, rhs) -> lhs.numDiv - rhs.numDiv).get();
 
-
         var timeElapsed = Duration.between(tpStart, Instant.now());
 
 
         System.out.println("The integer which has largest number of divisors is " + finalRes.value);
         System.out.println("The largest number of divisor is " + finalRes.numDiv);
         System.out.println("Time elapsed = " + timeElapsed.toNanos() / 1e9);
+
+
+        /*
+         * BETTER WAY (avoiding synchronization of lstWorkerRes):
+         *
+         * - Initialize lstWorkerRes with null objects.
+         *   Of course, the number of objects is NUM_THREADS.
+         *
+         * - In thread function:
+         *   lstWorkerRes.set(threadIndex, new WorkerResult(resValue, resNumDiv));
+         */
     }
 
 
