@@ -18,7 +18,7 @@ public class AppB04 {
 
     public static void main(String[] args) {
         var semFill = new Semaphore(0);     // item produced
-        var semEmpty = new Semaphore(1);    // if remaining space in queue > 1 then error occurs
+        var semEmpty = new Semaphore(1);    // remaining space in queue
 
         Queue<Integer> qProduct = new LinkedList<>();
 
@@ -44,9 +44,7 @@ public class AppB04 {
         for (;; ++i) {
             try {
                 semEmpty.acquire();
-
                 qProduct.add(i + startValue);
-
                 semFill.release();
             }
             catch (InterruptedException e) {
@@ -61,10 +59,7 @@ public class AppB04 {
             try {
                 semFill.acquire();
 
-                System.out.println("queue remain: " + qProduct.size());
-
                 int data = qProduct.remove();
-
                 System.out.println("Consumer " + data);
                 Thread.sleep(1000);
 

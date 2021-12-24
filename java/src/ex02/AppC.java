@@ -56,9 +56,7 @@ public class AppC {
         for (;;) {
             try {
                 int data = monitor.remove();
-
                 System.out.println("Consumer " + data);
-
                 Thread.sleep(1000);
             }
             catch (InterruptedException e) {

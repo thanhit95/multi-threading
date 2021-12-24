@@ -35,9 +35,7 @@ public class AppB03 {
         for (;; ++i) {
             try {
                 semEmpty.acquire();
-
                 qProduct.add(i + startValue);
-
                 semFill.release();
             }
             catch (InterruptedException e) {
@@ -53,7 +51,6 @@ public class AppB03 {
                 semFill.acquire();
 
                 int data = qProduct.remove();
-
                 System.out.println("Consumer " + data);
                 Thread.sleep(1000);
 
