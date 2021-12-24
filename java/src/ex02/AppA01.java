@@ -15,9 +15,7 @@ public class AppA01 {
 
     public static void main(String[] args) {
         var qProduct = new LinkedBlockingQueue<Integer>();
-
         new Thread(() -> funcProducer(qProduct)).start();
-
         new Thread(() -> funcConsumer(qProduct)).start();
     }
 

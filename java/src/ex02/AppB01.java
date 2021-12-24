@@ -22,7 +22,6 @@ public class AppB01 {
         Queue<Integer> qProduct = new LinkedList<>();
 
         new Thread(() -> funcProducer(semFill, semEmpty, qProduct)).start();
-
         new Thread(() -> funcConsumer(semFill, semEmpty, qProduct)).start();
     }
 
