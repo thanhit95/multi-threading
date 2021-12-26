@@ -5,25 +5,43 @@ CONDITION VARIABLE
 
 #include <iostream>
 #include <pthread.h>
-#include <unistd.h>
 using namespace std;
 
 
 
 pthread_mutex_t mut = PTHREAD_MUTEX_INITIALIZER;
+
 pthread_cond_t conditionVar = PTHREAD_COND_INITIALIZER;
 
+int counter = 0;
+
+constexpr int COUNT_HALT_01 = 3;
+constexpr int COUNT_HALT_02 = 6;
+constexpr int COUNT_DONE = 10;
 
 
+
+// Write numbers 1-3 and 8-10 as permitted by egg()
 void* foo(void*) {
-    cout << "foo is waiting..." << endl;
+    for (;;) {
+        // Lock mutex and then wait for signal to relase mutex
+        pthread_mutex_lock(&mut);
 
-    pthread_mutex_lock(&mut);
-    pthread_cond_wait(&conditionVar, &mut);
+        // Wait while egg() operates on counter,
+        // Mutex unlocked if condition variable in egg() signaled
+        pthread_cond_wait(&conditionVar, &mut);
 
-    cout << "foo resumed" << endl;
+        ++counter;
+        cout << "foo count = " << counter << endl;
 
-    pthread_mutex_unlock(&mut);
+        if (counter >= COUNT_DONE) {
+            pthread_mutex_unlock(&mut);
+            pthread_exit(nullptr);
+            return nullptr;
+        }
+
+        pthread_mutex_unlock(&mut);
+    }
 
     pthread_exit(nullptr);
     return nullptr;
@@ -31,10 +49,28 @@ void* foo(void*) {
 
 
 
-void* bar(void*) {
-    for (int i = 0; i < 3; ++i) {
-        sleep(2);
-        pthread_cond_signal(&conditionVar);
+// Write numbers 4-7
+void* egg(void*) {
+    for (;;) {
+        pthread_mutex_lock(&mut);
+
+        if (counter < COUNT_HALT_01 || counter > COUNT_HALT_02) {
+            // Signal to free waiting thread by freeing the mutex
+            // Note: foo() is now permitted to modify "counter"
+            pthread_cond_signal(&conditionVar);
+        }
+        else {
+            ++counter;
+            cout << "egg counter = " << counter << endl;
+        }
+
+        if (counter >= COUNT_DONE) {
+            pthread_mutex_unlock(&mut);
+            pthread_exit(nullptr);
+            return nullptr;
+        }
+
+        pthread_mutex_unlock(&mut);
     }
 
     pthread_exit(nullptr);
@@ -44,27 +80,14 @@ void* bar(void*) {
 
 
 int main() {
-    constexpr int NUM_TH_FOO = 3;
-
-    pthread_t lstTidFoo[NUM_TH_FOO];
-    pthread_t tidBar;
-
+    pthread_t tidFoo, tidEgg;
     int ret = 0;
 
+    ret = pthread_create(&tidFoo, nullptr, foo, nullptr);
+    ret = pthread_create(&tidEgg, nullptr, egg, nullptr);
 
-    for (auto&& tid : lstTidFoo) {
-        ret = pthread_create(&tid, nullptr, foo, nullptr);
-    }
-
-    ret = pthread_create(&tidBar, nullptr, bar, nullptr);
-
-
-    for (auto&& tid : lstTidFoo) {
-        ret = pthread_join(tid, nullptr);
-    }
-
-    ret = pthread_join(tidBar, nullptr);
-
+    ret = pthread_join(tidFoo, nullptr);
+    ret = pthread_join(tidEgg, nullptr);
 
     ret = pthread_cond_destroy(&conditionVar);
     ret = pthread_mutex_destroy(&mut);

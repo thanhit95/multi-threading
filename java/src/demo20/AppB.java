@@ -4,45 +4,73 @@
 
 package demo20;
 
-
-
 public class AppB {
 
     public static void main(String[] args) {
-        var conditionVar = new Object();
-
-
-        Runnable foo = () -> {
-            try {
-                System.out.println("foo is waiting...");
-
-                synchronized (conditionVar) {
-                    conditionVar.wait();
-                }
-
-                System.out.println("foo resumed");
-            }
-            catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        };
-
-
-        Runnable bar = () -> {
-            for (int i = 0; i < 3; ++i) {
-                try { Thread.sleep(2000); } catch (InterruptedException e) { }
-
-                synchronized (conditionVar) {
-                    conditionVar.notify();
-                }
-            }
-        };
-
-
-        for (int i = 0; i < 3; ++i)
-            new Thread(foo).start();
-
-        new Thread(bar).start();
+        new Foo().start();
+        new Egg().start();
     }
 
+}
+
+
+
+class Global {
+    public static Object conditionVar = new Object();
+
+    public static int counter = 0;
+
+    public static final int COUNT_HALT_01 = 3;
+    public static final int COUNT_HALT_02 = 6;
+    public static final int COUNT_DONE = 10;
+}
+
+
+
+// Write numbers 1-3 and 8-10 as permitted by egg()
+class Foo extends Thread {
+    @Override
+    public void run() {
+        for (;;) {
+            synchronized (Global.conditionVar) {
+                try {
+                    Global.conditionVar.wait();
+
+                    Global.counter += 1;
+                    System.out.println("foo counter = " + Global.counter);
+
+                    if (Global.counter >= Global.COUNT_DONE) {
+                        return;
+                    }
+                }
+                catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+}
+
+
+
+// Write numbers 4-7
+class Egg extends Thread {
+    @Override
+    public void run() {
+        for (;;) {
+            synchronized (Global.conditionVar) {
+                if (Global.counter < Global.COUNT_HALT_01 || Global.counter > Global.COUNT_HALT_02) {
+                    Global.conditionVar.notify();
+                }
+                else {
+                    Global.counter += 1;
+                    System.out.println("egg counter = " + Global.counter);
+                }
+
+                if (Global.counter >= Global.COUNT_DONE) {
+                    return;
+                }
+            }
+        }
+    }
 }

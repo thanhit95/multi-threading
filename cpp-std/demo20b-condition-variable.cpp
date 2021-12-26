@@ -7,53 +7,72 @@ CONDITION VARIABLE
 #include <thread>
 #include <mutex>
 #include <condition_variable>
-#include <chrono>
 using namespace std;
 
 
 
 std::mutex mut;
+
 std::condition_variable conditionVar;
 
+int counter = 0;
+
+constexpr int COUNT_HALT_01 = 3;
+constexpr int COUNT_HALT_02 = 6;
+constexpr int COUNT_DONE = 10;
 
 
+
+// Write numbers 1-3 and 8-10 as permitted by egg()
 void foo() {
-    cout << "foo is waiting..." << endl;
+    for (;;) {
+        // Lock mutex and then wait for signal to relase mutex
+        std::unique_lock<std::mutex> lk(mut);
 
-    std::unique_lock<std::mutex> mutLock(mut);
-    conditionVar.wait(mutLock);
+        // Wait while egg() operates on counter,
+        // Mutex unlocked if condition variable in egg() signaled
+        conditionVar.wait(lk);
 
-    cout << "foo resumed" << endl;
+        ++counter;
+        cout << "foo counter = " << counter << endl;
+
+        if (counter >= COUNT_DONE) {
+            return;
+        }
+    }
 }
 
 
 
-void bar() {
-    for (int i = 0; i < 3; ++i) {
-        std::this_thread::sleep_for(std::chrono::seconds(2));
-        conditionVar.notify_one();
+// Write numbers 4-7
+void egg() {
+    for (;;) {
+        std::unique_lock<std::mutex> lk(mut);
+
+        if (counter < COUNT_HALT_01 || counter > COUNT_HALT_02) {
+            // Signal to free waiting thread by freeing the mutex
+            // Note: foo() is now permitted to modify "counter"
+            conditionVar.notify_one();
+        }
+        else {
+            ++counter;
+            cout << "egg counter = " << counter << endl;
+        }
+
+        if (counter >= COUNT_DONE) {
+            return;
+        }
     }
 }
 
 
 
 int main() {
-    constexpr int NUM_TH_FOO = 3;
-    std::thread lstThFoo[NUM_TH_FOO];
+    auto thFoo = std::thread(foo);
+    auto thEgg = std::thread(egg);
 
-
-    for (auto&& th : lstThFoo) {
-        th = std::thread(foo);
-    }
-
-    auto thBar = std::thread(bar);
-
-
-    thBar.join();
-
-    for (auto&& th : lstThFoo) {
-        th.join();
-    }
+    thFoo.join();
+    thEgg.join();
 
     return 0;
 }
