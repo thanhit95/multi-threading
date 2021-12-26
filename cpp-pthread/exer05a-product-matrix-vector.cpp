@@ -46,7 +46,7 @@ void* workerScalarProduct(void* argVoid) {
 
 
 void getProduct(const matrix& mat, const vectord& vec, vectord& result) {
-    // Assume that the size of A and b are both correct
+    // Assume that size of mat and vec are both eligible
     int sizeRowMat = mat.size();
     int sizeColMat = mat[0].size();
     int sizeVec = vec.size();

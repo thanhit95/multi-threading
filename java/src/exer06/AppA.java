@@ -13,9 +13,7 @@ public class AppA {
 
     public static void main(String[] args) {
         final var queue = new MySynchronousQueue<String>();
-
         new Thread(() -> producer(queue)).start();
-
         new Thread(() -> consumer(queue)).start();
     }
 
@@ -52,33 +50,31 @@ public class AppA {
         }
     }
 
-}
 
 
+    static class MySynchronousQueue<T> {
+        private Semaphore semPut = new Semaphore(1);
+        private Semaphore semTake = new Semaphore(0);
+        private T element = null;
 
-class MySynchronousQueue<T> {
-    private Semaphore semPut = new Semaphore(1);
-    private Semaphore semTake = new Semaphore(0);
-    private T element = null;
+
+        public void put(T value) throws InterruptedException {
+            semPut.acquire();
+            element = value;
+            semTake.release();
+        }
 
 
-    public void put(T value) throws InterruptedException {
-        semPut.acquire();
-        element = value;
-        semTake.release();
+        public T take() throws InterruptedException {
+            semTake.acquire();
+
+            T result = element;
+            element = null;
+
+            semPut.release();
+
+            return result;
+        }
     }
 
-
-    public T take() throws InterruptedException {
-        T result = null;
-
-        semTake.acquire();
-
-        result = element;
-        element = null;
-
-        semPut.release();
-
-        return result;
-    }
 }

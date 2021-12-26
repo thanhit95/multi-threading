@@ -1,5 +1,5 @@
 /*
- * SYNCHRONIZED
+ * SYNCHRONIZED BLOCK
  * Version B: Synchronized instance method
  *
  * Synchronized methods has two effects:

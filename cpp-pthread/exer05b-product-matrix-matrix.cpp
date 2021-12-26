@@ -74,7 +74,7 @@ void displayMatrix(const matrix& mat) {
 
 
 void getProduct(const matrix& matA, const matrix& matB, matrix& result) {
-    // Assume that the size of A and B are both correct
+    // Assume that size of matA and matB are both eligible
     int sizeRowA = matA.size();
     int sizeColA = matA[0].size();
     int sizeColB = matB[0].size();

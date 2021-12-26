@@ -30,15 +30,13 @@ public class AppB {
 
 
     private static double[][] getProduct(double[][] matA, double[][] matB) throws InterruptedException {
-        // Assume that the size of A and B are both correct
+        // Assume that size of matA and matB are both eligible
         int sizeRowA = matA.length;
         int sizeColB = matB[0].length;
 
 
         double[][] matBT = MyUtil.getTransposeMatrix(matB);
-
         var result = new double[sizeRowA][sizeColB];
-
         var lstTh = new ArrayList<Thread>();
 
 

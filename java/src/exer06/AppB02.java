@@ -13,9 +13,7 @@ public class AppB02 {
 
     public static void main(String[] args) {
         final var queue = new MyLinkedBlockingQueue<String>(2); // capacity = 2
-
         new Thread(() -> producer(queue)).start();
-
         new Thread(() -> consumer(queue)).start();
     }
 

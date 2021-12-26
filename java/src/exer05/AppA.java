@@ -31,7 +31,7 @@ public class AppA {
 
 
     private static double[] getProduct(double[][] mat, double[] vec) throws InterruptedException {
-        // Assume that the size of A and b are both correct
+        // Assume that size of mat and vec are both eligible
         int sizeRowMat = mat.length;
         // int sizeColMat = mat[0].length;
         // int sizeVec = vec.length;

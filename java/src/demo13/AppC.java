@@ -1,5 +1,5 @@
 /*
- * SYNCHRONIZED
+ * SYNCHRONIZED BLOCK
  * Version C: Synchronized static method
  */
 

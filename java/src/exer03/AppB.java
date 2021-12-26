@@ -50,11 +50,9 @@ public class AppB {
         var rand = new Random();
         Thread.sleep(1000 * timeDelay);
 
-        Global.mutServiceQueue.acquire();
-
-        Global.mutResource.acquire();
-
-        Global.mutServiceQueue.release();
+        synchronized (Global.mutServiceQueue) {
+            Global.mutResource.acquire();
+        }
 
         Global.resource = rand.nextInt(100);
         System.out.println("Write " + Global.resource);
@@ -66,26 +64,19 @@ public class AppB {
     private static void funcReader(int timeDelay) throws InterruptedException {
         Thread.sleep(1000 * timeDelay);
 
+        synchronized (Global.mutServiceQueue) {
+            // Increase reader count
+            synchronized (Global.mutReaderCount) {
+                Global.readerCount += 1;
 
-        Global.mutServiceQueue.acquire();
-
-
-        // Increase reader count
-        synchronized (Global.mutReaderCount) {
-            Global.readerCount += 1;
-
-            if (1 == Global.readerCount)
-                Global.mutResource.acquire();
+                if (1 == Global.readerCount)
+                    Global.mutResource.acquire();
+            }
         }
-
-
-        Global.mutServiceQueue.release();
-
 
         // Do the reading
         int data = Global.resource;
         System.out.println("Read " + data);
-
 
         // Decrease reader count
         synchronized (Global.mutReaderCount) {
@@ -99,13 +90,13 @@ public class AppB {
 
 
     class Global {
-        static Semaphore mutServiceQueue = new Semaphore(1);
+        public static Object mutServiceQueue = new Object();
 
-        static Semaphore mutResource = new Semaphore(1);
-        static Object mutReaderCount = new Object();
+        public static Semaphore mutResource = new Semaphore(1);
+        public static Object mutReaderCount = new Object();
 
-        static volatile int resource = 0;
-        static int readerCount = 0;
+        public static volatile int resource = 0;
+        public static int readerCount = 0;
     }
 
 }

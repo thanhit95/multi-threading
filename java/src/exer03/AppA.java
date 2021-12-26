@@ -70,11 +70,9 @@ public class AppA {
                 Global.mutResource.acquire();
         }
 
-
         // Do the reading
         int data = Global.resource;
         System.out.println("Read " + data);
-
 
         // Decrease reader count
         synchronized (Global.mutReaderCount) {
@@ -88,11 +86,11 @@ public class AppA {
 
 
     class Global {
-        static Semaphore mutResource = new Semaphore(1);
-        static Object mutReaderCount = new Object();
+        public static Semaphore mutResource = new Semaphore(1);
+        public static Object mutReaderCount = new Object();
 
-        static volatile int resource = 0;
-        static int readerCount = 0;
+        public static volatile int resource = 0;
+        public static int readerCount = 0;
     }
 
 }
