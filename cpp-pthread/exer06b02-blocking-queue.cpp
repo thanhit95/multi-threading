@@ -5,7 +5,7 @@ Version B02: General blocking queue / underlying mechanism: condition variable
 
 
 #include <iostream>
-#include <list>
+#include <queue>
 #include <string>
 #include <stdexcept>
 #include <pthread.h>
@@ -26,7 +26,7 @@ private:
     int capacity = 0;
 
     pthread_mutex_t mutLst = PTHREAD_MUTEX_INITIALIZER;
-    std::list<T> lst;
+    std::queue<T> q;
 
 
 public:
@@ -53,7 +53,7 @@ public:
 
         ret = pthread_mutex_lock(&mutFull);
 
-        while (capacity == lst.size()) {
+        while (capacity == q.size()) {
             // queue is full, must wait for 'take'
             ret = pthread_cond_wait(&condFull, &mutFull);
         }
@@ -62,7 +62,7 @@ public:
 
 
         ret = pthread_mutex_lock(&mutLst);
-        lst.push_back(value);
+        q.push(value);
         ret = pthread_mutex_unlock(&mutLst);
 
 
@@ -77,7 +77,7 @@ public:
 
         ret = pthread_mutex_lock(&mutEmpty);
 
-        while (0 == lst.size()) {
+        while (0 == q.size()) {
             // queue is empty, must wait for 'put'
             ret = pthread_cond_wait(&condEmpty, &mutEmpty);
         }
@@ -86,14 +86,12 @@ public:
 
 
         ret = pthread_mutex_lock(&mutLst);
-        result = lst.front();
-        lst.pop_front();
+        result = q.front();
+        q.pop();
         ret = pthread_mutex_unlock(&mutLst);
 
 
         ret = pthread_cond_signal(&condFull);
-
-
         return result;
     }
 

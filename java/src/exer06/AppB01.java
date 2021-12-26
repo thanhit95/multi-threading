@@ -1,11 +1,13 @@
 /*
  * BLOCKING QUEUE IMPLEMENTATION
- * Version B01: General blocking queue / underlying mechanism: semaphore
+ * Version B01: General blocking queue
+ *              Underlying mechanism: Semaphore
  */
 
 package exer06;
 
 import java.util.LinkedList;
+import java.util.Queue;
 import java.util.concurrent.Semaphore;
 
 
@@ -13,13 +15,13 @@ import java.util.concurrent.Semaphore;
 public class AppB01 {
 
     public static void main(String[] args) {
-        final var queue = new MyLinkedBlockingQueue<String>(2); // capacity = 2
+        final var queue = new MyBlockingQueue<String>(2); // capacity = 2
         new Thread(() -> producer(queue)).start();
         new Thread(() -> consumer(queue)).start();
     }
 
 
-    private static void producer(MyLinkedBlockingQueue<String> queue) {
+    private static void producer(MyBlockingQueue<String> queue) {
         String[] arr = { "nice", "to", "meet", "you" };
 
         try {
@@ -35,7 +37,7 @@ public class AppB01 {
     }
 
 
-    private static void consumer(MyLinkedBlockingQueue<String> queue) {
+    private static void consumer(MyBlockingQueue<String> queue) {
         String data = "";
 
         try {
@@ -58,17 +60,17 @@ public class AppB01 {
     //////////////////////////////////////////////
 
 
-    static class MyLinkedBlockingQueue<T> {
+    static class MyBlockingQueue<T> {
         private Semaphore semRemain = null;
         private Semaphore semFill = null;
 
         @SuppressWarnings("unused")
         private int capacity = 0;
 
-        private LinkedList<T> lst = null;
+        private Queue<T> queue = null;
 
 
-        public MyLinkedBlockingQueue(int capacity) {
+        public MyBlockingQueue(int capacity) {
             if (capacity <= 0)
                 throw new IllegalArgumentException("capacity must be a positive integer");
 
@@ -76,15 +78,15 @@ public class AppB01 {
             semFill = new Semaphore(0);
 
             this.capacity = capacity;
-            lst = new LinkedList<T>();
+            queue = new LinkedList<T>();
         }
 
 
         public void put(T value) throws InterruptedException {
             semRemain.acquire();
 
-            synchronized (lst) {
-                lst.add(value);
+            synchronized (queue) {
+                queue.add(value);
             }
 
             semFill.release();
@@ -96,8 +98,8 @@ public class AppB01 {
 
             semFill.acquire();
 
-            synchronized (lst) {
-                result = lst.remove();
+            synchronized (queue) {
+                result = queue.remove();
             }
 
             semRemain.release();

@@ -1,11 +1,12 @@
 /*
 BLOCKING QUEUE IMPLEMENTATION
-Version B01: General blocking queue / underlying mechanism: semaphore
+Version B01: General blocking queue
+             Underlying mechanism: Semaphore
 */
 
 
 #include <iostream>
-#include <list>
+#include <queue>
 #include <string>
 #include <thread>
 #include <mutex>
@@ -30,7 +31,7 @@ private:
     TypeSemaphore semFill;
 
     std::mutex mutLst;
-    std::list<T> lst;
+    std::queue<T> q;
 
 
 public:
@@ -45,7 +46,7 @@ public:
 
         {
             std::unique_lock<std::mutex> lk(mutLst);
-            lst.push_back(value);
+            q.push(value);
         }
 
         semFill.release();
@@ -54,17 +55,15 @@ public:
 
     T take() {
         T result;
-
         semFill.acquire();
 
         {
             std::unique_lock<std::mutex> lk(mutLst);
-            result = lst.front();
-            lst.pop_front();
+            result = q.front();
+            q.pop();
         }
 
         semRemain.release();
-
         return result;
     }
 

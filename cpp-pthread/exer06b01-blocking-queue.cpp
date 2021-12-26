@@ -5,7 +5,7 @@ Version B01: General blocking queue / underlying mechanism: semaphore
 
 
 #include <iostream>
-#include <list>
+#include <queue>
 #include <string>
 #include <stdexcept>
 #include <pthread.h>
@@ -25,7 +25,7 @@ private:
     int capacity = 0;
 
     pthread_mutex_t mutLst = PTHREAD_MUTEX_INITIALIZER;
-    std::list<T> lst;
+    std::queue<T> q;
 
 
 public:
@@ -53,7 +53,7 @@ public:
         ret = sem_wait(&semRemain);
 
         ret = pthread_mutex_lock(&mutLst);
-        lst.push_back(value);
+        q.push(value);
         ret = pthread_mutex_unlock(&mutLst);
 
         ret = sem_post(&semFill);
@@ -67,8 +67,8 @@ public:
         ret = sem_wait(&semFill);
 
         ret = pthread_mutex_lock(&mutLst);
-        result = lst.front();
-        lst.pop_front();
+        result = q.front();
+        q.pop();
         ret = pthread_mutex_unlock(&mutLst);
 
         ret = sem_post(&semRemain);

@@ -1,11 +1,12 @@
 /*
 BLOCKING QUEUE IMPLEMENTATION
-Version B02: General blocking queue / underlying mechanism: condition variable
+Version B02: General blocking queue
+             Underlying mechanism: Condition variable
 */
 
 
 #include <iostream>
-#include <list>
+#include <queue>
 #include <string>
 #include <thread>
 #include <mutex>
@@ -28,7 +29,7 @@ private:
     int capacity = 0;
 
     std::mutex mutLst;
-    std::list<T> lst;
+    std::queue<T> q;
 
 
 public:
@@ -44,7 +45,7 @@ public:
         {
             std::unique_lock<std::mutex> lk(mutFull);
 
-            while (capacity == (int)lst.size()) {
+            while (capacity == (int)q.size()) {
                 // queue is full, must wait for 'take'
                 condFull.wait(lk);
             }
@@ -52,7 +53,7 @@ public:
 
         {
             std::unique_lock<std::mutex> lk(mutLst);
-            lst.push_back(value);
+            q.push(value);
         }
 
         condEmpty.notify_one();
@@ -65,7 +66,7 @@ public:
         {
             std::unique_lock<std::mutex> lk(mutEmpty);
 
-            while (0 == lst.size()) {
+            while (0 == q.size()) {
                 // queue is empty, must wait for 'put'
                 condEmpty.wait(lk);
             }
@@ -73,12 +74,11 @@ public:
 
         {
             std::unique_lock<std::mutex> lk(mutLst);
-            result = lst.front();
-            lst.pop_front();
+            result = q.front();
+            q.pop();
         }
 
         condFull.notify_one();
-
         return result;
     }
 

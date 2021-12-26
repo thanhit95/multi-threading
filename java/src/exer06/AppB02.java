@@ -1,24 +1,26 @@
 /*
  * BLOCKING QUEUE IMPLEMENTATION
- * Version B02: General blocking queue / underlying mechanism: condition variable
+ * Version B02: General blocking queue
+ *              Underlying mechanism: Condition variable
  */
 
 package exer06;
 
 import java.util.LinkedList;
+import java.util.Queue;
 
 
 
 public class AppB02 {
 
     public static void main(String[] args) {
-        final var queue = new MyLinkedBlockingQueue<String>(2); // capacity = 2
+        final var queue = new MyBlockingQueue<String>(2); // capacity = 2
         new Thread(() -> producer(queue)).start();
         new Thread(() -> consumer(queue)).start();
     }
 
 
-    private static void producer(MyLinkedBlockingQueue<String> queue) {
+    private static void producer(MyBlockingQueue<String> queue) {
         String[] arr = { "nice", "to", "meet", "you" };
 
         try {
@@ -34,7 +36,7 @@ public class AppB02 {
     }
 
 
-    private static void consumer(MyLinkedBlockingQueue<String> queue) {
+    private static void consumer(MyBlockingQueue<String> queue) {
         String data = "";
 
         try {
@@ -57,33 +59,33 @@ public class AppB02 {
     //////////////////////////////////////////////
 
 
-    static class MyLinkedBlockingQueue<T> {
+    static class MyBlockingQueue<T> {
         private Object condEmpty = new Object();
         private Object condFull = new Object();
 
         private int capacity = 0;
-        private LinkedList<T> lst = null;
+        private Queue<T> queue = null;
 
 
-        public MyLinkedBlockingQueue(int capacity) {
+        public MyBlockingQueue(int capacity) {
             if (capacity <= 0)
                 throw new IllegalArgumentException("capacity must be a positive integer");
 
             this.capacity = capacity;
-            lst = new LinkedList<T>();
+            queue = new LinkedList<T>();
         }
 
 
         public void put(T value) throws InterruptedException {
             synchronized (condFull) {
-                while (capacity == lst.size()) {
+                while (capacity == queue.size()) {
                     // queue is full, must wait for 'take'
                     condFull.wait();
                 }
             }
 
-            synchronized (lst) {
-                lst.add(value);
+            synchronized (queue) {
+                queue.add(value);
             }
 
             synchronized (condEmpty) {
@@ -96,14 +98,14 @@ public class AppB02 {
             T result = null;
 
             synchronized (condEmpty) {
-                while (0 == lst.size()) {
+                while (0 == queue.size()) {
                     // queue is empty, must wait for 'put'
                     condEmpty.wait();
                 }
             }
 
-            synchronized (lst) {
-                result = lst.remove();
+            synchronized (queue) {
+                result = queue.remove();
             }
 
             synchronized (condFull) {
