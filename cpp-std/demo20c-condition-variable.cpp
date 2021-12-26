@@ -30,6 +30,7 @@ void foo() {
 
 void bar() {
     std::this_thread::sleep_for(std::chrono::seconds(3));
+    // Notify all waiting threads
     conditionVar.notify_all();
 }
 

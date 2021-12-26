@@ -32,6 +32,7 @@ public class AppC {
             try { Thread.sleep(3000); } catch (InterruptedException e) { }
 
             synchronized (conditionVar) {
+                // Notify all waiting threads
                 conditionVar.notifyAll();
             }
         };

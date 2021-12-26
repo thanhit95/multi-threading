@@ -33,6 +33,7 @@ void* foo(void*) {
 
 void* bar(void*) {
     sleep(3);
+    // Notify all waiting threads
     pthread_cond_broadcast(&conditionVar);
 
     pthread_exit(nullptr);

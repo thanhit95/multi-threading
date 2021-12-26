@@ -34,12 +34,13 @@ void* foo(void*) {
         ++counter;
         cout << "foo count = " << counter << endl;
 
-        pthread_mutex_unlock(&mut);
-
         if (counter >= COUNT_DONE) {
+            pthread_mutex_unlock(&mut);
             pthread_exit(nullptr);
             return nullptr;
         }
+
+        pthread_mutex_unlock(&mut);
     }
 
     pthread_exit(nullptr);
@@ -63,12 +64,13 @@ void* egg(void*) {
             cout << "egg counter = " << counter << endl;
         }
 
-        pthread_mutex_unlock(&mut);
-
         if (counter >= COUNT_DONE) {
+            pthread_mutex_unlock(&mut);
             pthread_exit(nullptr);
             return nullptr;
         }
+
+        pthread_mutex_unlock(&mut);
     }
 
     pthread_exit(nullptr);
@@ -78,14 +80,14 @@ void* egg(void*) {
 
 
 int main() {
-    pthread_t tidFoo, tidEggs;
+    pthread_t tidFoo, tidEgg;
     int ret = 0;
 
     ret = pthread_create(&tidFoo, nullptr, foo, nullptr);
-    ret = pthread_create(&tidEggs, nullptr, egg, nullptr);
+    ret = pthread_create(&tidEgg, nullptr, egg, nullptr);
 
     ret = pthread_join(tidFoo, nullptr);
-    ret = pthread_join(tidEggs, nullptr);
+    ret = pthread_join(tidEgg, nullptr);
 
     ret = pthread_cond_destroy(&conditionVar);
     ret = pthread_mutex_destroy(&mut);
