@@ -90,6 +90,7 @@ void producer(BlockingQueue<std::string>* queue) {
     auto arr = { "nice", "to", "meet", "you" };
 
     for (auto&& value : arr) {
+        cout << "Producer: " << value << endl;
         queue->put(value);
         cout << "Producer: " << value << "\t\t\t[done]" << endl;
     }

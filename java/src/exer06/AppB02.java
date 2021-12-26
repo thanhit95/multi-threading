@@ -23,6 +23,7 @@ public class AppB02 {
 
         try {
             for (var value : arr) {
+                System.out.println("Producer: " + value);
                 queue.put(value);
                 System.out.println("Producer: " + value + "\t\t\t[done]");
             }

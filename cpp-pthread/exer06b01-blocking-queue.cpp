@@ -86,6 +86,7 @@ void* producer(void* arg) {
     auto arr = { "nice", "to", "meet", "you" };
 
     for (auto&& value : arr) {
+        cout << "Producer: " << value << endl;
         queue->put(value);
         cout << "Producer: " << value << "\t\t\t[done]" << endl;
     }
