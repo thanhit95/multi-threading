@@ -18,8 +18,6 @@ public class AppExtra {
 
     public static void main(String[] args) {
         final BlockingQueue<String> queue = new SynchronousQueue<>();
-
-
         new Thread(() -> producer(queue)).start();
         new Thread(() -> consumer(queue)).start();
     }
