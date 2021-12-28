@@ -1,5 +1,5 @@
 /*
-MUTEX (Mutual Exclusion)
+MUTEXES
 
 Without synchronization (by a mutex), we are not sure that result = 30000
 

@@ -1,7 +1,7 @@
 /*
 BLOCKING QUEUE IMPLEMENTATION
-Version B02: General blocking queue
-             Underlying mechanism: Condition variable
+Version B02: General blocking queues
+             Underlying mechanism: Condition variables
 */
 
 

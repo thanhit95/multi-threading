@@ -1,5 +1,5 @@
 /*
-SEMAPHORE
+SEMAPHORES
 Version B: Tires and chassis
 */
 

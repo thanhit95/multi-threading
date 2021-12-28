@@ -1,5 +1,5 @@
 /*
-DATA RACE
+DATA RACES
 Version 02: Multithreading
 */
 

@@ -1,5 +1,5 @@
 /*
-DETACH
+THREAD DETACHING
 */
 
 

@@ -1,5 +1,5 @@
 /*
-MUTEX (Mutual Exclusion)
+MUTEXES
 
 - std::lock_guard will be locked only once on construction and unlocked on destruction.
 - In contrast to std::lock_guard, std::unique_lock can be:

@@ -1,5 +1,5 @@
 /*
-SYNCHRONIZED BLOCK
+SYNCHRONIZED BLOCKS
 */
 
 
@@ -8,6 +8,6 @@ using namespace std;
 
 
 int main() {
-    cout << "C++ currently does not support \"synchronized block\" by default." << endl;
+    cout << "C++ currently does not support \"synchronized blocks\" by default." << endl;
     return 0;
 }

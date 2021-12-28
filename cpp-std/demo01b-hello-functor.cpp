@@ -1,6 +1,6 @@
 /*
 HELLO WORLD VERSION MULTITHREADING
-Version B: Using classes/functors
+Version B: Using functors
 */
 
 

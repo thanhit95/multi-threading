@@ -1,5 +1,5 @@
 /*
-READ-WRITE LOCK
+READ-WRITE LOCKS
 */
 
 

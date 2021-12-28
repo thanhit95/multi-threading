@@ -1,6 +1,6 @@
 /*
-REENTRANT LOCK (RECURSIVE MUTEX)
-Version A: Introduction to reentrant lock
+REENTRANT LOCKS (RECURSIVE MUTEXES)
+Version A: Introduction to reentrant locks
 */
 
 

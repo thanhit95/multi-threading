@@ -1,5 +1,5 @@
 /*
-MUTEX (Mutual Exclusion)
+MUTEXES
 */
 
 

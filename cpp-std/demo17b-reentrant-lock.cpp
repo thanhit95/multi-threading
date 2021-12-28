@@ -1,5 +1,5 @@
 /*
-REENTRANT LOCK (RECURSIVE MUTEX)
+REENTRANT LOCKS (RECURSIVE MUTEXES)
 Version B: Solving the problem from version A
 */
 
