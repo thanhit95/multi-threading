@@ -1,6 +1,6 @@
 /*
-REENTRANT LOCK (RECURSIVE MUTEX)
-Version C: Slightly hard example
+REENTRANT LOCKS (RECURSIVE MUTEXES)
+Version C: A slightly hard example
 */
 
 

@@ -1,5 +1,5 @@
 /*
-READ-WRITE LOCK
+READ-WRITE LOCKS
 
 Lock for reading
     A thread can hold multiple concurrent read locks on the rwlock object

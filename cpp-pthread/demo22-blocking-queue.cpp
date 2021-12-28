@@ -1,5 +1,5 @@
 /*
-BLOCKING QUEUE
+BLOCKING QUEUES
 */
 
 
@@ -8,6 +8,6 @@ using namespace std;
 
 
 int main() {
-    cout << "\"Blocking queue\" in C++ POSIX threading is not supported by default." << endl;
+    cout << "\"Blocking queues\" in C++ POSIX threading are not supported by default." << endl;
     return 0;
 }

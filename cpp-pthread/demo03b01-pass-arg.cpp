@@ -1,5 +1,5 @@
 /*
-PASSING MULTIPLE ARGUMENTS IN PTHREAD
+PASSING MULTIPLE ARGUMENTS
 Solution 01: Creating a custom struct
 */
 

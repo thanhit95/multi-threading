@@ -1,5 +1,5 @@
 /*
-THREAD JOINING
+THREAD JOINS
 */
 
 

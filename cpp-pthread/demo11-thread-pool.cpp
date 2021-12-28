@@ -1,5 +1,5 @@
 /*
-THREAD POOL
+THREAD POOLS
 */
 
 
@@ -8,6 +8,6 @@ using namespace std;
 
 
 int main() {
-    cout << "\"Thread pool\" in C++ POSIX threading is not supported by default." << endl;
+    cout << "\"Thread pools\" in C++ POSIX threading are not supported by default." << endl;
     return 0;
 }

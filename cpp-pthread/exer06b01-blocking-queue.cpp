@@ -1,6 +1,7 @@
 /*
 BLOCKING QUEUE IMPLEMENTATION
-Version B01: General blocking queue / underlying mechanism: semaphore
+Version B01: General blocking queues
+             Underlying mechanism: Semaphores
 */
 
 

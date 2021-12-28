@@ -1,6 +1,6 @@
 /*
 BLOCKING QUEUE IMPLEMENTATION
-Version A: Synchronous queue
+Version A: Synchronous queues
 */
 
 

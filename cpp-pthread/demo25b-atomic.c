@@ -1,5 +1,6 @@
 /*
-ATOMIC
+ATOMIC ACCESS
+
 In this demo, I use raw C language (not C++).
 */
 

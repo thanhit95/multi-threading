@@ -1,5 +1,5 @@
 /*
-FUTURE
+ASYNCHRONOUS PROGRAMMING WITH FUTURE
 */
 
 
@@ -8,6 +8,6 @@ using namespace std;
 
 
 int main() {
-    cout << "\"Future\" in POSIX threading is not supported by default." << endl;
+    cout << "\"Future\" feature in C++ POSIX threading is not supported by default." << endl;
     return 0;
 }

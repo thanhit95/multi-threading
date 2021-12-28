@@ -1,5 +1,5 @@
 /*
-MUTEX (Mutual Exclusion)
+MUTEXES
 
 Lock with a nonblocking mutex
 Use pthread_mutex_trylock to attempt to lock the mutex pointed to by mutex.
