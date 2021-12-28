@@ -8,6 +8,6 @@ using namespace std;
 
 
 int main() {
-    cout << "\"Blocking queue\" in C++ std threading is not supported by default." << endl;
+    cout << "\"Blocking queues\" in C++ std threading are not supported by default." << endl;
     return 0;
 }
