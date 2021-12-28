@@ -1,7 +1,7 @@
 /*
  * THE READERS-WRITERS PROBLEM
  * Solution for the first readers-writers problem
-*/
+ */
 
 package exer03;
 

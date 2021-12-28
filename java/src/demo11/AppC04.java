@@ -1,7 +1,7 @@
 /*
  * THREAD POOL
  * Version C04: Thread pool and Future - Getting started
-*/
+ */
 
 package demo11;
 
@@ -19,7 +19,7 @@ public class AppC04 {
         ExecutorService executor = Executors.newSingleThreadExecutor();
 
         // Old syntax
-//        Callable<Integer> caGetSquared = new Callable<>() {
+//        Callable<Integer> callable = new Callable<>() {
 //            @Override
 //            public Integer call() throws Exception {
 //                return getSquared(7);

@@ -1,7 +1,7 @@
 /*
  * THREAD-LOCAL STORAGE
  * Introduction
-*/
+ */
 
 package demo23;
 

@@ -1,6 +1,6 @@
 /*
  * RACE CONDITION AND DATA RACE
-*/
+ */
 
 package demo12;
 

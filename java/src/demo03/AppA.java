@@ -1,7 +1,7 @@
 /*
  * PASSING ARGUMENTS
  * Version A: Passing multiple arguments with various data types
-*/
+ */
 
 package demo03;
 

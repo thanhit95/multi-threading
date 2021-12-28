@@ -1,7 +1,7 @@
 /*
  * DEMO LIST OF MUTIPLE THREADS
  * Version A: Using java.util.List / ArrayList
-*/
+ */
 
 package demo06;
 

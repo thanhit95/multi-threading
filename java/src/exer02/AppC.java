@@ -3,7 +3,7 @@
  *
  * SOLUTION TYPE C: USING CONDITION VARIABLE & MONITOR
  *      Multiple fast producers, multiple slow consumers
-*/
+ */
 
 package exer02;
 

@@ -1,7 +1,7 @@
 /*
  * DEMO LIST OF MUTIPLE THREADS
  * Version B: Using stream
-*/
+ */
 
 package demo06;
 

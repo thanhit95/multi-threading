@@ -1,6 +1,6 @@
 /*
  * RACE CONDITION
-*/
+ */
 
 package demo12;
 

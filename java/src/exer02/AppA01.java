@@ -3,7 +3,7 @@
  *
  * SOLUTION TYPE A: USING BLOCKING QUEUE
  *      Version A01: 1 slow producer, 1 fast consumer
-*/
+ */
 
 package exer02;
 

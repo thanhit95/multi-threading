@@ -1,6 +1,6 @@
 /*
  * VOLATILE
-*/
+ */
 
 package demo24;
 

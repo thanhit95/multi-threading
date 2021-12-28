@@ -1,7 +1,7 @@
 /*
  * REENTRANT LOCK (RECURSIVE MUTEX)
- * Version B02: Slightly hard example
-*/
+ * Version B02: A slightly hard example
+ */
 
 package demo17;
 

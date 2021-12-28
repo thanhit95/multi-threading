@@ -1,6 +1,6 @@
 /*
  * REENTRANT LOCK (RECURSIVE MUTEX)
- * Version A01: Simple example
+ * Version A01: A simple example
  */
 
 package demo17;

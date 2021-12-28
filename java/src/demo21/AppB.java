@@ -1,8 +1,10 @@
 /*
  * CONDITION VARIABLE
-*/
+ */
 
 package demo21;
+
+
 
 public class AppB {
 

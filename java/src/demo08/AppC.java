@@ -1,6 +1,6 @@
 /*
  * GETTING RETURNED VALUES FROM THREADS
-*/
+ */
 
 package demo08;
 

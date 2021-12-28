@@ -1,11 +1,11 @@
 /*
  * REENTRANT LOCK (RECURSIVE MUTEX)
- * Version B01: Simple example
+ * Version B01: A simple example
  *
  * Looking into the lock behind the "synchronized" keyword.
  * The lock behind the synchronized methods and blocks is reentrant lock.
  * That is, the current thread can acquire the same synchronized lock over and over again while holding it.
-*/
+ */
 
 package demo17;
 

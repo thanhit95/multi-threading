@@ -1,7 +1,7 @@
 /*
  * HELLO WORLD VERSION MULTITHREADING
  * Version B01: Using inteface Runnable
-*/
+ */
 
 package demo01;
 

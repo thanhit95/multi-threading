@@ -1,7 +1,7 @@
 /*
  * DATA RACE
  * Version 01: Without multithreading
-*/
+ */
 
 package demo12;
 

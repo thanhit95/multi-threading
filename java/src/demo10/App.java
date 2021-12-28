@@ -1,6 +1,6 @@
 /*
  * YIELD
-*/
+ */
 
 package demo10;
 

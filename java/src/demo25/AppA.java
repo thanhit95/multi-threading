@@ -1,6 +1,6 @@
 /*
  * ATOMIC
-*/
+ */
 
 package demo25;
 

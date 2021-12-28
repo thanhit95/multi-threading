@@ -1,7 +1,7 @@
 /*
  * INTRODUCTION TO MULTITHREADING
  * You should try running this app several times and see results.
-*/
+ */
 
 package demo00;
 

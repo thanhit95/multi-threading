@@ -3,7 +3,7 @@
  * Introduction
  *
  * Use ThreadLocal.withInitial for better initialization
-*/
+ */
 
 package demo23;
 

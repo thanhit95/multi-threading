@@ -1,7 +1,7 @@
 /*
  * PASSING ARGUMENTS
  * Version B: Passing argument COUNT by capturing it from outside
-*/
+ */
 
 package demo03;
 

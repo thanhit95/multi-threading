@@ -1,7 +1,7 @@
 /*
  * BARRIER
  * Version B: Count down latch
-*/
+ */
 
 package demo18;
 

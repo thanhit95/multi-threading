@@ -3,7 +3,7 @@
  *
  * SOLUTION TYPE B: USING SEMAPHORE
  *      Version B03: 2 fast producers, 1 slow consumer
-*/
+ */
 
 package exer02;
 

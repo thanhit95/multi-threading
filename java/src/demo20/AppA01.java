@@ -1,7 +1,7 @@
 /*
  * SEMAPHORE
  * Version A: Paper sheets and packages
-*/
+ */
 
 package demo20;
 

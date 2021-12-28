@@ -1,6 +1,6 @@
 /*
  * GETTING THREAD'S ID
-*/
+ */
 
 package demo05;
 

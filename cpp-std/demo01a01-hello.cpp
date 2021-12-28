@@ -1,6 +1,6 @@
 /*
 HELLO WORLD VERSION MULTITHREADING
-Version A01: Using functions/routines
+Version A01: Using functions
 */
 
 

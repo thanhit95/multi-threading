@@ -1,7 +1,7 @@
 /*
  * SEMAPHORE
  * Version B: Tires and chassis
-*/
+ */
 
 package demo20;
 

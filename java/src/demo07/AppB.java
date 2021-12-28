@@ -1,7 +1,7 @@
 /*
  * FORCING A THREAD TO TERMINATE (i.e. killing the thread)
  * Version B: Using a flag to notify the thread
-*/
+ */
 
 package demo07;
 

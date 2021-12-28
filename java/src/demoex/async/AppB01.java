@@ -3,7 +3,7 @@
  *
  * The app takes about 1000 miliseconds to run
  * because all 3 tasks are running simultaneously.
-*/
+ */
 
 package demoex.async;
 

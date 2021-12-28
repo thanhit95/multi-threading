@@ -1,6 +1,6 @@
 /*
  * READ-WRITE LOCK
-*/
+ */
 
 package demo19;
 

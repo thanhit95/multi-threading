@@ -1,7 +1,7 @@
 /*
  * FORCING A THREAD TO TERMINATE (i.e. killing the thread)
  * Version A: Interrupting the thread
-*/
+ */
 
 package demo07;
 

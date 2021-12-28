@@ -1,7 +1,7 @@
 /*
  * THREAD-LOCAL STORAGE
  * Avoiding synchronization using Thread-Local Storage
-*/
+ */
 
 package demo23;
 

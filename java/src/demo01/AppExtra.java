@@ -1,7 +1,7 @@
 /*
  * HELLO WORLD VERSION MULTITHREADING
  * Version extra: Demo thread name and reference to the thread instance executing current thread
-*/
+ */
 
 package demo01;
 

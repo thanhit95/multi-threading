@@ -3,7 +3,7 @@
  *
  * The app takes about 3000 miliseconds to run
  * because each method "Future.get" pauses app until the task finishes.
-*/
+ */
 
 package demoex.async;
 

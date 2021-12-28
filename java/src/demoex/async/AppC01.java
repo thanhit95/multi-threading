@@ -6,7 +6,7 @@
  * supporting dependent functions and actions that trigger upon its completion.
  *
  * From that definition, CompletableFuture can be called as "Promise".
-*/
+ */
 
 package demoex.async;
 

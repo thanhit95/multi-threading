@@ -1,6 +1,6 @@
 /*
  * CONDITION VARIABLE
-*/
+ */
 
 package demo21;
 
