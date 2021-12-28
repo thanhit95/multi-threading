@@ -41,7 +41,7 @@ int main() {
     cout << (*result1) << endl;
 
 
-    delete[] result0, result1;
+    delete result0, result1;
     result0 = result1 = nullptr;
 
     return 0;
