@@ -1,5 +1,5 @@
 /*
- * MUTEX (Mutual Exclusion)
+ * MUTEXES
  *
  * A binary semaphore can be used as a mutex.
  *

@@ -1,6 +1,6 @@
 /*
- * SYNCHRONIZED BLOCK
- * Version C: Synchronized static method
+ * SYNCHRONIZED BLOCKS
+ * Version C: Synchronized static methods
  */
 
 package demo14;

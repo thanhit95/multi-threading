@@ -1,6 +1,6 @@
 /*
- * SYNCHRONIZED BLOCK
- * Version B: Synchronized instance method
+ * SYNCHRONIZED BLOCKS
+ * Version B: Synchronized instance methods
  */
 
 package demo14;

@@ -1,5 +1,5 @@
 /*
- * BLOCKING QUEUE
+ * BLOCKING QUEUES
  * VersionC: Introduction to SynchronousQueue
  *
  * The SynchronousQueue is simply the BlockingQueue with capacity = 0.

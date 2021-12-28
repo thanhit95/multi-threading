@@ -1,5 +1,5 @@
 /*
- * ATOMIC
+ * ATOMIC ACCESS
  */
 
 package demo25;

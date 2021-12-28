@@ -1,5 +1,5 @@
 /*
- * RACE CONDITION AND DATA RACE
+ * RACE CONDITIONS AND DATA RACES
  */
 
 package demo12;

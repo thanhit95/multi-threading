@@ -1,5 +1,5 @@
 /*
- * DATA RACE
+ * DATA RACES
  * Version 01: Without multithreading
  */
 

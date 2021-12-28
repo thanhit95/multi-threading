@@ -1,7 +1,7 @@
 /*
  * BLOCKING QUEUE IMPLEMENTATION
- * Version B01: General blocking queue
- *              Underlying mechanism: Semaphore
+ * Version B01: General blocking queues
+ *              Underlying mechanism: Semaphores
  */
 
 package exer06;

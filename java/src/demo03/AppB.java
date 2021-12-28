@@ -1,6 +1,8 @@
 /*
  * PASSING ARGUMENTS
- * Version B: Passing argument COUNT by capturing it from outside
+ * Version B: Passing arguments by capturing them
+ *
+ * Note: The captured variables must be final or effectively final.
  */
 
 package demo03;

@@ -1,6 +1,6 @@
 /*
  * HELLO WORLD VERSION MULTITHREADING
- * Version B03: Using inteface Runnable with lambda
+ * Version B03: Using inteface Runnable with lambdas
  */
 
 package demo01;

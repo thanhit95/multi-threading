@@ -1,6 +1,6 @@
 /*
- * SYNCHRONIZED BLOCK
- * Version A: Synchronized block
+ * SYNCHRONIZED BLOCKS
+ * Version A: Synchronized blocks
  */
 
 package demo14;

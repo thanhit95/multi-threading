@@ -2,7 +2,7 @@
  * THREAD-LOCAL STORAGE
  * Introduction
  *
- * Use ThreadLocal.withInitial for better initialization
+ * Use ThreadLocal.withInitial for better initialization.
  */
 
 package demo23;

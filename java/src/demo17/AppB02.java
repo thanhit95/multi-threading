@@ -1,5 +1,5 @@
 /*
- * REENTRANT LOCK (RECURSIVE MUTEX)
+ * REENTRANT LOCKS (RECURSIVE MUTEXES)
  * Version B02: A slightly hard example
  */
 

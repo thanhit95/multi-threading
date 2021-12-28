@@ -1,6 +1,6 @@
 /*
- * DEMO LIST OF MUTIPLE THREADS
- * Version A: Using java.util.List / ArrayList
+ * LIST OF MUTIPLE THREADS
+ * Version A: Using java.util.List / java.util.ArrayList
  */
 
 package demo06;

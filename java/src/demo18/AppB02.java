@@ -1,6 +1,6 @@
 /*
- * BARRIER
- * Version B: Count down latch
+ * BARRIERS
+ * Version B: Count-down latches
  *
  * Note:
  * - CyclicBarrier maintains a count of threads whereas CountDownLatch maintains a count of tasks.

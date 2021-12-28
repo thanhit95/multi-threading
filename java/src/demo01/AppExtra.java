@@ -1,6 +1,6 @@
 /*
  * HELLO WORLD VERSION MULTITHREADING
- * Version extra: Demo thread name and reference to the thread instance executing current thread
+ * Version extra: Getting thread name and reference to thread instance executing current thread
  */
 
 package demo01;

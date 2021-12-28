@@ -1,6 +1,6 @@
 /*
- * THREAD POOL
- * Demo extra: fork/join pool
+ * THREAD POOLS
+ * Demo extra: The fork/join pool
  *
  * ForkJoinPool is the central part of the fork/join framework introduced in Java 7.
  * It solves a common problem of spawning multiple tasks in recursive algorithms.

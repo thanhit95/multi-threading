@@ -1,6 +1,6 @@
 /*
- * BLOCKING QUEUE
- * Version A: Slow producer, fast consumer
+ * BLOCKING QUEUES
+ * Version A: A slow producer and a fast consumer
  */
 
 package demo22;

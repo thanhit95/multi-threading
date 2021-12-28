@@ -1,5 +1,5 @@
 /*
- * SEMAPHORE
+ * SEMAPHORES
  * Version A: Paper sheets and packages
  */
 

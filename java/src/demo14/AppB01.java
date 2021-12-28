@@ -1,8 +1,8 @@
 /*
- * SYNCHRONIZED BLOCK
- * Version B: Synchronized instance method
+ * SYNCHRONIZED BLOCKS
+ * Version B: Synchronized instance methods
  *
- * Synchronized methods has two effects:
+ * Synchronized methods have two effects:
  *
  * First, it is not possible for two invocations of synchronized methods on the same object to interleave.
  * When one thread is executing a synchronized method for an object,

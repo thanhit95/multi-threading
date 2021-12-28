@@ -1,5 +1,5 @@
 /*
- * REENTRANT LOCK (RECURSIVE MUTEX)
+ * REENTRANT LOCKS (RECURSIVE MUTEXES)
  * Version B01: A simple example
  *
  * Looking into the lock behind the "synchronized" keyword.

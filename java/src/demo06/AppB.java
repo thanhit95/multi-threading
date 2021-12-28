@@ -1,6 +1,6 @@
 /*
- * DEMO LIST OF MUTIPLE THREADS
- * Version B: Using stream
+ * LIST OF MUTIPLE THREADS
+ * Version B: Using streams
  */
 
 package demo06;

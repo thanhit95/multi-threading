@@ -1,6 +1,6 @@
 /*
- * BARRIER
- * Version A: Cyclic barrier
+ * BARRIERS
+ * Version A: Cyclic barriers
  */
 
 package demo18;

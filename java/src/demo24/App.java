@@ -1,5 +1,5 @@
 /*
- * VOLATILE
+ * THE VOLATILE KEYWORD
  */
 
 package demo24;

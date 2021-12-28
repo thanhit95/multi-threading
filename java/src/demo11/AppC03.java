@@ -1,6 +1,6 @@
 /*
- * THREAD POOL
- * Version C03: Thread pool and Future - Getting started
+ * THREAD POOLS
+ * Version C03: Thread pools and Future objects - Getting started
  */
 
 package demo11;

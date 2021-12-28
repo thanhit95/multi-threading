@@ -1,6 +1,6 @@
 /*
  * HELLO WORLD VERSION MULTITHREADING
- * Version A02: Using class Thread / Anonymous subclass
+ * Version A02: Using class Thread (anonymous subclass)
  */
 
 package demo01;

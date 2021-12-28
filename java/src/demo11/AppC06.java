@@ -1,6 +1,6 @@
 /*
- * THREAD POOL
- * Version C06: Thread pool and Future - List of Future objects
+ * THREAD POOLS
+ * Version C06: Thread pools and Future objects - List of Future objects
  */
 
 package demo11;
