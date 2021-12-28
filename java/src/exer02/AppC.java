@@ -1,7 +1,7 @@
 /*
  * THE PRODUCER-CONSUMER PROBLEM
  *
- * SOLUTION TYPE C: USING CONDITION VARIABLE & MONITOR
+ * SOLUTION TYPE C: USING CONDITION VARIABLES & MONITORS
  *      Multiple fast producers, multiple slow consumers
  */
 

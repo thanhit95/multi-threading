@@ -1,5 +1,5 @@
 /*
- * THREAD JOINING
+ * THREAD JOINS
  */
 
 package demo02;

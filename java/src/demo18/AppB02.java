@@ -2,7 +2,7 @@
  * BARRIERS
  * Version B: Count-down latches
  *
- * Note:
+ * Notes:
  * - CyclicBarrier maintains a count of threads whereas CountDownLatch maintains a count of tasks.
  * - CountDownLatch in Java is different from that one in C++.
  */
