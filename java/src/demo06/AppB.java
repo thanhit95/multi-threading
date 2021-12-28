@@ -1,36 +1,25 @@
 /*
- * FORCING A THREAD TO TERMINATE (i.e. killing the thread)
- * Version B: Using a flag to notify the thread
+ * DEMO LIST OF MUTIPLE THREADS
+ * Version B: Using stream
 */
 
 package demo06;
 
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.IntStream;
 
 
 
 public class AppB {
 
-    public static void main(String[] args) throws InterruptedException {
-        var flagStop = new AtomicBoolean(false);
+    public static void main(String[] args) {
+        IntStream.range(0, 5).forEach(i -> new Thread(() -> {
 
-        var th = new Thread(() -> {
-            while (true) {
-                if (flagStop.get())
-                    break;
+            try { Thread.sleep(500); }
+            catch (InterruptedException e) { }
 
-                System.out.println("Running...");
+            System.out.print(i);
 
-                try { Thread.sleep(1000); }
-                catch (InterruptedException e) { }
-            }
-        });
-
-        th.start();
-
-        Thread.sleep(3000);
-
-        flagStop.set(true);
+        }).start());
     }
 
 }

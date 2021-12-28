@@ -1,6 +1,6 @@
 /*
  * BLOCKING QUEUE
- * Version B: Fast producer, slow consumer
+ * Version A: Slow producer, fast consumer
  */
 
 package demo22;
@@ -10,7 +10,7 @@ import java.util.concurrent.BlockingQueue;
 
 
 
-public class AppB {
+public class AppA {
 
     public static void main(String[] args) {
         BlockingQueue<String> queue;
@@ -27,14 +27,13 @@ public class AppB {
 
     private static void producer(BlockingQueue<String> queue) {
         try {
+            Thread.sleep(2000);
             queue.put("lorem");
+
+            Thread.sleep(2000);
             queue.put("ipsum");
 
-            /*
-             * Due to reaching the maximum of capacity = 2, when executing queue.put("fooooooo"),
-             * this thread is going to sleep until the queue removes an element.
-             */
-
+            Thread.sleep(2000);
             queue.put("fooooooo");
         }
         catch (InterruptedException e) {
@@ -47,8 +46,6 @@ public class AppB {
         String data = "";
 
         try {
-            Thread.sleep(2000);
-
             for (int i = 0; i < 3; ++i) {
                 System.out.println("\nWaiting for data...");
 

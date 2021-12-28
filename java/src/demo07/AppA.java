@@ -1,5 +1,6 @@
 /*
- * GETTING RETURNED VALUES FROM THREADS
+ * FORCING A THREAD TO TERMINATE (i.e. killing the thread)
+ * Version A: Interrupting the thread
 */
 
 package demo07;
@@ -9,34 +10,22 @@ package demo07;
 public class AppA {
 
     public static void main(String[] args) throws InterruptedException {
-        var th1 = new MyThread(5);
-        var th2 = new MyThread(80);
+        var th = new Thread(() -> {
+            while (true) {
+                System.out.println("Running...");
 
-        th1.start();
-        th2.start();
+                try { Thread.sleep(1000); }
+                catch (InterruptedException e) {
+                    return;
+                }
+            }
+        });
 
-        th1.join();
-        th2.join();
+        th.start();
 
-        System.out.println(th1.result);
-        System.out.println(th2.result);
+        Thread.sleep(3000);
+
+        th.interrupt();
     }
 
-}
-
-
-
-class MyThread extends Thread {
-    int arg = 0;
-    int result = 0;
-
-    public MyThread(int arg) {
-        super();
-        this.arg = arg;
-    }
-
-    @Override
-    public void run() {
-        result = arg * 2;
-    }
 }

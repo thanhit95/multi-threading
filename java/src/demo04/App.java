@@ -1,5 +1,5 @@
 /*
- * GETTING THREAD'S ID
+ * SLEEP
 */
 
 package demo04;
@@ -9,19 +9,19 @@ package demo04;
 public class App {
 
     public static void main(String[] args) {
-        Runnable routine = () -> {
-            long id = Thread.currentThread().getId();
-            System.out.println(id);
-        };
+        var th = new Thread(() -> {
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
-        var foo = new Thread(routine);
-        var bar = new Thread(routine);
+            System.out.println("Done!!!");
+        });
 
-        System.out.println("foo's id: " + foo.getId());
-        System.out.println("bar's id: " + bar.getId());
+        th.start();
 
-        foo.start();
-        bar.start();
+        System.out.println("main thread is running...");
     }
 
 }

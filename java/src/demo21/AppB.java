@@ -1,65 +1,76 @@
 /*
- * BLOCKING QUEUE
- * Version B: Fast producer, slow consumer
- */
+ * CONDITION VARIABLE
+*/
 
 package demo21;
-
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.BlockingQueue;
-
-
 
 public class AppB {
 
     public static void main(String[] args) {
-        BlockingQueue<String> queue;
-
-
-        // queue = new LinkedBlockingQueue<>();
-        queue = new ArrayBlockingQueue<>(2); // blocking queue with capacity = 2
-
-
-        new Thread(() -> producer(queue)).start();
-        new Thread(() -> consumer(queue)).start();
+        new Foo().start();
+        new Egg().start();
     }
 
-
-    private static void producer(BlockingQueue<String> queue) {
-        try {
-            queue.put("lorem");
-            queue.put("ipsum");
-
-            /*
-             * Due to reaching the maximum of capacity = 2, when executing queue.put("fooooooo"),
-             * this thread is going to sleep until the queue removes an element.
-             */
-
-            queue.put("fooooooo");
-        }
-        catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
+}
 
 
-    private static void consumer(BlockingQueue<String> queue) {
-        String data = "";
 
-        try {
-            Thread.sleep(2000);
+class Global {
+    public static Object conditionVar = new Object();
 
-            for (int i = 0; i < 3; ++i) {
-                System.out.println("\nWaiting for data...");
+    public static int counter = 0;
 
-                data = queue.take();
+    public static final int COUNT_HALT_01 = 3;
+    public static final int COUNT_HALT_02 = 6;
+    public static final int COUNT_DONE = 10;
+}
 
-                System.out.println("    " + data);
+
+
+// Write numbers 1-3 and 8-10 as permitted by egg()
+class Foo extends Thread {
+    @Override
+    public void run() {
+        for (;;) {
+            synchronized (Global.conditionVar) {
+                try {
+                    Global.conditionVar.wait();
+
+                    Global.counter += 1;
+                    System.out.println("foo counter = " + Global.counter);
+
+                    if (Global.counter >= Global.COUNT_DONE) {
+                        return;
+                    }
+                }
+                catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }
-        catch (InterruptedException e) {
-            e.printStackTrace();
+    }
+}
+
+
+
+// Write numbers 4-7
+class Egg extends Thread {
+    @Override
+    public void run() {
+        for (;;) {
+            synchronized (Global.conditionVar) {
+                if (Global.counter < Global.COUNT_HALT_01 || Global.counter > Global.COUNT_HALT_02) {
+                    Global.conditionVar.notify();
+                }
+                else {
+                    Global.counter += 1;
+                    System.out.println("egg counter = " + Global.counter);
+                }
+
+                if (Global.counter >= Global.COUNT_DONE) {
+                    return;
+                }
+            }
         }
     }
-
 }

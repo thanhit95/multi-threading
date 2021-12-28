@@ -1,31 +1,36 @@
 /*
- * GETTING RETURNED VALUES FROM THREADS
+ * FORCING A THREAD TO TERMINATE (i.e. killing the thread)
+ * Version B: Using a flag to notify the thread
 */
 
 package demo07;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
+
+
 public class AppB {
 
     public static void main(String[] args) throws InterruptedException {
-        int[] result = new int[2];
+        var flagStop = new AtomicBoolean(false);
 
-        var thFoo = new Thread(() -> result[0] = doubleValue(5));
-        var thBar = new Thread(() -> result[1] = doubleValue(80));
+        var th = new Thread(() -> {
+            while (true) {
+                if (flagStop.get())
+                    break;
 
-        thFoo.start();
-        thBar.start();
+                System.out.println("Running...");
 
-        // Wait until thFoo and thBar finish
-        thFoo.join();
-        thBar.join();
+                try { Thread.sleep(1000); }
+                catch (InterruptedException e) { }
+            }
+        });
 
-        System.out.println(result[0]);
-        System.out.println(result[1]);
-    }
+        th.start();
 
+        Thread.sleep(3000);
 
-    private static int doubleValue(int value) {
-        return value * 2;
+        flagStop.set(true);
     }
 
 }

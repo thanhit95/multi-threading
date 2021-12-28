@@ -1,6 +1,6 @@
 /*
  * THREAD POOL
- * Version C02: Thread pool and Future - Getting started
+ * Version C03: Thread pool and Future - Getting started
 */
 
 package demo11;
@@ -12,18 +12,20 @@ import java.util.concurrent.Future;
 
 
 
-public class AppC02 {
+public class AppC03 {
 
     public static void main(String[] args) throws InterruptedException, ExecutionException {
         ExecutorService executor = Executors.newSingleThreadExecutor();
 
         Future<Integer> task = executor.submit(() -> getSquared(7));
-
         executor.shutdown();
 
-        while (false == task.isDone()) {
-            // Waiting...
-        }
+        /*
+         * Method "Future.get" should wait if necessary for the computation to complete,
+         * and then retrieves its result.
+         *
+         * So, we can omit the while loop (to wait for task completion).
+         */
 
         Integer result = task.get();
         System.out.println(result);

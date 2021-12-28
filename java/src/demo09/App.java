@@ -1,35 +1,33 @@
 /*
- * YIELD
+ * DETACH
 */
 
 package demo09;
-
-import java.time.Duration;
-import java.time.Instant;
 
 
 
 public class App {
 
-    public static void main(String[] args) {
-        var tpStartMeasure = Instant.now();
+    public static void main(String[] args) throws InterruptedException {
+        var th = new Thread(() -> {
+            System.out.println("Routine is starting...");
 
-        littleSleep(130000);
+            try { Thread.sleep(2000); } catch (InterruptedException e) { }
 
-        var timeElapsed = Duration.between(tpStartMeasure, Instant.now());
-
-        System.out.println("Elapsed time: " + timeElapsed.toNanos() + " nanoseonds");
-    }
+            System.out.println("Routine is exiting...");
+        });
 
 
-    private static void littleSleep(int ns) {
-        var tpStart = Instant.now();
-        var tpEnd = tpStart.plusNanos(ns);
+        th.setDaemon(true);
+        th.start();
 
-        do {
-            Thread.yield();
-        }
-        while (Instant.now().isBefore(tpEnd));
+
+        // If I comment this statement,
+        // the thread routine will be forced into terminating with main thread
+        Thread.sleep(3000);
+
+
+        System.out.println("Program is terminating");
     }
 
 }

@@ -1,31 +1,35 @@
 /*
- * FORCING A THREAD TO TERMINATE (i.e. killing the thread)
- * Version A: Interrupting the thread
+ * DEMO LIST OF MUTIPLE THREADS
+ * Version A: Using java.util.List / ArrayList
 */
 
 package demo06;
+
+import java.util.ArrayList;
 
 
 
 public class AppA {
 
-    public static void main(String[] args) throws InterruptedException {
-        var th = new Thread(() -> {
-            while (true) {
-                System.out.println("Running...");
+    public static void main(String[] args) {
+        final int NUM_THREADS = 5;
 
-                try { Thread.sleep(1000); }
-                catch (InterruptedException e) {
-                    return;
-                }
-            }
-        });
+        var lstTh = new ArrayList<Thread>();
 
-        th.start();
+        for (int i = 0; i < NUM_THREADS; ++i) {
+            final int index = i;
 
-        Thread.sleep(3000);
+            lstTh.add(new Thread(() -> {
+                try { Thread.sleep(500); }
+                catch (InterruptedException e) { }
 
-        th.interrupt();
+                System.out.print(index);
+            }));
+        }
+
+        for (var th : lstTh) {
+            th.start();
+        }
     }
 
 }

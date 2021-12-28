@@ -1,44 +1,39 @@
 /*
- * DATA RACE
- * Version 01: Without multithreading
+ * THREAD POOL
+ * Version B01: Thread pool containing multiple threads - FixedThreadPool
 */
 
 package demo11;
 
-import java.util.Arrays;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.stream.IntStream;
 
 
 
 public class AppB01 {
 
-    public static void main(String[] args) {
-        final int N = 8;
-        int result = getResult(N);
-        System.out.println("Numbers of integers that are divisible by 2 or 3 is: " + result);
-    }
+    public static void main(String[] args) throws InterruptedException {
+        final int NUM_THREADS = 2;
+        final int NUM_TASKS = 5;
 
 
-    private static int getResult(int N) {
-        var a = new boolean[N + 1];
-        Arrays.fill(a, false);
-
-        for (int i = 1; i <= N; ++i)
-            if (i % 2 == 0 || i % 3 == 0)
-                a[i] = true;
-
-        int res = countTrue(a, N);
-        return res;
-    }
+        ExecutorService executor = Executors.newFixedThreadPool(NUM_THREADS);
 
 
-    private static int countTrue(boolean[] a, int N) {
-        int count = 0;
+        IntStream.range(0, NUM_TASKS).forEach(i -> executor.submit(() -> {
+            char nameTask = (char) (i + 'A');
 
-        for (int i = 1; i <= N; ++i)
-            if (a[i])
-                ++count;
+            System.out.println("Task %c is starting".formatted(nameTask));
 
-        return count;
+            try { Thread.sleep(3000); } catch (InterruptedException e) { }
+
+            System.out.println("Task %c is completed".formatted(nameTask));
+        }));
+
+
+        // shutdown() stops the ExecutorService from accepting new tasks and closes down idle worker threads
+        executor.shutdown();
     }
 
 }

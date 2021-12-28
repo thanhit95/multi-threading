@@ -1,46 +1,51 @@
 /*
- * CONDITION VARIABLE
+ * SEMAPHORE
+ * Version A: Paper sheets and packages
 */
 
 package demo20;
+
+import java.util.concurrent.Semaphore;
 
 
 
 public class AppA01 {
 
     public static void main(String[] args) {
-        var conditionVar = new Object();
+        var semPackage = new Semaphore(0);
 
 
-        Runnable foo = () -> {
-            try {
-                System.out.println("foo is waiting...");
+        Runnable makeOneSheet = () -> {
+            for (int i = 0; i < 4; ++i) {
+                try {
+                    System.out.println("Make 1 sheet");
+                    Thread.sleep(1000);
 
-                synchronized (conditionVar) {
-                    // foo must own the conditionVar before using it
-                    conditionVar.wait();
+                    semPackage.release();
                 }
-
-                System.out.println("foo resumed");
-            }
-            catch (InterruptedException e) {
-                e.printStackTrace();
+                catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         };
 
 
-        Runnable bar = () -> {
-            try { Thread.sleep(3000); } catch (InterruptedException e) { }
-
-            synchronized (conditionVar) {
-                // bar must own the conditionVar before using it
-                conditionVar.notify();
+        Runnable combineOnePackage = () -> {
+            for (int i = 0; i < 4; ++i) {
+                try {
+                    semPackage.acquire(2);
+                    System.out.println("Combine 2 sheets into 1 package");
+                }
+                catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         };
 
 
-        new Thread(foo).start();
-        new Thread(bar).start();
+        new Thread(makeOneSheet).start();
+        new Thread(makeOneSheet).start();
+        new Thread(combineOnePackage).start();
     }
 
 }

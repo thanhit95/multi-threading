@@ -1,19 +1,31 @@
 /*
- * MUTEX (Mutual Exclusion)
- */
+ * RACE CONDITION
+*/
 
 package demo12;
+
+import java.util.stream.IntStream;
 
 
 
 public class AppA {
 
     public static void main(String[] args) {
-        /*
-         * Unfortunately, Java does not support mutex by default.
-         * However, Java does support keyword "synchronized", which is closest to the term "mutex".
-         * Additionally, you can use a binary semaphore as a mutex.
-         */
+        final int NUM_THREADS = 4;
+
+
+        var lstTh = IntStream.range(0, NUM_THREADS)
+                .mapToObj(i -> new Thread(() -> {
+
+                    try { Thread.sleep(1000); } catch (InterruptedException e) { }
+
+                    System.out.print(i);
+
+                }))
+                .toList();
+
+
+        lstTh.forEach(Thread::start);
     }
 
 }

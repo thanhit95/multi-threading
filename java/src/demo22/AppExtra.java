@@ -1,23 +1,23 @@
 /*
  * BLOCKING QUEUE
- * Version B: Fast producer, slow consumer
+ * VersionC: Introduction to SynchronousQueue
+ *
+ * The SynchronousQueue is simply the BlockingQueue with capacity = 0.
+ * Therefore, each insert operation must wait for a corresponding remove operation by another thread,
+ *            and vice versa.
  */
 
 package demo22;
 
-import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.SynchronousQueue;
 
 
 
-public class AppB {
+public class AppExtra {
 
     public static void main(String[] args) {
-        BlockingQueue<String> queue;
-
-
-        // queue = new LinkedBlockingQueue<>();
-        queue = new ArrayBlockingQueue<>(2); // blocking queue with capacity = 2
+        final BlockingQueue<String> queue = new SynchronousQueue<>();
 
 
         new Thread(() -> producer(queue)).start();
@@ -29,12 +29,6 @@ public class AppB {
         try {
             queue.put("lorem");
             queue.put("ipsum");
-
-            /*
-             * Due to reaching the maximum of capacity = 2, when executing queue.put("fooooooo"),
-             * this thread is going to sleep until the queue removes an element.
-             */
-
             queue.put("fooooooo");
         }
         catch (InterruptedException e) {
