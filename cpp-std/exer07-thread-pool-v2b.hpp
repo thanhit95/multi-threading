@@ -152,8 +152,10 @@ private:
                 taskPending.pop();
 
                 // PUSH IT TO THE RUNNING QUEUE
-                std::lock_guard<std::mutex> lkRunning(mutTaskRunning);
-                taskRunning.push_back(task);
+                {
+                    std::lock_guard<std::mutex> lkRunning(mutTaskRunning);
+                    taskRunning.push_back(task);
+                }
             }
 
             // DO THE TASK
