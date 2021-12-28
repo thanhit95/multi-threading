@@ -28,14 +28,14 @@ public class MyThreadPoolV1 {
 
 
 
-    public void init(int numThreads) {
+    public void init(int inpNumThreads) {
         shutdown();
 
-        this.numThreads = numThreads;
+        numThreads = inpNumThreads;
         counterTaskRunning.set(0);
         forceThreadShutdown = false;
 
-        lstTh = IntStream.range(0, this.numThreads)
+        lstTh = IntStream.range(0, numThreads)
                 .mapToObj(i -> new Thread(() -> threadRoutine(this)))
                 .toList();
 
@@ -44,7 +44,7 @@ public class MyThreadPoolV1 {
 
 
 
-    void submit(Runnable task) {
+    public void submit(Runnable task) {
         synchronized (taskPending) {
             taskPending.add(task);
             taskPending.notify();
@@ -53,7 +53,7 @@ public class MyThreadPoolV1 {
 
 
 
-    void waitTaskDone() {
+    public void waitTaskDone() {
         boolean done = false;
 
         for (;;) {
@@ -84,7 +84,7 @@ public class MyThreadPoolV1 {
                 th.join();
 
             numThreads = 0;
-            // lstTh.clear();
+            lstTh.clear();
         }
         catch (InterruptedException e) {
             e.printStackTrace();

@@ -162,9 +162,11 @@ private:
             task->run();
 
             // REMOVE IT FROM THE RUNNING QUEUE
-            std::lock_guard<std::mutex> lkRunning(mutTaskRunning);
-            taskRunning.remove(task);
-            counterTaskRunning.release();
+            {
+                std::lock_guard<std::mutex> lkRunning(mutTaskRunning);
+                taskRunning.remove(task);
+                counterTaskRunning.release();
+            }
         }
     }
 

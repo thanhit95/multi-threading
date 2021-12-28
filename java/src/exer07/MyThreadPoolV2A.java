@@ -38,14 +38,16 @@ public class MyThreadPoolV2A {
         numThreads = inpNumThreads;
         forceThreadShutdown = false;
 
-        lstTh = IntStream.range(0, numThreads).mapToObj(i -> new Thread(() -> threadRoutine(this))).toList();
+        lstTh = IntStream.range(0, numThreads)
+                .mapToObj(i -> new Thread(() -> threadRoutine(this)))
+                .toList();
 
         lstTh.forEach(Thread::start);
     }
 
 
 
-    void submit(Runnable task) {
+    public void submit(Runnable task) {
         synchronized (taskPending) {
             taskPending.add(task);
             taskPending.notify();
@@ -54,7 +56,7 @@ public class MyThreadPoolV2A {
 
 
 
-    void waitTaskDone() {
+    public void waitTaskDone() {
         for (;;) {
             try {
                 counterTaskRunning.acquire();
@@ -88,9 +90,9 @@ public class MyThreadPoolV2A {
                 th.join();
 
             numThreads = 0;
-            // lstTh.clear();
-
+            lstTh.clear();
             taskRunning.clear();
+
             counterTaskRunning.release(counterTaskRunning.availablePermits());
         }
         catch (InterruptedException e) {

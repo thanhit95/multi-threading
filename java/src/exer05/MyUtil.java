@@ -11,7 +11,7 @@ public class MyUtil {
 
     static {
         nf = NumberFormat.getInstance();
-        nf.setMaximumFractionDigits(2);
+        nf.setMaximumFractionDigits(1);
     }
 
 

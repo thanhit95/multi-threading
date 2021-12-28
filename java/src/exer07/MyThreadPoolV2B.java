@@ -35,14 +35,16 @@ public class MyThreadPoolV2B {
         numThreads = inpNumThreads;
         forceThreadShutdown = false;
 
-        lstTh = IntStream.range(0, numThreads).mapToObj(i -> new Thread(() -> threadRoutine(this))).toList();
+        lstTh = IntStream.range(0, numThreads)
+                .mapToObj(i -> new Thread(() -> threadRoutine(this)))
+                .toList();
 
         lstTh.forEach(Thread::start);
     }
 
 
 
-    void submit(Runnable task) {
+    public void submit(Runnable task) {
         synchronized (taskPending) {
             taskPending.add(task);
             taskPending.notify();
@@ -51,7 +53,7 @@ public class MyThreadPoolV2B {
 
 
 
-//    void waitTaskDoneBad() {
+//    public void waitTaskDoneBad() {
 //        try {
 //            for (;;) {
 //                synchronized (taskRunning) {
@@ -72,7 +74,7 @@ public class MyThreadPoolV2B {
 
 
 
-    void waitTaskDone() {
+    public void waitTaskDone() {
         try {
             for (;;) {
                 synchronized (taskPending) {
@@ -107,8 +109,7 @@ public class MyThreadPoolV2B {
                 th.join();
 
             numThreads = 0;
-            // lstTh.clear();
-
+            lstTh.clear();
             taskRunning.clear();
         }
         catch (InterruptedException e) {
@@ -125,8 +126,8 @@ public class MyThreadPoolV2B {
 
         try {
             for (;;) {
-                // WAIT FOR AN AVAILABLE PENDING TASK
                 synchronized (taskPending) {
+                    // WAIT FOR AN AVAILABLE PENDING TASK
                     while (0 == taskPending.size() && false == thisPtr.forceThreadShutdown) {
                         taskPending.wait();
                     }
