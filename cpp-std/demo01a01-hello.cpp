@@ -1,6 +1,6 @@
 /*
 HELLO WORLD VERSION MULTITHREADING
-Version A01: Using functions
+Version A01: Using functions/routines
 */
 
 
@@ -10,18 +10,17 @@ using namespace std;
 
 
 
-void helloThread() {
-    cout << "Hello" << endl;
+void lorem() {
+    cout << "Hello from Lorem thread" << endl;
 }
 
 
 
 int main() {
-    std::thread th1(helloThread);
-    std::thread th2(helloThread);
+    std::thread th(lorem);
 
-    th1.join();
-    th2.join();
+    cout << "Hello from main thread" << endl;
 
+    th.join();
     return 0;
 }

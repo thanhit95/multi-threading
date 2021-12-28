@@ -10,25 +10,16 @@ package demo01;
 public class AppA02 {
 
     public static void main(String[] args) throws InterruptedException {
-        var th1 = new Thread() {
+        var th = new Thread() {
             @Override
             public void run() {
-                System.out.println("Hello thread 1");
+                System.out.println("Hello from Lorem thread");
             }
         };
 
-        var th2 = new Thread() {
-            @Override
-            public void run() {
-                System.out.println("Hello thread 2");
-            }
-        };
+        th.start();
 
-        th1.start();
-        th2.start();
-
-        th1.join();
-        th2.join();
+        System.out.println("Hello from main thread");
     }
 
 }

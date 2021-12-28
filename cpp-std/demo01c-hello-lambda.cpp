@@ -1,6 +1,6 @@
 /*
 HELLO WORLD VERSION MULTITHREADING
-Version C: Using lambda
+Version C: Using lambdas
 */
 
 
@@ -16,11 +16,8 @@ int main() {
         cout << message << endl;
     };
 
-    std::thread th1(lambda, "ham");
-    std::thread th2(lambda, "egg");
+    std::thread th(lambda, "Lorem");
 
-    th1.join();
-    th2.join();
-
+    th.join();
     return 0;
 }

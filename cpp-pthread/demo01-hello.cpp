@@ -9,8 +9,8 @@ using namespace std;
 
 
 
-void* helloThread(void* arg) {
-    cout << "Hello" << endl;
+void* lorem(void*) {
+    cout << "Hello from Lorem thread" << endl;
 
     pthread_exit(nullptr);
     return nullptr;
@@ -19,20 +19,17 @@ void* helloThread(void* arg) {
 
 
 int main() {
-    pthread_t tid1, tid2;
+    pthread_t tid;
     int ret = 0;
 
-    ret = pthread_create(&tid1, nullptr, helloThread, nullptr);
-    ret = pthread_create(&tid2, nullptr, helloThread, nullptr);
+    ret = pthread_create(&tid, nullptr, lorem, nullptr);
 
     /*
     if (ret) {
-        cerr << "Error: Unable to create thread" << ret << endl;
+        cerr << "Error: Unable to create thread " << ret << endl;
     }
     */
 
-    ret = pthread_join(tid1, nullptr);
-    ret = pthread_join(tid2, nullptr);
-
+    ret = pthread_join(tid, nullptr);
     return 0;
 }

@@ -10,23 +10,18 @@ package demo01;
 public class AppA01 {
 
     public static void main(String[] args) throws InterruptedException {
-        var th1 = new HelloThread();
-        var th2 = new HelloThread();
-
-        th1.start();
-        th2.start();
-
-        th1.join();
-        th2.join();
+        var th = new LoremThread();
+        th.start();
+        System.out.println("Hello from main thread");
     }
 
 }
 
 
 
-class HelloThread extends Thread {
+class LoremThread extends Thread {
     @Override
     public void run() {
-        System.out.println("Hello");
+        System.out.println("Hello from Lorem thread");
     }
 }

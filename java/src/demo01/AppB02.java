@@ -1,6 +1,6 @@
 /*
  * HELLO WORLD VERSION MULTITHREADING
- * Version B02: Using inteface Runnable / Lambda
+ * Version B02: Using inteface Runnable with lambda
 */
 
 package demo01;
@@ -10,7 +10,7 @@ package demo01;
 public class AppB02 {
 
     public static void main(String[] args) throws InterruptedException {
-        Runnable runnable = () -> System.out.println("Hello");
+        Runnable runnable = () -> System.out.println("Hello from Lorem thread");
 
         var th1 = new Thread(runnable);
         var th2 = new Thread(runnable);
@@ -18,8 +18,7 @@ public class AppB02 {
         th1.start();
         th2.start();
 
-        th1.join();
-        th2.join();
+        System.out.println("Hello from main thread");
     }
 
 }

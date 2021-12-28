@@ -1,6 +1,6 @@
 /*
 HELLO WORLD VERSION MULTITHREADING
-Version B: Using class/functor
+Version B: Using classes/functors
 */
 
 
@@ -22,12 +22,8 @@ public:
 
 int main() {
     Foo foo;
+    std::thread th(foo, "Lorem");
 
-    std::thread th1(foo, "ham");
-    std::thread th2(foo, "egg");
-
-    th1.join();
-    th2.join();
-
+    th.join();
     return 0;
 }

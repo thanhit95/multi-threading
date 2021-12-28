@@ -1,6 +1,6 @@
 /*
 HELLO WORLD VERSION MULTITHREADING
-Version A02: Using functions with passing an argument
+Version A02: Using functions allowing passing 2 arguments
 */
 
 
@@ -10,18 +10,14 @@ using namespace std;
 
 
 
-void helloThread(int value) {
-    cout << value << endl;
+void routine(char const* message, int number) {
+    cout << message << " " << number << endl;
 }
 
 
 
 int main() {
-    std::thread th1(helloThread, 1);
-    std::thread th2(helloThread, 2);
-
-    th1.join();
-    th2.join();
-
+    std::thread th(routine, "Lorem", 19);
+    th.join();
     return 0;
 }
