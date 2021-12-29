@@ -1,6 +1,6 @@
 /*
  * PASSING ARGUMENTS
- * Version B: Passing arguments by capturing them
+ * Version C: Passing arguments by capturing them
  *
  * Note: The captured variables must be final or effectively final.
  */
@@ -9,7 +9,7 @@ package demo03;
 
 
 
-public class AppB {
+public class AppC {
 
     public static void main(String[] args) throws InterruptedException {
         final int COUNT = 10;
