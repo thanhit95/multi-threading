@@ -19,7 +19,7 @@ public class AppB {
         var mutex = new Semaphore(1);
 
 
-        Runnable routineCounter = () -> {
+        Runnable counterFunc = () -> {
             try {
                 Thread.sleep(1000);
 
@@ -39,7 +39,7 @@ public class AppB {
         final int NUM_THREADS = 3;
 
 
-        var lstTh = Stream.generate(() -> new Thread(routineCounter)).limit(NUM_THREADS).toList();
+        var lstTh = Stream.generate(() -> new Thread(counterFunc)).limit(NUM_THREADS).toList();
 
 
         for (var th : lstTh)

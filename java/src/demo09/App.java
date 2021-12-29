@@ -10,11 +10,11 @@ public class App {
 
     public static void main(String[] args) throws InterruptedException {
         var th = new Thread(() -> {
-            System.out.println("Routine is starting...");
+            System.out.println("Thread is starting...");
 
             try { Thread.sleep(2000); } catch (InterruptedException e) { }
 
-            System.out.println("Routine is exiting...");
+            System.out.println("Thread is exiting...");
         });
 
 
@@ -23,7 +23,7 @@ public class App {
 
 
         // If I comment this statement,
-        // the thread routine will be forced into terminating with main thread
+        // th will be forced into terminating with main thread
         Thread.sleep(3000);
 
 

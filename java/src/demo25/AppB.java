@@ -12,14 +12,14 @@ import java.util.stream.IntStream;
 public class AppB {
 
     public static void main(String[] args) throws InterruptedException {
-        Runnable routine = () -> {
+        Runnable threadFunc = () -> {
             try { Thread.sleep(1000); } catch (InterruptedException e) { }
             Global.counter.incrementAndGet();
             // Global.counter.addAndGet(1);
         };
 
 
-        var lstTh = IntStream.range(0, 1000).mapToObj(i -> new Thread(routine)).toList();
+        var lstTh = IntStream.range(0, 1000).mapToObj(i -> new Thread(threadFunc)).toList();
 
 
         for (var th : lstTh)

@@ -14,8 +14,8 @@ public class AppA {
     public static void main(String[] args) throws InterruptedException {
         var mutex = new Semaphore(1);
 
-        var thFoo = new Thread(() -> routine(mutex, "foo"));
-        var thBar = new Thread(() -> routine(mutex, "bar"));
+        var thFoo = new Thread(() -> threadFunc(mutex, "foo"));
+        var thBar = new Thread(() -> threadFunc(mutex, "bar"));
 
         thFoo.start();
         thBar.start();
@@ -27,7 +27,7 @@ public class AppA {
     }
 
 
-    private static void routine(Semaphore mutex, String name) {
+    private static void threadFunc(Semaphore mutex, String name) {
         try {
             mutex.acquire();
         }

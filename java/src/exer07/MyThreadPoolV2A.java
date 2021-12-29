@@ -39,7 +39,7 @@ public class MyThreadPoolV2A {
         forceThreadShutdown = false;
 
         lstTh = IntStream.range(0, numThreads)
-                .mapToObj(i -> new Thread(() -> threadRoutine(this)))
+                .mapToObj(i -> new Thread(() -> threadWorkerFunc(this)))
                 .toList();
 
         lstTh.forEach(Thread::start);
@@ -102,7 +102,7 @@ public class MyThreadPoolV2A {
 
 
 
-    private static void threadRoutine(MyThreadPoolV2A thisPtr) {
+    private static void threadWorkerFunc(MyThreadPoolV2A thisPtr) {
         var taskPending = thisPtr.taskPending;
         var taskRunning = thisPtr.taskRunning;
         var counterTaskRunning = thisPtr.counterTaskRunning;
