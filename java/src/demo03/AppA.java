@@ -1,6 +1,6 @@
 /*
  * PASSING ARGUMENTS
- * Version A: Passing multiple arguments with various data types
+ * Version A: Passing arguments to Thread objects
  */
 
 package demo03;
@@ -15,9 +15,6 @@ public class AppA {
 
         th1.start();
         th2.start();
-
-        th1.join();
-        th2.join();
     }
 
 }
