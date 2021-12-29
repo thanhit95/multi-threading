@@ -1,16 +1,16 @@
 /*
  * HELLO WORLD VERSION MULTITHREADING
- * Version B04: Using functions (via delegation from lambdas)
+ * Version C02: Using function references
  */
 
 package demo01;
 
 
 
-public class AppB04 {
+public class AppC02 {
 
     public static void main(String[] args) throws InterruptedException {
-        var th = new Thread(() -> threadFunc());
+        var th = new Thread(AppC02::threadFunc);
 
         th.start();
 
