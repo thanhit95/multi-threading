@@ -47,7 +47,7 @@ public class AppB01 {
 
 
 class MyTaskB01 extends Thread {
-    static int counter = 0;
+    public static int counter = 0;
 
 
     @Override

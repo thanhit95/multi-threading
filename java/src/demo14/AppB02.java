@@ -39,7 +39,7 @@ public class AppB02 {
 
 
 class MyTaskB02 implements Runnable {
-    static int counter = 0;
+    public static int counter = 0;
 
 
     @Override

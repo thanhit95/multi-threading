@@ -22,9 +22,9 @@ public class AppA {
 
 
 class MyThread extends Thread {
-    int a;
-    double b;
-    String c;
+    private int a;
+    private double b;
+    private String c;
 
     public MyThread(int a, double b, String c) {
         super();

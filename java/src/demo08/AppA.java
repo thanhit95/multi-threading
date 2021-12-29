@@ -27,8 +27,8 @@ public class AppA {
 
 
 class MyThread extends Thread {
-    int arg = 0;
-    int result = 0;
+    public int arg = 0;
+    public int result = 0;
 
     public MyThread(int arg) {
         super();

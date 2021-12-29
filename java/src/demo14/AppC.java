@@ -36,7 +36,7 @@ public class AppC {
 
 
 class MyTaskC extends Thread {
-    static int counter = 0;
+    public static int counter = 0;
 
 
     @Override
