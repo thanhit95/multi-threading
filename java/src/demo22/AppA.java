@@ -26,13 +26,13 @@ public class AppA {
     private static void producer(BlockingQueue<String> queue) {
         try {
             Thread.sleep(2000);
-            queue.put("lorem");
+            queue.put("Alice");
 
             Thread.sleep(2000);
-            queue.put("ipsum");
+            queue.put("likes");
 
             Thread.sleep(2000);
-            queue.put("fooooooo");
+            queue.put("singing");
         }
         catch (InterruptedException e) {
             e.printStackTrace();

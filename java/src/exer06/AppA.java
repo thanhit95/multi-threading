@@ -19,7 +19,7 @@ public class AppA {
 
 
     private static void producer(MySynchronousQueue<String> queue) {
-        String[] arr = { "lorem", "ipsum", "foo" };
+        String[] arr = { "lorem", "ipsum", "dolor" };
 
         try {
             for (var value : arr) {

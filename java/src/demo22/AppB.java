@@ -25,15 +25,15 @@ public class AppB {
 
     private static void producer(BlockingQueue<String> queue) {
         try {
-            queue.put("lorem");
-            queue.put("ipsum");
+            queue.put("Alice");
+            queue.put("likes");
 
             /*
-             * Due to reaching the maximum of capacity = 2, when executing queue.put("fooooooo"),
+             * Due to reaching the maximum of capacity = 2, when executing queue.put("singing"),
              * this thread is going to sleep until the queue removes an element.
              */
 
-            queue.put("fooooooo");
+            queue.put("singing");
         }
         catch (InterruptedException e) {
             e.printStackTrace();

@@ -25,9 +25,9 @@ public class AppExtra {
 
     private static void producer(BlockingQueue<String> queue) {
         try {
-            queue.put("lorem");
-            queue.put("ipsum");
-            queue.put("fooooooo");
+            queue.put("Alice");
+            queue.put("likes");
+            queue.put("singing");
         }
         catch (InterruptedException e) {
             e.printStackTrace();

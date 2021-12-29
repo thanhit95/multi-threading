@@ -19,10 +19,10 @@ public class AppA03 {
 
 
         var lstArgs = List.of(
-                new ThreadArg("foo", 1),
-                new ThreadArg("bar", 3),
-                new ThreadArg("ham", 3),
-                new ThreadArg("egg", 10)
+                new ThreadArg("lorem", 1),
+                new ThreadArg("ipsum", 3),
+                new ThreadArg("dolor", 3),
+                new ThreadArg("amet", 10)
         );
 
 

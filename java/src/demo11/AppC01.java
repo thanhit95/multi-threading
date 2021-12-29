@@ -21,7 +21,7 @@ public class AppC01 {
     public static void main(String[] args) throws InterruptedException, ExecutionException {
         ExecutorService executor = Executors.newSingleThreadExecutor();
 
-        Future<String> task = executor.submit(() -> "foo");
+        Future<String> task = executor.submit(() -> "lorem ipsum");
 
         executor.shutdown();
 

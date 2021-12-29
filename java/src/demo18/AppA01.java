@@ -18,9 +18,9 @@ public class AppA01 {
 
 
         var lstArgs = List.of(
-                new ThreadArg("foo", 1),
-                new ThreadArg("bar", 2),
-                new ThreadArg("ham", 3)
+                new ThreadArg("lorem", 1),
+                new ThreadArg("ipsum", 2),
+                new ThreadArg("dolor", 3)
         );
 
 

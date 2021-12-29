@@ -10,11 +10,11 @@ package demo03;
 public class AppA {
 
     public static void main(String[] args) throws InterruptedException {
-        var th1 = new MyThread(1, 2, "red");
-        var th2 = new MyThread(3, 4, "blue");
+        var foo = new MyThread(1, 2, "red");
+        var bar = new MyThread(3, 4, "blue");
 
-        th1.start();
-        th2.start();
+        foo.start();
+        bar.start();
     }
 
 }
