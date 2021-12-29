@@ -10,7 +10,7 @@ package demo01;
 public class AppB04 {
 
     public static void main(String[] args) throws InterruptedException {
-        var th = new Thread(() -> lorem());
+        var th = new Thread(() -> threadFunc());
 
         th.start();
 
@@ -18,8 +18,8 @@ public class AppB04 {
     }
 
 
-    private static void lorem() {
-        System.out.println("Hello from Lorem thread");
+    private static void threadFunc() {
+        System.out.println("Hello from example thread");
     }
 
 }

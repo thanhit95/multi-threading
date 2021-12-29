@@ -10,7 +10,7 @@ package demo01;
 public class AppB01 {
 
     public static void main(String[] args) throws InterruptedException {
-        var runnable = new LoremRunnable();
+        var runnable = new ExampleRunnable();
 
         var th1 = new Thread(runnable);
         var th2 = new Thread(runnable);
@@ -25,9 +25,9 @@ public class AppB01 {
 
 
 
-class LoremRunnable implements Runnable {
+class ExampleRunnable implements Runnable {
     @Override
     public void run() {
-        System.out.println("Hello from Lorem thread");
+        System.out.println("Hello from example thread");
     }
 }

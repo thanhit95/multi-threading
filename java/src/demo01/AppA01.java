@@ -10,7 +10,7 @@ package demo01;
 public class AppA01 {
 
     public static void main(String[] args) throws InterruptedException {
-        var th = new LoremThread();
+        var th = new ExampleThread();
         th.start();
         System.out.println("Hello from main thread");
     }
@@ -19,9 +19,9 @@ public class AppA01 {
 
 
 
-class LoremThread extends Thread {
+class ExampleThread extends Thread {
     @Override
     public void run() {
-        System.out.println("Hello from Lorem thread");
+        System.out.println("Hello from example thread");
     }
 }

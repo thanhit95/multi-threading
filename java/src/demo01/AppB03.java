@@ -10,7 +10,7 @@ package demo01;
 public class AppB03 {
 
     public static void main(String[] args) throws InterruptedException {
-        var th = new Thread(() -> System.out.println("Hello from Lorem thread"));
+        var th = new Thread(() -> System.out.println("Hello from example thread"));
 
         th.start();
 

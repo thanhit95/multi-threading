@@ -13,7 +13,7 @@ public class AppA02 {
         var th = new Thread() {
             @Override
             public void run() {
-                System.out.println("Hello from Lorem thread");
+                System.out.println("Hello from example thread");
             }
         };
 

@@ -10,7 +10,7 @@ package demo00;
 public class App {
 
     public static void main(String[] args) {
-        Thread th = new LoremClass();
+        Thread th = new ExampleThread();
 
         th.start();
 
@@ -22,7 +22,7 @@ public class App {
 
 
 
-class LoremClass extends Thread {
+class ExampleThread extends Thread {
     @Override
     public void run() {
         for (int i = 0; i < 300; ++i)
