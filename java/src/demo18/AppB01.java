@@ -16,14 +16,14 @@ public class AppB01 {
         var syncPoint = new CountDownLatch(3); // participant count = 3
 
 
-        var lstArgs = List.of(
+        var lstArg = List.of(
                 new ThreadArg("lorem", 1),
                 new ThreadArg("ipsum", 2),
                 new ThreadArg("dolor", 3)
         );
 
 
-        lstArgs.forEach(arg -> new Thread(() -> {
+        lstArg.forEach(arg -> new Thread(() -> {
 
             try {
                 Thread.sleep(1000 * arg.timeWait());

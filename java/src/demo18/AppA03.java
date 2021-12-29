@@ -18,7 +18,7 @@ public class AppA03 {
         var syncPointB = new CyclicBarrier(2);
 
 
-        var lstArgs = List.of(
+        var lstArg = List.of(
                 new ThreadArg("lorem", 1),
                 new ThreadArg("ipsum", 3),
                 new ThreadArg("dolor", 3),
@@ -26,7 +26,7 @@ public class AppA03 {
         );
 
 
-        lstArgs.forEach(arg -> new Thread(() -> {
+        lstArg.forEach(arg -> new Thread(() -> {
 
             try {
                 Thread.sleep(1000 * arg.timeWait());

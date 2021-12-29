@@ -20,7 +20,7 @@ public class AppB02 {
         var syncPoint = new CountDownLatch(3); // participant count = 3
 
 
-        var lstArgs = List.of(
+        var lstArg = List.of(
                 new ThreadArg("lorem", 1),
                 new ThreadArg("ipsum", 2),
                 new ThreadArg("dolor", 3)
@@ -28,7 +28,7 @@ public class AppB02 {
 
 
         for (int repeatCount = 0; repeatCount < 2; ++repeatCount) {
-            var lstTh = lstArgs.stream().map(arg -> new Thread(() -> {
+            var lstTh = lstArg.stream().map(arg -> new Thread(() -> {
 
                 try {
                     Thread.sleep(1000 * arg.timeWait());

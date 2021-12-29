@@ -19,13 +19,13 @@ public class App {
         threadPool.init(NUM_THREADS);
 
 
-        var lstTasks = new ArrayList<MyTask>();
+        var lstTask = new ArrayList<MyTask>();
 
         for (int i = 0; i < NUM_TASKS; ++i)
-            lstTasks.add(new MyTask((char)('A' + i)));
+            lstTask.add(new MyTask((char)('A' + i)));
 
 
-        lstTasks.forEach(task -> threadPool.submit(task));
+        lstTask.forEach(task -> threadPool.submit(task));
         System.out.println("All tasks are submitted");
 
 
