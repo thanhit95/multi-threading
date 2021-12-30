@@ -16,14 +16,14 @@ public class AppA03 {
     public static void main(String[] args) {
         var qProduct = new LinkedBlockingQueue<Integer>();
 
-        new Thread(() -> funcProducer(qProduct)).start();
+        new Thread(() -> producer(qProduct)).start();
 
-        new Thread(() -> funcConsumer("foo", qProduct)).start();
-        new Thread(() -> funcConsumer("bar", qProduct)).start();
+        new Thread(() -> consumer("foo", qProduct)).start();
+        new Thread(() -> consumer("bar", qProduct)).start();
     }
 
 
-    private static void funcProducer(LinkedBlockingQueue<Integer> qProduct) {
+    private static void producer(LinkedBlockingQueue<Integer> qProduct) {
         int i = 1;
 
         for (;; ++i) {
@@ -38,7 +38,7 @@ public class AppA03 {
     }
 
 
-    private static void funcConsumer(String name, LinkedBlockingQueue<Integer> qProduct) {
+    private static void consumer(String name, LinkedBlockingQueue<Integer> qProduct) {
         for (;;) {
             try {
                 int data = qProduct.take();

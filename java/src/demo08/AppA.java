@@ -9,17 +9,17 @@ package demo08;
 public class AppA {
 
     public static void main(String[] args) throws InterruptedException {
-        var foo = new MyThread(5);
-        var bar = new MyThread(80);
+        var thFoo = new MyThread(5);
+        var thBar = new MyThread(80);
 
-        foo.start();
-        bar.start();
+        thFoo.start();
+        thBar.start();
 
-        foo.join();
-        bar.join();
+        thFoo.join();
+        thBar.join();
 
-        System.out.println(foo.result);
-        System.out.println(bar.result);
+        System.out.println(thFoo.result);
+        System.out.println(thBar.result);
     }
 
 }

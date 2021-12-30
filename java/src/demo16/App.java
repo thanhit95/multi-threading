@@ -1,6 +1,6 @@
 /*
  * MONITORS
- * Implementation of a monitor
+ * Implementation of a monitor for managing a counter
  */
 
 package demo16;
@@ -23,7 +23,7 @@ public class App {
         var lstTh = IntStream.range(0, NUM_THREADS).mapToObj(t -> new Thread(() -> {
             try { Thread.sleep(1000); } catch (InterruptedException e) { }
 
-            for (int i = 0; i < 1000; ++i)
+            for (int i = 0; i < 10000; ++i)
                 monitor.increaseCounter();
         })).toList();
 

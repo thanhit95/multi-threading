@@ -15,7 +15,7 @@ public class AppB02 {
         final int NUM_THREADS = 3;
 
 
-        var myTask = new MyTaskB02();
+        var myTask = new WorkerB02();
 
 
         var lstTh = IntStream.range(0, NUM_THREADS).mapToObj(i -> new Thread(myTask)).toList();
@@ -28,7 +28,7 @@ public class AppB02 {
             th.join();
 
 
-        System.out.println("counter = " + MyTaskB02.counter);
+        System.out.println("counter = " + WorkerB02.counter);
         /*
          * We are sure that counter = 30000
          */
@@ -38,7 +38,7 @@ public class AppB02 {
 
 
 
-class MyTaskB02 implements Runnable {
+class WorkerB02 implements Runnable {
     public static int counter = 0;
 
 

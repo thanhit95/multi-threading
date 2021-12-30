@@ -37,7 +37,7 @@ public class AppB02 {
 
 
         int result = countTrue(a, N);
-        System.out.println("Numbers of integers that are divisible by 2 or 3 is: " + result);
+        System.out.println("Number of integers that are divisible by 2 or 3 is: " + result);
     }
 
 

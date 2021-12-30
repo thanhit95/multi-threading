@@ -15,7 +15,7 @@ public class AppA {
         final int NUM_THREADS = 3;
 
 
-        var lstTh = IntStream.range(0, NUM_THREADS).mapToObj(i -> new MyTaskA()).toList();
+        var lstTh = IntStream.range(0, NUM_THREADS).mapToObj(i -> new WorkerA()).toList();
 
 
         for (var th : lstTh)
@@ -25,7 +25,7 @@ public class AppA {
             th.join();
 
 
-        System.out.println("counter = " + MyTaskA.counter);
+        System.out.println("counter = " + WorkerA.counter);
         /*
          * We are sure that counter = 30000
          */
@@ -35,7 +35,7 @@ public class AppA {
 
 
 
-class MyTaskA extends Thread {
+class WorkerA extends Thread {
     public static int counter = 0;
 
 

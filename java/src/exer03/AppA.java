@@ -23,7 +23,7 @@ public class AppA {
 
         var lstThReader = IntStream.range(0, NUM_READERS).mapToObj(i -> new Thread(() -> {
             try {
-                funcReader(rand.nextInt(3));
+                doTaskReader(rand.nextInt(3));
             }
             catch (InterruptedException e) {
                 e.printStackTrace();
@@ -33,7 +33,7 @@ public class AppA {
 
         var lstThWriter = IntStream.range(0, NUM_WRITERS).mapToObj(i -> new Thread(() -> {
             try {
-                funcWriter(rand.nextInt(3));
+                doTaskWriter(rand.nextInt(3));
             }
             catch (InterruptedException e) {
                 e.printStackTrace();
@@ -46,7 +46,7 @@ public class AppA {
     }
 
 
-    private static void funcWriter(int timeDelay) throws InterruptedException {
+    private static void doTaskWriter(int timeDelay) throws InterruptedException {
         var rand = new Random();
         Thread.sleep(1000 * timeDelay);
 
@@ -59,7 +59,7 @@ public class AppA {
     }
 
 
-    private static void funcReader(int timeDelay) throws InterruptedException {
+    private static void doTaskReader(int timeDelay) throws InterruptedException {
         Thread.sleep(1000 * timeDelay);
 
         // Increase reader count

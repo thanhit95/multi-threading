@@ -10,7 +10,7 @@ package demo01;
 public class AppC01 {
 
     public static void main(String[] args) throws InterruptedException {
-        var th = new Thread(() -> threadFunc());
+        var th = new Thread(() -> doTask());
 
         th.start();
 
@@ -18,7 +18,7 @@ public class AppC01 {
     }
 
 
-    private static void threadFunc() {
+    private static void doTask() {
         System.out.println("Hello from example thread");
     }
 

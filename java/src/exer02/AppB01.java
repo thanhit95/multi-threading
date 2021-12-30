@@ -21,12 +21,12 @@ public class AppB01 {
 
         Queue<Integer> qProduct = new LinkedList<>();
 
-        new Thread(() -> funcProducer(semFill, semEmpty, qProduct)).start();
-        new Thread(() -> funcConsumer(semFill, semEmpty, qProduct)).start();
+        new Thread(() -> producer(semFill, semEmpty, qProduct)).start();
+        new Thread(() -> consumer(semFill, semEmpty, qProduct)).start();
     }
 
 
-    private static void funcProducer(Semaphore semFill, Semaphore semEmpty, Queue<Integer> qProduct) {
+    private static void producer(Semaphore semFill, Semaphore semEmpty, Queue<Integer> qProduct) {
         int i = 1;
 
         for (;; ++i) {
@@ -45,7 +45,7 @@ public class AppB01 {
     }
 
 
-    private static void funcConsumer(Semaphore semFill, Semaphore semEmpty, Queue<Integer> qProduct) {
+    private static void consumer(Semaphore semFill, Semaphore semEmpty, Queue<Integer> qProduct) {
         for (;;) {
             try {
                 semFill.acquire();

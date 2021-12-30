@@ -14,38 +14,36 @@ public class AppB {
         final Object resourceB = "resourceB";
 
 
-        var foo = new Thread(() -> {
+        var thFoo = new Thread(() -> {
             synchronized (resourceA) {
-                System.out.println("foo entered resource A");
+                System.out.println("foo acquired resource A");
 
                 try { Thread.sleep(1000); } catch (InterruptedException e) { }
 
                 synchronized (resourceB) {
-                    System.out.println("foo entered resource B");
+                    System.out.println("foo acquired resource B");
                 }
             }
         });
 
 
-        var bar = new Thread(() -> {
+        var thBar = new Thread(() -> {
             synchronized (resourceB) {
-                System.out.println("bar entered resource B");
+                System.out.println("bar acquired resource B");
 
                 try { Thread.sleep(1000); } catch (InterruptedException e) { }
 
                 synchronized (resourceA) {
-                    System.out.println("bar entered resource A");
+                    System.out.println("bar acquired resource A");
                 }
             }
         });
 
 
-        foo.start();
-        bar.start();
-
-
-        foo.join();
-        bar.join();
+        thFoo.start();
+        thBar.start();
+        thFoo.join();
+        thBar.join();
 
 
         System.out.println("You will never see this statement due to deadlock!");

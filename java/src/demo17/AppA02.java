@@ -16,21 +16,21 @@ public class AppA02 {
     public static void main(String[] args) {
         final int NUM_THREADS = 3;
 
-        IntStream.range(0, NUM_THREADS).forEach(i -> new MyTaskA((char)(i + 'A')).start());
+        IntStream.range(0, NUM_THREADS).forEach(i -> new WorkerA((char)(i + 'A')).start());
     }
 
 }
 
 
 
-class MyTaskA extends Thread {
+class WorkerA extends Thread {
     private static Lock lk = new ReentrantLock();
 
 
     private char name;
 
 
-    public MyTaskA(char name) {
+    public WorkerA(char name) {
         this.name = name;
     }
 

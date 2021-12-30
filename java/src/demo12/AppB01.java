@@ -14,7 +14,7 @@ public class AppB01 {
     public static void main(String[] args) {
         final int N = 8;
         int result = getResult(N);
-        System.out.println("Numbers of integers that are divisible by 2 or 3 is: " + result);
+        System.out.println("Number of integers that are divisible by 2 or 3 is: " + result);
     }
 
 

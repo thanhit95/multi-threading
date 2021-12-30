@@ -28,17 +28,17 @@ public class AppB04 {
 
 
         IntStream.range(0, NUM_PRODUCERS).forEach(
-                i -> new Thread(() -> funcProducer(semFill, semEmpty, qProduct, i * 1000)).start()
+                i -> new Thread(() -> producer(semFill, semEmpty, qProduct, i * 1000)).start()
         );
 
         IntStream.range(0, NUM_CONSUMERS).forEach(
-                i -> new Thread(() -> funcConsumer(semFill, semEmpty, qProduct)).start()
+                i -> new Thread(() -> consumer(semFill, semEmpty, qProduct)).start()
         );
     }
 
 
-    private static void funcProducer(Semaphore semFill, Semaphore semEmpty,
-                                     Queue<Integer> qProduct, int startValue) {
+    private static void producer(Semaphore semFill, Semaphore semEmpty,
+                                 Queue<Integer> qProduct, int startValue) {
         int i = 1;
 
         for (;; ++i) {
@@ -54,7 +54,7 @@ public class AppB04 {
     }
 
 
-    private static void funcConsumer(Semaphore semFill, Semaphore semEmpty, Queue<Integer> qProduct) {
+    private static void consumer(Semaphore semFill, Semaphore semEmpty, Queue<Integer> qProduct) {
         for (;;) {
             try {
                 semFill.acquire();

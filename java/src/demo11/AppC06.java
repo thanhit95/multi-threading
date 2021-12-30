@@ -21,7 +21,7 @@ public class AppC06 {
 
         ExecutorService executor = Executors.newFixedThreadPool(NUM_THREADS);
 
-        // List<MyTask> todo
+        // List< Callable<String> > todo
         var todo = IntStream.range(0, NUM_TASKS)
                 .mapToObj(i -> (Callable<String>)() -> doTask(i))
                 .toList();
@@ -33,7 +33,7 @@ public class AppC06 {
          * (i.e., all the Futures in your answer collection will report isDone() if asked)
          */
 
-        // lstTask is List< Future<Character> >
+        // lstTask is List< Future<String> >
         var lstTask = executor.invokeAll(todo);
 
         System.out.println("All tasks are completed");

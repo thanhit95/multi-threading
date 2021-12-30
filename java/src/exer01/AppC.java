@@ -23,7 +23,7 @@ public class AppC {
         var finalRes = new WorkerResult();
 
 
-        var lstTh = lstWorkerArg.stream().map(arg -> new Thread(() -> {
+        var lstWorker = lstWorkerArg.stream().map(arg -> new Thread(() -> {
 
             int resValue = 0;
             int resNumDiv = 0;
@@ -49,11 +49,11 @@ public class AppC {
         var tpStart = Instant.now();
 
 
-        for (var th : lstTh)
-            th.start();
+        for (var worker : lstWorker)
+            worker.start();
 
-        for (var th : lstTh)
-            th.join();
+        for (var worker : lstWorker)
+            worker.join();
 
 
         var timeElapsed = Duration.between(tpStart, Instant.now());

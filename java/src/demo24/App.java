@@ -9,7 +9,7 @@ package demo24;
 public class App {
 
     public static void main(String[] args) throws InterruptedException {
-        new Thread(() -> threadFunc()).start();
+        new Thread(() -> doTask()).start();
 
         Thread.sleep(6000);
 
@@ -17,7 +17,7 @@ public class App {
     }
 
 
-    private static void threadFunc() {
+    private static void doTask() {
         while (false == Global.stopped) {
             System.out.println("Running...");
             try { Thread.sleep(2000); } catch (InterruptedException e) { }

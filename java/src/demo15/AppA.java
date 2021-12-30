@@ -14,20 +14,20 @@ public class AppA {
     public static void main(String[] args) throws InterruptedException {
         var mutex = new Semaphore(1);
 
-        var foo = new Thread(() -> threadFunc(mutex, "foo"));
-        var bar = new Thread(() -> threadFunc(mutex, "bar"));
+        var thFoo = new Thread(() -> doTask(mutex, "foo"));
+        var thBar = new Thread(() -> doTask(mutex, "bar"));
 
-        foo.start();
-        bar.start();
+        thFoo.start();
+        thBar.start();
 
-        foo.join();
-        bar.join();
+        thFoo.join();
+        thBar.join();
 
         System.out.println("You will never see this statement due to deadlock!");
     }
 
 
-    private static void threadFunc(Semaphore mutex, String name) {
+    private static void doTask(Semaphore mutex, String name) {
         try {
             mutex.acquire();
         }

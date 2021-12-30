@@ -9,8 +9,8 @@ package demo21;
 public class AppB {
 
     public static void main(String[] args) {
-        new Foo().start();
-        new Egg().start();
+        new FooThread().start();
+        new EggThread().start();
     }
 
 }
@@ -30,7 +30,7 @@ class Global {
 
 
 // Write numbers 1-3 and 8-10 as permitted by egg()
-class Foo extends Thread {
+class FooThread extends Thread {
     @Override
     public void run() {
         for (;;) {
@@ -56,7 +56,7 @@ class Foo extends Thread {
 
 
 // Write numbers 4-7
-class Egg extends Thread {
+class EggThread extends Thread {
     @Override
     public void run() {
         for (;;) {

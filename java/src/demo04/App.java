@@ -8,20 +8,17 @@ package demo04;
 
 public class App {
 
-    public static void main(String[] args) {
-        var th = new Thread(() -> {
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-            System.out.println("Done!!!");
+    public static void main(String[] args) throws InterruptedException {
+        var thFoo = new Thread(() -> {
+            System.out.println("foo is sleeping");
+            try { Thread.sleep(3000); } catch (InterruptedException e) { }
+            System.out.println("foo wakes up");
         });
 
-        th.start();
+        thFoo.start();
+        thFoo.join();
 
-        System.out.println("main thread is running...");
+        System.out.println("Good bye");
     }
 
 }

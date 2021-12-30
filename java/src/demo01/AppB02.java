@@ -10,10 +10,10 @@ package demo01;
 public class AppB02 {
 
     public static void main(String[] args) throws InterruptedException {
-        Runnable runnable = () -> System.out.println("Hello from example thread");
+        Runnable doTask = () -> System.out.println("Hello from example thread");
 
-        var th1 = new Thread(runnable);
-        var th2 = new Thread(runnable);
+        var th1 = new Thread(doTask);
+        var th2 = new Thread(doTask);
 
         th1.start();
         th2.start();

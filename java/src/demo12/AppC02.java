@@ -10,7 +10,7 @@ public class AppC02 {
 
     public static void main(String[] args) throws InterruptedException {
         var thA = new Thread(() -> {
-            try { Thread.sleep(30); } catch (InterruptedException e) { }
+            try { Thread.sleep(1000); } catch (InterruptedException e) { }
 
             while (Global.counter < 10)
                 ++Global.counter;
@@ -20,7 +20,7 @@ public class AppC02 {
 
 
         var thB = new Thread(() -> {
-            try { Thread.sleep(30); } catch (InterruptedException e) { }
+            try { Thread.sleep(1000); } catch (InterruptedException e) { }
 
             while (Global.counter > -10)
                 --Global.counter;

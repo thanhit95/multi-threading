@@ -9,19 +9,19 @@ package demo05;
 public class App {
 
     public static void main(String[] args) {
-        Runnable threadFunc = () -> {
+        Runnable doTask = () -> {
             long id = Thread.currentThread().getId();
             System.out.println(id);
         };
 
-        var foo = new Thread(threadFunc);
-        var bar = new Thread(threadFunc);
+        var thFoo = new Thread(doTask);
+        var thBar = new Thread(doTask);
 
-        System.out.println("foo's id: " + foo.getId());
-        System.out.println("bar's id: " + bar.getId());
+        System.out.println("foo's id: " + thFoo.getId());
+        System.out.println("bar's id: " + thBar.getId());
 
-        foo.start();
-        bar.start();
+        thFoo.start();
+        thBar.start();
     }
 
 }

@@ -9,19 +9,19 @@ package demo12;
 public class AppC01 {
 
     public static void main(String[] args) throws InterruptedException {
-        var foo = new MyTask();
-        var bar = new MyTask();
-        var egg = new MyTask();
+        var thFoo = new WorkerThread();
+        var thBar = new WorkerThread();
+        var thEgg = new WorkerThread();
 
-        foo.start();
-        bar.start();
-        egg.start();
+        thFoo.start();
+        thBar.start();
+        thEgg.start();
 
-        foo.join();
-        bar.join();
-        egg.join();
+        thFoo.join();
+        thBar.join();
+        thEgg.join();
 
-        System.out.println("counter = " + MyTask.counter);
+        System.out.println("counter = " + WorkerThread.counter);
         /*
          * We are not sure that counter = 1500
          */
@@ -31,7 +31,7 @@ public class AppC01 {
 
 
 
-class MyTask extends Thread {
+class WorkerThread extends Thread {
     static int counter = 0;
 
 

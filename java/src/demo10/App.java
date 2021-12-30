@@ -12,11 +12,11 @@ import java.time.Instant;
 public class App {
 
     public static void main(String[] args) {
-        var tpStart = Instant.now();
+        var tpStartMeasure = Instant.now();
 
         littleSleep(130000);
 
-        var timeElapsed = Duration.between(tpStart, Instant.now());
+        var timeElapsed = Duration.between(tpStartMeasure, Instant.now());
 
         System.out.println("Elapsed time: " + timeElapsed.toNanos() + " nanoseonds");
     }

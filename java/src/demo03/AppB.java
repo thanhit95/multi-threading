@@ -10,15 +10,15 @@ package demo03;
 public class AppB {
 
     public static void main(String[] args) throws InterruptedException {
-        var th1 = new Thread(() -> threadFunc(1, 2, "red"));
-        var th2 = new Thread(() -> threadFunc(3, 4, "blue"));
+        var thFoo = new Thread(() -> doTask(1, 2, "red"));
+        var thBar = new Thread(() -> doTask(3, 4, "blue"));
 
-        th1.start();
-        th2.start();
+        thFoo.start();
+        thBar.start();
     }
 
 
-    private static void threadFunc(int a, double b, String c) {
+    private static void doTask(int a, double b, String c) {
         System.out.printf("%d  %.1f  %s %n", a, b, c);
     }
 

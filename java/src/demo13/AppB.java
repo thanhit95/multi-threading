@@ -16,31 +16,11 @@ import java.util.stream.Stream;
 public class AppB {
 
     public static void main(String[] args) throws InterruptedException {
-        var mutex = new Semaphore(1);
-
-
-        Runnable counterFunc = () -> {
-            try {
-                Thread.sleep(1000);
-
-                mutex.acquire();
-
-                for (int i = 0; i < 10000; ++i)
-                    ++Global.counter;
-
-                mutex.release();
-            }
-            catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        };
-
-
         final int NUM_THREADS = 3;
 
-
-        var lstTh = Stream.generate(() -> new Thread(counterFunc)).limit(NUM_THREADS).toList();
-
+        var lstTh = Stream.generate(() -> new Thread(() -> doTask()))
+                .limit(NUM_THREADS)
+                .toList();
 
         for (var th : lstTh)
             th.start();
@@ -48,13 +28,29 @@ public class AppB {
         for (var th : lstTh)
             th.join();
 
-
         System.out.println("counter = " + Global.counter);
     }
 
 
+    private static void doTask() {
+        try {
+            Thread.sleep(1000);
+
+            Global.mutex.acquire();
+
+            for (int i = 0; i < 10000; ++i)
+                ++Global.counter;
+
+            Global.mutex.release();
+        }
+        catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     class Global {
+        public static Semaphore mutex = new Semaphore(1);
         public static int counter = 0;
     }
 

@@ -14,21 +14,21 @@ public class AppB02 {
     public static void main(String[] args) throws InterruptedException {
         final int NUM_THREADS = 3;
 
-        IntStream.range(0, NUM_THREADS).forEach(i -> new MyTaskB((char)(i + 'A')).start());
+        IntStream.range(0, NUM_THREADS).forEach(i -> new WorkerB((char)(i + 'A')).start());
     }
 
 }
 
 
 
-class MyTaskB extends Thread {
+class WorkerB extends Thread {
     private static Object lock = new Object();
 
 
     private char name;
 
 
-    public MyTaskB(char name) {
+    public WorkerB(char name) {
         this.name = name;
     }
 

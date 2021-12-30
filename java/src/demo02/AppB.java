@@ -9,17 +9,17 @@ package demo02;
 public class AppB {
 
     public static void main(String[] args) {
-        Thread foo = new Thread(() -> System.out.println("foo"));
-        Thread bar = new Thread(() -> System.out.println("bar"));
+        Thread thFoo = new Thread(() -> System.out.println("foo"));
+        Thread thBar = new Thread(() -> System.out.println("bar"));
 
-        foo.start();
-        bar.start();
+        thFoo.start();
+        thBar.start();
 
-        // foo.join();
-        // bar.join();
+        // thFoo.join();
+        // thBar.join();
 
         /*
-         * We do not need to call foo.join() and bar.join().
+         * We do not need to call thFoo.join() and thBar.join().
          * The reason is main thread will wait for the completion of all threads before app exits.
          */
     }

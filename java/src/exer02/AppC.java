@@ -29,16 +29,16 @@ public class AppC {
 
 
         IntStream.range(0, NUM_PRODUCERS).forEach(
-                i -> new Thread(() -> funcProducer(monitor, i * 1000)).start()
+                i -> new Thread(() -> producer(monitor, i * 1000)).start()
         );
 
         IntStream.range(0, NUM_CONSUMERS).forEach(
-                i -> new Thread(() -> funcConsumer(monitor)).start()
+                i -> new Thread(() -> consumer(monitor)).start()
         );
     }
 
 
-    private static void funcProducer(Monitor<Integer> monitor, int startValue) {
+    private static void producer(Monitor<Integer> monitor, int startValue) {
         int i = 1;
 
         for (;; ++i) {
@@ -52,7 +52,7 @@ public class AppC {
     }
 
 
-    private static void funcConsumer(Monitor<Integer> monitor) {
+    private static void consumer(Monitor<Integer> monitor) {
         for (;;) {
             try {
                 int data = monitor.remove();
