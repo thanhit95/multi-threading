@@ -9,9 +9,9 @@ SOLUTION TYPE A: USING BLOCKING QUEUES
 #include <iostream>
 #include <thread>
 #include <chrono>
-#include "extool-blocking-collection.hpp"
+#include "mylib-blockingqueue.hpp"
 using namespace std;
-using namespace code_machina;
+using namespace mylib;
 
 
 
@@ -19,7 +19,7 @@ void producer(BlockingQueue<int>* qProduct) {
     int i = 1;
 
     for (;; ++i) {
-        qProduct->add(i);
+        qProduct->put(i);
         std::this_thread::sleep_for(std::chrono::seconds(1));
     }
 }
@@ -28,24 +28,17 @@ void producer(BlockingQueue<int>* qProduct) {
 
 void consumer(BlockingQueue<int>* qProduct) {
     int data = 0;
-    BlockingCollectionStatus status;
 
     for (;;) {
-        status = qProduct->take(data);
-
-        if (BlockingCollectionStatus::Ok == status) {
-            cout << "Consumer " << data << endl;
-        }
-        else {
-            cerr << "Consumer error" << endl;
-        }
+        data = qProduct->take();
+        cout << "Consumer " << data << endl;
     }
 }
 
 
 
 int main() {
-    BlockingQueue<int> qProduct;
+    auto qProduct = BlockingQueue<int>();
 
     auto thProducerA = std::thread(producer, &qProduct);
     auto thProducerB = std::thread(producer, &qProduct);
