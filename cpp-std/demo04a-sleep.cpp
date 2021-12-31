@@ -12,20 +12,19 @@ using namespace std;
 
 
 
-void routine(string name) {
+void doTask(string name) {
     cout << name << " is sleeping" << endl;
-    std::this_thread::sleep_for(std::chrono::seconds(2));
+    std::this_thread::sleep_for(std::chrono::seconds(3));
     cout << name << " wakes up" << endl;
 }
 
 
 
 int main() {
-    auto th1 = std::thread(routine, "foo");
-    auto th2 = std::thread(routine, "bar");
+    auto thFoo = std::thread(doTask, "foo");
 
-    th1.join();
-    th2.join();
+    thFoo.join();
 
+    cout << "Good bye" << endl;
     return 0;
 }

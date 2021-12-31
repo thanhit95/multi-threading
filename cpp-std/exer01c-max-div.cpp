@@ -47,7 +47,7 @@ public:
 
 
 
-void workerRoutine(WorkerArg* arg, FinalResult* res) {
+void workerFunc(WorkerArg* arg, FinalResult* res) {
     int resValue = 0;
     int resNumDiv = 0;
 
@@ -113,7 +113,7 @@ int main() {
 
 
     for (int i = 0; i < NUM_THREADS; ++i) {
-        lstTh[i] = std::thread(workerRoutine, &lstWorkerArg[i], &finalRes);
+        lstTh[i] = std::thread(workerFunc, &lstWorkerArg[i], &finalRes);
     }
 
     for (auto&& th : lstTh) {

@@ -22,15 +22,7 @@ Version 2A:
 #include <mutex>
 #include <condition_variable>
 #include <semaphore>
-
-
-
-// interface ITask
-class ITask {
-public:
-    virtual ~ITask() = default;
-    virtual void run() = 0;
-};
+#include "exer07-thread-pool-itask.hpp"
 
 
 
@@ -71,7 +63,7 @@ public:
         forceThreadShutdown = false;
 
         for (auto&& th : lstTh) {
-            th = std::thread(threadRoutine, this);
+            th = std::thread(threadWorkerFunc, this);
         }
     }
 
@@ -121,7 +113,7 @@ public:
 
 
 private:
-    static void threadRoutine(ThreadPoolV2A* thisPtr) {
+    static void threadWorkerFunc(ThreadPoolV2A* thisPtr) {
         auto&& taskPending = thisPtr->taskPending;
         auto&& mutTaskPending = thisPtr->mutTaskPending;
         auto&& condTaskPending = thisPtr->condTaskPending;

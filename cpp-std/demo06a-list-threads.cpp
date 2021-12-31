@@ -10,7 +10,7 @@ using namespace std;
 
 
 
-void routine(int index) {
+void doTask(int index) {
     cout << index;
 }
 
@@ -23,7 +23,7 @@ int main() {
 
 
     for (int i = 0; i < NUM_THREADS; ++i) {
-        lstTh[i] = std::thread(routine, i);
+        lstTh[i] = std::thread(doTask, i);
     }
 
 

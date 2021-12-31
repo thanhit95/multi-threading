@@ -10,26 +10,26 @@ using namespace std;
 
 
 
-void routine() {
-    cout << "Routine is starting..." << endl;
+void foo() {
+    cout << "foo is starting..." << endl;
 
     std::this_thread::sleep_for(std::chrono::seconds(2));
 
-    cout << "Routine is exiting..." << endl;
+    cout << "foo is exiting..." << endl;
 }
 
 
 
 int main() {
-    auto th = std::thread(routine);
-    th.detach();
+    auto thFoo = std::thread(foo);
+    thFoo.detach();
 
 
     // If I comment this statement,
-    // the thread routine will be forced into terminating with main thread
+    // thFoo will be forced into terminating with main thread
     std::this_thread::sleep_for(std::chrono::seconds(3));
 
 
-    cout << "Program is terminating" << endl;
+    cout << "Main thread is exiting" << endl;
     return 0;
 }

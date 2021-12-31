@@ -22,15 +22,15 @@ int counter = 0;
 
 
 
-void routineCounter() {
+void doTask() {
     std::this_thread::sleep_for(std::chrono::seconds(1));
 
-    std::lock_guard<std::mutex> lockGuard(mut);
+    std::lock_guard<std::mutex> lk(mut);
 
     for (int i = 0; i < 10000; ++i)
         ++counter;
 
-    // Once function exits, then destructor of lockGuard object will be called.
+    // Once function exits, then destructor of lk object will be called.
     // In destructor it unlocks the mutex.
 }
 
@@ -41,11 +41,8 @@ int main() {
     std::thread lstTh[NUM_THREADS];
 
 
-    counter = 0;
-
-
     for (auto&& th : lstTh) {
-        th = std::thread(routineCounter);
+        th = std::thread(doTask);
     }
 
 

@@ -4,6 +4,7 @@ READ-WRITE LOCKS
 
 
 #include <iostream>
+#include <numeric>
 #include <thread>
 #include <shared_mutex>
 #include <chrono>
@@ -17,25 +18,25 @@ auto rwlock = std::shared_mutex();
 
 
 
-void routineRead(int timeWait) {
+void readFunc(int timeWait) {
     std::this_thread::sleep_for(std::chrono::seconds(timeWait));
 
     rwlock.lock_shared();
 
-    cout << "routineRead: " << resource << endl;
+    cout << "read: " << resource << endl;
 
     rwlock.unlock_shared();
 }
 
 
 
-void routineWrite(int timeWait) {
+void writeFunc(int timeWait) {
     std::this_thread::sleep_for(std::chrono::seconds(timeWait));
 
     rwlock.lock();
 
     resource = mytool::RandInt::staticGet() % 100;
-    cout << "routineWrite: " << resource << endl;
+    cout << "write: " << resource << endl;
 
     rwlock.unlock();
 }
@@ -49,26 +50,25 @@ int main() {
 
     std::thread lstThRead[NUM_THREADS_READ];
     std::thread lstThWrite[NUM_THREADS_WRITE];
-    int arg[NUM_ARGS];
+    int lstArg[NUM_ARGS];
 
     mytool::RandInt randInt(1, 1000);
 
 
     // INITIALIZE
-    for (int i = 0; i < NUM_ARGS; ++i) {
-        arg[i] = i;
-    }
+    // lstArg = { 0, 1, 2, ..., NUM_ARG - 1 }
+    std::iota(lstArg, lstArg + NUM_ARGS, 0);
 
 
     // CREATE THREADS
     for (auto&& th : lstThRead) {
-        int argIndex = randInt.get() % NUM_ARGS;
-        th = std::thread(routineRead, arg[argIndex]);
+        int arg = lstArg[ randInt.get() % NUM_ARGS ];
+        th = std::thread(readFunc, arg);
     }
 
     for (auto&& th : lstThWrite) {
-        int argIndex = randInt.get() % NUM_ARGS;
-        th = std::thread(routineWrite, arg[argIndex]);
+        int arg = lstArg[ randInt.get() % NUM_ARGS ];
+        th = std::thread(writeFunc, arg);
     }
 
 
@@ -76,7 +76,6 @@ int main() {
     for (auto&& th : lstThRead) {
         th.join();
     }
-
     for (auto&& th : lstThWrite) {
         th.join();
     }

@@ -34,7 +34,7 @@ struct WorkerResult {
 
 
 
-void workerRoutine(WorkerArg* arg, WorkerResult* res) {
+void workerFunc(WorkerArg* arg, WorkerResult* res) {
     int resValue = 0;
     int resNumDiv = 0;
 
@@ -101,7 +101,7 @@ int main() {
 
 
     for (int i = 0; i < NUM_THREADS; ++i) {
-        lstTh[i] = std::thread(workerRoutine, &lstWorkerArg[i], &lstWorkerRes[i]);
+        lstTh[i] = std::thread(workerFunc, &lstWorkerArg[i], &lstWorkerRes[i]);
     }
 
     for (auto&& th : lstTh) {

@@ -10,25 +10,22 @@ using namespace std;
 
 
 
-void routine() {
+void doTask() {
     std::this_thread::sleep_for(std::chrono::seconds(2));
-    cout << "Thread id is " << std::this_thread::get_id() << endl;
+    cout << std::this_thread::get_id() << endl;
 }
 
 
 
 int main() {
-    auto th1 = std::thread(routine);
-    auto th2 = std::thread(routine);
+    auto thFoo = std::thread(doTask);
+    auto thBar = std::thread(doTask);
 
-    cout << "th1 id: " << th1.get_id() << endl;
-    cout << "th2 id: " << th2.get_id() << endl;
+    cout << "foo's id: " << thFoo.get_id() << endl;
+    cout << "bar's id: " << thBar.get_id() << endl;
 
-    th1.join();
-    th2.join();
-
-    // output: th1 id: thread::id of a non-executing thread
-    // cout << "th1 id: " << th1.get_id() << endl;
+    thFoo.join();
+    thBar.join();
 
     return 0;
 }

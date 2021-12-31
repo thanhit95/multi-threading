@@ -20,9 +20,7 @@ auto semSheet = std::counting_semaphore(2);
 void makeOneSheet() {
     for (int i = 0; i < 4; ++i) {
         semSheet.acquire();
-
         cout << "Make 1 sheet" << endl;
-
         semPackage.release();
     }
 }

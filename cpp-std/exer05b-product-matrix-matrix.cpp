@@ -6,24 +6,13 @@ MATRIX-MATRIX MULTIPLICATION (DOT PRODUCT)
 #include <iostream>
 #include <vector>
 #include <thread>
+#include "exer05-util.hpp"
 using namespace std;
 
 
 
 using vectord = std::vector<double>;
 using matrix = std::vector<vectord>;
-
-
-
-void workerScalarProduct(double const* u, double const* v, int sizeVector, double* res) {
-    double sum = 0;
-
-    for (int i = sizeVector - 1; i >= 0; --i) {
-        sum += u[i] * v[i];
-    }
-
-    (*res) = sum;
-}
 
 
 
@@ -77,7 +66,7 @@ void getProduct(const matrix& matA, const matrix& matB, matrix& result) {
             auto&& v = matBT[j].data();
             auto&& sizeVector = sizeColA;
 
-            lstTh[iSca] = std::thread(workerScalarProduct, u, v, sizeVector, &result[i][j]);
+            lstTh[iSca] = std::thread(getScalarProduct, u, v, sizeVector, &result[i][j]);
             ++iSca;
         }
     }

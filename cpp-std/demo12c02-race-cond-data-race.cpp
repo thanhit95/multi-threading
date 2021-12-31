@@ -18,7 +18,7 @@ int counter = 0;
 
 
 
-void routineA(sysclock::time_point timePointWakeUp) {
+void doTaskA(sysclock::time_point timePointWakeUp) {
     std::this_thread::sleep_until(timePointWakeUp);
 
     while (counter < 10)
@@ -29,7 +29,7 @@ void routineA(sysclock::time_point timePointWakeUp) {
 
 
 
-void routineB(sysclock::time_point timePointWakeUp) {
+void doTaskB(sysclock::time_point timePointWakeUp) {
     std::this_thread::sleep_until(timePointWakeUp);
 
     while (counter > -10)
@@ -42,10 +42,10 @@ void routineB(sysclock::time_point timePointWakeUp) {
 
 int main() {
     auto tpNow = sysclock::now();
-    auto tpWakeUp = tpNow + std::chrono::seconds(2);
+    auto tpWakeUp = tpNow + std::chrono::seconds(1);
 
-    auto thA = std::thread(routineA, tpWakeUp);
-    auto thB = std::thread(routineB, tpWakeUp);
+    auto thA = std::thread(doTaskA, tpWakeUp);
+    auto thB = std::thread(doTaskB, tpWakeUp);
 
     thA.join();
     thB.join();

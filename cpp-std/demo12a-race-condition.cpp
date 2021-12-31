@@ -11,7 +11,7 @@ using namespace std;
 
 
 
-void routine(int index) {
+void doTask(int index) {
     std::this_thread::sleep_for(std::chrono::seconds(1));
     cout << index;
 }
@@ -25,7 +25,7 @@ int main() {
 
     for (int i = 0; i < NUM_THREADS; ++i) {
         lstTh.push_back(
-            std::thread(routine, i)
+            std::thread(doTask, i)
         );
     }
 

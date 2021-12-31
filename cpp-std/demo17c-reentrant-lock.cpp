@@ -16,7 +16,7 @@ std::recursive_mutex mut;
 
 
 
-void routine(char name) {
+void doTask(char name) {
     std::this_thread::sleep_for(std::chrono::seconds(1));
 
     mut.lock();
@@ -37,7 +37,7 @@ int main() {
 
 
     for (int i = 0; i < NUM_THREADS; ++i) {
-        lstTh[i] = std::thread(routine, char(i + 'A'));
+        lstTh[i] = std::thread(doTask, char(i + 'A'));
     }
 
 

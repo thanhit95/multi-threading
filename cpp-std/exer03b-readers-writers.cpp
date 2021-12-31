@@ -25,7 +25,7 @@ struct GlobalData {
 
 
 
-void funcWriter(GlobalData* g, int timeDelay) {
+void doTaskWriter(GlobalData* g, int timeDelay) {
     std::this_thread::sleep_for(std::chrono::seconds(timeDelay));
 
     g->mutServiceQueue.lock();
@@ -42,7 +42,7 @@ void funcWriter(GlobalData* g, int timeDelay) {
 
 
 
-void funcReader(GlobalData* g, int timeDelay) {
+void doTaskReader(GlobalData* g, int timeDelay) {
     std::this_thread::sleep_for(std::chrono::seconds(timeDelay));
 
 
@@ -91,11 +91,11 @@ int main() {
 
     // CREATE THREADS
     for (auto&& th: lstThReader) {
-        th = std::thread(funcReader, &globalData, mytool::RandInt::staticGet() % 3);
+        th = std::thread(doTaskReader, &globalData, mytool::RandInt::staticGet() % 3);
     }
 
     for (auto&& th: lstThWriter) {
-        th = std::thread(funcWriter, &globalData, mytool::RandInt::staticGet() % 3);
+        th = std::thread(doTaskWriter, &globalData, mytool::RandInt::staticGet() % 3);
     }
 
 

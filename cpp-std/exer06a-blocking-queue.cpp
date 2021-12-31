@@ -45,7 +45,7 @@ public:
 
 
 void producer(SynchronousQueue<std::string>* queue) {
-    auto arr = { "lorem", "ipsum", "foo" };
+    auto arr = { "lorem", "ipsum", "dolor" };
 
     for (auto&& value : arr) {
         cout << "Producer: " << value << endl;

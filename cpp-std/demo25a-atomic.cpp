@@ -15,7 +15,7 @@ volatile int counter = 0;
 
 
 
-void routine() {
+void doTask() {
     std::this_thread::sleep_for(std::chrono::seconds(1));
     counter += 1;
 }
@@ -28,7 +28,7 @@ int main() {
     vector<std::thread> lstTh;
 
     for (int i = 0; i < 1000; ++i) {
-        lstTh.push_back(std::thread(routine));
+        lstTh.push_back(std::thread(doTask));
     }
 
     for (auto&& th : lstTh) {

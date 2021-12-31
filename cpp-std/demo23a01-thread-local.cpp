@@ -17,7 +17,7 @@ thread_local string value = "NOT SET";
 
 
 
-void routine() {
+void doTask() {
     cout << value << endl;
 }
 
@@ -30,7 +30,7 @@ int main() {
 
     // Child thread gets value
     // Expected output: "NOT SET"
-    auto th = std::thread(routine);
+    auto th = std::thread(doTask);
     th.join();
 
     return 0;

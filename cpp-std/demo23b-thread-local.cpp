@@ -16,7 +16,7 @@ thread_local int counter = 0;
 
 
 
-void routine(int t) {
+void doTask(int t) {
     std::this_thread::sleep_for(std::chrono::seconds(1));
 
     for (int i = 0; i < 1000; ++i)
@@ -32,7 +32,7 @@ int main() {
     vector<std::thread> lstTh;
 
     for (int i = 0; i < NUM_THREADS; ++i) {
-        lstTh.push_back(std::thread(routine, i));
+        lstTh.push_back(std::thread(doTask, i));
     }
 
     for (auto&& th : lstTh) {
@@ -40,5 +40,12 @@ int main() {
     }
 
     cout << endl;
+
+    /*
+    By using Thread-Local Storage, each thread has its own counter.
+    So, the counter in one thread is completely independent of each other.
+
+    Thread-Local Storage helps us to AVOID SYNCHRONIZATION.
+    */
     return 0;
 }

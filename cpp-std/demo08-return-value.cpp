@@ -9,7 +9,7 @@ using namespace std;
 
 
 
-void worker(int arg, int* res) {
+void doubleValue(int arg, int* res) {
     (*res) = arg * 2;
 }
 
@@ -18,11 +18,11 @@ void worker(int arg, int* res) {
 int main() {
     int result[2];
 
-    auto th1 = std::thread(worker, 5, &result[0]);
-    auto th2 = std::thread(worker, 80, &result[1]);
+    auto thFoo = std::thread(doubleValue, 5, &result[0]);
+    auto thBar = std::thread(doubleValue, 80, &result[1]);
 
-    th1.join();
-    th2.join();
+    thFoo.join();
+    thBar.join();
 
     cout << result[0] << endl;
     cout << result[1] << endl;

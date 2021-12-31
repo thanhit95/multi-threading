@@ -11,7 +11,7 @@ using namespace std;
 
 
 
-void funcPhilosopher(std::mutex chopstick[], int numPhilo, int idPhilo) {
+void doTaskPhilosopher(std::mutex chopstick[], int numPhilo, int idPhilo) {
     int n = numPhilo;
     int i = idPhilo;
 
@@ -37,7 +37,7 @@ int main() {
 
     // CREATE THREADS
     for (int i = 0; i < NUM_PHILOSOPHERS; ++i) {
-        lstTh[i] = std::thread(funcPhilosopher, chopstick, NUM_PHILOSOPHERS, i);
+        lstTh[i] = std::thread(doTaskPhilosopher, chopstick, NUM_PHILOSOPHERS, i);
     }
 
 

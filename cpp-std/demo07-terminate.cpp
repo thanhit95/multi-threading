@@ -1,5 +1,7 @@
 /*
 FORCING A THREAD TO TERMINATE (i.e. killing the thread)
+
+Beside atomic variables, you can use the "volatile" specifier.
 */
 
 
@@ -14,7 +16,7 @@ std::atomic_bool flagStop;
 
 
 
-void routine() {
+void doTask() {
     while (1) {
         if (flagStop.load())
             break;
@@ -32,7 +34,7 @@ void routine() {
 int main() {
     flagStop.store(false);
 
-    auto th = std::thread(routine);
+    auto th = std::thread(doTask);
 
     std::this_thread::sleep_for(std::chrono::seconds(3));
 

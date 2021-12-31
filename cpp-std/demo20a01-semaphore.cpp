@@ -20,7 +20,6 @@ void makeOneSheet() {
     for (int i = 0; i < 4; ++i) {
         cout << "Make 1 sheet" << endl;
         std::this_thread::sleep_for(std::chrono::seconds(1));
-
         semPackage.release();
     }
 }

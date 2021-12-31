@@ -11,21 +11,18 @@ using namespace std;
 
 
 
-void routine(const string& msg) {
+void doTask(const string& msg) {
     cout << msg << endl;
 }
 
 
 
 int main() {
-    string a = "foo";
-    string b = "bar";
+    auto thFoo = std::thread(doTask, "foo");
+    auto thBar = std::thread(doTask, "bar");
 
-    auto th1 = std::thread(routine, a);
-    auto th2 = std::thread(routine, b);
-
-    th1.join();
-    th2.join();
+    thFoo.join();
+    thBar.join();
 
     return 0;
 }

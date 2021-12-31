@@ -36,24 +36,24 @@ int main() {
 
 
     // tuple<userName, timeWait>
-    tuple<string,int> arg[NUM_THREADS] = {
-        { "foo", 1 },
-        { "bar", 2 },
-        { "ham", 3 }
+    tuple<string,int> lstArg[NUM_THREADS] = {
+        { "lorem", 1 },
+        { "ipsum", 2 },
+        { "dolor", 3 }
     };
 
 
-    for (int repeatCount = 0; repeatCount < 2; ++repeatCount)
-    {
-        for (int i = 0; i < NUM_THREADS; ++i) {
-            auto&& argItem = arg[i];
-            lstTh[i] = std::thread(processRequest, std::get<0>(argItem), std::get<1>(argItem));
-        }
+    for (int repeatCount = 0; repeatCount < 2; ++repeatCount) {
 
+        for (int i = 0; i < NUM_THREADS; ++i) {
+            auto&& arg = lstArg[i];
+            lstTh[i] = std::thread(processRequest, std::get<0>(arg), std::get<1>(arg));
+        }
 
         for (auto&& th : lstTh) {
             th.join();
         }
+
     }
 
 

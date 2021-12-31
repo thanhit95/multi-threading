@@ -16,14 +16,14 @@ int counter = 0;
 
 
 
-void routineCounter() {
+void doTask() {
     std::this_thread::sleep_for(std::chrono::seconds(1));
 
     if (false == mut.try_lock()) {
         return;
     }
 
-    for (int i = 0; i < 1000; ++i)
+    for (int i = 0; i < 10000; ++i)
         ++counter;
 
     mut.unlock();
@@ -36,11 +36,8 @@ int main() {
     std::thread lstTh[NUM_THREADS];
 
 
-    counter = 0;
-
-
     for (auto&& th : lstTh) {
-        th = std::thread(routineCounter);
+        th = std::thread(doTask);
     }
 
 
@@ -50,5 +47,8 @@ int main() {
 
 
     cout << "counter = " << counter << endl;
+    // counter can be 10000, 20000 or 30000
+
+
     return 0;
 }

@@ -10,14 +10,14 @@ using namespace std;
 
 
 
-void routine(char const* message, int number) {
+void doTask(char const* message, int number) {
     cout << message << " " << number << endl;
 }
 
 
 
 int main() {
-    std::thread th(routine, "Lorem", 19);
+    std::thread th(doTask, "Good day", 19);
     th.join();
     return 0;
 }

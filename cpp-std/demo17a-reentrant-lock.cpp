@@ -15,7 +15,7 @@ std::mutex mut;
 
 
 
-void routine() {
+void doTask() {
     mut.lock();
     cout << "First time acquiring the resource" << endl;
 
@@ -29,11 +29,11 @@ void routine() {
 
 
 int main() {
-    auto th = std::thread(routine);
+    auto th = std::thread(doTask);
 
     /*
-    The function "routine" will meet deadlock.
-    So, you will never get output "Second time acquiring the resource".
+    The thread th shall meet deadlock.
+    So, you will never get output "Second time the acquiring resource".
     */
 
     th.join();

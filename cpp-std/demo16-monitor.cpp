@@ -1,6 +1,6 @@
 /*
 MONITORS
-Implementation of a monitor
+Implementation of a monitor for managing a counter
 */
 
 
@@ -26,19 +26,17 @@ public:
 
     void increaseCounter() {
         mut.lock();
-
         (*pCounter) += 1;
-
         mut.unlock();
     }
 };
 
 
 
-void routineCounter(Monitor* monitor) {
+void doTask(Monitor* monitor) {
     std::this_thread::sleep_for(std::chrono::seconds(1));
 
-    for (int i = 0; i < 1000; ++i)
+    for (int i = 0; i < 10000; ++i)
         monitor->increaseCounter();
 }
 
@@ -56,7 +54,7 @@ int main() {
 
 
     for (auto&& th : lstTh) {
-        th = std::thread(routineCounter, &monitor);
+        th = std::thread(doTask, &monitor);
     }
 
 

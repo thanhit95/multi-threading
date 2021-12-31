@@ -25,7 +25,7 @@ int counter = 0;
 
 
 
-void routineCounter() {
+void doTask() {
     std::this_thread::sleep_for(std::chrono::seconds(1));
 
     std::unique_lock<std::mutex> lk(mut);
@@ -45,11 +45,8 @@ int main() {
     std::thread lstTh[NUM_THREADS];
 
 
-    counter = 0;
-
-
     for (auto&& th : lstTh) {
-        th = std::thread(routineCounter);
+        th = std::thread(doTask);
     }
 
 

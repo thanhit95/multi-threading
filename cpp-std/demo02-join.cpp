@@ -9,21 +9,21 @@ using namespace std;
 
 
 
-void threadFunc() {
-    // Doing a heavy task...
-    for (int i = 0; i < 1000000000; ++i);
+void doHeavyTask() {
+    // do a heavy task, which takes a little time
+    for (int i = 0; i < 2000000000; ++i);
 
-    cout << "First" << endl;
+    cout << "Done!" << endl;
 }
 
 
 
 int main() {
-    std::thread th(threadFunc);
+    std::thread th(doHeavyTask);
 
     th.join();
 
-    cout << "Second" << endl;
+    cout << "Good bye!" << endl;
 
     return 0;
 }

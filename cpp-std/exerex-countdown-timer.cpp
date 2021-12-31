@@ -12,7 +12,7 @@ using namespace std;
 
 
 
-void funcUserInput(char* buffer, std::condition_variable* cv) {
+void doUserInput(char* buffer, std::condition_variable* cv) {
     cin.getline(buffer, 1024);
     cv->notify_one();
 }
@@ -49,7 +49,7 @@ int main() {
     cout << "START!!!" << endl << endl;
 
 
-    auto th = std::thread(funcUserInput, buffer, &cv);
+    auto th = std::thread(doUserInput, buffer, &cv);
 
 
     if (waitForTime(SECONDS, cv, mut)) {

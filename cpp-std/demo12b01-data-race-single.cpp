@@ -20,7 +20,7 @@ int getResult(int N) {
         if (0 == i % 2 || 0 == i % 3)
             a[i] = true;
 
-    // result = sum of a (i.e. count numbers of true values in a)
+    // result = sum of a (i.e. counting number of true values in a)
     int result = std::accumulate(a.begin(), a.end(), 0);
     return result;
 }
@@ -32,6 +32,6 @@ int main() {
 
     int result = getResult(N);
 
-    cout << "Numbers of integers that are divisible by 2 or 3 is: " << result << endl;
+    cout << "Number of integers that are divisible by 2 or 3 is: " << result << endl;
     return 0;
 }

@@ -16,7 +16,7 @@ std::mutex mut;
 
 
 
-void routine(std::string name) {
+void doTask(std::string name) {
     mut.lock();
 
     cout << name << " acquired resource" << endl;
@@ -27,8 +27,8 @@ void routine(std::string name) {
 
 
 int main() {
-    auto thFoo = std::thread(routine, "foo");
-    auto thBar = std::thread(routine, "bar");
+    auto thFoo = std::thread(doTask, "foo");
+    auto thBar = std::thread(doTask, "bar");
 
     thFoo.join();
     thBar.join();

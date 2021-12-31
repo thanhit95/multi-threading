@@ -10,14 +10,14 @@ using namespace std;
 
 
 
-void lorem() {
-    cout << "Hello from Lorem thread" << endl;
+void doTask() {
+    cout << "Hello from example thread" << endl;
 }
 
 
 
 int main() {
-    std::thread th(lorem);
+    std::thread th(doTask);
 
     cout << "Hello from main thread" << endl;
 

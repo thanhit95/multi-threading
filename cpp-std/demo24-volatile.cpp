@@ -14,7 +14,7 @@ volatile bool stopped = false;
 
 
 
-void routine() {
+void doTask() {
     while (false == stopped) {
         cout << "Running..." << endl;
         std::this_thread::sleep_for(std::chrono::seconds(2));
@@ -24,7 +24,7 @@ void routine() {
 
 
 int main() {
-    auto th = std::thread(routine);
+    auto th = std::thread(doTask);
 
     std::this_thread::sleep_for(std::chrono::seconds(6));
 

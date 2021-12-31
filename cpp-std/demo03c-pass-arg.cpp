@@ -23,23 +23,23 @@ By wrapping reference arguments with the class template std::reference_wrapper
 
 
 
-void routine(string& msg) {
+void doTask(string& msg) {
     cout << msg << endl;
 }
 
 
 
 int main() {
-    string a = "foo";
-    string b = "bar";
+    string a = "lorem ipsum";
+    string b = "dolor amet";
 
-    // auto th1 = std::thread(routine, a); // error
+    // auto thFoo = std::thread(doTask, a); // error
 
-    auto th1 = std::thread(routine, std::ref(a));
-    auto th2 = std::thread(routine, std::ref(b));
+    auto thFoo = std::thread(doTask, std::ref(a));
+    auto thBar = std::thread(doTask, std::ref(b));
 
-    th1.join();
-    th2.join();
+    thFoo.join();
+    thBar.join();
 
     return 0;
 }

@@ -11,9 +11,9 @@ using namespace std;
 
 
 
-class Foo {
+class Example {
 public:
-    void bar(string message) {
+    void doTask(string message) {
         cout << message << endl;
     }
 };
@@ -21,8 +21,9 @@ public:
 
 
 int main() {
-    Foo foo;
-    std::thread th(&Foo::bar, &foo, "Lorem");
+    Example example;
+
+    std::thread th(&Example::doTask, &example, "Good day");
 
     th.join();
     return 0;

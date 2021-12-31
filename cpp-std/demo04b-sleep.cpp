@@ -17,7 +17,7 @@ using sysclock = std::chrono::system_clock;
 
 
 
-void routine(string name, sysclock::time_point tpWakeUp) {
+void doTask(string name, sysclock::time_point tpWakeUp) {
     std::this_thread::sleep_until(tpWakeUp);
     cout << name << " wakes up" << endl;
 }
@@ -32,8 +32,8 @@ int main() {
     cout << "foo will sleep until " << mytool::getTimePointStr(tpWakeUpFoo) << endl;
     cout << "bar will sleep until " << mytool::getTimePointStr(tpWakeUpBar) << endl;
 
-    auto thFoo = std::thread(routine, "foo", tpWakeUpFoo);
-    auto thBar = std::thread(routine, "bar", tpWakeUpBar);
+    auto thFoo = std::thread(doTask, "foo", tpWakeUpFoo);
+    auto thBar = std::thread(doTask, "bar", tpWakeUpBar);
 
     thFoo.join();
     thBar.join();

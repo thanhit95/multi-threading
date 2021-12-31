@@ -11,7 +11,7 @@ using namespace std;
 
 
 
-class Foo {
+class Example {
 public:
     void operator()(string message) {
         cout << message << endl;
@@ -21,8 +21,9 @@ public:
 
 
 int main() {
-    Foo foo;
-    std::thread th(foo, "Lorem");
+    Example example;
+
+    std::thread th(example, "Good day");
 
     th.join();
     return 0;

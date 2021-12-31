@@ -6,24 +6,13 @@ MATRIX-VECTOR MULTIPLICATION
 #include <iostream>
 #include <vector>
 #include <thread>
+#include "exer05-util.hpp"
 using namespace std;
 
 
 
 using vectord = std::vector<double>;
 using matrix = std::vector<vectord>;
-
-
-
-void workerScalarProduct(double const* u, double const* v, int sizeVector, double* res) {
-    double sum = 0;
-
-    for (int i = sizeVector - 1; i >= 0; --i) {
-        sum += u[i] * v[i];
-    }
-
-    (*res) = sum;
-}
 
 
 
@@ -36,12 +25,12 @@ void getProduct(const matrix& mat, const vectord& vec, vectord& result) {
     result.clear();
     result.resize(sizeRowMat, 0);
 
-    vector<std::thread> lstTh(sizeRowMat);
+    std::vector<std::thread> lstTh(sizeRowMat);
 
     for (int i = 0; i < sizeRowMat; ++i) {
         auto&& u = mat[i].data();
         auto&& v = vec.data();
-        lstTh[i] = std::thread(workerScalarProduct, u, v, sizeVec, &result[i]);
+        lstTh[i] = std::thread(getScalarProduct, u, v, sizeVec, &result[i]);
     }
 
     for (auto&& th : lstTh) {

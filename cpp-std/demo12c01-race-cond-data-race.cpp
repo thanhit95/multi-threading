@@ -14,31 +14,26 @@ int counter = 0;
 
 
 
-void foo() {
-    std::this_thread::sleep_for(std::chrono::seconds(1));
-    counter += 1;
-}
-
-
-
-void bar() {
-    std::this_thread::sleep_for(std::chrono::seconds(1));
-    counter += 2;
+void increaseCounter() {
+    for (int i = 0; i < 500; ++i) {
+        std::this_thread::sleep_for(std::chrono::microseconds(3));
+        counter += 1;
+    }
 }
 
 
 
 int main() {
-    auto thFoo = std::thread(foo);
-    auto thBar = std::thread(bar);
+    auto thFoo = std::thread(increaseCounter);
+    auto thBar = std::thread(increaseCounter);
+    auto thEgg = std::thread(increaseCounter);
 
     thFoo.join();
     thBar.join();
+    thEgg.join();
 
     cout << "counter = " << counter << endl;
-    /*
-    counter can be 1, 2 or 3
-    */
+    // We are not sure that counter = 1500
 
     return 0;
 }

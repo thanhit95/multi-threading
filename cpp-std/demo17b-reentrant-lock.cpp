@@ -15,7 +15,7 @@ std::recursive_mutex mut;
 
 
 
-void routine() {
+void doTask() {
     mut.lock();
     cout << "First time acquiring the resource" << endl;
 
@@ -29,7 +29,7 @@ void routine() {
 
 
 int main() {
-    auto th = std::thread(routine);
+    auto th = std::thread(doTask);
 
     th.join();
 

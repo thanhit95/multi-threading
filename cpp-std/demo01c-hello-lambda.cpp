@@ -12,11 +12,11 @@ using namespace std;
 
 
 int main() {
-    auto lambda = [](string message) {
+    auto doTask = [](string message) {
         cout << message << endl;
     };
 
-    std::thread th(lambda, "Lorem");
+    std::thread th(doTask, "Good day");
 
     th.join();
     return 0;

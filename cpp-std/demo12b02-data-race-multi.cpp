@@ -12,14 +12,14 @@ using namespace std;
 
 
 
-void markDiv2(vector<bool> &a, int N) {
+void markDiv2(vector<bool> & a, int N) {
     for (int i = 2; i <= N; i += 2)
         a[i] = true;
 }
 
 
 
-void markDiv3(vector<bool> &a, int N) {
+void markDiv3(vector<bool> & a, int N) {
     for (int i = 3; i <= N; i += 3)
         a[i] = true;
 }
@@ -43,6 +43,6 @@ int main() {
     int result = std::accumulate(a.begin(), a.end(), 0);
 
 
-    cout << "Numbers of integers that are divisible by 2 or 3 is: " << result << endl;
+    cout << "Number of integers that are divisible by 2 or 3 is: " << result << endl;
     return 0;
 }

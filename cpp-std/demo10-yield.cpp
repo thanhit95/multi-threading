@@ -11,30 +11,30 @@ using namespace std;
 
 
 
+using chrmicro = std::chrono::microseconds;
+using hrclock = mytool::HiResClock;
+
+
+
 void littleSleep(int us) {
-    auto tpStart = mytool::HiResClock::now();
-    auto tpEnd = tpStart + std::chrono::microseconds(us);
+    auto tpStart = hrclock::now();
+    auto tpEnd = tpStart + chrmicro(us);
 
     do {
         std::this_thread::yield();
     }
-    while (mytool::HiResClock::now() < tpEnd);
+    while (hrclock::now() < tpEnd);
 }
 
 
 
 int main() {
-    auto tpStartMeasure = mytool::HiResClock::now();
-
+    auto tpStartMeasure = hrclock::now();
 
     littleSleep(130);
 
-
-    auto timeElapsed = mytool::HiResClock::getTimeSpan<chrono::microseconds>(tpStartMeasure);
-
+    auto timeElapsed = hrclock::getTimeSpan<chrmicro>(tpStartMeasure);
 
     cout << "Elapsed time: " << timeElapsed.count() << " microseonds" << endl;
-
-
     return 0;
 }
