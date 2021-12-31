@@ -28,6 +28,10 @@ Version 2B:
 class ThreadPoolV2B {
 
 private:
+    using uniquelk = std::unique_lock<std::mutex>;
+
+
+private:
     int numThreads = 0;
     std::vector<std::thread> lstTh;
 
@@ -75,10 +79,10 @@ public:
     void waitTaskDone() {
         for (;;) {
             {
-                std::lock_guard<std::mutex> lkPending(mutTaskPending);
+                uniquelk lkPending(mutTaskPending);
 
                 if (0 == taskPending.size()) {
-                    std::unique_lock<std::mutex> lkRunning(mutTaskRunning);
+                    uniquelk lkRunning(mutTaskRunning);
 
                     while (taskRunning.size() > 0)
                         condTaskRunning.wait(lkRunning);
@@ -128,7 +132,7 @@ private:
         for (;;) {
             {
                 // WAIT FOR AN AVAILABLE PENDING TASK
-                std::unique_lock<std::mutex> lkPending(mutTaskPending);
+                uniquelk lkPending(mutTaskPending);
 
                 while (0 == taskPending.size() && false == forceThreadShutdown) {
                     condTaskPending.wait(lkPending);
@@ -145,7 +149,7 @@ private:
 
                 // PUSH IT TO THE RUNNING QUEUE
                 {
-                    std::lock_guard<std::mutex> lkRunning(mutTaskRunning);
+                    uniquelk lkRunning(mutTaskRunning);
                     taskRunning.push_back(task);
                 }
             }
@@ -155,7 +159,7 @@ private:
 
             // REMOVE IT FROM THE RUNNING QUEUE
             {
-                std::lock_guard<std::mutex> lkRunning(mutTaskRunning);
+                uniquelk lkRunning(mutTaskRunning);
                 taskRunning.remove(task);
                 condTaskRunning.notify_one();
             }

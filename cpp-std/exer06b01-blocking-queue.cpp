@@ -17,7 +17,7 @@ using namespace std;
 
 
 
-using TypeSemaphore = std::counting_semaphore<>;
+using cntsemaphore = std::counting_semaphore<>;
 
 
 
@@ -27,8 +27,8 @@ class BlockingQueue {
 private:
     int capacity;
 
-    TypeSemaphore semRemain;
-    TypeSemaphore semFill;
+    cntsemaphore semRemain;
+    cntsemaphore semFill;
     std::mutex mut;
 
     std::queue<T> q;

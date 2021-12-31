@@ -15,13 +15,13 @@ using namespace std;
 
 
 
-using TypeSemaphore = std::counting_semaphore<>;
+using cntsemaphore = std::counting_semaphore<>;
 
 
 
 void producer(
-    TypeSemaphore* semFill,
-    TypeSemaphore* semEmpty,
+    cntsemaphore* semFill,
+    cntsemaphore* semEmpty,
     queue<int>* qProduct,
     int startValue
 ) {
@@ -37,8 +37,8 @@ void producer(
 
 
 void consumer(
-    TypeSemaphore* semFill,
-    TypeSemaphore* semEmpty,
+    cntsemaphore* semFill,
+    cntsemaphore* semEmpty,
     queue<int>* qProduct
 ) {
     int data = 0;
@@ -59,8 +59,8 @@ void consumer(
 
 
 int main() {
-    TypeSemaphore semFill(0);   // item produced
-    TypeSemaphore semEmpty(1);  // remaining space in queue
+    cntsemaphore semFill(0);   // item produced
+    cntsemaphore semEmpty(1);  // remaining space in queue
 
     queue<int> qProduct;
 

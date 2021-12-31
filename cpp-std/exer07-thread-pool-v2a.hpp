@@ -28,8 +28,9 @@ Version 2A:
 
 class ThreadPoolV2A {
 
-public:
-    using TypeSemaphore = std::counting_semaphore<>;
+private:
+    using cntsemaphore = std::counting_semaphore<>;
+    using uniquelk = std::unique_lock<std::mutex>;
 
 
 private:
@@ -42,7 +43,7 @@ private:
 
     std::list<ITask*> taskRunning;
     std::mutex mutTaskRunning;
-    TypeSemaphore counterTaskRunning = TypeSemaphore(0);
+    cntsemaphore counterTaskRunning = cntsemaphore(0);
 
     volatile bool forceThreadShutdown;
 
@@ -82,8 +83,8 @@ public:
             counterTaskRunning.acquire();
 
             {
-                std::lock_guard<std::mutex> lkPending(mutTaskPending);
-                std::lock_guard<std::mutex> lkRunning(mutTaskRunning);
+                uniquelk lkPending(mutTaskPending);
+                uniquelk lkRunning(mutTaskRunning);
 
                 if (0 == taskPending.size() && 0 == taskRunning.size()) {
                     break;
@@ -130,7 +131,7 @@ private:
         for (;;) {
             {
                 // WAIT FOR AN AVAILABLE PENDING TASK
-                std::unique_lock<std::mutex> lkPending(mutTaskPending);
+                uniquelk lkPending(mutTaskPending);
 
                 while (0 == taskPending.size() && false == forceThreadShutdown) {
                     condTaskPending.wait(lkPending);
@@ -147,7 +148,7 @@ private:
 
                 // PUSH IT TO THE RUNNING QUEUE
                 {
-                    std::lock_guard<std::mutex> lkRunning(mutTaskRunning);
+                    uniquelk lkRunning(mutTaskRunning);
                     taskRunning.push_back(task);
                 }
             }
@@ -157,7 +158,7 @@ private:
 
             // REMOVE IT FROM THE RUNNING QUEUE
             {
-                std::lock_guard<std::mutex> lkRunning(mutTaskRunning);
+                uniquelk lkRunning(mutTaskRunning);
                 taskRunning.remove(task);
                 counterTaskRunning.release();
             }

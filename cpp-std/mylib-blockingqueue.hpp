@@ -18,6 +18,7 @@ namespace mylib
 template <typename T>
 class BlockingQueue {
 
+private:
     using uniquelk = std::unique_lock<std::mutex>;
 
 
@@ -31,10 +32,7 @@ private:
 
 
 public:
-    BlockingQueue(int capacity) {
-        if (capacity <= 0)
-            throw std::invalid_argument("capacity must be a positive integer");
-
+    BlockingQueue(size_t capacity) {
         this->capacity = capacity;
     }
 
@@ -89,7 +87,7 @@ public:
         return q.size();
     }
 
-};
+}; // BlockingQueue
 
 
 

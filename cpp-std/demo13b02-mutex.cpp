@@ -29,6 +29,7 @@ void doTask() {
     std::this_thread::sleep_for(std::chrono::seconds(1));
 
     std::unique_lock<std::mutex> lk(mut);
+    // std::scoped_lock<std::mutex> lk(mut);
 
     for (int i = 0; i < 10000; ++i)
         ++counter;

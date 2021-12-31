@@ -13,7 +13,7 @@ using namespace std;
 
 
 
-using TypeSemaphore = std::counting_semaphore<>;
+using cntsemaphore = std::counting_semaphore<>;
 
 
 
@@ -21,8 +21,8 @@ template <typename T>
 class SynchronousQueue {
 
 private:
-    TypeSemaphore semPut = TypeSemaphore(1);
-    TypeSemaphore semTake = TypeSemaphore(0);
+    cntsemaphore semPut = cntsemaphore(1);
+    cntsemaphore semTake = cntsemaphore(0);
     T element;
 
 
