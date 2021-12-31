@@ -29,7 +29,7 @@ public class AppB {
             queue.put("likes");
 
             /*
-             * Due to reaching the maximum of capacity = 2, when executing queue.put("singing"),
+             * Due to reaching the maximum capacity = 2, when executing queue.put("singing"),
              * this thread is going to sleep until the queue removes an element.
              */
 
