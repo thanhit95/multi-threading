@@ -35,7 +35,7 @@ void writeFunc(int timeWait) {
 
     rwlock.lock();
 
-    resource = mylib::RandInt::staticGet() % 100;
+    resource = mylib::RandInt::get(100);
     cout << "write: " << resource << endl;
 
     rwlock.unlock();
@@ -52,8 +52,6 @@ int main() {
     std::thread lstThWrite[NUM_THREADS_WRITE];
     int lstArg[NUM_ARGS];
 
-    mylib::RandInt randInt(1, 1000);
-
 
     // INITIALIZE
     // lstArg = { 0, 1, 2, ..., NUM_ARG - 1 }
@@ -62,12 +60,12 @@ int main() {
 
     // CREATE THREADS
     for (auto&& th : lstThRead) {
-        int arg = lstArg[ randInt.get() % NUM_ARGS ];
+        int arg = lstArg[ mylib::RandInt::get(NUM_ARGS) ];
         th = std::thread(readFunc, arg);
     }
 
     for (auto&& th : lstThWrite) {
-        int arg = lstArg[ randInt.get() % NUM_ARGS ];
+        int arg = lstArg[ mylib::RandInt::get(NUM_ARGS) ];
         th = std::thread(writeFunc, arg);
     }
 

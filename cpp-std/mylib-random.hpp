@@ -38,7 +38,7 @@ public:
     }
 
 
-    int get() {
+    int next() {
         return dist(mt);
     }
 
@@ -55,8 +55,8 @@ private:
     static RandInt publicRandInt;
 
 public:
-    static int staticGet() {
-        return publicRandInt.get();
+    static int get(int maxExclusive) {
+        return publicRandInt.next() % maxExclusive;
     }
 
 }; // RandInt

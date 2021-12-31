@@ -34,7 +34,7 @@ void doTaskWriter(GlobalData* g, int timeDelay) {
 
     g->mutServiceQueue.unlock();
 
-    g->resource = mylib::RandInt::staticGet() % 100;
+    g->resource = mylib::RandInt::get(100);
     cout << "Write " << g->resource << endl;
 
     g->mutResource.unlock();
@@ -91,11 +91,11 @@ int main() {
 
     // CREATE THREADS
     for (auto&& th: lstThReader) {
-        th = std::thread(doTaskReader, &globalData, mylib::RandInt::staticGet() % 3);
+        th = std::thread(doTaskReader, &globalData, mylib::RandInt::get(3));
     }
 
     for (auto&& th: lstThWriter) {
-        th = std::thread(doTaskWriter, &globalData, mylib::RandInt::staticGet() % 3);
+        th = std::thread(doTaskWriter, &globalData, mylib::RandInt::get(3));
     }
 
 
