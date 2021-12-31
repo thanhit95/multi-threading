@@ -36,7 +36,7 @@ public class AppB {
 
 
 
-    class Global {
+    static class Global {
         public static AtomicInteger counter = new AtomicInteger(0);
     }
 

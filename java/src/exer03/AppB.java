@@ -89,7 +89,7 @@ public class AppB {
 
 
 
-    class Global {
+    static class Global {
         public static Object mutServiceQueue = new Object();
 
         public static Semaphore mutResource = new Semaphore(1);

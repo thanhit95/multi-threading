@@ -34,7 +34,7 @@ public class AppA {
 
 
 
-    class Global {
+    static class Global {
         public static volatile int counter = 0;
     }
 

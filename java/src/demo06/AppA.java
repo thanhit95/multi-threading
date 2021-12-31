@@ -1,5 +1,5 @@
 /*
- * LIST OF MUTIPLE THREADS
+ * LIST OF MULTIPLE THREADS
  * Version A: Using java.util.List / java.util.ArrayList
  */
 

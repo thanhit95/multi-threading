@@ -1,5 +1,5 @@
 /*
- * LIST OF MUTIPLE THREADS
+ * LIST OF MULTIPLE THREADS
  * Version B02: Using streams (shorten code, no variable to store list of threads)
  */
 
