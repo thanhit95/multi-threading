@@ -1,5 +1,6 @@
 /*
 GETTING RETURNED VALUES FROM THREADS
+Version A: Using pointers or references (traditional way)
 */
 
 
