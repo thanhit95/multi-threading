@@ -1,5 +1,5 @@
-#ifndef _MYTOOL_RANDOM_HPP_
-#define _MYTOOL_RANDOM_HPP_
+#ifndef _MYLIB_RANDOM_HPP_
+#define _MYLIB_RANDOM_HPP_
 
 
 
@@ -8,12 +8,13 @@
 
 
 
-namespace mytool
+namespace mylib
 {
 
 
 
 class RandInt {
+
 private:
     std::random_device rd;
     std::mt19937 mt;
@@ -57,6 +58,7 @@ public:
     static int staticGet() {
         return publicRandInt.get();
     }
+
 }; // RandInt
 
 
@@ -65,8 +67,8 @@ RandInt RandInt::publicRandInt(1, std::numeric_limits<int>::max());
 
 
 
-} // namespace mytool
+} // namespace mylib
 
 
 
-#endif // _MYTOOL_RANDOM_HPP_
+#endif // _MYLIB_RANDOM_HPP_

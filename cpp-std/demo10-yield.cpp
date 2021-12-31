@@ -6,13 +6,13 @@ THREAD YIELDING
 #include <iostream>
 #include <thread>
 #include <chrono>
-#include "mytool-time.hpp"
+#include "mylib-time.hpp"
 using namespace std;
 
 
 
 using chrmicro = std::chrono::microseconds;
-using hrclock = mytool::HiResClock;
+using hrclock = mylib::HiResClock;
 
 
 

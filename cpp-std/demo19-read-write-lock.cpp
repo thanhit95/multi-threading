@@ -8,7 +8,7 @@ READ-WRITE LOCKS
 #include <thread>
 #include <shared_mutex>
 #include <chrono>
-#include "mytool-random.hpp"
+#include "mylib-random.hpp"
 using namespace std;
 
 
@@ -35,7 +35,7 @@ void writeFunc(int timeWait) {
 
     rwlock.lock();
 
-    resource = mytool::RandInt::staticGet() % 100;
+    resource = mylib::RandInt::staticGet() % 100;
     cout << "write: " << resource << endl;
 
     rwlock.unlock();
@@ -52,7 +52,7 @@ int main() {
     std::thread lstThWrite[NUM_THREADS_WRITE];
     int lstArg[NUM_ARGS];
 
-    mytool::RandInt randInt(1, 1000);
+    mylib::RandInt randInt(1, 1000);
 
 
     // INITIALIZE

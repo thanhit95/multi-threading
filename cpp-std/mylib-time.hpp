@@ -1,5 +1,5 @@
-#ifndef _MYTOOL_TIME_HPP_
-#define _MYTOOL_TIME_HPP_
+#ifndef _MYLIB_TIME_HPP_
+#define _MYLIB_TIME_HPP_
 
 
 
@@ -7,7 +7,7 @@
 
 
 
-namespace mytool
+namespace mylib
 {
 
 
@@ -18,12 +18,12 @@ using sysclock = chro::system_clock;
 
 
 class HiResClock {
-    using clockns = chro::high_resolution_clock;
+    using stdhrc = chro::high_resolution_clock;
 
 public:
-    static inline clockns::time_point now()
+    static inline stdhrc::time_point now()
     {
-        return clockns::now();
+        return stdhrc::now();
     }
 
 
@@ -31,8 +31,8 @@ public:
     static inline
     duType
     getTimeSpan(
-        const clockns::time_point& tp1,
-        const clockns::time_point& tp2)
+        const stdhrc::time_point& tp1,
+        const stdhrc::time_point& tp2)
     {
         auto res = chro::duration_cast<duType>(tp2 - tp1);
         return res;
@@ -42,7 +42,7 @@ public:
     template< typename duType=chro::duration<double> >
     static inline
     duType
-    getTimeSpan(const clockns::time_point& tpBefore)
+    getTimeSpan(const stdhrc::time_point& tpBefore)
     {
         auto tpCurrent = HiResClock::now();
         auto res = HiResClock::getTimeSpan<duType>(tpBefore, tpCurrent);
@@ -102,8 +102,8 @@ getTimePointFutureFloor(const chro::time_point<clock>& tp, int numSeconds) {
 
 
 
-} // namespace mytool
+} // namespace mylib
 
 
 
-#endif // _MYTOOL_TIME_HPP_
+#endif // _MYLIB_TIME_HPP_

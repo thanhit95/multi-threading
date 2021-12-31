@@ -7,7 +7,7 @@ MAXIMUM NUMBER OF DIVISORS
 #include <vector>
 #include <algorithm>
 #include <thread>
-#include "mytool-time.hpp"
+#include "mylib-time.hpp"
 using namespace std;
 
 
@@ -97,7 +97,7 @@ int main() {
     prepare(RANGE_START, RANGE_STOP, NUM_THREADS, lstTh, lstWorkerArg, lstWorkerRes);
 
 
-    auto tpStart = mytool::HiResClock::now();
+    auto tpStart = mylib::HiResClock::now();
 
 
     for (int i = 0; i < NUM_THREADS; ++i) {
@@ -121,7 +121,7 @@ int main() {
     );
 
 
-    auto timeElapsed = mytool::HiResClock::getTimeSpan(tpStart);
+    auto timeElapsed = mylib::HiResClock::getTimeSpan(tpStart);
 
 
     cout << "The integer which has largest number of divisors is " << finalRes.value << endl;

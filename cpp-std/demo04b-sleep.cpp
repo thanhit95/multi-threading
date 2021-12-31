@@ -8,7 +8,7 @@ Version B: Sleep until a specific time point
 #include <string>
 #include <thread>
 #include <chrono>
-#include "mytool-time.hpp"
+#include "mylib-time.hpp"
 using namespace std;
 
 
@@ -29,8 +29,8 @@ int main() {
     auto tpWakeUpFoo = tpNow + std::chrono::seconds(7);
     auto tpWakeUpBar = tpNow + std::chrono::seconds(3);
 
-    cout << "foo will sleep until " << mytool::getTimePointStr(tpWakeUpFoo) << endl;
-    cout << "bar will sleep until " << mytool::getTimePointStr(tpWakeUpBar) << endl;
+    cout << "foo will sleep until " << mylib::getTimePointStr(tpWakeUpFoo) << endl;
+    cout << "bar will sleep until " << mylib::getTimePointStr(tpWakeUpBar) << endl;
 
     auto thFoo = std::thread(doTask, "foo", tpWakeUpFoo);
     auto thBar = std::thread(doTask, "bar", tpWakeUpBar);
