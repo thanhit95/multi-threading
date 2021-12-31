@@ -29,8 +29,8 @@ private:
 
     TypeSemaphore semRemain;
     TypeSemaphore semFill;
+    std::mutex mut;
 
-    std::mutex mutLst;
     std::queue<T> q;
 
 
@@ -41,11 +41,11 @@ public:
     }
 
 
-    void put(const T&& value) {
+    void put(const T& value) {
         semRemain.acquire();
 
         {
-            std::unique_lock<std::mutex> lk(mutLst);
+            std::unique_lock<std::mutex> lk(mut);
             q.push(value);
         }
 
@@ -58,7 +58,7 @@ public:
         semFill.acquire();
 
         {
-            std::unique_lock<std::mutex> lk(mutLst);
+            std::unique_lock<std::mutex> lk(mut);
             result = q.front();
             q.pop();
         }
@@ -71,23 +71,23 @@ public:
 
 
 
-void producer(BlockingQueue<std::string>* queue) {
+void producer(BlockingQueue<std::string>* blkQueue) {
     auto arr = { "nice", "to", "meet", "you" };
 
     for (auto&& value : arr) {
         cout << "Producer: " << value << endl;
-        queue->put(value);
+        blkQueue->put(value);
         cout << "Producer: " << value << "\t\t\t[done]" << endl;
     }
 }
 
 
 
-void consumer(BlockingQueue<std::string>* queue) {
+void consumer(BlockingQueue<std::string>* blkQueue) {
     std::this_thread::sleep_for(std::chrono::seconds(5));
 
     for (int i = 0; i < 4; ++i) {
-        std::string data = queue->take();
+        std::string data = blkQueue->take();
         cout << "\tConsumer: " << data << endl;
 
         if (0 == i)
@@ -98,10 +98,10 @@ void consumer(BlockingQueue<std::string>* queue) {
 
 
 int main() {
-    BlockingQueue<std::string> queue(2); // capacity = 2
+    BlockingQueue<std::string> blkQueue(2); // capacity = 2
 
-    auto thProducer = std::thread(producer, &queue);
-    auto thConsumer = std::thread(consumer, &queue);
+    auto thProducer = std::thread(producer, &blkQueue);
+    auto thConsumer = std::thread(consumer, &blkQueue);
 
     thProducer.join();
     thConsumer.join();

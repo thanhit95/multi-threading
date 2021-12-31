@@ -21,14 +21,18 @@ template <typename T>
 class BlockingQueue {
 
 private:
+    /*
+    I use a lot of synchronization primitives to help you to understand.
+    In a practical context, please take a look at
+    the BlockingQueue implementation in "mylib-blockingqueue"
+    */
     std::condition_variable condEmpty;
     std::condition_variable condFull;
     std::mutex mutEmpty;
     std::mutex mutFull;
+    std::mutex mutQueue;
 
     int capacity = 0;
-
-    std::mutex mutLst;
     std::queue<T> q;
 
 
@@ -41,7 +45,7 @@ public:
     }
 
 
-    void put(const T&& value) {
+    void put(const T& value) {
         {
             std::unique_lock<std::mutex> lk(mutFull);
 
@@ -52,7 +56,7 @@ public:
         }
 
         {
-            std::unique_lock<std::mutex> lk(mutLst);
+            std::unique_lock<std::mutex> lk(mutQueue);
             q.push(value);
         }
 
@@ -73,7 +77,7 @@ public:
         }
 
         {
-            std::unique_lock<std::mutex> lk(mutLst);
+            std::unique_lock<std::mutex> lk(mutQueue);
             result = q.front();
             q.pop();
         }
@@ -86,23 +90,23 @@ public:
 
 
 
-void producer(BlockingQueue<std::string>* queue) {
+void producer(BlockingQueue<std::string>* blkQueue) {
     auto arr = { "nice", "to", "meet", "you" };
 
     for (auto&& value : arr) {
         cout << "Producer: " << value << endl;
-        queue->put(value);
+        blkQueue->put(value);
         cout << "Producer: " << value << "\t\t\t[done]" << endl;
     }
 }
 
 
 
-void consumer(BlockingQueue<std::string>* queue) {
+void consumer(BlockingQueue<std::string>* blkQueue) {
     std::this_thread::sleep_for(std::chrono::seconds(5));
 
     for (int i = 0; i < 4; ++i) {
-        std::string data = queue->take();
+        std::string data = blkQueue->take();
         cout << "\tConsumer: " << data << endl;
 
         if (0 == i)
@@ -113,10 +117,10 @@ void consumer(BlockingQueue<std::string>* queue) {
 
 
 int main() {
-    BlockingQueue<std::string> queue(2); // capacity = 2
+    BlockingQueue<std::string> blkQueue(2); // capacity = 2
 
-    auto thProducer = std::thread(producer, &queue);
-    auto thConsumer = std::thread(consumer, &queue);
+    auto thProducer = std::thread(producer, &blkQueue);
+    auto thConsumer = std::thread(consumer, &blkQueue);
 
     thProducer.join();
     thConsumer.join();

@@ -44,23 +44,23 @@ public:
 
 
 
-void producer(SynchronousQueue<std::string>* queue) {
+void producer(SynchronousQueue<std::string>* syncQueue) {
     auto arr = { "lorem", "ipsum", "dolor" };
 
     for (auto&& value : arr) {
         cout << "Producer: " << value << endl;
-        queue->put(value);
+        syncQueue->put(value);
         cout << "Producer: " << value << "\t\t\t[done]" << endl;
     }
 }
 
 
 
-void consumer(SynchronousQueue<std::string>* queue) {
+void consumer(SynchronousQueue<std::string>* syncQueue) {
     std::this_thread::sleep_for(std::chrono::seconds(5));
 
     for (int i = 0; i < 3; ++i) {
-        std::string data = queue->take();
+        std::string data = syncQueue->take();
         cout << "\tConsumer: " << data << endl;
     }
 }
@@ -68,10 +68,10 @@ void consumer(SynchronousQueue<std::string>* queue) {
 
 
 int main() {
-    SynchronousQueue<std::string> queue;
+    SynchronousQueue<std::string> syncQueue;
 
-    auto thProducer = std::thread(producer, &queue);
-    auto thConsumer = std::thread(consumer, &queue);
+    auto thProducer = std::thread(producer, &syncQueue);
+    auto thConsumer = std::thread(consumer, &syncQueue);
 
     thProducer.join();
     thConsumer.join();
