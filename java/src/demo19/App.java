@@ -23,15 +23,13 @@ public class App {
         final int NUM_ARGS = 3;
 
 
-        var arg = IntStream.range(0, NUM_ARGS).toArray();
-
-
+        var lstArg = IntStream.range(0, NUM_ARGS).toArray();
         var rand = new Random();
 
 
         var lstThRead = Stream.generate(() -> new Thread(() -> {
 
-            int timeWait = arg[rand.nextInt(arg.length)];
+            int timeWait = lstArg[ rand.nextInt(lstArg.length) ];
             try { Thread.sleep(1000 * timeWait);} catch (InterruptedException e) { }
 
             rwlock.readLock().lock();
@@ -45,7 +43,7 @@ public class App {
 
         var lstThWrite = Stream.generate(() -> new Thread(() -> {
 
-            int timeWait = arg[rand.nextInt(arg.length)];
+            int timeWait = lstArg[ rand.nextInt(lstArg.length) ];
             try { Thread.sleep(1000 * timeWait);} catch (InterruptedException e) { }
 
             rwlock.writeLock().lock();

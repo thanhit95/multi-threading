@@ -20,7 +20,6 @@ public class AppA01 {
                 try {
                     System.out.println("Make 1 sheet");
                     Thread.sleep(1000);
-
                     semPackage.release();
                 }
                 catch (InterruptedException e) {

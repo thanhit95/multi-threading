@@ -30,10 +30,10 @@ public class AppB {
 
 
         /*
-         * By using thread-local storage, each thread has its own counter.
+         * By using Thread-Local Storage, each thread has its own counter.
          * So, the counter in one thread is completely independent of each other.
          *
-         * Thread-local storage helps us to AVOID SYNCHRONIZATION.
+         * Thread-Local Storage helps us to AVOID SYNCHRONIZATION.
          */
     }
 

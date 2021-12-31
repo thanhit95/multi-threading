@@ -20,9 +20,7 @@ public class AppA03 {
             for (int i = 0; i < 4; ++i) {
                 try {
                     semSheet.acquire();
-
                     System.out.println("Make 1 sheet");
-
                     semPackage.release();
                 }
                 catch (InterruptedException e) {

@@ -1,6 +1,8 @@
 /*
  * FORCING A THREAD TO TERMINATE (i.e. killing the thread)
  * Version B: Using a flag to notify the thread
+ *
+ * Beside atomic variables, you can use the "volatile" specifier.
  */
 
 package demo07;

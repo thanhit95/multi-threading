@@ -20,9 +20,7 @@ public class AppA02 {
             for (int i = 0; i < 4; ++i) {
                 try {
                     semSheet.acquire();
-
                     System.out.println("Make 1 sheet");
-
                     semPackage.release();
                 }
                 catch (InterruptedException e) {
@@ -37,10 +35,8 @@ public class AppA02 {
             for (int i = 0; i < 4; ++i) {
                 try {
                     semPackage.acquire(2);
-
                     System.out.println("Combine 2 sheets into 1 package");
                     Thread.sleep(1000);
-
                     semSheet.release(2);
                 }
                 catch (InterruptedException e) {
