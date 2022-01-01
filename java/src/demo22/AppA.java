@@ -5,8 +5,8 @@
 
 package demo22;
 
-import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 
 
@@ -15,8 +15,8 @@ public class AppA {
     public static void main(String[] args) {
         BlockingQueue<String> queue;
 
-        // queue = new LinkedBlockingQueue<>();
-        queue = new ArrayBlockingQueue<>(2); // blocking queue with capacity = 2
+        queue = new LinkedBlockingQueue<>();
+        // queue = new ArrayBlockingQueue<>(2); // blocking queue with capacity = 2
 
         new Thread(() -> producer(queue)).start();
         new Thread(() -> consumer(queue)).start();

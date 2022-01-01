@@ -14,8 +14,6 @@ public class AppB {
 
     public static void main(String[] args) {
         BlockingQueue<String> queue;
-
-        // queue = new LinkedBlockingQueue<>();
         queue = new ArrayBlockingQueue<>(2); // blocking queue with capacity = 2
 
         new Thread(() -> producer(queue)).start();
