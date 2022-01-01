@@ -27,7 +27,7 @@ private:
 
 
 public:
-    void put(const T&& value) {
+    void put(const T& value) {
         semPut.acquire();
         element = value;
         semTake.release();

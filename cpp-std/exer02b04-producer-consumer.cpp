@@ -29,9 +29,7 @@ void producer(
 
     for (;; ++i) {
         semEmpty->acquire();
-
         q->push(i + startValue);
-
         semFill->release();
     }
 }
