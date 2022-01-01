@@ -14,7 +14,7 @@ int counter = 0;
 
 
 
-void* routineA(void*) {
+void* doTaskA(void*) {
     sleep(1);
 
     while (counter < 10)
@@ -28,7 +28,7 @@ void* routineA(void*) {
 
 
 
-void* routineB(void*) {
+void* doTaskB(void*) {
     sleep(1);
 
     while (counter > -10)
@@ -46,8 +46,8 @@ int main() {
     pthread_t tidA, tidB;
     int ret = 0;
 
-    ret = pthread_create(&tidA, nullptr, routineA, nullptr);
-    ret = pthread_create(&tidB, nullptr, routineB, nullptr);
+    ret = pthread_create(&tidA, nullptr, doTaskA, nullptr);
+    ret = pthread_create(&tidB, nullptr, doTaskB, nullptr);
 
     ret = pthread_join(tidA, nullptr);
     ret = pthread_join(tidB, nullptr);

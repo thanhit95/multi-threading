@@ -1,7 +1,7 @@
 /*
 MUTEXES
+Locking with a nonblocking mutex
 
-Lock with a nonblocking mutex
 Use pthread_mutex_trylock to attempt to lock the mutex pointed to by mutex.
 */
 
@@ -18,7 +18,7 @@ int counter = 0;
 
 
 
-void* routineCounter(void*) {
+void* doTask(void*) {
     int ret = 0;
     sleep(1);
 
@@ -57,7 +57,7 @@ void* routineCounter(void*) {
         return nullptr;
     }
 
-    for (int i = 0; i < 1000; ++i)
+    for (int i = 0; i < 10000; ++i)
         ++counter;
 
     pthread_mutex_unlock(&mut);
@@ -70,16 +70,12 @@ void* routineCounter(void*) {
 
 int main() {
     constexpr int NUM_THREADS = 3;
-
     pthread_t lstTid[NUM_THREADS];
     int ret = 0;
 
 
-    counter = 0;
-
-
     for (auto&& tid : lstTid) {
-        ret = pthread_create(&tid, nullptr, routineCounter, nullptr);
+        ret = pthread_create(&tid, nullptr, doTask, nullptr);
     }
 
 
@@ -88,9 +84,10 @@ int main() {
     }
 
 
-    ret = pthread_mutex_destroy(&mut);
-
-
     cout << "counter = " << counter << endl;
+    // counter can be 10000, 20000 or 30000
+
+
+    ret = pthread_mutex_destroy(&mut);
     return 0;
 }

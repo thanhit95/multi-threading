@@ -4,13 +4,13 @@ FORCING A THREAD TO TERMINATE (i.e. killing the thread)
 
 
 #include <iostream>
-#include <pthread.h>
 #include <unistd.h>
+#include <pthread.h>
 using namespace std;
 
 
 
-void* routine(void*) {
+void* doTask(void*) {
     while (1) {
         cout << "Running..." << endl;
         sleep(1);
@@ -26,7 +26,7 @@ int main() {
     pthread_t tid;
     int ret = 0;
 
-    ret = pthread_create(&tid, nullptr, routine, nullptr);
+    ret = pthread_create(&tid, nullptr, doTask, nullptr);
 
     sleep(3);
 

@@ -6,8 +6,8 @@ Without synchronization (by a mutex), we are not sure that result = 30000
 
 
 #include <iostream>
-#include <pthread.h>
 #include <unistd.h>
+#include <pthread.h>
 using namespace std;
 
 
@@ -17,7 +17,7 @@ int counter = 0;
 
 
 
-void* routineCounter(void*) {
+void* doTask(void*) {
     sleep(1);
 
     pthread_mutex_lock(&mut);
@@ -39,11 +39,8 @@ int main() {
     int ret = 0;
 
 
-    counter = 0;
-
-
     for (auto&& tid : lstTid) {
-        ret = pthread_create(&tid, nullptr, routineCounter, nullptr);
+        ret = pthread_create(&tid, nullptr, doTask, nullptr);
     }
 
 
@@ -52,9 +49,9 @@ int main() {
     }
 
 
-    ret = pthread_mutex_destroy(&mut);
-
-
     cout << "counter = " << counter << endl;
+
+
+    ret = pthread_mutex_destroy(&mut);
     return 0;
 }

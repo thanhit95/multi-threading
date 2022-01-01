@@ -16,7 +16,7 @@ atomic_int counter;
 
 
 
-void* routine(void* arg) {
+void* doTask(void* arg) {
     sleep(1);
     atomic_fetch_add(&counter, 1);
 
@@ -27,11 +27,13 @@ void* routine(void* arg) {
 
 
 int main() {
+    atomic_store(&counter, 0); // assign counter = 0
+
     pthread_t lstTid[1000];
     int ret = 0;
 
     for (int i = 0; i < 1000; ++i) {
-        ret = pthread_create(&lstTid[i], NULL, routine, NULL);
+        ret = pthread_create(&lstTid[i], NULL, doTask, NULL);
     }
 
     for (int i = 0; i < 1000; ++i) {

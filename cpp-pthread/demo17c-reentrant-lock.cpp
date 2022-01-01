@@ -5,8 +5,8 @@ Version C: A slightly hard example
 
 
 #include <iostream>
-#include <pthread.h>
 #include <unistd.h>
+#include <pthread.h>
 using namespace std;
 
 
@@ -15,8 +15,8 @@ pthread_mutex_t mut = PTHREAD_MUTEX_INITIALIZER;
 
 
 
-void* routine(void* arg) {
-    char name = *(char*)arg;
+void* doTask(void* arg) {
+    char name = *(char*) arg;
     sleep(1);
 
     pthread_mutex_lock(&mut);
@@ -37,9 +37,8 @@ void* routine(void* arg) {
 int main() {
     constexpr int NUM_THREADS = 3;
 
-
     pthread_t lstTid[NUM_THREADS];
-    char arg[NUM_THREADS];
+    char lstArg[NUM_THREADS];
 
     pthread_mutexattr_t attr;
     int ret = 0;
@@ -51,8 +50,8 @@ int main() {
 
 
     for (int i = 0; i < NUM_THREADS; ++i) {
-        arg[i] = char(i + 'A');
-        ret = pthread_create(&lstTid[i], nullptr, routine, &arg[i]);
+        lstArg[i] = char(i + 'A');
+        ret = pthread_create(&lstTid[i], nullptr, doTask, &lstArg[i]);
     }
 
 

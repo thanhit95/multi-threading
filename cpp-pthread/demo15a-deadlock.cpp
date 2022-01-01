@@ -14,8 +14,8 @@ pthread_mutex_t mut = PTHREAD_MUTEX_INITIALIZER;
 
 
 
-void* routine(void* arg) {
-    auto name = (const char*)arg;
+void* doTask(void* arg) {
+    auto name = (const char*) arg;
 
     pthread_mutex_lock(&mut);
 
@@ -33,8 +33,8 @@ int main() {
     pthread_t tidFoo, tidBar;
     int ret = 0;
 
-    ret = pthread_create(&tidFoo, nullptr, routine, (void*)"foo");
-    ret = pthread_create(&tidBar, nullptr, routine, (void*)"bar");
+    ret = pthread_create(&tidFoo, nullptr, doTask, (void*)"foo");
+    ret = pthread_create(&tidBar, nullptr, doTask, (void*)"bar");
 
     ret = pthread_join(tidFoo, nullptr);
     ret = pthread_join(tidBar, nullptr);

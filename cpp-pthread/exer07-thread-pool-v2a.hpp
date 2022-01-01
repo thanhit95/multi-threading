@@ -20,15 +20,7 @@ Version 2A:
 #include <queue>
 #include <pthread.h>
 #include <semaphore.h>
-
-
-
-// interface ITask
-class ITask {
-public:
-    virtual ~ITask() = default;
-    virtual void run() = 0;
-};
+#include "exer07-thread-pool-itask.hpp"
 
 
 
@@ -71,7 +63,7 @@ public:
         forceThreadShutdown = false;
 
         for (auto&& th : lstTh) {
-            pthread_create(&th, nullptr, threadRoutine, this);
+            pthread_create(&th, nullptr, threadWorkerFunc, this);
         }
     }
 
@@ -133,8 +125,8 @@ public:
 
 
 private:
-    static void* threadRoutine(void* argVoid) {
-        auto thisPtr = (ThreadPoolV2A*)argVoid;
+    static void* threadWorkerFunc(void* argVoid) {
+        auto thisPtr = (ThreadPoolV2A*) argVoid;
 
         auto&& taskPending = thisPtr->taskPending;
         auto&& mutTaskPending = thisPtr->mutTaskPending;

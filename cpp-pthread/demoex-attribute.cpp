@@ -1,11 +1,11 @@
 #include <iostream>
-#include <pthread.h>
 #include <unistd.h>
+#include <pthread.h>
 using namespace std;
 
 
 
-void* routine(void* ptrId) {
+void* doTask(void* ptrId) {
     int id = *(int*)ptrId;
 
     cout << "Sleeping in thread " << id << endl;
@@ -36,7 +36,7 @@ int main() {
 
     for (int i = 0; i < NUM_THREADS; ++i) {
         arg[i] = i;
-        ret = pthread_create(&tid[i], &attr, routine, &arg[i]);
+        ret = pthread_create(&tid[i], &attr, doTask, &arg[i]);
     }
 
 

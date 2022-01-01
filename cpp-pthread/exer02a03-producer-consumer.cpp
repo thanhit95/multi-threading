@@ -8,28 +8,28 @@ SOLUTION TYPE A: USING BLOCKING QUEUES
 
 #include <iostream>
 #include <string>
-#include <pthread.h>
 #include <unistd.h>
-#include "extool-blocking-collection.hpp"
+#include <pthread.h>
+#include "../cpp-std/mylib-blockingqueue.hpp"
 using namespace std;
-using namespace code_machina;
+using namespace mylib;
 
 
 
 struct ConsumerArg {
     string name;
-    BlockingQueue<int> *qProduct;
+    BlockingQueue<int> *blkq;
 };
 
 
 
 void* producer(void* arg) {
-    auto qProduct = (BlockingQueue<int>*)arg;
+    auto blkq = (BlockingQueue<int>*) arg;
 
     int i = 1;
 
     for (;; ++i) {
-        qProduct->add(i);
+        blkq->put(i);
         sleep(1);
     }
 
@@ -40,21 +40,14 @@ void* producer(void* arg) {
 
 
 void* consumer(void* argVoid) {
-    auto arg = (ConsumerArg*)argVoid;
-    auto qProduct = arg->qProduct;
+    auto arg = (ConsumerArg*) argVoid;
+    auto blkq = arg->blkq;
 
-    int data;
-    BlockingCollectionStatus status;
+    int data = 0;
 
     for (;;) {
-        status = qProduct->take(data);
-
-        if (BlockingCollectionStatus::Ok == status) {
-            cout << "Consumer " << arg->name << ": " << data << endl;
-        }
-        else {
-            cerr << "Consumer error" << endl;
-        }
+        data = blkq->take();
+        cout << "Consumer " << arg->name << ": " << data << endl;
     }
 
     pthread_exit(nullptr);
@@ -66,14 +59,14 @@ void* consumer(void* argVoid) {
 int main() {
     pthread_t tidProducer;
     pthread_t tidConsumerFoo, tidConsumerBar;
-    BlockingQueue<int> qProduct;
+    BlockingQueue<int> blkq;
 
     int ret = 0;
 
-    ConsumerArg argFoo = { "foo", &qProduct };
-    ConsumerArg argBar = { "bar", &qProduct };
+    ConsumerArg argFoo = { "foo", &blkq };
+    ConsumerArg argBar = { "bar", &blkq };
 
-    ret = pthread_create(&tidProducer, nullptr, producer, &qProduct);
+    ret = pthread_create(&tidProducer, nullptr, producer, &blkq);
     ret = pthread_create(&tidConsumerFoo, nullptr, consumer, &argFoo);
     ret = pthread_create(&tidConsumerBar, nullptr, consumer, &argBar);
 

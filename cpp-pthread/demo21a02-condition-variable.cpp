@@ -4,8 +4,8 @@ CONDITION VARIABLES
 
 
 #include <iostream>
-#include <pthread.h>
 #include <unistd.h>
+#include <pthread.h>
 using namespace std;
 
 
@@ -52,15 +52,15 @@ int main() {
     int ret = 0;
 
 
-    for (auto&& tid : lstTidFoo) {
-        ret = pthread_create(&tid, nullptr, foo, nullptr);
+    for (auto&& tidFoo : lstTidFoo) {
+        ret = pthread_create(&tidFoo, nullptr, foo, nullptr);
     }
 
     ret = pthread_create(&tidBar, nullptr, bar, nullptr);
 
 
-    for (auto&& tid : lstTidFoo) {
-        ret = pthread_join(tid, nullptr);
+    for (auto&& tidFoo : lstTidFoo) {
+        ret = pthread_join(tidFoo, nullptr);
     }
 
     ret = pthread_join(tidBar, nullptr);
@@ -68,6 +68,5 @@ int main() {
 
     ret = pthread_cond_destroy(&conditionVar);
     ret = pthread_mutex_destroy(&mut);
-
     return 0;
 }

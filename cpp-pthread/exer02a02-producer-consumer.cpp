@@ -7,21 +7,21 @@ SOLUTION TYPE A: USING BLOCKING QUEUES
 
 
 #include <iostream>
-#include <pthread.h>
 #include <unistd.h>
-#include "extool-blocking-collection.hpp"
+#include <pthread.h>
+#include "../cpp-std/mylib-blockingqueue.hpp"
 using namespace std;
-using namespace code_machina;
+using namespace mylib;
 
 
 
 void* producer(void* arg) {
-    auto qProduct = (BlockingQueue<int>*)arg;
+    auto blkq = (BlockingQueue<int>*) arg;
 
     int i = 1;
 
     for (;; ++i) {
-        qProduct->add(i);
+        blkq->put(i);
         sleep(1);
     }
 
@@ -32,20 +32,13 @@ void* producer(void* arg) {
 
 
 void* consumer(void* arg) {
-    auto qProduct = (BlockingQueue<int>*)arg;
+    auto blkq = (BlockingQueue<int>*) arg;
 
-    int data;
-    BlockingCollectionStatus status;
+    int data = 0;
 
     for (;;) {
-        status = qProduct->take(data);
-
-        if (BlockingCollectionStatus::Ok == status) {
-            cout << "Consumer " << data << endl;
-        }
-        else {
-            cerr << "Consumer error" << endl;
-        }
+        data = blkq->take();
+        cout << "Consumer " << data << endl;
     }
 
     pthread_exit(nullptr);
@@ -57,13 +50,13 @@ void* consumer(void* arg) {
 int main() {
     pthread_t tidProducerA, tidProducerB;
     pthread_t tidConsumer;
-    BlockingQueue<int> qProduct;
+    BlockingQueue<int> blkq;
 
     int ret = 0;
 
-    ret = pthread_create(&tidProducerA, nullptr, producer, &qProduct);
-    ret = pthread_create(&tidProducerB, nullptr, producer, &qProduct);
-    ret = pthread_create(&tidConsumer, nullptr, consumer, &qProduct);
+    ret = pthread_create(&tidProducerA, nullptr, producer, &blkq);
+    ret = pthread_create(&tidProducerB, nullptr, producer, &blkq);
+    ret = pthread_create(&tidConsumer, nullptr, consumer, &blkq);
 
     ret = pthread_join(tidProducerA, nullptr);
     ret = pthread_join(tidProducerB, nullptr);

@@ -1,6 +1,6 @@
 /*
 THREAD-LOCAL STORAGE
-Avoiding synchronization using Thread-Local Storage
+Avoiding synchronization using thread-local storage
 
 The code is specific for gcc.
 */
@@ -8,8 +8,8 @@ The code is specific for gcc.
 
 #include <iostream>
 #include <vector>
-#include <pthread.h>
 #include <unistd.h>
+#include <pthread.h>
 using namespace std;
 
 
@@ -18,8 +18,8 @@ __thread int counter = 0;
 
 
 
-void* routine(void* arg) {
-    auto t = *(int*)arg;
+void* doTask(void* arg) {
+    auto t = *(int*) arg;
 
     sleep(1);
 
@@ -38,14 +38,14 @@ int main() {
     constexpr int NUM_THREADS = 3;
 
     pthread_t lstTid[NUM_THREADS];
-    int arg[NUM_THREADS];
+    int lstArg[NUM_THREADS];
 
     int ret = 0;
 
 
     for (int i = 0; i < NUM_THREADS; ++i) {
-        arg[i] = i;
-        ret = pthread_create(&lstTid[i], nullptr, routine, &arg[i]);
+        lstArg[i] = i;
+        ret = pthread_create(&lstTid[i], nullptr, doTask, &lstArg[i]);
     }
 
 

@@ -9,9 +9,9 @@ Version B01: General blocking queues
 #include <queue>
 #include <string>
 #include <stdexcept>
+#include <unistd.h>
 #include <pthread.h>
 #include <semaphore.h>
-#include <unistd.h>
 using namespace std;
 
 
@@ -20,12 +20,12 @@ template <typename T>
 class BlockingQueue {
 
 private:
-    sem_t semRemain;
-    sem_t semFill;
-
     int capacity = 0;
 
-    pthread_mutex_t mutLst = PTHREAD_MUTEX_INITIALIZER;
+    sem_t semRemain;
+    sem_t semFill;
+    pthread_mutex_t mut = PTHREAD_MUTEX_INITIALIZER;
+
     std::queue<T> q;
 
 
@@ -44,18 +44,18 @@ public:
     ~BlockingQueue() {
         sem_destroy(&semRemain);
         sem_destroy(&semFill);
-        pthread_mutex_destroy(&mutLst);
+        pthread_mutex_destroy(&mut);
     }
 
 
-    void put(const T&& value) {
+    void put(const T& value) {
         int ret = 0;
 
         ret = sem_wait(&semRemain);
 
-        ret = pthread_mutex_lock(&mutLst);
+        ret = pthread_mutex_lock(&mut);
         q.push(value);
-        ret = pthread_mutex_unlock(&mutLst);
+        ret = pthread_mutex_unlock(&mut);
 
         ret = sem_post(&semFill);
     }
@@ -67,10 +67,10 @@ public:
 
         ret = sem_wait(&semFill);
 
-        ret = pthread_mutex_lock(&mutLst);
+        ret = pthread_mutex_lock(&mut);
         result = q.front();
         q.pop();
-        ret = pthread_mutex_unlock(&mutLst);
+        ret = pthread_mutex_unlock(&mut);
 
         ret = sem_post(&semRemain);
 
@@ -82,13 +82,13 @@ public:
 
 
 void* producer(void* arg) {
-    auto queue = (BlockingQueue<std::string>*) arg;
+    auto blkQueue = (BlockingQueue<std::string>*) arg;
 
     auto arr = { "nice", "to", "meet", "you" };
 
     for (auto&& value : arr) {
         cout << "Producer: " << value << endl;
-        queue->put(value);
+        blkQueue->put(value);
         cout << "Producer: " << value << "\t\t\t[done]" << endl;
     }
 
@@ -99,12 +99,12 @@ void* producer(void* arg) {
 
 
 void* consumer(void* arg) {
-    auto queue = (BlockingQueue<std::string>*) arg;
+    auto blkQueue = (BlockingQueue<std::string>*) arg;
 
     sleep(5);
 
     for (int i = 0; i < 4; ++i) {
-        std::string data = queue->take();
+        std::string data = blkQueue->take();
         cout << "\tConsumer: " << data << endl;
 
         if (0 == i)
@@ -118,13 +118,13 @@ void* consumer(void* arg) {
 
 
 int main() {
-    BlockingQueue<std::string> queue(2); // capacity = 2
+    BlockingQueue<std::string> blkQueue(2); // capacity = 2
 
     pthread_t tidProducer, tidConsumer;
     int ret = 0;
 
-    ret = pthread_create(&tidProducer, nullptr, producer, &queue);
-    ret = pthread_create(&tidConsumer, nullptr, consumer, &queue);
+    ret = pthread_create(&tidProducer, nullptr, producer, &blkQueue);
+    ret = pthread_create(&tidConsumer, nullptr, consumer, &blkQueue);
 
     ret = pthread_join(tidProducer, nullptr);
     ret = pthread_join(tidConsumer, nullptr);

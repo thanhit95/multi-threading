@@ -16,7 +16,7 @@ __thread int value = 123;
 
 
 
-void* routine(void* arg) {
+void* doTask(void* arg) {
     cout << value << endl;
     pthread_exit(nullptr);
     return nullptr;
@@ -34,7 +34,7 @@ int main() {
 
     // Child thread gets value
     // Expected output: 123
-    ret = pthread_create(&tid, nullptr, routine, nullptr);
+    ret = pthread_create(&tid, nullptr, doTask, nullptr);
     ret = pthread_join(tid, nullptr);
 
     return 0;

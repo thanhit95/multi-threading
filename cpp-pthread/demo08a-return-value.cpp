@@ -10,15 +10,15 @@ using namespace std;
 
 
 
-struct WorkerArg {
+struct ThreadArg {
     int value;
     int *res;
 };
 
 
 
-void* worker(void* argVoid) {
-    auto arg = (WorkerArg*)argVoid;
+void* doubleValue(void* argVoid) {
+    auto arg = (ThreadArg*) argVoid;
 
     *(arg->res) = arg->value * 2;
 
@@ -29,26 +29,16 @@ void* worker(void* argVoid) {
 
 
 int main() {
-    int result[2];
-    WorkerArg arg[2];
-
-    pthread_t tid0, tid1;
+    pthread_t tid;
+    int result;
+    ThreadArg arg;
     int ret = 0;
 
+    arg = { 80, &result };
 
-    arg[0] = { 5, &result[0] };
-    arg[1] = { 80, &result[1] };
+    ret = pthread_create(&tid, nullptr, doubleValue, &arg);
+    ret = pthread_join(tid, nullptr);
 
-
-    ret = pthread_create(&tid0, nullptr, worker, &arg[0]);
-    ret = pthread_create(&tid1, nullptr, worker, &arg[1]);
-
-    ret = pthread_join(tid0, nullptr);
-    ret = pthread_join(tid1, nullptr);
-
-
-    cout << result[0] << endl;
-    cout << result[1] << endl;
-
+    cout << result << endl;
     return 0;
 }

@@ -8,9 +8,9 @@ SOLUTION TYPE B: USING SEMAPHORES
 
 #include <iostream>
 #include <queue>
+#include <unistd.h>
 #include <pthread.h>
 #include <semaphore.h>
-#include <unistd.h>
 using namespace std;
 
 
@@ -49,15 +49,15 @@ struct GlobalSemaphore {
 
 
 struct GlobalArg {
-    queue<int>* qProduct;
+    queue<int>* q;
     GlobalSemaphore* sem;
 };
 
 
 
 void* producer(void* argVoid) {
-    auto arg = (GlobalArg*)argVoid;
-    auto qProduct = arg->qProduct;
+    auto arg = (GlobalArg*) argVoid;
+    auto q = arg->q;
     auto sem = arg->sem;
 
     int i = 1;
@@ -65,7 +65,7 @@ void* producer(void* argVoid) {
     for (;; ++i) {
         sem->waitEmpty();
 
-        qProduct->push(i);
+        q->push(i);
         sleep(1);
 
         sem->postFill();
@@ -78,8 +78,8 @@ void* producer(void* argVoid) {
 
 
 void* consumer(void* argVoid) {
-    auto arg = (GlobalArg*)argVoid;
-    auto qProduct = arg->qProduct;
+    auto arg = (GlobalArg*) argVoid;
+    auto q = arg->q;
     auto sem = arg->sem;
 
     int data = 0;
@@ -87,8 +87,8 @@ void* consumer(void* argVoid) {
     for (;;) {
         sem->waitFill();
 
-        data = qProduct->front();
-        qProduct->pop();
+        data = q->front();
+        q->pop();
 
         cout << "Consumer " << data << endl;
 
@@ -103,25 +103,23 @@ void* consumer(void* argVoid) {
 
 int main() {
     GlobalSemaphore sem;
-    queue<int> qProduct;
+    queue<int> q;
     pthread_t tidProducer, tidConsumer;
 
-    GlobalArg globalArg = { &qProduct, &sem };
+    GlobalArg arg = { &q, &sem };
     int ret = 0;
 
 
     sem.init(0, 1);
 
 
-    ret = pthread_create(&tidProducer, nullptr, producer, &globalArg);
-    ret = pthread_create(&tidConsumer, nullptr, consumer, &globalArg);
+    ret = pthread_create(&tidProducer, nullptr, producer, &arg);
+    ret = pthread_create(&tidConsumer, nullptr, consumer, &arg);
 
     ret = pthread_join(tidProducer, nullptr);
     ret = pthread_join(tidConsumer, nullptr);
 
 
     sem.destroy();
-
-
     return 0;
 }

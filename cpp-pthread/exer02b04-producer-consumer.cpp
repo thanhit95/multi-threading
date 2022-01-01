@@ -49,7 +49,7 @@ struct GlobalSemaphore {
 
 
 struct GlobalArg {
-    queue<int>* qProduct;
+    queue<int>* q;
     GlobalSemaphore* sem;
     int startValue;
 };
@@ -57,17 +57,15 @@ struct GlobalArg {
 
 
 void* producer(void* argVoid) {
-    auto arg = (GlobalArg*)argVoid;
-    auto qProduct = arg->qProduct;
+    auto arg = (GlobalArg*) argVoid;
+    auto q = arg->q;
     auto sem = arg->sem;
 
     int i = 1;
 
     for (;; ++i) {
         sem->waitEmpty();
-
-        qProduct->push(i + arg->startValue);
-
+        q->push(i + arg->startValue);
         sem->postFill();
     }
 
@@ -78,8 +76,8 @@ void* producer(void* argVoid) {
 
 
 void* consumer(void* argVoid) {
-    auto arg = (GlobalArg*)argVoid;
-    auto qProduct = arg->qProduct;
+    auto arg = (GlobalArg*) argVoid;
+    auto q = arg->q;
     auto sem = arg->sem;
 
     int data = 0;
@@ -87,8 +85,8 @@ void* consumer(void* argVoid) {
     for (;;) {
         sem->waitFill();
 
-        data = qProduct->front();
-        qProduct->pop();
+        data = q->front();
+        q->pop();
 
         cout << "Consumer " << data << endl;
         sleep(1);
@@ -107,7 +105,7 @@ int main() {
     constexpr int NUM_CONSUMERS = 2;
 
     GlobalSemaphore sem;
-    queue<int> qProduct;
+    queue<int> q;
 
     pthread_t lstTidProducer[NUM_PRODUCERS];
     pthread_t lstTidConsumer[NUM_CONSUMERS];
@@ -119,22 +117,22 @@ int main() {
 
 
     // PREPARE ARGUMENTS
-    GlobalArg argPro[NUM_PRODUCERS];
+    GlobalArg lstArgPro[NUM_PRODUCERS];
     GlobalArg argCon;
 
     for (int i = 0; i < NUM_PRODUCERS; ++i) {
-        argPro[i].qProduct = &qProduct;
-        argPro[i].sem = &sem;
-        argPro[i].startValue = i * 1000;
+        lstArgPro[i].q = &q;
+        lstArgPro[i].sem = &sem;
+        lstArgPro[i].startValue = i * 1000;
     }
 
-    argCon.qProduct = &qProduct;
+    argCon.q = &q;
     argCon.sem = &sem;
 
 
     // CREATE THREADS
     for (int i = 0; i < NUM_PRODUCERS; ++i) {
-        ret = pthread_create(&lstTidProducer[i], nullptr, producer, &argPro[i]);
+        ret = pthread_create(&lstTidProducer[i], nullptr, producer, &lstArgPro[i]);
     }
 
     for (int i = 0; i < NUM_CONSUMERS; ++i) {
@@ -153,7 +151,5 @@ int main() {
 
 
     sem.destroy();
-
-
     return 0;
 }

@@ -4,8 +4,8 @@ CONDITION VARIABLES
 
 
 #include <iostream>
-#include <pthread.h>
 #include <unistd.h>
+#include <pthread.h>
 using namespace std;
 
 

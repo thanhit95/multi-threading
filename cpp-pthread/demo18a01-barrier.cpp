@@ -7,8 +7,8 @@ Version A: Cyclic barriers
 #include <iostream>
 #include <string>
 #include <tuple>
-#include <pthread.h>
 #include <unistd.h>
+#include <pthread.h>
 using namespace std;
 
 
@@ -18,9 +18,9 @@ pthread_barrier_t syncPoint;
 
 
 void* processRequest(void* argVoid) {
-    auto arg = *(tuple<string,int>*)argVoid;
-    string userName = get<0>(arg);
-    int timeWait = get<1>(arg);
+    auto arg = *(tuple<string,int>*) argVoid;
+    string userName = std::get<0>(arg);
+    int timeWait = std::get<1>(arg);
 
     sleep(timeWait);
 
@@ -42,25 +42,23 @@ void* processRequest(void* argVoid) {
 
 int main() {
     constexpr int NUM_THREADS = 3;
-
     pthread_t lstTid[NUM_THREADS];
+    int ret = 0;
+
 
     // tuple<userName, timeWait>
-    tuple<string,int> arg[NUM_THREADS] = {
-        { "foo", 1 },
-        { "bar", 2 },
-        { "ham", 3 },
+    tuple<string,int> lstArg[NUM_THREADS] = {
+        { "lorem", 1 },
+        { "ipsum", 2 },
+        { "dolor", 3 },
     };
-
-    int ret = 0;
 
 
     ret = pthread_barrier_init(&syncPoint, nullptr, 3); // participant count = 3
 
 
     for (int i = 0; i < NUM_THREADS; ++i) {
-        auto&& argItem = arg[i];
-        ret = pthread_create(&lstTid[i], nullptr, processRequest, &argItem);
+        ret = pthread_create(&lstTid[i], nullptr, processRequest, &lstArg[i]);
     }
 
 

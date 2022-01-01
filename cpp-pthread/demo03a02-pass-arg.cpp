@@ -10,7 +10,7 @@ using namespace std;
 
 
 
-void* printHello(void* ptrId) {
+void* doTask(void* ptrId) {
     int id = *(int*)ptrId;
 
     cout << "Hello pthread with id = " << id << endl;
@@ -22,20 +22,19 @@ void* printHello(void* ptrId) {
 
 
 int main() {
-    pthread_t tid[2];
-    int arg[2];
-
+    pthread_t lstTid[2];
+    int lstArg[2];
     int ret = 0;
 
 
     for (int i = 0; i < 2; ++i) {
-        arg[i] = i + 1;
-        ret = pthread_create(&tid[i], nullptr, printHello, &arg[i]);
+        lstArg[i] = i + 1;
+        ret = pthread_create(&lstTid[i], nullptr, doTask, &lstArg[i]);
     }
 
 
     for (int i = 0; i < 2; ++i)
-        ret = pthread_join(tid[i], nullptr);
+        ret = pthread_join(lstTid[i], nullptr);
 
 
     return 0;

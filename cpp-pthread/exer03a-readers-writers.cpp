@@ -7,7 +7,7 @@ Solution for the first readers-writers problem
 #include <iostream>
 #include <unistd.h>
 #include <pthread.h>
-#include "mytool-random.hpp"
+#include "../cpp-std/mylib-random.hpp"
 using namespace std;
 
 
@@ -29,15 +29,15 @@ struct ThreadArg {
 
 
 
-void* writerFunc(void* argVoid) {
-    auto arg = (ThreadArg*)argVoid;
+void* doTaskWriter(void* argVoid) {
+    auto arg = (ThreadArg*) argVoid;
     GlobalData* g = arg->g;
 
     sleep(arg->timeDelay);
 
     pthread_mutex_lock(&g->mutResource);
 
-    g->resource = mytool::RandInt::staticGet() % 100;
+    g->resource = mylib::RandInt::get(100);
     cout << "Write " << g->resource << endl;
 
     pthread_mutex_unlock(&g->mutResource);
@@ -48,8 +48,8 @@ void* writerFunc(void* argVoid) {
 
 
 
-void* readerFunc(void* argVoid) {
-    auto arg = (ThreadArg*)argVoid;
+void* doTaskReader(void* argVoid) {
+    auto arg = (ThreadArg*) argVoid;
     GlobalData* g = arg->g;
 
     sleep(arg->timeDelay);
@@ -90,7 +90,7 @@ void* readerFunc(void* argVoid) {
 void prepareArg(ThreadArg arg[], int numArg, GlobalData* g) {
     for (int i = 0; i < numArg; ++i) {
         arg[i].g = g;
-        arg[i].timeDelay = mytool::RandInt::staticGet() % 3;
+        arg[i].timeDelay = mylib::RandInt::get(3);
     }
 }
 
@@ -98,7 +98,6 @@ void prepareArg(ThreadArg arg[], int numArg, GlobalData* g) {
 
 int main() {
     GlobalData globalData;
-
 
     constexpr int NUM_READERS = 8;
     constexpr int NUM_WRITERS = 6;
@@ -119,11 +118,11 @@ int main() {
 
     // CREATE THREADS
     for (int i = 0; i < NUM_READERS; ++i) {
-        ret = pthread_create(&lstTidReader[i], nullptr, readerFunc, &argReader[i]);
+        ret = pthread_create(&lstTidReader[i], nullptr, doTaskReader, &argReader[i]);
     }
 
     for (int i = 0; i < NUM_WRITERS; ++i) {
-        ret = pthread_create(&lstTidWriter[i], nullptr, writerFunc, &argWriter[i]);
+        ret = pthread_create(&lstTidWriter[i], nullptr, doTaskWriter, &argWriter[i]);
     }
 
 

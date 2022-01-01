@@ -4,7 +4,7 @@ MAXIMUM NUMBER OF DIVISORS
 
 
 #include <iostream>
-#include "mytool-time.hpp"
+#include "../cpp-std/mylib-time.hpp"
 using namespace std;
 
 
@@ -16,7 +16,7 @@ int main() {
     int resValue = 0;
     int resNumDiv = 0;  // number of divisors of result
 
-    auto tpStart = mytool::HiResClock::now();
+    auto tpStart = mylib::HiResClock::now();
 
 
     for (int i = RANGE_START; i <= RANGE_STOP; ++i) {
@@ -33,7 +33,7 @@ int main() {
     }
 
 
-    auto timeElapsed = mytool::HiResClock::getTimeSpan(tpStart);
+    auto timeElapsed = mylib::HiResClock::getTimeSpan(tpStart);
 
     cout << "The integer which has largest number of divisors is " << resValue << endl;
     cout << "The largest number of divisor is " << resNumDiv << endl;

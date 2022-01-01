@@ -37,7 +37,7 @@ public:
 
 private:
     static void* work(void* arg) {
-        auto thisPtr = (Task*)arg;
+        auto thisPtr = (Task*) arg;
 
         cout << thisPtr->index << endl;
 

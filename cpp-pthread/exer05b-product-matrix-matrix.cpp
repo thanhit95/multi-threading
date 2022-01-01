@@ -6,42 +6,13 @@ MATRIX-MATRIX MULTIPLICATION (DOT PRODUCT)
 #include <iostream>
 #include <vector>
 #include <pthread.h>
+#include "exer05-util.hpp"
 using namespace std;
 
 
 
 using vectord = std::vector<double>;
 using matrix = std::vector<vectord>;
-
-
-
-struct WorkerArg {
-    double const* u = nullptr;
-    double const* v = nullptr;
-    int sizeVector = 0;
-    double* res = nullptr;
-};
-
-
-
-void* workerScalarProduct(void* argVoid) {
-    auto arg = (WorkerArg*)argVoid;
-    auto u = arg->u;
-    auto v = arg->v;
-    auto sizeVector = arg->sizeVector;
-    auto res = arg->res;
-
-    double sum = 0;
-
-    for (int i = sizeVector - 1; i >= 0; --i) {
-        sum += u[i] * v[i];
-    }
-
-    (*res) = sum;
-
-    pthread_exit(nullptr);
-    return nullptr;
-}
 
 
 
@@ -87,7 +58,7 @@ void getProduct(const matrix& matA, const matrix& matB, matrix& result) {
     getTransposeMatrix(matB, matBT);
 
     vector<pthread_t> lstTid(sizeTotal);
-    vector<WorkerArg> arg(sizeTotal);
+    vector<WorkerScProdArg> lstArg(sizeTotal);
 
     int iSca = 0;
     int ret = 0;
@@ -98,9 +69,10 @@ void getProduct(const matrix& matA, const matrix& matB, matrix& result) {
             auto&& v = matBT[j].data();
             auto&& sizeVector = sizeColA;
 
-            arg[iSca] = { u, v, sizeVector, &result[i][j] };
+            lstArg[iSca] = { u, v, sizeVector, &result[i][j] };
 
-            ret = pthread_create(&lstTid[iSca], nullptr, workerScalarProduct, &arg[iSca]);
+            ret = pthread_create(&lstTid[iSca], nullptr,
+                                 workerScalarProduct, &lstArg[iSca]);
 
             ++iSca;
         }

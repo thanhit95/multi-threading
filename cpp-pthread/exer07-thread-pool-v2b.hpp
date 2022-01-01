@@ -19,15 +19,7 @@ Version 2B:
 #include <list>
 #include <queue>
 #include <pthread.h>
-
-
-
-// interface ITask
-class ITask {
-public:
-    virtual ~ITask() = default;
-    virtual void run() = 0;
-};
+#include "exer07-thread-pool-itask.hpp"
 
 
 
@@ -70,7 +62,7 @@ public:
         forceThreadShutdown = false;
 
         for (auto&& th : lstTh) {
-            pthread_create(&th, nullptr, threadRoutine, this);
+            pthread_create(&th, nullptr, threadWorkerFunc, this);
         }
     }
 
@@ -135,8 +127,8 @@ public:
 
 
 private:
-    static void* threadRoutine(void* argVoid) {
-        auto thisPtr = (ThreadPoolV2B*)argVoid;
+    static void* threadWorkerFunc(void* argVoid) {
+        auto thisPtr = (ThreadPoolV2B*) argVoid;
 
         auto&& taskPending = thisPtr->taskPending;
         auto&& mutTaskPending = thisPtr->mutTaskPending;

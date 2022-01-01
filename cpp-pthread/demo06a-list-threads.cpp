@@ -1,5 +1,5 @@
 /*
-LIST OF MUTIPLE THREADS
+LIST OF MULTIPLE THREADS
 Version A: Using standard arrays
 */
 
@@ -10,8 +10,8 @@ using namespace std;
 
 
 
-void* routine(void* arg) {
-    auto index = *(int*)arg;
+void* doTask(void* arg) {
+    auto index = *(int*) arg;
     cout << index;
 
     pthread_exit(nullptr);
@@ -24,14 +24,14 @@ int main() {
     constexpr int NUM_THREADS = 5;
 
     pthread_t lstTid[NUM_THREADS];
-    int arg[NUM_THREADS];
+    int lstArg[NUM_THREADS];
 
     int ret = 0;
 
 
     for (int i = 0; i < NUM_THREADS; ++i) {
-        arg[i] = i;
-        ret = pthread_create(&lstTid[i], nullptr, routine, &arg[i]);
+        lstArg[i] = i;
+        ret = pthread_create(&lstTid[i], nullptr, doTask, &lstArg[i]);
     }
 
 

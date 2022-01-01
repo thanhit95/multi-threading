@@ -5,6 +5,7 @@ THREAD POOL & EXECUTOR SERVICE IMPLEMENTATION
 
 #include <iostream>
 #include <unistd.h>
+#include "exer07-thread-pool-itask.hpp"
 // #include "exer07-thread-pool-v1.hpp"
 // #include "exer07-thread-pool-v2a.hpp"
 #include "exer07-thread-pool-v2b.hpp"
@@ -34,13 +35,13 @@ int main() {
     threadPool.init(NUM_THREADS);
 
 
-    std::vector<MyTask> lstTasks(NUM_TASKS);
+    std::vector<MyTask> lstTask(NUM_TASKS);
 
     for (int i = 0; i < NUM_TASKS; ++i)
-        lstTasks[i].id = 'A' + i;
+        lstTask[i].id = 'A' + i;
 
 
-    for (auto&& task : lstTasks)
+    for (auto&& task : lstTask)
         threadPool.submit(&task);
 
     std::cout << "All tasks are submitted" << std::endl;

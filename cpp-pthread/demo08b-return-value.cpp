@@ -1,6 +1,6 @@
 /*
 GETTING RETURNED VALUES FROM THREADS
-Version A: Values returned via pthread_exit
+Version B: Values returned via pthread_exit
 */
 
 
@@ -10,8 +10,8 @@ using namespace std;
 
 
 
-void* worker(void* argVoid) {
-    auto value = *(int*)argVoid;
+void* doubleValue(void* arg) {
+    auto value = *(int*) arg;
 
     int *result = new int;
     *result = value * 2;
@@ -23,26 +23,18 @@ void* worker(void* argVoid) {
 
 
 int main() {
-    int arg0 = 5, arg1 = 80;
-    int *result0 = nullptr, *result1 = nullptr;
-
-    pthread_t tid0, tid1;
+    pthread_t tid;
+    int arg = 80;
+    int *result = nullptr;
     int ret = 0;
 
+    ret = pthread_create(&tid, nullptr, doubleValue, &arg);
+    ret = pthread_join(tid, (void**)&result);
 
-    ret = pthread_create(&tid0, nullptr, worker, &arg0);
-    ret = pthread_create(&tid1, nullptr, worker, &arg1);
+    cout << (*result) << endl;
 
-    ret = pthread_join(tid0, (void**)&result0);
-    ret = pthread_join(tid1, (void**)&result1);
-
-
-    cout << (*result0) << endl;
-    cout << (*result1) << endl;
-
-
-    delete result0, result1;
-    result0 = result1 = nullptr;
+    delete result;
+    result = nullptr;
 
     return 0;
 }

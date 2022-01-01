@@ -4,8 +4,8 @@ THE VOLATILE KEYWORD
 
 
 #include <iostream>
-#include <pthread.h>
 #include <unistd.h>
+#include <pthread.h>
 using namespace std;
 
 
@@ -14,7 +14,7 @@ volatile bool stopped = false;
 
 
 
-void* routine(void*) {
+void* doTask(void*) {
     while (false == stopped) {
         cout << "Running..." << endl;
         sleep(2);
@@ -30,7 +30,7 @@ int main() {
     pthread_t tid;
     int ret = 0;
 
-    ret = pthread_create(&tid, nullptr, routine, nullptr);
+    ret = pthread_create(&tid, nullptr, doTask, nullptr);
 
     sleep(6);
 

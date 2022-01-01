@@ -9,8 +9,8 @@ using namespace std;
 
 
 
-void* lorem(void*) {
-    cout << "Hello from Lorem thread" << endl;
+void* doTask(void*) {
+    cout << "Hello from example thread" << endl;
 
     pthread_exit(nullptr);
     return nullptr;
@@ -22,11 +22,12 @@ int main() {
     pthread_t tid;
     int ret = 0;
 
-    ret = pthread_create(&tid, nullptr, lorem, nullptr);
+    ret = pthread_create(&tid, nullptr, doTask, nullptr);
 
     /*
     if (ret) {
         cerr << "Error: Unable to create thread " << ret << endl;
+        return 1;
     }
     */
 

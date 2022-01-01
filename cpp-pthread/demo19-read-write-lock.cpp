@@ -24,9 +24,9 @@ Lock for writing
 
 
 #include <iostream>
-#include <pthread.h>
 #include <unistd.h>
-#include "mytool-random.hpp"
+#include <pthread.h>
+#include "../cpp-std/mylib-random.hpp"
 using namespace std;
 
 
@@ -36,14 +36,13 @@ pthread_rwlock_t rwlock = PTHREAD_RWLOCK_INITIALIZER;
 
 
 
-void* routineRead(void* arg) {
-    auto timeWait = *(int*)arg;
-
+void* readFunc(void* arg) {
+    auto timeWait = *(int*) arg;
     sleep(timeWait);
 
     pthread_rwlock_rdlock(&rwlock);
 
-    cout << "routineRead: " << resource << endl;
+    cout << "read: " << resource << endl;
 
     pthread_rwlock_unlock(&rwlock);
 
@@ -53,15 +52,14 @@ void* routineRead(void* arg) {
 
 
 
-void* routineWrite(void* arg) {
-    auto timeWait = *(int*)arg;
-
+void* writeFunc(void* arg) {
+    auto timeWait = *(int*) arg;
     sleep(timeWait);
 
     pthread_rwlock_wrlock(&rwlock);
 
-    resource = mytool::RandInt::staticGet() % 100;
-    cout << "routineWrite: " << resource << endl;
+    resource = mylib::RandInt::get(100);
+    cout << "write: " << resource << endl;
 
     pthread_rwlock_unlock(&rwlock);
 
@@ -78,28 +76,25 @@ int main() {
 
     pthread_t lstTidRead[NUM_THREADS_READ];
     pthread_t lstTidWrite[NUM_THREADS_WRITE];
-
-    int arg[NUM_ARGS];
-    mytool::RandInt randInt(1, 1000);
-
+    int lstArg[NUM_ARGS];
     int ret = 0;
 
 
     // INITIALIZE
     for (int i = 0; i < NUM_ARGS; ++i) {
-        arg[i] = i;
+        lstArg[i] = i;
     }
 
 
     // CREATE THREADS
     for (auto&& tid : lstTidRead) {
-        int argIndex = randInt.get() % NUM_ARGS;
-        ret = pthread_create(&tid, nullptr, routineRead, &arg[argIndex]);
+        int argIndex = mylib::RandInt::get(NUM_ARGS);
+        ret = pthread_create(&tid, nullptr, readFunc, &lstArg[argIndex]);
     }
 
     for (auto&& tid : lstTidWrite) {
-        int argIndex = randInt.get() % NUM_ARGS;
-        ret = pthread_create(&tid, nullptr, routineWrite, &arg[argIndex]);
+        int argIndex = mylib::RandInt::get(NUM_ARGS);
+        ret = pthread_create(&tid, nullptr, writeFunc, &lstArg[argIndex]);
     }
 
 

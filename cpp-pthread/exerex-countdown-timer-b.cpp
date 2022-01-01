@@ -4,9 +4,9 @@ COUNTDOWN TIMER
 
 
 #include <iostream>
-#include <pthread.h>
 #include <unistd.h>
 #include <time.h>
+#include <pthread.h>
 using namespace std;
 
 

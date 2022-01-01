@@ -6,9 +6,9 @@ Version A: Synchronous queues
 
 #include <iostream>
 #include <string>
+#include <unistd.h>
 #include <pthread.h>
 #include <semaphore.h>
-#include <unistd.h>
 using namespace std;
 
 
@@ -35,7 +35,7 @@ public:
     }
 
 
-    void put(const T&& value) {
+    void put(const T& value) {
         sem_wait(&semPut);
         element = value;
         sem_post(&semTake);
@@ -53,13 +53,13 @@ public:
 
 
 void* producer(void* arg) {
-    auto queue = (SynchronousQueue<std::string>*) arg;
+    auto syncQueue = (SynchronousQueue<std::string>*) arg;
 
     auto arr = { "lorem", "ipsum", "foo" };
 
     for (auto&& value : arr) {
         cout << "Producer: " << value << endl;
-        queue->put(value);
+        syncQueue->put(value);
         cout << "Producer: " << value << "\t\t\t[done]" << endl;
     }
 
@@ -70,12 +70,12 @@ void* producer(void* arg) {
 
 
 void* consumer(void* arg) {
-    auto queue = (SynchronousQueue<std::string>*) arg;
+    auto syncQueue = (SynchronousQueue<std::string>*) arg;
 
     sleep(5);
 
     for (int i = 0; i < 3; ++i) {
-        std::string data = queue->take();
+        std::string data = syncQueue->take();
         cout << "\tConsumer: " << data << endl;
     }
 
@@ -86,13 +86,13 @@ void* consumer(void* arg) {
 
 
 int main() {
-    SynchronousQueue<std::string> queue;
+    SynchronousQueue<std::string> syncQueue;
 
     pthread_t tidProducer, tidConsumer;
     int ret = 0;
 
-    ret = pthread_create(&tidProducer, nullptr, producer, &queue);
-    ret = pthread_create(&tidConsumer, nullptr, consumer, &queue);
+    ret = pthread_create(&tidProducer, nullptr, producer, &syncQueue);
+    ret = pthread_create(&tidConsumer, nullptr, consumer, &syncQueue);
 
     ret = pthread_join(tidProducer, nullptr);
     ret = pthread_join(tidConsumer, nullptr);

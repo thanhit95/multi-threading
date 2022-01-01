@@ -14,7 +14,7 @@ pthread_mutex_t mut = PTHREAD_MUTEX_INITIALIZER;
 
 
 
-void* routine(void*) {
+void* doTask(void*) {
     pthread_mutex_lock(&mut);
     cout << "First time acquiring the resource" << endl;
 
@@ -34,10 +34,10 @@ int main() {
     pthread_t tid;
     int ret = 0;
 
-    ret = pthread_create(&tid, nullptr, routine, nullptr);
+    ret = pthread_create(&tid, nullptr, doTask, nullptr);
 
     /*
-    The function "routine" will meet deadlock.
+    The thread tid shall meet deadlock.
     So, you will never get output "Second time acquiring the resource".
     */
 

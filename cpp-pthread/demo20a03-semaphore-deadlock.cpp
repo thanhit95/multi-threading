@@ -5,9 +5,9 @@ Version A: Paper sheets and packages
 
 
 #include <iostream>
+#include <unistd.h>
 #include <pthread.h>
 #include <semaphore.h>
-#include <unistd.h>
 using namespace std;
 
 
@@ -20,9 +20,7 @@ sem_t semSheet;
 void* makeOneSheet(void*) {
     for (int i = 0; i < 4; ++i) {
         sem_wait(&semSheet);
-
         cout << "Make 1 sheet" << endl;
-
         sem_post(&semPackage);
     }
 

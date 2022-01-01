@@ -9,8 +9,8 @@ Version B02: General blocking queues
 #include <queue>
 #include <string>
 #include <stdexcept>
-#include <pthread.h>
 #include <unistd.h>
+#include <pthread.h>
 using namespace std;
 
 
@@ -19,14 +19,18 @@ template <typename T>
 class BlockingQueue {
 
 private:
+    /*
+    I use a lot of synchronization primitives to help you to understand.
+    In a practical context, please take a look at
+    the BlockingQueue implementation in "mylib-blockingqueue"
+    */
     pthread_cond_t condEmpty = PTHREAD_COND_INITIALIZER;
     pthread_cond_t condFull = PTHREAD_COND_INITIALIZER;
     pthread_mutex_t mutEmpty = PTHREAD_MUTEX_INITIALIZER;
     pthread_mutex_t mutFull = PTHREAD_MUTEX_INITIALIZER;
+    pthread_mutex_t mutQueue = PTHREAD_MUTEX_INITIALIZER;
 
     int capacity = 0;
-
-    pthread_mutex_t mutLst = PTHREAD_MUTEX_INITIALIZER;
     std::queue<T> q;
 
 
@@ -44,11 +48,11 @@ public:
         pthread_cond_destroy(&condFull);
         pthread_mutex_destroy(&mutEmpty);
         pthread_mutex_destroy(&mutFull);
-        pthread_mutex_destroy(&mutLst);
+        pthread_mutex_destroy(&mutQueue);
     }
 
 
-    void put(const T&& value) {
+    void put(const T& value) {
         int ret = 0;
 
 
@@ -62,9 +66,9 @@ public:
         ret = pthread_mutex_unlock(&mutFull);
 
 
-        ret = pthread_mutex_lock(&mutLst);
+        ret = pthread_mutex_lock(&mutQueue);
         q.push(value);
-        ret = pthread_mutex_unlock(&mutLst);
+        ret = pthread_mutex_unlock(&mutQueue);
 
 
         ret = pthread_cond_signal(&condEmpty);
@@ -86,10 +90,10 @@ public:
         ret = pthread_mutex_unlock(&mutEmpty);
 
 
-        ret = pthread_mutex_lock(&mutLst);
+        ret = pthread_mutex_lock(&mutQueue);
         result = q.front();
         q.pop();
-        ret = pthread_mutex_unlock(&mutLst);
+        ret = pthread_mutex_unlock(&mutQueue);
 
 
         ret = pthread_cond_signal(&condFull);
@@ -101,13 +105,13 @@ public:
 
 
 void* producer(void* arg) {
-    auto queue = (BlockingQueue<std::string>*) arg;
+    auto blkQueue = (BlockingQueue<std::string>*) arg;
 
     auto arr = { "nice", "to", "meet", "you" };
 
     for (auto&& value : arr) {
         cout << "Producer: " << value << endl;
-        queue->put(value);
+        blkQueue->put(value);
         cout << "Producer: " << value << "\t\t\t[done]" << endl;
     }
 
@@ -118,12 +122,12 @@ void* producer(void* arg) {
 
 
 void* consumer(void* arg) {
-    auto queue = (BlockingQueue<std::string>*) arg;
+    auto blkQueue = (BlockingQueue<std::string>*) arg;
 
     sleep(5);
 
     for (int i = 0; i < 4; ++i) {
-        std::string data = queue->take();
+        std::string data = blkQueue->take();
         cout << "\tConsumer: " << data << endl;
 
         if (0 == i)
@@ -137,13 +141,13 @@ void* consumer(void* arg) {
 
 
 int main() {
-    BlockingQueue<std::string> queue(2); // capacity = 2
+    BlockingQueue<std::string> blkQueue(2); // capacity = 2
 
     pthread_t tidProducer, tidConsumer;
     int ret = 0;
 
-    ret = pthread_create(&tidProducer, nullptr, producer, &queue);
-    ret = pthread_create(&tidConsumer, nullptr, consumer, &queue);
+    ret = pthread_create(&tidProducer, nullptr, producer, &blkQueue);
+    ret = pthread_create(&tidConsumer, nullptr, consumer, &blkQueue);
 
     ret = pthread_join(tidProducer, nullptr);
     ret = pthread_join(tidConsumer, nullptr);

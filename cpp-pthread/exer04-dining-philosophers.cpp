@@ -4,13 +4,13 @@ THE DINING PHILOSOPHERS PROBLEM
 
 
 #include <iostream>
-#include <pthread.h>
 #include <unistd.h>
+#include <pthread.h>
 using namespace std;
 
 
 
-struct FuncArg {
+struct TaskArg {
     pthread_mutex_t* chopstick;
     int numPhilo;
     int idPhiLo;
@@ -18,8 +18,8 @@ struct FuncArg {
 
 
 
-void* funcPhilosopher(void *argVoid) {
-    auto arg = (FuncArg*)argVoid;
+void* doTaskPhilosopher(void *argVoid) {
+    auto arg = (TaskArg*) argVoid;
 
     auto chopstick = arg->chopstick;
     int n = arg->numPhilo;
@@ -46,7 +46,7 @@ int main() {
 
     pthread_t tid[NUM_PHILOSOPHERS];
     pthread_mutex_t chopstick[NUM_PHILOSOPHERS];
-    FuncArg arg[NUM_PHILOSOPHERS];
+    TaskArg arg[NUM_PHILOSOPHERS];
 
     int ret = 0;
 
@@ -62,7 +62,7 @@ int main() {
 
     // CREATE THREADS
     for (int i = 0; i < NUM_PHILOSOPHERS; ++i) {
-        ret = pthread_create(&tid[i], nullptr, funcPhilosopher, &arg[i]);
+        ret = pthread_create(&tid[i], nullptr, doTaskPhilosopher, &arg[i]);
     }
 
 

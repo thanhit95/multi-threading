@@ -4,14 +4,14 @@ SLEEP
 
 
 #include <iostream>
-#include <pthread.h>
 #include <unistd.h>
+#include <pthread.h>
 using namespace std;
 
 
 
-void* routine(void* arg) {
-    auto name = (const char*)arg;
+void* doTask(void* arg) {
+    auto name = (const char*) arg;
 
     cout << name << " is sleeping" << endl;
     sleep(2);
@@ -24,14 +24,12 @@ void* routine(void* arg) {
 
 
 int main() {
-    pthread_t tid1, tid2;
+    pthread_t tid;
     int ret = 0;
 
-    ret = pthread_create(&tid1, nullptr, routine, (void*)"foo");
-    ret = pthread_create(&tid2, nullptr, routine, (void*)"bar");
+    ret = pthread_create(&tid, nullptr, doTask, (void*)"foo");
 
-    ret = pthread_join(tid1, nullptr);
-    ret = pthread_join(tid2, nullptr);
+    ret = pthread_join(tid, nullptr);
 
     return 0;
 }

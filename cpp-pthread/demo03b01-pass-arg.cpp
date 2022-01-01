@@ -11,7 +11,7 @@ using namespace std;
 
 
 
-struct RoutineArg {
+struct ThreadArg {
     int x;
     double y;
     string z;
@@ -19,8 +19,8 @@ struct RoutineArg {
 
 
 
-void* routine(void* argVoid) {
-    auto arg = (RoutineArg*)argVoid;
+void* doTask(void* argVoid) {
+    auto arg = (ThreadArg*) argVoid;
 
     cout << arg->x << endl;
     cout << arg->y << endl;
@@ -34,19 +34,15 @@ void* routine(void* argVoid) {
 
 int main() {
     pthread_t tid;
-    RoutineArg arg;
-
+    ThreadArg arg;
     int ret = 0;
-
 
     arg.x = 10;
     arg.y = -2.4;
-    arg.z = "barrrrr";
+    arg.z = "lorem ipsum";
 
-
-    ret = pthread_create(&tid, nullptr, routine, &arg);
+    ret = pthread_create(&tid, nullptr, doTask, &arg);
     ret = pthread_join(tid, nullptr);
-
 
     return 0;
 }

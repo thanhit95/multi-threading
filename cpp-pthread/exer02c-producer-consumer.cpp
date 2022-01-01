@@ -10,7 +10,6 @@ SOLUTION TYPE C: USING CONDITION VARIABLES & MONITORS
 #include <queue>
 #include <pthread.h>
 #include <unistd.h>
-#include "mytool-random.hpp"
 
 using namespace std;
 
@@ -104,7 +103,7 @@ struct ProducerArg {
 
 template <typename T>
 void* producer(void* argVoid) {
-    auto arg = (ProducerArg<T>*)argVoid;
+    auto arg = (ProducerArg<T>*) argVoid;
     auto monitor = arg->monitor;
     auto startValue = arg->startValue;
 
@@ -122,7 +121,7 @@ void* producer(void* argVoid) {
 
 template <typename T>
 void* consumer(void* argVoid) {
-    auto monitor = (Monitor<T>*)argVoid;
+    auto monitor = (Monitor<T>*) argVoid;
 
     int data = 0;
 
@@ -140,7 +139,7 @@ void* consumer(void* argVoid) {
 
 int main() {
     Monitor<int> monitor;
-    queue<int> qProduct;
+    queue<int> q;
 
     constexpr int MAX_QUEUE_SIZE = 6;
     constexpr int NUM_PRODUCERS = 3;
@@ -154,7 +153,7 @@ int main() {
 
 
     // PREPARE ARGUMENTS
-    monitor.init(MAX_QUEUE_SIZE, &qProduct);
+    monitor.init(MAX_QUEUE_SIZE, &q);
 
     for (int i = 0; i < NUM_PRODUCERS; ++i)
         argPro[i] = { &monitor, i * 1000 };
@@ -181,7 +180,5 @@ int main() {
 
 
     monitor.destroy();
-
-
     return 0;
 }

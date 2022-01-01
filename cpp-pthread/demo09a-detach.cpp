@@ -4,18 +4,18 @@ THREAD DETACHING
 
 
 #include <iostream>
-#include <pthread.h>
 #include <unistd.h>
+#include <pthread.h>
 using namespace std;
 
 
 
-void* routine(void *arg) {
-    cout << "Routine is starting..." << endl;
+void* foo(void*) {
+    cout << "foo is starting..." << endl;
 
     sleep(2);
 
-    cout << "Routine is exiting..." << endl;
+    cout << "foo is exiting..." << endl;
 
     pthread_exit(nullptr);
     return nullptr;
@@ -24,30 +24,29 @@ void* routine(void *arg) {
 
 
 int main() {
-    pthread_t tid;
+    pthread_t tidFoo;
     int ret = 0;
 
 
-    ret = pthread_create(&tid, nullptr, routine, nullptr);
-    ret = pthread_detach(tid);
+    ret = pthread_create(&tidFoo, nullptr, foo, nullptr);
+    ret = pthread_detach(tidFoo);
 
     if (ret) {
-        cout << "Error: Cannot detach routine" << endl;
+        cout << "Error: Cannot detach tidFoo" << endl;
     }
 
 
-    // ret = pthread_join(tid, nullptr);
-
+    // ret = pthread_join(tidFoo, nullptr);
     // if (ret) {
-    //     cout << "Error: Cannot join routine" << endl;
+    //     cout << "Error: Cannot join tidFoo" << endl;
     // }
 
 
     // If I comment this statement,
-    // the thread routine will be forced into terminating with main thread
+    // tidFoo will be forced into terminating with main thread
     sleep(3);
 
 
-    cout << "Program is terminating" << endl;
+    cout << "Main thread is exiting" << endl;
     return 0;
 }

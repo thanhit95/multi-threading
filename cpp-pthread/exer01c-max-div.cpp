@@ -7,7 +7,7 @@ MAXIMUM NUMBER OF DIVISORS
 #include <vector>
 #include <algorithm>
 #include <pthread.h>
-#include "mytool-time.hpp"
+#include "../cpp-std/mylib-time.hpp"
 using namespace std;
 
 
@@ -50,7 +50,7 @@ struct WorkerArg {
     int iEnd;
     FinalResult *res;
 
-    WorkerArg(int iStart = 0, int iEnd = 0, FinalResult *res = nullptr):
+    WorkerArg(int iStart = 0, int iEnd = 0, FinalResult* res = nullptr):
         iStart(iStart), iEnd(iEnd), res(res)
     {
     }
@@ -58,8 +58,8 @@ struct WorkerArg {
 
 
 
-void* workerRoutine(void* argVoid) {
-    auto arg = (WorkerArg*)argVoid;
+void* workerFunc(void* argVoid) {
+    auto arg = (WorkerArg*) argVoid;
     auto res = arg->res;
 
     int resValue = 0;
@@ -130,11 +130,11 @@ int main() {
     prepare(RANGE_START, RANGE_STOP, NUM_THREADS, lstTid, lstWorkerArg, &finalRes);
 
 
-    auto tpStart = mytool::HiResClock::now();
+    auto tpStart = mylib::HiResClock::now();
 
 
     for (int i = 0; i < NUM_THREADS; ++i) {
-        ret = pthread_create(&lstTid[i], nullptr, workerRoutine, &lstWorkerArg[i]);
+        ret = pthread_create(&lstTid[i], nullptr, workerFunc, &lstWorkerArg[i]);
     }
 
     for (auto&& tid : lstTid) {
@@ -145,7 +145,7 @@ int main() {
     finalRes.destroy();
 
 
-    auto timeElapsed = mytool::HiResClock::getTimeSpan(tpStart);
+    auto timeElapsed = mylib::HiResClock::getTimeSpan(tpStart);
 
 
     cout << "The integer which has largest number of divisors is " << finalRes.value << endl;

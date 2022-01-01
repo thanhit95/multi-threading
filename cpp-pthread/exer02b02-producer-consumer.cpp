@@ -49,7 +49,7 @@ struct GlobalSemaphore {
 
 
 struct GlobalArg {
-    queue<int>* qProduct;
+    queue<int>* q;
     GlobalSemaphore* sem;
     int startValue;
 };
@@ -57,8 +57,8 @@ struct GlobalArg {
 
 
 void* producer(void* argVoid) {
-    auto arg = (GlobalArg*)argVoid;
-    auto qProduct = arg->qProduct;
+    auto arg = (GlobalArg*) argVoid;
+    auto q = arg->q;
     auto sem = arg->sem;
 
     int i = 1;
@@ -66,7 +66,7 @@ void* producer(void* argVoid) {
     for (;; ++i) {
         sem->waitEmpty();
 
-        qProduct->push(i + arg->startValue);
+        q->push(i + arg->startValue);
         sleep(1);
 
         sem->postFill();
@@ -79,8 +79,8 @@ void* producer(void* argVoid) {
 
 
 void* consumer(void* argVoid) {
-    auto arg = (GlobalArg*)argVoid;
-    auto qProduct = arg->qProduct;
+    auto arg = (GlobalArg*) argVoid;
+    auto q = arg->q;
     auto sem = arg->sem;
 
     int data = 0;
@@ -88,8 +88,8 @@ void* consumer(void* argVoid) {
     for (;;) {
         sem->waitFill();
 
-        data = qProduct->front();
-        qProduct->pop();
+        data = q->front();
+        q->pop();
 
         cout << "Consumer " << data << endl;
 
@@ -104,7 +104,7 @@ void* consumer(void* argVoid) {
 
 int main() {
     GlobalSemaphore sem;
-    queue<int> qProduct;
+    queue<int> q;
     pthread_t tidProducerA, tidProducerB, tidConsumer;
 
     GlobalArg argCon, argProA, argProB;
@@ -114,7 +114,7 @@ int main() {
     sem.init(0, 1);
 
 
-    argCon = argProA = argProB = { &qProduct, &sem, 0 };
+    argCon = argProA = argProB = { &q, &sem, 0 };
     argProA.startValue = 0;
     argProB.startValue = 1000;
 
@@ -129,7 +129,5 @@ int main() {
 
 
     sem.destroy();
-
-
     return 0;
 }

@@ -55,7 +55,7 @@ int main() {
     int result = 0;
 
     for (int i = 1; i <= N; ++i)
-        if (a[i] == 1)
+        if (a[i])
             ++result;
 
 

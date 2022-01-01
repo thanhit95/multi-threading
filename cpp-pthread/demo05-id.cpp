@@ -4,15 +4,15 @@ GETTING THREAD'S ID
 
 
 #include <iostream>
-#include <pthread.h>
 #include <unistd.h>
+#include <pthread.h>
 using namespace std;
 
 
 
-void* routine(void*) {
+void* doTask(void*) {
     sleep(2);
-    cout << "Thread id is " << pthread_self() << endl;
+    cout << pthread_self() << endl;
 
     pthread_exit(nullptr);
     return nullptr;
@@ -21,17 +21,17 @@ void* routine(void*) {
 
 
 int main() {
-    pthread_t tid1, tid2;
+    pthread_t tidFoo, tidBar;
     int ret = 0;
 
-    ret = pthread_create(&tid1, nullptr, routine, nullptr);
-    ret = pthread_create(&tid2, nullptr, routine, nullptr);
+    ret = pthread_create(&tidFoo, nullptr, doTask, nullptr);
+    ret = pthread_create(&tidBar, nullptr, doTask, nullptr);
 
-    cout << "tid1 = " << tid1 << endl;
-    cout << "tid2 = " << tid2 << endl;
+    cout << "foo's id = " << tidFoo << endl;
+    cout << "bar's id = " << tidBar << endl;
 
-    ret = pthread_join(tid1, nullptr);
-    ret = pthread_join(tid2, nullptr);
+    ret = pthread_join(tidFoo, nullptr);
+    ret = pthread_join(tidBar, nullptr);
 
     return 0;
 }
