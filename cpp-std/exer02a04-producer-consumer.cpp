@@ -15,21 +15,21 @@ using namespace mylib;
 
 
 
-void producer(BlockingQueue<int>* qProduct, int startValue) {
+void producer(BlockingQueue<int>* blkq, int startValue) {
     int i = 1;
 
     for (;; ++i) {
-        qProduct->put(i + startValue);
+        blkq->put(i + startValue);
     }
 }
 
 
 
-void consumer(BlockingQueue<int>* qProduct) {
+void consumer(BlockingQueue<int>* blkq) {
     int data = 0;
 
     for (;;) {
-        data = qProduct->take();
+        data = blkq->take();
         cout << "Consumer " << data << endl;
         std::this_thread::sleep_for(std::chrono::seconds(1));
     }
@@ -38,7 +38,7 @@ void consumer(BlockingQueue<int>* qProduct) {
 
 
 int main() {
-    auto qProduct = BlockingQueue<int>();
+    auto blkq = BlockingQueue<int>();
 
 
     constexpr int NUM_PRODUCERS = 3;
@@ -50,11 +50,11 @@ int main() {
 
     // CREATE THREADS
     for (int i = 0; i < NUM_PRODUCERS; ++i) {
-        lstThProducer[i] = std::thread(producer, &qProduct, i * 1000);
+        lstThProducer[i] = std::thread(producer, &blkq, i * 1000);
     }
 
     for (auto&& th : lstThConsumer) {
-        th = std::thread(consumer, &qProduct);
+        th = std::thread(consumer, &blkq);
     }
 
 

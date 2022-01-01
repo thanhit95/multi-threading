@@ -17,7 +17,7 @@ public class AppC {
 
     public static void main(String[] args) {
         var monitor = new MyMonitor<Integer>();
-        Queue<Integer> qProduct = new LinkedList<>();
+        Queue<Integer> queue = new LinkedList<>();
 
 
         final int MAX_QUEUE_SIZE = 6;
@@ -25,7 +25,7 @@ public class AppC {
         final int NUM_CONSUMERS = 2;
 
 
-        monitor.init(MAX_QUEUE_SIZE, qProduct);
+        monitor.init(MAX_QUEUE_SIZE, queue);
 
 
         IntStream.range(0, NUM_PRODUCERS).forEach(
@@ -70,7 +70,7 @@ public class AppC {
 
 
 class MyMonitor<T> {
-    private Queue<T> q;
+    private Queue<T> queue;
     private int maxQueueSize;
 
     private Object condFull = new Object();
@@ -79,21 +79,21 @@ class MyMonitor<T> {
 
     public void init(int maxQueueSize, Queue<T> q ) {
         this.maxQueueSize = maxQueueSize;
-        this.q = q;
+        this.queue = q;
     }
 
 
     public void add(T item) throws InterruptedException {
         synchronized (condFull) {
-            while (q.size() == maxQueueSize) {
+            while (queue.size() == maxQueueSize) {
                 condFull.wait();
             }
 
-            q.add(item);
+            queue.add(item);
         }
 
         synchronized (condEmpty) {
-            if (q.size() == 1) {
+            if (queue.size() == 1) {
                 condEmpty.notify();
             }
         }
@@ -104,15 +104,15 @@ class MyMonitor<T> {
         T item = null;
 
         synchronized (condEmpty) {
-            while (q.size() == 0) {
+            while (queue.size() == 0) {
                 condEmpty.wait();
             }
 
-            item = q.remove();
+            item = queue.remove();
         }
 
         synchronized (condFull) {
-            if (q.size() == maxQueueSize - 1) {
+            if (queue.size() == maxQueueSize - 1) {
                 condFull.notify();
             }
         }

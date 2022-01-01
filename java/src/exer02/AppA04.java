@@ -15,7 +15,7 @@ import java.util.stream.IntStream;
 public class AppA04 {
 
     public static void main(String[] args) {
-        var qProduct = new LinkedBlockingQueue<Integer>();
+        var queue = new LinkedBlockingQueue<Integer>();
 
 
         final int NUM_PRODUCERS = 3;
@@ -23,27 +23,27 @@ public class AppA04 {
 
 
         IntStream.range(0, NUM_PRODUCERS).forEach(
-                i -> new Thread(() -> producer(qProduct, i * 1000)).start()
+                i -> new Thread(() -> producer(queue, i * 1000)).start()
         );
 
         IntStream.range(0, NUM_CONSUMERS).forEach(
-                i -> new Thread(() -> consumer(qProduct)).start()
+                i -> new Thread(() -> consumer(queue)).start()
         );
     }
 
 
-    private static void producer(LinkedBlockingQueue<Integer> qProduct, int startValue) {
+    private static void producer(LinkedBlockingQueue<Integer> queue, int startValue) {
         int i = 1;
 
         for (;; ++i) {
-            qProduct.add(i + startValue);
+            queue.add(i + startValue);
         }
     }
 
 
-    private static void consumer(LinkedBlockingQueue<Integer> qProduct) {
+    private static void consumer(LinkedBlockingQueue<Integer> queue) {
         for (;;) {
-            int data = qProduct.remove();
+            int data = queue.remove();
             System.out.println("Consumer " + data);
             try { Thread.sleep(1000); } catch (InterruptedException e) { }
         }

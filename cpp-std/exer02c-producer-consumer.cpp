@@ -106,7 +106,7 @@ void consumer(Monitor<T>* monitor) {
 
 int main() {
     Monitor<int> monitor;
-    queue<int> qProduct;
+    queue<int> q;
 
     constexpr int MAX_QUEUE_SIZE = 6;
     constexpr int NUM_PRODUCERS = 3;
@@ -117,7 +117,7 @@ int main() {
 
 
     // PREPARE ARGUMENTS
-    monitor.init(MAX_QUEUE_SIZE, &qProduct);
+    monitor.init(MAX_QUEUE_SIZE, &q);
 
 
     // CREATE THREADS

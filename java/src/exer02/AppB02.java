@@ -19,24 +19,24 @@ public class AppB02 {
         var semFill = new Semaphore(0);     // item produced
         var semEmpty = new Semaphore(1);    // remaining space in queue
 
-        Queue<Integer> qProduct = new LinkedList<>();
+        Queue<Integer> queue = new LinkedList<>();
 
-        new Thread(() -> producer(semFill, semEmpty, qProduct, 0)).start();
-        new Thread(() -> producer(semFill, semEmpty, qProduct, 1000)).start();
+        new Thread(() -> producer(semFill, semEmpty, queue, 0)).start();
+        new Thread(() -> producer(semFill, semEmpty, queue, 1000)).start();
 
-        new Thread(() -> consumer(semFill, semEmpty, qProduct)).start();
+        new Thread(() -> consumer(semFill, semEmpty, queue)).start();
     }
 
 
     private static void producer(Semaphore semFill, Semaphore semEmpty,
-                                 Queue<Integer> qProduct, int startValue) {
+                                 Queue<Integer> queue, int startValue) {
         int i = 1;
 
         for (;; ++i) {
             try {
                 semEmpty.acquire();
 
-                qProduct.add(i + startValue);
+                queue.add(i + startValue);
                 Thread.sleep(1000);
 
                 semFill.release();
@@ -48,12 +48,12 @@ public class AppB02 {
     }
 
 
-    private static void consumer(Semaphore semFill, Semaphore semEmpty, Queue<Integer> qProduct) {
+    private static void consumer(Semaphore semFill, Semaphore semEmpty, Queue<Integer> queue) {
         for (;;) {
             try {
                 semFill.acquire();
 
-                int data = qProduct.remove();
+                int data = queue.remove();
                 System.out.println("Consumer " + data);
 
                 semEmpty.release();

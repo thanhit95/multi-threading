@@ -14,21 +14,21 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class AppA02 {
 
     public static void main(String[] args) {
-        var qProduct = new LinkedBlockingQueue<Integer>();
+        var queue = new LinkedBlockingQueue<Integer>();
 
-        new Thread(() -> producer(qProduct)).start();
-        new Thread(() -> producer(qProduct)).start();
+        new Thread(() -> producer(queue)).start();
+        new Thread(() -> producer(queue)).start();
 
-        new Thread(() -> consumer(qProduct)).start();
+        new Thread(() -> consumer(queue)).start();
     }
 
 
-    private static void producer(LinkedBlockingQueue<Integer> qProduct) {
+    private static void producer(LinkedBlockingQueue<Integer> queue) {
         int i = 1;
 
         for (;; ++i) {
             try {
-                qProduct.put(i);
+                queue.put(i);
                 Thread.sleep(1000);
             }
             catch (InterruptedException e) {
@@ -38,10 +38,10 @@ public class AppA02 {
     }
 
 
-    private static void consumer(LinkedBlockingQueue<Integer> qProduct) {
+    private static void consumer(LinkedBlockingQueue<Integer> queue) {
         for (;;) {
             try {
-                int data = qProduct.take();
+                int data = queue.take();
                 System.out.println("Consumer " + data);
             }
             catch (InterruptedException e) {

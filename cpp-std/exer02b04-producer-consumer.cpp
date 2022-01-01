@@ -22,7 +22,7 @@ using cntsemaphore = std::counting_semaphore<>;
 void producer(
     cntsemaphore* semFill,
     cntsemaphore* semEmpty,
-    queue<int>* qProduct,
+    queue<int>* q,
     int startValue
 ) {
     int i = 1;
@@ -30,7 +30,7 @@ void producer(
     for (;; ++i) {
         semEmpty->acquire();
 
-        qProduct->push(i + startValue);
+        q->push(i + startValue);
 
         semFill->release();
     }
@@ -41,15 +41,15 @@ void producer(
 void consumer(
     cntsemaphore* semFill,
     cntsemaphore* semEmpty,
-    queue<int>* qProduct
+    queue<int>* q
 ) {
     int data = 0;
 
     for (;;) {
         semFill->acquire();
 
-        data = qProduct->front();
-        qProduct->pop();
+        data = q->front();
+        q->pop();
 
         cout << "Consumer " << data << endl;
         std::this_thread::sleep_for(std::chrono::seconds(1));
@@ -64,7 +64,7 @@ int main() {
     cntsemaphore semFill(0);   // item produced
     cntsemaphore semEmpty(1);  // remaining space in queue
 
-    queue<int> qProduct;
+    queue<int> q;
 
 
     constexpr int NUM_PRODUCERS = 3;
@@ -76,11 +76,11 @@ int main() {
 
     // CREATE THREADS
     for (int i = 0; i < NUM_PRODUCERS; ++i) {
-        lstThProducer[i] = std::thread(producer, &semFill, &semEmpty, &qProduct, i * 1000);
+        lstThProducer[i] = std::thread(producer, &semFill, &semEmpty, &q, i * 1000);
     }
 
     for (auto&& th : lstThConsumer) {
-        th = std::thread(consumer, &semFill, &semEmpty, &qProduct);
+        th = std::thread(consumer, &semFill, &semEmpty, &q);
     }
 
 

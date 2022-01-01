@@ -15,22 +15,22 @@ using namespace mylib;
 
 
 
-void producer(BlockingQueue<int>* qProduct) {
+void producer(BlockingQueue<int>* blkq) {
     int i = 1;
 
     for (;; ++i) {
-        qProduct->put(i);
+        blkq->put(i);
         std::this_thread::sleep_for(std::chrono::seconds(1));
     }
 }
 
 
 
-void consumer(BlockingQueue<int>* qProduct) {
+void consumer(BlockingQueue<int>* blkq) {
     int data = 0;
 
     for (;;) {
-        data = qProduct->take();
+        data = blkq->take();
         cout << "Consumer " << data << endl;
     }
 }
@@ -38,11 +38,11 @@ void consumer(BlockingQueue<int>* qProduct) {
 
 
 int main() {
-    auto qProduct = BlockingQueue<int>();
+    auto blkq = BlockingQueue<int>();
 
-    auto thProducerA = std::thread(producer, &qProduct);
-    auto thProducerB = std::thread(producer, &qProduct);
-    auto thConsumer = std::thread(consumer, &qProduct);
+    auto thProducerA = std::thread(producer, &blkq);
+    auto thProducerB = std::thread(producer, &blkq);
+    auto thConsumer = std::thread(consumer, &blkq);
 
     thProducerA.join();
     thProducerB.join();
