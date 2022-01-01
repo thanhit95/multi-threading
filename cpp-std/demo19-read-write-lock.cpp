@@ -74,6 +74,7 @@ int main() {
     for (auto&& th : lstThRead) {
         th.join();
     }
+
     for (auto&& th : lstThWrite) {
         th.join();
     }

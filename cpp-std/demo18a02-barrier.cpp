@@ -54,7 +54,7 @@ int main() {
     }
 
 
-    // thread with userName = "amet" will be FREEZED
+    // thread with userName = "amet" shall be FREEZED
 
 
     for (auto&& th : lstTh) {

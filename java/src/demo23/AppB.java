@@ -1,6 +1,6 @@
 /*
  * THREAD-LOCAL STORAGE
- * Avoiding synchronization using Thread-Local Storage
+ * Avoiding synchronization using thread-local storage
  */
 
 package demo23;
@@ -30,10 +30,10 @@ public class AppB {
 
 
         /*
-         * By using Thread-Local Storage, each thread has its own counter.
+         * By using thread-local storage, each thread has its own counter.
          * So, the counter in one thread is completely independent of each other.
          *
-         * Thread-Local Storage helps us to AVOID SYNCHRONIZATION.
+         * Thread-local storage helps us to AVOID SYNCHRONIZATION.
          */
     }
 

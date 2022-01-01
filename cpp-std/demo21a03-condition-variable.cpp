@@ -48,11 +48,12 @@ int main() {
     auto thBar = std::thread(bar);
 
 
-    thBar.join();
-
     for (auto&& thFoo : lstThFoo) {
         thFoo.join();
     }
+
+    thBar.join();
+
 
     return 0;
 }
