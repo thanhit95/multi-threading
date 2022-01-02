@@ -22,10 +22,12 @@ public class AppC05 {
 
         System.out.println("Begin to submit all tasks");
 
+
         // lstTask is List< Future<Character> >
         var lstTask = IntStream.range(0, NUM_TASKS)
                 .mapToObj(i -> executor.submit(() -> (char)(i + 'A')))
                 .toList();
+
 
         executor.shutdown();
 

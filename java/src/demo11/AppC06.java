@@ -21,10 +21,12 @@ public class AppC06 {
 
         ExecutorService executor = Executors.newFixedThreadPool(NUM_THREADS);
 
+
         // List< Callable<String> > todo
         var todo = IntStream.range(0, NUM_TASKS)
                 .mapToObj(i -> (Callable<String>)() -> doTask(i))
                 .toList();
+
 
         System.out.println("Begin to submit all tasks");
 
@@ -36,8 +38,10 @@ public class AppC06 {
         // lstTask is List< Future<String> >
         var lstTask = executor.invokeAll(todo);
 
+
         System.out.println("All tasks are completed");
         executor.shutdown();
+
 
         for (var task : lstTask) {
             System.out.println(task.get());

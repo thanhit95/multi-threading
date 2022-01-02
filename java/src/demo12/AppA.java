@@ -16,11 +16,8 @@ public class AppA {
 
         var lstTh = IntStream.range(0, NUM_THREADS)
                 .mapToObj(i -> new Thread(() -> {
-
                     try { Thread.sleep(1000); } catch (InterruptedException e) { }
-
                     System.out.print(i);
-
                 }))
                 .toList();
 

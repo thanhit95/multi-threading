@@ -26,14 +26,11 @@ public class AppA02 {
 class WorkerA extends Thread {
     private static Lock lk = new ReentrantLock();
 
-
     private char name;
-
 
     public WorkerA(char name) {
         this.name = name;
     }
-
 
     @Override
     public void run() {

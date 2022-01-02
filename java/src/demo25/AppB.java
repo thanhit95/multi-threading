@@ -25,7 +25,6 @@ public class AppB {
         for (var th : lstTh)
             th.start();
 
-
         for (var th : lstTh)
             th.join();
 

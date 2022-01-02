@@ -24,14 +24,11 @@ public class AppB02 {
 class WorkerB extends Thread {
     private static Object lock = new Object();
 
-
     private char name;
-
 
     public WorkerB(char name) {
         this.name = name;
     }
-
 
     @Override
     public void run() {
