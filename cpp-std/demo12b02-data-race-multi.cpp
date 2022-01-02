@@ -6,8 +6,8 @@ Version 02: Multithreading
 
 #include <iostream>
 #include <vector>
-#include <thread>
 #include <numeric>
+#include <thread>
 using namespace std;
 
 

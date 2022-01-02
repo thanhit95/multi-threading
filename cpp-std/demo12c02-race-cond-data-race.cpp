@@ -4,8 +4,8 @@ RACE CONDITIONS AND DATA RACES
 
 
 #include <iostream>
-#include <thread>
 #include <chrono>
+#include <thread>
 using namespace std;
 
 

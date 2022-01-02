@@ -5,9 +5,9 @@ Version B: Using std::future
 
 
 #include <iostream>
+#include <chrono>
 #include <thread>
 #include <future>
-#include <chrono>
 using namespace std;
 
 

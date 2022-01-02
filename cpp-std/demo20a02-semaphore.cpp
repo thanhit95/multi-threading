@@ -5,9 +5,9 @@ Version A: Paper sheets and packages
 
 
 #include <iostream>
+#include <chrono>
 #include <thread>
 #include <semaphore>
-#include <chrono>
 using namespace std;
 
 

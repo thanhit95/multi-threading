@@ -5,9 +5,9 @@ ATOMIC ACCESS
 
 #include <iostream>
 #include <vector>
+#include <chrono>
 #include <thread>
 #include <atomic>
-#include <chrono>
 using namespace std;
 
 

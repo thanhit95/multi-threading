@@ -5,8 +5,8 @@ RACE CONDITIONS
 
 #include <iostream>
 #include <vector>
-#include <thread>
 #include <chrono>
+#include <thread>
 using namespace std;
 
 

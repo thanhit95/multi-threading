@@ -9,8 +9,8 @@ So, I use mylib::BlockingQueue for this demonstration.
 
 #include <iostream>
 #include <string>
-#include <thread>
 #include <chrono>
+#include <thread>
 #include "mylib-blockingqueue.hpp"
 using namespace std;
 using namespace mylib;

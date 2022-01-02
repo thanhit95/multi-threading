@@ -8,10 +8,10 @@ SOLUTION TYPE C: USING CONDITION VARIABLES & MONITORS
 
 #include <iostream>
 #include <queue>
+#include <chrono>
 #include <thread>
 #include <mutex>
 #include <condition_variable>
-#include <chrono>
 using namespace std;
 
 

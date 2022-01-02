@@ -7,9 +7,9 @@ Version A: Cyclic barriers
 #include <iostream>
 #include <string>
 #include <tuple>
+#include <chrono>
 #include <thread>
 #include <barrier>
-#include <chrono>
 using namespace std;
 
 

@@ -6,9 +6,9 @@ Version A: Synchronous queues
 
 #include <iostream>
 #include <string>
+#include <chrono>
 #include <thread>
 #include <semaphore>
-#include <chrono>
 using namespace std;
 
 

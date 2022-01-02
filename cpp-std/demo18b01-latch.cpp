@@ -7,9 +7,9 @@ Version B: Count-down latches
 #include <iostream>
 #include <string>
 #include <tuple>
+#include <chrono>
 #include <thread>
 #include <latch>
-#include <chrono>
 using namespace std;
 
 

@@ -6,9 +6,9 @@ Without synchronization (by a mutex), we are not sure that result = 30000
 
 
 #include <iostream>
+#include <chrono>
 #include <thread>
 #include <mutex>
-#include <chrono>
 using namespace std;
 
 

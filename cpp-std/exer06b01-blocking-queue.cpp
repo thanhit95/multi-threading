@@ -8,11 +8,11 @@ Version B01: General blocking queues
 #include <iostream>
 #include <queue>
 #include <string>
+#include <chrono>
+#include <stdexcept>
 #include <thread>
 #include <mutex>
 #include <semaphore>
-#include <chrono>
-#include <stdexcept>
 using namespace std;
 
 

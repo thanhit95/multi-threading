@@ -10,9 +10,9 @@ When it’s destructor is called it releases the mutex.
 
 
 #include <iostream>
+#include <chrono>
 #include <thread>
 #include <mutex>
-#include <chrono>
 using namespace std;
 
 

@@ -7,8 +7,8 @@ SOLUTION TYPE A: USING BLOCKING QUEUES
 
 
 #include <iostream>
-#include <thread>
 #include <chrono>
+#include <thread>
 #include "mylib-blockingqueue.hpp"
 using namespace std;
 using namespace mylib;

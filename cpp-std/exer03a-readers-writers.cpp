@@ -5,9 +5,9 @@ Solution for the first readers-writers problem
 
 
 #include <iostream>
+#include <chrono>
 #include <thread>
 #include <mutex>
-#include <chrono>
 #include "mylib-random.hpp"
 using namespace std;
 

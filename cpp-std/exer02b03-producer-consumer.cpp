@@ -8,9 +8,9 @@ SOLUTION TYPE B: USING SEMAPHORES
 
 #include <iostream>
 #include <queue>
+#include <chrono>
 #include <thread>
 #include <semaphore>
-#include <chrono>
 using namespace std;
 
 

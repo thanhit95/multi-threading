@@ -4,9 +4,9 @@ THE DINING PHILOSOPHERS PROBLEM
 
 
 #include <iostream>
+#include <chrono>
 #include <thread>
 #include <mutex>
-#include <chrono>
 using namespace std;
 
 
