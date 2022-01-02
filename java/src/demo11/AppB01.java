@@ -32,7 +32,8 @@ public class AppB01 {
         }));
 
 
-        // shutdown() stops the ExecutorService from accepting new tasks and closes down idle worker threads
+        // shutdown() stops the ExecutorService from accepting new tasks
+        // and closes down idle worker threads
         executor.shutdown();
     }
 

@@ -16,6 +16,7 @@ public class AppA {
 
         var lstTh = new ArrayList<Thread>();
 
+
         for (int i = 0; i < NUM_THREADS; ++i) {
             final int index = i;
 
@@ -27,9 +28,12 @@ public class AppA {
             }));
         }
 
-        for (var th : lstTh) {
+
+        for (var th : lstTh)
             th.start();
-        }
+
+        // We can reduce above for loop with this statement:
+        // lstTh.forEach(Thread::start);
     }
 
 }

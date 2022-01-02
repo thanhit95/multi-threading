@@ -14,7 +14,7 @@ public class App {
     public static void main(String[] args) throws InterruptedException {
         var counter = new Counter();
 
-        var monitor = new Monitor();
+        var monitor = new MyMonitor();
         monitor.init(counter);
 
         final int NUM_THREADS = 3;
@@ -48,7 +48,7 @@ class Counter {
 
 
 
-class Monitor {
+class MyMonitor {
     private Counter counter = null;
 
     public void init(Counter counter) {

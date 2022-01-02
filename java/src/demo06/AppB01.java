@@ -22,11 +22,11 @@ public class AppB01 {
         })).toList();
 
 
-        lstTh.forEach(Thread::start);
-        /*
-         * for (var th : lstTh)
-         *     th.start();
-         */
+        for (var th : lstTh)
+            th.start();
+
+        // We can reduce above for loop with this statement:
+        // lstTh.forEach(Thread::start);
     }
 
 }

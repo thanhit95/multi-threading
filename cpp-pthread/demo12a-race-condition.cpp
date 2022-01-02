@@ -38,8 +38,8 @@ int main() {
     }
 
 
-    for (int i = 0; i < NUM_THREADS; ++i) {
-        ret = pthread_join(lstTid[i], nullptr);
+    for (auto&& tid : lstTid) {
+        ret = pthread_join(tid, nullptr);
     }
 
 
