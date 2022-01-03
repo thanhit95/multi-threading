@@ -15,38 +15,39 @@ I am sorry that generated table of contents contains too many uppercase stuff...
   - [TABLE OF CONTENTS](#table-of-contents)
   - [DEMOSTRATIONS](#demostrations)
     - [DEMO 01 - HELLO](#demo-01---hello)
-    - [DEMO 02 - PASSING ARGUMENTS](#demo-02---passing-arguments)
-    - [DEMO 03 - SLEEP](#demo-03---sleep)
-    - [DEMO 04 - ID](#demo-04---id)
-    - [DEMO 05 - LIST OF MULTIPLE THREADS](#demo-05---list-of-multiple-threads)
-    - [DEMO 06 - TERMINATE](#demo-06---terminate)
-    - [DEMO 07 - RETURN VALUE](#demo-07---return-value)
-    - [DEMO 08 - DETACH](#demo-08---detach)
-    - [DEMO 09 - YIELD](#demo-09---yield)
-    - [DEMO 10 - THREAD POOL](#demo-10---thread-pool)
-    - [DEMO 11A - RACE CONDITION](#demo-11a---race-condition)
-    - [DEMO 11B - DATA RACE](#demo-11b---data-race)
-    - [DEMO 11C - RACE CONDITION AND DATA RACE](#demo-11c---race-condition-and-data-race)
-    - [DEMO 12 - MUTEX](#demo-12---mutex)
-    - [DEMO 13 - SYNCHRONIZED](#demo-13---synchronized)
-    - [DEMO 14 - DEADLOCK](#demo-14---deadlock)
+    - [DEMO 02 - THREAD JOINS](#demo-02---thread-joins)
+    - [DEMO 03 - PASSING ARGUMENTS](#demo-03---passing-arguments)
+    - [DEMO 04 - SLEEP](#demo-04---sleep)
+    - [DEMO 05 - GETTING THREAD'S ID](#demo-05---getting-threads-id)
+    - [DEMO 06 - LIST OF MULTIPLE THREADS](#demo-06---list-of-multiple-threads)
+    - [DEMO 07 - FORCING A THREAD TO TERMINATE](#demo-07---forcing-a-thread-to-terminate)
+    - [DEMO 08 - GETTING RETURNED VALUES FROM THREADS](#demo-08---getting-returned-values-from-threads)
+    - [DEMO 09 - THREAD DETACHING](#demo-09---thread-detaching)
+    - [DEMO 10 - THREAD YIELDING](#demo-10---thread-yielding)
+    - [DEMO 11 - THREAD POOLS](#demo-11---thread-pools)
+    - [DEMO 12A - RACE CONDITIONS](#demo-12a---race-conditions)
+    - [DEMO 12B - DATA RACES](#demo-12b---data-races)
+    - [DEMO 12C - RACE CONDITIONS AND DATA RACES](#demo-12c---race-conditions-and-data-races)
+    - [DEMO 13 - MUTEXES](#demo-13---mutexes)
+    - [DEMO 14 - SYNCHRONIZED BLOCKS](#demo-14---synchronized-blocks)
+    - [DEMO 15 - DEADLOCK](#demo-15---deadlock)
       - [Version A](#version-a)
       - [Version B](#version-b)
-    - [DEMO 15 - MONITOR](#demo-15---monitor)
-    - [DEMO 16 - REENTRANT LOCK (RECURSIVE MUTEX)](#demo-16---reentrant-lock-recursive-mutex)
-    - [DEMO 17 - BARRIER AND LATCH](#demo-17---barrier-and-latch)
-    - [DEMO 18 - READ-WRITE LOCK](#demo-18---read-write-lock)
-    - [DEMO 19A - SEMAPHORE](#demo-19a---semaphore)
+    - [DEMO 16 - MONITORS](#demo-16---monitors)
+    - [DEMO 17 - REENTRANT LOCKS (RECURSIVE MUTEXES)](#demo-17---reentrant-locks-recursive-mutexes)
+    - [DEMO 18 - BARRIERS AND LATCHES](#demo-18---barriers-and-latches)
+    - [DEMO 19 - READ-WRITE LOCKS](#demo-19---read-write-locks)
+    - [DEMO 20A - SEMAPHORES](#demo-20a---semaphores)
       - [Version A01](#version-a01)
       - [Version A02](#version-a02)
       - [Version A03](#version-a03)
-    - [DEMO 19B - SEMAPHORE](#demo-19b---semaphore)
-    - [DEMO 20 - CONDITION VARIABLE](#demo-20---condition-variable)
-    - [DEMO 21 - BLOCKING QUEUE](#demo-21---blocking-queue)
-    - [DEMO 22 - THREAD-LOCAL STORAGE](#demo-22---thread-local-storage)
-    - [DEMO 23 & 24 - VOLATILE AND ATOMIC](#demo-23--24---volatile-and-atomic)
+    - [DEMO 20B - SEMAPHORES](#demo-20b---semaphores)
+    - [DEMO 21 - CONDITION VARIABLES](#demo-21---condition-variables)
+    - [DEMO 22 - BLOCKING QUEUES](#demo-22---blocking-queues)
+    - [DEMO 23 - THREAD-LOCAL STORAGE](#demo-23---thread-local-storage)
+    - [DEMO 24 & 25 - THE VOLATILE KEYWORD AND ATOMIC ACCESS](#demo-24--25---the-volatile-keyword-and-atomic-access)
   - [EXERCISES](#exercises)
-    - [EX01 - MAX DIV](#ex01---max-div)
+    - [EX01 - MAXIMUM NUMBER OF DIVISORS](#ex01---maximum-number-of-divisors)
       - [Version A](#version-a-1)
       - [Version B](#version-b-1)
       - [Version C](#version-c)
@@ -81,7 +82,11 @@ You learn how to create a thread, and how to join a thread.
 
 &nbsp;
 
-### DEMO 02 - PASSING ARGUMENTS
+### DEMO 02 - THREAD JOINS
+
+&nbsp;
+
+### DEMO 03 - PASSING ARGUMENTS
 
 You learn how to pass arguments to a thread:
 
@@ -90,52 +95,52 @@ You learn how to pass arguments to a thread:
 
 &nbsp;
 
-### DEMO 03 - SLEEP
+### DEMO 04 - SLEEP
 
 Making a thread sleep for a while.
 
 &nbsp;
 
-### DEMO 04 - ID
+### DEMO 05 - GETTING THREAD'S ID
 
-Getting thread id.
+Getting thread's id.
 
 &nbsp;
 
-### DEMO 05 - LIST OF MULTIPLE THREADS
+### DEMO 06 - LIST OF MULTIPLE THREADS
 
 Handling a list of multiple threads.
 
 &nbsp;
 
-### DEMO 06 - TERMINATE
+### DEMO 07 - FORCING A THREAD TO TERMINATE
 
-Forcing a thread to terminate (i.e. killing the thread).
+Forcing a thread to terminate aka. "killing the thread".
 
 Sometimes, we want to force a thread to terminate (for convenient).
 However, for careful practice, the thread should terminate by itself, not by external factors.
 
 &nbsp;
 
-### DEMO 07 - RETURN VALUE
+### DEMO 08 - GETTING RETURNED VALUES FROM THREADS
 
 You learn how to return value from a thread, and how to use that value for future tasks.
 
 &nbsp;
 
-### DEMO 08 - DETACH
+### DEMO 09 - THREAD DETACHING
 
 When a thread is created, one of its attributes defines whether it is joinable or detached. Only threads that are created as joinable can be joined. If a thread is created as detached, it can never be joined.
 
 &nbsp;
 
-### DEMO 09 - YIELD
+### DEMO 10 - THREAD YIELDING
 
 Yield is an action that occurs in a computer program during multithreading, of forcing a processor to relinquish control of the current running thread, and sending it to the end of the running queue, of the same scheduling priority.
 
 &nbsp;
 
-### DEMO 10 - THREAD POOL
+### DEMO 11 - THREAD POOLS
 
 You learn how to use thread pool and how thread pool works.
 
@@ -143,7 +148,7 @@ A thread pool is a software design pattern for achieving concurrency of executio
 
 &nbsp;
 
-### DEMO 11A - RACE CONDITION
+### DEMO 12A - RACE CONDITIONS
 
 A race condition or race hazard is the condition of an electronics, software, or other system where the system's substantive behavior is dependent on the sequence or timing of other uncontrollable events.
 
@@ -151,7 +156,7 @@ This program illustrates race condition: Each time you run the program, the resu
 
 &nbsp;
 
-### DEMO 11B - DATA RACE
+### DEMO 12B - DATA RACES
 
 Data race specifically refers to the non-synchronized conflicting "memory accesses" (or actions, or operations) to the same memory location.
 
@@ -180,7 +185,7 @@ About the source code, there are two versions:
 
 &nbsp;
 
-### DEMO 11C - RACE CONDITION AND DATA RACE
+### DEMO 12C - RACE CONDITIONS AND DATA RACES
 
 Many people are confused about race condition and data race.
 
@@ -195,7 +200,7 @@ Concurrent accesses to shared resources can lead to unexpected or erroneous beha
 
 &nbsp;
 
-### DEMO 12 - MUTEX
+### DEMO 13 - MUTEXES
 
 Mutexes are used to prevent data inconsistencies due to race conditions.
 
@@ -205,13 +210,13 @@ One can apply a mutex to protect a segment of memory ("critical region") from ot
 
 &nbsp;
 
-### DEMO 13 - SYNCHRONIZED
+### DEMO 14 - SYNCHRONIZED BLOCKS
 
 Update later.
 
 &nbsp;
 
-### DEMO 14 - DEADLOCK
+### DEMO 15 - DEADLOCK
 
 #### Version A
 
@@ -247,7 +252,7 @@ After foo accessing A and bar accessing B, foo and bar might wait other together
 
 &nbsp;
 
-### DEMO 15 - MONITOR
+### DEMO 16 - MONITORS
 
 Monitor: Concurrent programming meets object-oriented programming.
 
@@ -258,7 +263,7 @@ A monitor is a thread-safe class, object, or module that wraps around a mutex in
 
 &nbsp;
 
-### DEMO 16 - REENTRANT LOCK (RECURSIVE MUTEX)
+### DEMO 17 - REENTRANT LOCKS (RECURSIVE MUTEXES)
 
 The reason for using reentrant lock is to avoid a deadlock due to e.g. recursion.
 
@@ -268,7 +273,7 @@ In the locked state, some thread owns the lock; in the unlocked state, no thread
 
 &nbsp;
 
-### DEMO 17 - BARRIER AND LATCH
+### DEMO 18 - BARRIERS AND LATCHES
 
 In cases where you must wait for a number of tasks to be completed before an overall task can proceed, barrier synchronization can be used.
 
@@ -279,7 +284,7 @@ There are two types of barriers:
 
 &nbsp;
 
-### DEMO 18 - READ-WRITE LOCK
+### DEMO 19 - READ-WRITE LOCKS
 
 In many situations, data is read more often than it is modified or written. In these cases, you can allow threads to read concurrently while holding the lock and allow only one thread to hold the lock when data is modified. A multiple-reader single-writer lock (or read-write lock) does this.
 
@@ -287,7 +292,7 @@ A read-write lock is acquired either for reading or writing, and then is release
 
 &nbsp;
 
-### DEMO 19A - SEMAPHORE
+### DEMO 20A - SEMAPHORES
 
 #### Version A01
 
@@ -315,7 +320,7 @@ The problem in this version is DEADLOCK, due to a mistake of semaphore synchroni
 
 &nbsp;
 
-### DEMO 19B - SEMAPHORE
+### DEMO 20B - SEMAPHORES
 
 A car is manufactured at each stop on a conveyor belt in a car factory.
 
@@ -330,13 +335,13 @@ Write a program to illustrate this scenario.
 
 &nbsp;
 
-### DEMO 20 - CONDITION VARIABLE
+### DEMO 21 - CONDITION VARIABLES
 
 Condition variables are synchronization primitives that enable threads to wait until a particular condition occurs. Condition variables are user-mode objects that cannot be shared across processes.
 
 &nbsp;
 
-### DEMO 21 - BLOCKING QUEUE
+### DEMO 22 - BLOCKING QUEUES
 
 A blocking queue is a queue that blocks when you:
 
@@ -347,7 +352,7 @@ There is a special type of the blocking queue, that is "synchronous queue". A sy
 
 &nbsp;
 
-### DEMO 22 - THREAD-LOCAL STORAGE
+### DEMO 23 - THREAD-LOCAL STORAGE
 
 There are two main ways to solve the race condition & data race problem:
 
@@ -386,7 +391,7 @@ In the demo code, by using thread-local storage, each thread has its own counter
 
 &nbsp;
 
-### DEMO 23 & 24 - VOLATILE AND ATOMIC
+### DEMO 24 & 25 - THE VOLATILE KEYWORD AND ATOMIC ACCESS
 
 Please read article "Volatile vs Atomic" for better understanding.
 
@@ -398,7 +403,7 @@ Please read article "Volatile vs Atomic" for better understanding.
 
 ## EXERCISES
 
-### EX01 - MAX DIV
+### EX01 - MAXIMUM NUMBER OF DIVISORS
 
 Problem statement: Find the integer in the range 1 to 100000 that has the largest number of divisors.
 
