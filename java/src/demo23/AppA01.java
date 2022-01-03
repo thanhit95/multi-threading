@@ -24,7 +24,7 @@ public class AppA01 {
 
 
 
-    static class MyTask {
+    private static class MyTask {
         private static ThreadLocal<String> data = new ThreadLocal<>();
 
         public static String get() {

@@ -35,7 +35,7 @@ public class AppC02 {
 
 
 
-    static class Global {
+    private static class Global {
         public static int counter = 0;
     }
 

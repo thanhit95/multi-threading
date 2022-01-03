@@ -59,7 +59,7 @@ public class AppB02 {
     //////////////////////////////////////////////
 
 
-    static class MyBlockingQueue<T> {
+    private static class MyBlockingQueue<T> {
         private Object condEmpty = new Object();
         private Object condFull = new Object();
 

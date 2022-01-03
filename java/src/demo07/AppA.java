@@ -16,7 +16,7 @@ public class AppA {
 
                 try { Thread.sleep(1000); }
                 catch (InterruptedException e) {
-                    // received interrupt signal, now current thread is going to exit
+                    // Received interrupt signal, now current thread is going to exit
                     return;
                 }
             }

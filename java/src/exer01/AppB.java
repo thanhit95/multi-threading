@@ -100,10 +100,10 @@ public class AppB {
 
 
 
-    record WorkerArg(int iStart, int iEnd) { }
+    private record WorkerArg(int iStart, int iEnd) { }
 
 
 
-    record WorkerResult(int value, int numDiv) { }
+    private record WorkerResult(int value, int numDiv) { }
 
 }

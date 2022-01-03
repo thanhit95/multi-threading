@@ -87,11 +87,11 @@ public class AppC {
 
 
 
-    record WorkerArg(int iStart, int iEnd) { }
+    private record WorkerArg(int iStart, int iEnd) { }
 
 
 
-    static class WorkerResult {
+    private static class WorkerResult {
         public int value = 0;
         public int numDiv = 0;
 

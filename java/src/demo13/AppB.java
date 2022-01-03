@@ -50,7 +50,7 @@ public class AppB {
 
 
 
-    static class Global {
+    private static class Global {
         public static Semaphore mutex = new Semaphore(1);
         public static int counter = 0;
     }

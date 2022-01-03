@@ -25,8 +25,7 @@ public class AppB {
         })).toList();
 
 
-        for (var th : lstTh)
-            th.start();
+        lstTh.forEach(Thread::start);
 
 
         /*
@@ -39,13 +38,13 @@ public class AppB {
 
 
 
-    static class Counter {
+    private static class Counter {
         public int value = 0;
     }
 
 
 
-    static class MyTask {
+    private static class MyTask {
         private static ThreadLocal<Counter> thlCounter = ThreadLocal.withInitial(() -> new Counter());
 
         public static int getCounter() {

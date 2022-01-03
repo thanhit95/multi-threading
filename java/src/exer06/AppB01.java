@@ -60,7 +60,7 @@ public class AppB01 {
     //////////////////////////////////////////////
 
 
-    static class MyBlockingQueue<T> {
+    private static class MyBlockingQueue<T> {
         private Semaphore semRemain = null;
         private Semaphore semFill = null;
 

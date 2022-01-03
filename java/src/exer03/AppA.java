@@ -85,7 +85,7 @@ public class AppA {
 
 
 
-    static class Global {
+    private static class Global {
         public static Semaphore mutResource = new Semaphore(1);
         public static Object mutReaderCount = new Object();
 

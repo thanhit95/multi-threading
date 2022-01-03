@@ -33,7 +33,7 @@ public class AppA {
 
 
 
-    static class Global {
+    private static class Global {
         public static volatile int counter = 0;
     }
 

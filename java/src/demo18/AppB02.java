@@ -58,6 +58,6 @@ public class AppB02 {
 
 
 
-    record ThreadArg(String userName, int timeWait) { }
+    private record ThreadArg(String userName, int timeWait) { }
 
 }

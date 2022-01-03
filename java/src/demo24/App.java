@@ -26,7 +26,7 @@ public class App {
 
 
 
-    static class Global {
+    private static class Global {
         public static volatile boolean stopped = false;
     }
 

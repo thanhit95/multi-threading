@@ -38,7 +38,7 @@ public class App {
 
 
 
-    static class MyTask implements Runnable {
+    private static class MyTask implements Runnable {
         public char id;
 
         public MyTask(char id) {
