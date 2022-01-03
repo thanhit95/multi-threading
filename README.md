@@ -21,6 +21,7 @@ This repo is licensed under the [3-Clause BSD License](LICENSE.txt).
 
 - ```cpp-pthread```: C++ POSIX threading.
 - ```cpp-std```: C++ std threading.
+- ```csharp```: C# std threading.
 - ```java```: Java threading.
 
 &nbsp;
@@ -32,20 +33,20 @@ This repo is licensed under the [3-Clause BSD License](LICENSE.txt).
 The notes and articles are the additional resources for the source code, which guides you for better research, step by step. You may consider it the comment/description at the beginning of the source code.
 
 ```text
-    ORIGINAL SOURCE CODE FILE                     SOURCE CODE FILE                NOTES AND ARTICLES
----------------------------------        ---------------------------------     -----------------------
-|                               |        |                               |     |                     |
-| /* THE COMMENTS... */         |        |                               |     |    THE COMMENTS     |
-|                               |        |                               |     |                     |
-| #include <iostream>           |        | #include <iostream>           |     |                     |
-| using namespace std;          |        | using namespace std;          |     |                     |
-|                               |  ===>  |                               |  +  |                     |
-| int main() {                  |        | int main() {                  |     |                     |
-|   cout << "Hello thread \n";  |        |   cout << "Hello thread \n";  |     |                     |
-|   return 0;                   |        |   return 0;                   |     |                     |
-| }                             |        | }                             |     |                     |
-|                               |        |                               |     |                     |
----------------------------------        ---------------------------------     -----------------------
+  ORIGINAL SOURCE CODE FILE                  SOURCE CODE FILE              NOTES AND ARTICLES
+------------------------------        ------------------------------     ----------------------
+|                            |        |                            |     |                    |
+| /* THE COMMENTS... */      |        |                            |     |    THE COMMENTS    |
+|                            |        |                            |     |                    |
+| #include <iostream>        |        | #include <iostream>        |     |                    |
+| using namespace std;       |        | using namespace std;       |     |                    |
+|                            |  ===>  |                            |  +  |                    |
+| int main() {               |        | int main() {               |     |                    |
+|   cout << "Hello thread";  |        |   cout << "Hello thread";  |     |                    |
+|   return 0;                |        |   return 0;                |     |                    |
+| }                          |        | }                          |     |                    |
+|                            |        |                            |     |                    |
+------------------------------        ------------------------------     ----------------------
 ```
 
 There are 2 notes:
@@ -53,7 +54,9 @@ There are 2 notes:
 - [notes-demos-exercises.md](notes-demos-exercises.md): The notes that go along with original source code.
 - [notes-articles.md](notes-articles.md): Extra helpful notes during my research.
 
-For your best result, I **strongly recommend** that you read [notes-demos-exercises.md](notes-demos-exercises.md) while enjoying source code (demos and exercises).
+&nbsp;
+
+**For your best result, I strongly recommend that you read [notes-demos-exercises.md](notes-demos-exercises.md) while enjoying source code (demos and exercises).**
 
 &nbsp;
 
