@@ -39,7 +39,7 @@ void* combineOnePackage(void*) {
         sleep(2);
 
         sem_post(&semSheet);
-        // Missing one statement: sem_post(&semSheet) ==> DEADLOCK.
+        // Missing one statement: sem_post(&semSheet) ==> deadlock
     }
 
     pthread_exit(nullptr);

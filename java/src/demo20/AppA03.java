@@ -40,7 +40,7 @@ public class AppA03 {
                     Thread.sleep(1000);
 
                     semSheet.release(1);
-                    // The code causes DEADLOCK due to missing one release.
+                    // The code causes deadlock due to missing one release.
                     // The code should be semSheet.release(2);
                 }
                 catch (InterruptedException e) {

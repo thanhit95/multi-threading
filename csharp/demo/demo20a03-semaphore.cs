@@ -37,7 +37,7 @@ class Demo20A03 : IRunnable
                 Thread.Sleep(1000);
 
                 semSheet.Release();
-                // Missing one statement: semSheet.Release() ==> DEADLOCK.
+                // Missing one statement: semSheet.Release() ==> deadlock
             }
         };
 
