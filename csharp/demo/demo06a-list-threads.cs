@@ -1,5 +1,5 @@
 ﻿/*
- * LIST OF MUTIPLE THREADS
+ * LIST OF MULTIPLE THREADS
  * Version B: Using List
  */
 using System;
