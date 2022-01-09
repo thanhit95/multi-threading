@@ -78,18 +78,16 @@ public:
 
     void waitTaskDone() {
         for (;;) {
-            {
-                uniquelk lkPending(mutTaskPending);
+            uniquelk lkPending(mutTaskPending);
 
-                if (0 == taskPending.size()) {
-                    uniquelk lkRunning(mutTaskRunning);
+            if (0 == taskPending.size()) {
+                uniquelk lkRunning(mutTaskRunning);
 
-                    while (taskRunning.size() > 0)
-                        condTaskRunning.wait(lkRunning);
+                while (taskRunning.size() > 0)
+                    condTaskRunning.wait(lkRunning);
 
-                    // no pending task and no running task
-                    break;
-                }
+                // no pending task and no running task
+                break;
             }
         }
     }
