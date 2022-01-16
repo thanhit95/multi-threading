@@ -6,7 +6,7 @@ using System.Threading;
 
 
 
-class Demo08 : IRunnable
+class Demo08A : IRunnable
 {
     public void run()
     {
