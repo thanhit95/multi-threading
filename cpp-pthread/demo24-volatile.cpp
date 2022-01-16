@@ -10,12 +10,12 @@ using namespace std;
 
 
 
-volatile bool stopped = false;
+volatile bool isRunning;
 
 
 
 void* doTask(void*) {
-    while (false == stopped) {
+    while (isRunning) {
         cout << "Running..." << endl;
         sleep(2);
     }
@@ -30,13 +30,12 @@ int main() {
     pthread_t tid;
     int ret = 0;
 
+    isRunning = true;
     ret = pthread_create(&tid, nullptr, doTask, nullptr);
 
     sleep(6);
-
-    stopped = true;
+    isRunning = false;
 
     ret = pthread_join(tid, nullptr);
-
     return 0;
 }

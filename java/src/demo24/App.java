@@ -9,16 +9,16 @@ package demo24;
 public class App {
 
     public static void main(String[] args) throws InterruptedException {
+        Global.isRunning = true;
         new Thread(() -> doTask()).start();
 
         Thread.sleep(6000);
-
-        Global.stopped = true;
+        Global.isRunning = false;
     }
 
 
     private static void doTask() {
-        while (false == Global.stopped) {
+        while (Global.isRunning) {
             System.out.println("Running...");
             try { Thread.sleep(2000); } catch (InterruptedException e) { }
         }
@@ -27,7 +27,7 @@ public class App {
 
 
     private static class Global {
-        public static volatile boolean stopped = false;
+        public static volatile boolean isRunning;
     }
 
 }

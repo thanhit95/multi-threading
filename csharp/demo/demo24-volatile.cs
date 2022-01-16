@@ -10,15 +10,17 @@ class Demo24 : IRunnable
 {
     public void run()
     {
+        Global.isRunning = true;
         new Thread(doTask).Start();
+
         Thread.Sleep(6000);
-        Global.stopped = true;
+        Global.isRunning = false;
     }
 
 
     private void doTask()
     {
-        while (false == Global.stopped)
+        while (Global.isRunning)
         {
             Console.WriteLine("Running...");
             Thread.Sleep(2000);
@@ -28,6 +30,6 @@ class Demo24 : IRunnable
 
     class Global
     {
-        public static volatile bool stopped = false;
+        public static volatile bool isRunning;
     }
 }
