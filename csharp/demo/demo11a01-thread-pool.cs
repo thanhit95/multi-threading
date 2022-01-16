@@ -1,6 +1,7 @@
 ﻿/*
  * THREAD POOLS
- * Version A01: Introduction
+ * Version A01: System.Threading.ThreadPool
+ *              Introduction
  */
 using System;
 using System.Threading;
@@ -17,9 +18,9 @@ class Demo11A01 : IRunnable
         };
 
 
-        ThreadPool.QueueUserWorkItem(arg => Console.WriteLine("Hello World"));
         ThreadPool.QueueUserWorkItem(wcb);
         ThreadPool.QueueUserWorkItem(doTask);
+        ThreadPool.QueueUserWorkItem(arg => Console.WriteLine("Hello World"));
 
 
         // Wait one second for task completion

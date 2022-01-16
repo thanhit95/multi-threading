@@ -1,6 +1,7 @@
 ﻿/*
  * THREAD POOLS
- * Version A02: Passing arguments
+ * Version A02: System.Threading.ThreadPool
+ *              Passing arguments
  */
 using System;
 using System.Threading;
@@ -13,16 +14,17 @@ class Demo11A02 : IRunnable
     {
         WaitCallback wcb = (arg) =>
         {
-            Console.WriteLine("Hello Multithreading " + arg);
+            Console.WriteLine($"Hello Multithreading {arg}");
         };
 
 
+        ThreadPool.QueueUserWorkItem(wcb, 1);
+        ThreadPool.QueueUserWorkItem(doTask, 2);
+
         ThreadPool.QueueUserWorkItem(
-            arg => Console.WriteLine("Hello World " + arg),
-            1
+            arg => Console.WriteLine($"Hello World {arg}"),
+            3
         );
-        ThreadPool.QueueUserWorkItem(wcb, 2);
-        ThreadPool.QueueUserWorkItem(doTask, 3);
 
 
         // Wait one second for task completion
@@ -32,6 +34,6 @@ class Demo11A02 : IRunnable
 
     private void doTask(object arg)
     {
-        Console.WriteLine("Hello Thread Pool " + arg);
+        Console.WriteLine($"Hello Thread Pool {arg}");
     }
 }
