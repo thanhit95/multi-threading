@@ -29,17 +29,17 @@ public class AppA03 {
         lstArg.forEach(arg -> new Thread(() -> {
 
             try {
-                Thread.sleep(1000 * arg.timeWait());
+                Thread.sleep(1000 * arg.timeWait);
 
-                System.out.println("Get request from " + arg.userName());
+                System.out.println("Get request from " + arg.userName);
 
                 syncPointA.await();
 
-                System.out.println("Process request for " + arg.userName());
+                System.out.println("Process request for " + arg.userName);
 
                 syncPointB.await();
 
-                System.out.println("Done " + arg.userName());
+                System.out.println("Done " + arg.userName);
             }
             catch (InterruptedException | BrokenBarrierException e) {
                 e.printStackTrace();

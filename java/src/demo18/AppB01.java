@@ -26,15 +26,15 @@ public class AppB01 {
         lstArg.forEach(arg -> new Thread(() -> {
 
             try {
-                Thread.sleep(1000 * arg.timeWait());
+                Thread.sleep(1000 * arg.timeWait);
 
-                System.out.println("Get request from " + arg.userName());
+                System.out.println("Get request from " + arg.userName);
 
                 syncPoint.countDown();
 
                 syncPoint.await();
 
-                System.out.println("Done " + arg.userName());
+                System.out.println("Done " + arg.userName);
             }
             catch (InterruptedException e) {
                 e.printStackTrace();

@@ -13,7 +13,6 @@ public class App {
 
     public static void main(String[] args) throws InterruptedException {
         var counter = new Counter();
-
         var monitor = new MyMonitor();
         monitor.init(counter);
 

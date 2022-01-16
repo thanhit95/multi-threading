@@ -64,9 +64,7 @@ public class AppB01 {
         private Semaphore semRemain = null;
         private Semaphore semFill = null;
 
-        @SuppressWarnings("unused")
         private int capacity = 0;
-
         private Queue<T> queue = null;
 
 
@@ -74,10 +72,11 @@ public class AppB01 {
             if (capacity <= 0)
                 throw new IllegalArgumentException("capacity must be a positive integer");
 
-            semRemain = new Semaphore(capacity);
+            this.capacity = capacity;
+
+            semRemain = new Semaphore(this.capacity);
             semFill = new Semaphore(0);
 
-            this.capacity = capacity;
             queue = new LinkedList<T>();
         }
 
@@ -95,7 +94,6 @@ public class AppB01 {
 
         public T take() throws InterruptedException {
             T result = null;
-
             semFill.acquire();
 
             synchronized (queue) {
@@ -103,7 +101,6 @@ public class AppB01 {
             }
 
             semRemain.release();
-
             return result;
         }
     }
