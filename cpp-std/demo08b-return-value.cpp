@@ -17,6 +17,9 @@ void doubleValue(int arg, std::promise<int> & prom) {
     std::this_thread::sleep_for(std::chrono::seconds(2));
 
     prom.set_value(result);
+
+    std::this_thread::sleep_for(std::chrono::seconds(2));
+    cout << "This thread is exiting" << endl;
 }
 
 
