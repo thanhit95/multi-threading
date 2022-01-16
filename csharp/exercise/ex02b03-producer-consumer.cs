@@ -17,36 +17,36 @@ class Exer02B03 : IRunnable
         var semFill = new Semaphore(0, 100);     // item produced
         var semEmpty = new Semaphore(1, 100);    // remaining space in queue
 
-        var qProduct = new Queue<int>();
+        var queue = new Queue<int>();
 
-        new Thread(() => funcProducer(semFill, semEmpty, qProduct, 0)).Start();
-        new Thread(() => funcProducer(semFill, semEmpty, qProduct, 100)).Start();
+        new Thread(() => producer(semFill, semEmpty, queue, 0)).Start();
+        new Thread(() => producer(semFill, semEmpty, queue, 1000)).Start();
 
-        new Thread(() => funcConsumer(semFill, semEmpty, qProduct)).Start();
+        new Thread(() => consumer(semFill, semEmpty, queue)).Start();
     }
 
 
-    private void funcProducer(Semaphore semFill, Semaphore semEmpty,
-        Queue<int> qProduct, int startValue)
+    private void producer(Semaphore semFill, Semaphore semEmpty,
+        Queue<int> queue, int startValue)
     {
         int i = 1;
 
         for (; ; ++i)
         {
             semEmpty.WaitOne();
-            qProduct.Enqueue(i + startValue);
+            queue.Enqueue(i + startValue);
             semFill.Release();
         }
     }
 
 
-    private void funcConsumer(Semaphore semFill, Semaphore semEmpty, Queue<int> qProduct)
+    private void consumer(Semaphore semFill, Semaphore semEmpty, Queue<int> queue)
     {
         for (; ; )
         {
             semFill.WaitOne();
 
-            int data = qProduct.Dequeue();
+            int data = queue.Dequeue();
             Console.WriteLine("Consumer " + data);
             Thread.Sleep(1000);
 

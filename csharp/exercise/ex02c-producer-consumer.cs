@@ -15,7 +15,7 @@ class Exer02C : IRunnable
     public void run()
     {
         var monitor = new ProdConsMonitor<int>();
-        var qProduct = new Queue<int>();
+        var queue = new Queue<int>();
 
 
         const int MAX_QUEUE_SIZE = 6;
@@ -23,7 +23,7 @@ class Exer02C : IRunnable
         const int NUM_CONSUMERS = 2;
 
 
-        monitor.init(MAX_QUEUE_SIZE, qProduct);
+        monitor.init(MAX_QUEUE_SIZE, queue);
 
 
         var lstProd = new List<Thread>();
@@ -32,12 +32,12 @@ class Exer02C : IRunnable
         for (int i = 0; i < NUM_PRODUCERS; ++i)
         {
             int t = i;
-            lstProd.Add(new Thread(() => funcProducer(monitor, t * 1000)));
+            lstProd.Add(new Thread(() => producer(monitor, t * 1000)));
         }
 
         for (int i = 0; i < NUM_CONSUMERS; ++i)
         {
-            lstCons.Add(new Thread(() => funcConsumer(monitor)));
+            lstCons.Add(new Thread(() => consumer(monitor)));
         }
 
 
@@ -46,7 +46,7 @@ class Exer02C : IRunnable
     }
 
 
-    private void funcProducer(ProdConsMonitor<int> monitor, int startValue)
+    private void producer(ProdConsMonitor<int> monitor, int startValue)
     {
         int i = 1;
 
@@ -57,7 +57,7 @@ class Exer02C : IRunnable
     }
 
 
-    private void funcConsumer(ProdConsMonitor<int> monitor)
+    private void consumer(ProdConsMonitor<int> monitor)
     {
         for (; ; )
         {
@@ -70,17 +70,17 @@ class Exer02C : IRunnable
 
     class ProdConsMonitor<T>
     {
-        private Queue<T> q;
+        private Queue<T> queue;
         private int maxQueueSize;
 
         private object condFull = new object();
         private object condEmpty = new object();
 
 
-        public void init(int maxQueueSize, Queue<T> q)
+        public void init(int maxQueueSize, Queue<T> queue)
         {
             this.maxQueueSize = maxQueueSize;
-            this.q = q;
+            this.queue = queue;
         }
 
 
@@ -88,15 +88,15 @@ class Exer02C : IRunnable
         {
             lock (condFull)
             {
-                while (q.Count == maxQueueSize)
+                while (queue.Count == maxQueueSize)
                     Monitor.Wait(condFull);
 
-                q.Enqueue(item);
+                queue.Enqueue(item);
             }
 
             lock (condEmpty)
             {
-                if (q.Count == 1)
+                if (queue.Count == 1)
                     Monitor.Pulse(condEmpty);
             }
         }
@@ -108,15 +108,15 @@ class Exer02C : IRunnable
 
             lock (condEmpty)
             {
-                while (q.Count == 0)
+                while (queue.Count == 0)
                     Monitor.Wait(condEmpty);
 
-                item = q.Dequeue();
+                item = queue.Dequeue();
             }
 
             lock (condFull)
             {
-                if (q.Count == maxQueueSize - 1)
+                if (queue.Count == maxQueueSize - 1)
                     Monitor.Pulse(condFull);
             }
 

@@ -20,17 +20,17 @@ class Exer03A : IRunnable
         var lstThWriter = new List<Thread>();
 
         for (int i = 0; i < NUM_READER; ++i)
-            lstThReader.Add(new Thread(() => funcReader(rand.Next(3))));
+            lstThReader.Add(new Thread(() => doTaskReader(rand.Next(3))));
 
         for (int i = 0; i < NUM_WRITER; ++i)
-            lstThWriter.Add(new Thread(() => funcWriter(rand.Next(3))));
+            lstThWriter.Add(new Thread(() => doTaskWriter(rand.Next(3))));
 
         lstThReader.ForEach(th => th.Start());
         lstThWriter.ForEach(th => th.Start());
     }
 
 
-    private static void funcWriter(int timeDelay)
+    private static void doTaskWriter(int timeDelay)
     {
         var rand = new Random();
         Thread.Sleep(1000 * timeDelay);
@@ -44,7 +44,7 @@ class Exer03A : IRunnable
     }
 
 
-    private void funcReader(int timeDelay)
+    private void doTaskReader(int timeDelay)
     {
         Thread.Sleep(1000 * timeDelay);
 

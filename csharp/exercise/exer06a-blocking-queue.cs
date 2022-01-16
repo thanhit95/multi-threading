@@ -19,7 +19,7 @@ class Exer06A : IRunnable
 
     private void producer(MySynchronousQueue<string> queue)
     {
-        string[] arr = { "lorem", "ipsum", "foo" };
+        string[] arr = { "lorem", "ipsum", "dolor" };
 
         foreach (var value in arr)
         {

@@ -36,8 +36,8 @@ namespace Exer07
             numThreads = inpNumThreads;
             forceThreadShutdown = false;
 
-            for (int i = 0; i < this.numThreads; ++i)
-                lstTh.Add(new Thread(() => threadRoutine(this)));
+            for (int i = 0; i < numThreads; ++i)
+                lstTh.Add(new Thread(() => threadWorkerFunc(this)));
 
             lstTh.ForEach(th => th.Start());
         }
@@ -94,7 +94,7 @@ namespace Exer07
 
 
 
-        private static void threadRoutine(MyThreadPoolV2A thisPtr)
+        private static void threadWorkerFunc(MyThreadPoolV2A thisPtr)
         {
             ref var taskPending = ref thisPtr.taskPending;
             ref var taskRunning = ref thisPtr.taskRunning;

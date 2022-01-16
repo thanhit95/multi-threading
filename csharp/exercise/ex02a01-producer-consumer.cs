@@ -14,29 +14,29 @@ class Exer02A01 : IRunnable
 {
     public void run()
     {
-        var qProduct = new BlockingCollection<int>(100);
-        new Thread(() => funcProducer(qProduct)).Start();
-        new Thread(() => funcConsumer(qProduct)).Start();
+        var queue = new BlockingCollection<int>(1);
+        new Thread(() => producer(queue)).Start();
+        new Thread(() => consumer(queue)).Start();
     }
 
 
-    private void funcProducer(BlockingCollection<int> qProduct)
+    private void producer(BlockingCollection<int> queue)
     {
         int i = 1;
 
         for (; ; ++i)
         {
-            qProduct.Add(i);
+            queue.Add(i);
             Thread.Sleep(1000);
         }
     }
 
 
-    private void funcConsumer(BlockingCollection<int> qProduct)
+    private void consumer(BlockingCollection<int> queue)
     {
         for (; ; )
         {
-            int data = qProduct.Take();
+            int data = queue.Take();
             Console.WriteLine("Consumer " + data);
         }
     }

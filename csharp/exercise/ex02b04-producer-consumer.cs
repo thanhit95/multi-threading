@@ -17,53 +17,53 @@ class Exer02B04 : IRunnable
         var semFill = new Semaphore(0, 100);     // item produced
         var semEmpty = new Semaphore(1, 100);    // remaining space in queue
 
-        var qProduct = new Queue<int>();
+        var queue = new Queue<int>();
 
         const int NUM_PRODUCERS = 3;
         const int NUM_CONSUMERS = 2;
 
 
-        var lstProd = new List<Thread>();
-        var lstCons = new List<Thread>();
+        var lstThProducer = new List<Thread>();
+        var lstThConsumer = new List<Thread>();
 
         for (int i = 0; i < NUM_PRODUCERS; ++i)
         {
             int t = i;
-            lstProd.Add(new Thread(() => funcProducer(semFill, semEmpty, qProduct, t * 1000)));
+            lstThProducer.Add(new Thread(() => producer(semFill, semEmpty, queue, t * 1000)));
         }
 
         for (int i = 0; i < NUM_CONSUMERS; ++i)
         {
-            lstCons.Add(new Thread(() => funcConsumer(semFill, semEmpty, qProduct)));
+            lstThConsumer.Add(new Thread(() => consumer(semFill, semEmpty, queue)));
         }
 
 
-        lstProd.ForEach(th => th.Start());
-        lstCons.ForEach(th => th.Start());
+        lstThProducer.ForEach(th => th.Start());
+        lstThConsumer.ForEach(th => th.Start());
     }
 
 
-    private void funcProducer(Semaphore semFill, Semaphore semEmpty,
-        Queue<int> qProduct, int startValue)
+    private void producer(Semaphore semFill, Semaphore semEmpty,
+        Queue<int> queue, int startValue)
     {
         int i = 1;
 
         for (; ; ++i)
         {
             semEmpty.WaitOne();
-            qProduct.Enqueue(i + startValue);
+            queue.Enqueue(i + startValue);
             semFill.Release();
         }
     }
 
 
-    private void funcConsumer(Semaphore semFill, Semaphore semEmpty, Queue<int> qProduct)
+    private void consumer(Semaphore semFill, Semaphore semEmpty, Queue<int> queue)
     {
         for (; ; )
         {
             semFill.WaitOne();
 
-            int data = qProduct.Dequeue();
+            int data = queue.Dequeue();
             Console.WriteLine("Consumer " + data);
             Thread.Sleep(1000);
 

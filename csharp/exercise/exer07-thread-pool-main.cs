@@ -21,13 +21,13 @@ namespace Exer07
             threadPool.init(NUM_THREADS);
 
 
-            var lstTasks = new List<MyTask>();
+            var lstTask = new List<MyTask>();
 
             for (int i = 0; i < NUM_TASKS; ++i)
-                lstTasks.Add(new MyTask((char)('A' + i)));
+                lstTask.Add(new MyTask((char)('A' + i)));
 
 
-            lstTasks.ForEach(task => threadPool.submit(task));
+            lstTask.ForEach(task => threadPool.submit(task));
             Console.WriteLine("All tasks are submitted");
 
 

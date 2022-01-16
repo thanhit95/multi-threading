@@ -91,7 +91,8 @@ class Exer06B01 : IRunnable
             T result = default;
             semFill.WaitOne();
 
-            lock (queue) {
+            lock (queue)
+            {
                 result = queue.Dequeue();
             }
 
