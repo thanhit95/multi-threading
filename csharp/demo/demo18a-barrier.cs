@@ -13,15 +13,15 @@ class Demo18A : IRunnable
     {
         var syncPoint = new Barrier(participantCount: 3);
 
-        var lstArgs = new List<ThreadArg>
+        var lstArg = new List<ThreadArg>
         {
-            new ThreadArg{ userName = "foo", timeWait = 1 },
-            new ThreadArg{ userName = "bar", timeWait = 2 },
-            new ThreadArg{ userName = "ham", timeWait = 3 }
+            new ThreadArg{ userName = "lorem", timeWait = 1 },
+            new ThreadArg{ userName = "ipsum", timeWait = 2 },
+            new ThreadArg{ userName = "dolor", timeWait = 3 }
         };
 
 
-        lstArgs.ForEach(arg => new Thread(() =>
+        lstArg.ForEach(arg => new Thread(() =>
         {
 
             Thread.Sleep(1000 * arg.timeWait);

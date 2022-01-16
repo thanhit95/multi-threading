@@ -24,15 +24,15 @@ class Demo22B : IRunnable
 
     private void producer(BlockingCollection<string> queue)
     {
-        queue.Add("lorem");
-        queue.Add("ipsum");
+        queue.Add("Alice");
+        queue.Add("likes");
 
         /*
-         * Due to reaching the maximum of capacity = 2, when executing bc.put("fooooooo"),
+         * Due to reaching the maximum of capacity = 2, when executing queue.put("singing"),
          * this thread is going to sleep until the queue removes an element.
         */
 
-        queue.Add("fooooooo");
+        queue.Add("singing");
     }
 
 

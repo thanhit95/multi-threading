@@ -13,12 +13,12 @@ class Demo03D : IRunnable
     {
         const int COUNT = 10;
 
-        Thread th = new Thread(() =>
+        new Thread(() =>
         {
+
             for (int i = 1; i <= COUNT; ++i)
                 Console.WriteLine("Foo " + i);
-        });
 
-        th.Start();
+        }).Start();
     }
 }

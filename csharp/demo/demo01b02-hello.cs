@@ -11,7 +11,7 @@ class Demo01B02 : IRunnable
 {
     public void run()
     {
-        Thread th = new Thread(() => Console.WriteLine("Hello from Lorem thread"));
+        Thread th = new Thread(() => Console.WriteLine("Hello from example thread"));
 
         th.Start();
 

@@ -10,13 +10,13 @@ class Demo24 : IRunnable
 {
     public void run()
     {
-        new Thread(routine).Start();
+        new Thread(doTask).Start();
         Thread.Sleep(6000);
         Global.stopped = true;
     }
 
 
-    private void routine()
+    private void doTask()
     {
         while (false == Global.stopped)
         {

@@ -26,7 +26,7 @@ class Demo13A : IRunnable
 
         for (int i = 0; i < NUM_THREADS; ++i)
         {
-            lstTh.Add(new Thread(routineCounter));
+            lstTh.Add(new Thread(doTask));
         }
 
         lstTh.ForEach(th => th.Start());
@@ -38,7 +38,7 @@ class Demo13A : IRunnable
     }
 
 
-    private void routineCounter()
+    private void doTask()
     {
         Thread.Sleep(1000);
 

@@ -10,19 +10,19 @@ class Demo05 : IRunnable
 {
     public void run()
     {
-        ThreadStart routine = () =>
+        ThreadStart doTask = () =>
         {
             int id = Thread.CurrentThread.ManagedThreadId;
             Console.WriteLine(id);
         };
 
-        Thread foo = new Thread(routine);
-        Thread bar = new Thread(routine);
+        Thread thFoo = new Thread(doTask);
+        Thread thBar = new Thread(doTask);
 
-        Console.WriteLine("foo's id is " + foo.ManagedThreadId);
-        Console.WriteLine("bar's id is " + bar.ManagedThreadId);
+        Console.WriteLine("foo's id: " + thFoo.ManagedThreadId);
+        Console.WriteLine("bar's id: " + thBar.ManagedThreadId);
 
-        foo.Start();
-        bar.Start();
+        thFoo.Start();
+        thBar.Start();
     }
 }

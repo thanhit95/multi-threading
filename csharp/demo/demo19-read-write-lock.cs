@@ -12,7 +12,7 @@ class Demo19 : IRunnable
 {
     public void run()
     {
-        var rwlock = new ReaderWriterLock();
+        var rwlk = new ReaderWriterLock();
 
 
         const int NUM_THREADS_READ = 10;
@@ -31,15 +31,15 @@ class Demo19 : IRunnable
         {
             lstThRead.Add(new Thread(() =>
             {
-                int timeWait = arg[rand.Next(arg.Length)];
+                int timeWait = arg[ rand.Next(arg.Length) ];
                 Thread.Sleep(1000 * timeWait);
 
                 // should catch exception
-                rwlock.AcquireReaderLock(1000);
+                rwlk.AcquireReaderLock(1000);
 
                 Console.WriteLine("read: " + Resource.value);
 
-                rwlock.ReleaseReaderLock();
+                rwlk.ReleaseReaderLock();
             }));
         }
 
@@ -48,16 +48,16 @@ class Demo19 : IRunnable
         {
             lstThWrite.Add(new Thread(() =>
             {
-                int timeWait = arg[rand.Next(arg.Length)];
+                int timeWait = arg[ rand.Next(arg.Length) ];
                 Thread.Sleep(1000 * timeWait);
 
                 // should catch exception
-                rwlock.AcquireWriterLock(1000);
+                rwlk.AcquireWriterLock(1000);
 
                 Resource.value = rand.Next(100);
                 Console.WriteLine("write: " + Resource.value);
 
-                rwlock.ReleaseWriterLock();
+                rwlk.ReleaseWriterLock();
             }));
         }
 

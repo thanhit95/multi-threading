@@ -11,15 +11,15 @@ class Demo03C : IRunnable
 {
     public void run()
     {
-        Thread th1 = new Thread(() => routine(1, 2, "red"));
-        Thread th2 = new Thread(() => routine(3, 4, "blue"));
+        Thread thFoo = new Thread(() => doTask(1, 2, "red"));
+        Thread thBar = new Thread(() => doTask(3, 4, "blue"));
 
-        th1.Start();
-        th2.Start();
+        thFoo.Start();
+        thBar.Start();
     }
 
 
-    private void routine(int a, double b, string c)
+    private void doTask(int a, double b, string c)
     {
         Console.WriteLine($"{a} {b} {c}");
     }

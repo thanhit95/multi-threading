@@ -1,7 +1,6 @@
 ﻿/*
  * MUTEXES
- *
- * Lock with a nonblocking mutex
+ * Locking with a nonblocking mutex
  */
 using System;
 using System.Collections.Generic;
@@ -17,7 +16,7 @@ class Demo13B : IRunnable
 
     public void run()
     {
-        const int NUM_THREADS = 50;
+        const int NUM_THREADS = 90;
 
         mut = new Mutex();
         counter = 0;
@@ -47,7 +46,7 @@ class Demo13B : IRunnable
             return;
         }
 
-        for (int i = 0; i < 10000; ++i)
+        for (int i = 0; i < 1000; ++i)
             ++counter;
 
         mut.ReleaseMutex();

@@ -2,14 +2,14 @@
  * THREAD-LOCAL STORAGE
  * Introduction
  *
- * Use valueFactory function for better initialization
+ * Use valueFactory function for better initialization.
  */
 using System;
 using System.Threading;
 
 
 
-class Demo22302 : IRunnable
+class Demo23A02 : IRunnable
 {
     public void run()
     {

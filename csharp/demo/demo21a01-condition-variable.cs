@@ -1,7 +1,7 @@
 ﻿/*
  * CONDITION VARIABLES
  *
- * In my opinion, the best mechanism to demonstrate term "Condition Variable"
+ * In my opinion, the best mechanism to demonstrate the term "Condition Variable"
  * in C# is System.Threading.Monitor.
  *
  * Monitor.Wait(conditionVariable)      ==> Wait
@@ -25,7 +25,7 @@ class Demo21A01 : IRunnable
 
             lock (conditionVar)
             {
-                // Waiting for notification from conditionVar
+                // Waiting for a notification from conditionVar
                 Monitor.Wait(conditionVar);
             }
 
@@ -38,7 +38,7 @@ class Demo21A01 : IRunnable
 
             lock (conditionVar)
             {
-                // Notify a thread which is waiting for notification from conditionVar
+                // Notify a thread which is waiting for the notification from conditionVar
                 Monitor.Pulse(conditionVar);
             }
         };

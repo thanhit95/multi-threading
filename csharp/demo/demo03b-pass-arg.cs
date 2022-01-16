@@ -11,16 +11,21 @@ class Demo03A : IRunnable
 {
     public void run()
     {
-        Thread th1 = new Thread(new ParameterizedThreadStart(routine));
-        Thread th2 = new Thread(new ParameterizedThreadStart(routine));
+        Thread thFoo = new Thread(doTask);
+        Thread thBar = new Thread(doTask);
 
-        th1.Start(new object[] { 1, 2.0, "red" });
-        th2.Start(new object[] { 3, 4.0, "blue" });
+        // or
+        // Thread thFoo = new Thread(new ParameterizedThreadStart(doTask));
+        // Thread thBar = new Thread(new ParameterizedThreadStart(doTask));
+
+        thFoo.Start(new object[] { 1, 2.0, "red" });
+        thBar.Start(new object[] { 3, 4.0, "blue" });
     }
 
-    private void routine(object arg)
+    private void doTask(object arg)
     {
         object[] array = (object[]) arg;
+
         int a = (int) array[0];
         double b = (double) array[1];
         string c = (string) array[2];

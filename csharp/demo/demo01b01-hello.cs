@@ -11,13 +11,13 @@ class Demo01B01 : IRunnable
 {
     public void run()
     {
-        ThreadStart threadFunc = new ThreadStart(() =>
+        ThreadStart doTask = new ThreadStart(() =>
         {
-            Console.WriteLine("Hello from Lorem thread");
+            Console.WriteLine("Hello from example thread");
         });
 
-        Thread th1 = new Thread(threadFunc);
-        Thread th2 = new Thread(threadFunc);
+        Thread th1 = new Thread(doTask);
+        Thread th2 = new Thread(doTask);
 
         th1.Start();
         th2.Start();

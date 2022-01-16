@@ -10,15 +10,15 @@ class Demo09 : IRunnable
 {
     public void run()
     {
-        var th = new Thread(() => {
-            Console.WriteLine("Routine is starting...");
+        var thFoo = new Thread(() => {
+            Console.WriteLine("foo is starting...");
             Thread.Sleep(2000);
-            Console.WriteLine("Routine is exiting...");
+            Console.WriteLine("foo is exiting...");
         });
 
 
-        th.IsBackground = true;
-        th.Start();
+        thFoo.IsBackground = true;
+        thFoo.Start();
 
 
         // If I comment this statement,
@@ -26,6 +26,6 @@ class Demo09 : IRunnable
         Thread.Sleep(3000);
 
 
-        Console.WriteLine("Program is terminating");
+        Console.WriteLine("Main thread is exiting");
     }
 }

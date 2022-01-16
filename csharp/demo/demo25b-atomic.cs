@@ -11,7 +11,7 @@ class Demo25B : IRunnable
 {
     public void run()
     {
-        ThreadStart routine = () =>
+        ThreadStart doTask = () =>
         {
             Thread.Sleep(1000);
             Interlocked.Increment(ref Global.counter);
@@ -21,7 +21,7 @@ class Demo25B : IRunnable
         var lstTh = new List<Thread>();
 
         for (int i = 0; i < 1000; ++i)
-            lstTh.Add(new Thread(routine));
+            lstTh.Add(new Thread(doTask));
 
 
         lstTh.ForEach(th => th.Start());

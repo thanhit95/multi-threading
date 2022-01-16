@@ -11,14 +11,14 @@ class Demo03B : IRunnable
 {
     public void run()
     {
-        Thread th1 = new Thread(new ParameterizedThreadStart(routine));
-        Thread th2 = new Thread(new ParameterizedThreadStart(routine));
+        Thread thFoo = new Thread(doTask);
+        Thread thBar = new Thread(doTask);
 
-        th1.Start(new object[] { 1, 2, "red" });
-        th2.Start(new object[] { 3, 4, "blue" });
+        thFoo.Start(new object[] { 1, 2, "red" });
+        thBar.Start(new object[] { 3, 4, "blue" });
     }
 
-    private void routine(dynamic arg)
+    private void doTask(dynamic arg)
     {
         int a = arg[0];
         double b = arg[1];

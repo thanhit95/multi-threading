@@ -10,17 +10,17 @@ class Demo02B : IRunnable
 {
     public void run()
     {
-        Thread foo = new Thread(() => Console.WriteLine("foo"));
-        Thread bar = new Thread(() => Console.WriteLine("bar"));
+        Thread thFoo = new Thread(() => Console.WriteLine("foo"));
+        Thread thBar = new Thread(() => Console.WriteLine("bar"));
 
-        foo.Start();
-        bar.Start();
+        thFoo.Start();
+        thBar.Start();
 
-        //foo.Join();
-        //bar.Join();
+        // thFoo.Join();
+        // thBar.Join();
 
         /*
-         * We do not need to call foo.Join() and bar.Join().
+         * We do not need to call thFoo.Join() and thBar.Join().
          * The reason is main thread will wait for the completion of all threads before app exits.
          */
     }

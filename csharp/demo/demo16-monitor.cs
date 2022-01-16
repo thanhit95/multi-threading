@@ -1,6 +1,6 @@
 ﻿/*
  * MONITORS
- * Implementation of a monitor
+ * Implementation of a monitor for managing a counter
  *
  * Notes:
  * - In C#, Monitor is already available (class System.Threading.Monitor).
@@ -31,7 +31,7 @@ class Demo16 : IRunnable
             {
                 Thread.Sleep(1000);
 
-                for (int j = 0; j < 1000; ++j)
+                for (int j = 0; j < 10000; ++j)
                     monitor.increaseCounter();
             }));
         }

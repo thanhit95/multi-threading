@@ -17,12 +17,12 @@ class Demo11B : IRunnable
         // INIT
         var inp = new int[N];
         var result = new int[N];
-        var lstEvents = new ManualResetEvent[N];
+        var lstEvents = new AutoResetEvent[N];
 
         for (int i = 0; i < N; ++i)
         {
             inp[i] = i + 100;
-            lstEvents[i] = new ManualResetEvent(false);
+            lstEvents[i] = new AutoResetEvent(false);
         }
 
 
@@ -40,6 +40,7 @@ class Demo11B : IRunnable
                 inp[i]
             );
         }
+
 
         WaitHandle.WaitAll(lstEvents);
 

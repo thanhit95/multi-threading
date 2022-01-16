@@ -25,13 +25,13 @@ class Demo22A : IRunnable
     private void producer(BlockingCollection<string> queue)
     {
         Thread.Sleep(2000);
-        queue.Add("lorem");
+        queue.Add("Alice");
 
         Thread.Sleep(2000);
-        queue.Add("ipsum");
+        queue.Add("likes");
 
         Thread.Sleep(2000);
-        queue.Add("fooooooo");
+        queue.Add("singing");
     }
 
 

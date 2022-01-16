@@ -14,20 +14,19 @@ class Demo12A : IRunnable
         const int NUM_THREADS = 5;
         var lstTh = new List<Thread>();
 
+
         for (int i = 0; i < NUM_THREADS; ++i)
         {
-            int index = i;
+            int ith = i;
 
             lstTh.Add(new Thread(() =>
             {
                 Thread.Sleep(1000);
-                Console.WriteLine(index);
+                Console.WriteLine(ith);
             }));
         }
 
-        foreach (var th in lstTh)
-        {
-            th.Start();
-        }
+
+        lstTh.ForEach(th => th.Start());
     }
 }

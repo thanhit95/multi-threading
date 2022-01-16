@@ -10,14 +10,16 @@ class Demo04 : IRunnable
 {
     public void run()
     {
-        var th = new Thread(() =>
+        var thFoo = new Thread(() =>
         {
-            Thread.Sleep(2000);
-            Console.WriteLine("Done!!!");
+            Console.WriteLine("foo is sleeping");
+            Thread.Sleep(3000);
+            Console.WriteLine("foo wakes up");
         });
 
-        th.Start();
+        thFoo.Start();
+        thFoo.Join();
 
-        Console.WriteLine("main thread is running...");
+        Console.WriteLine("Good bye");
     }
 }

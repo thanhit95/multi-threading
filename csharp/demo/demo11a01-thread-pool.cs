@@ -19,7 +19,7 @@ class Demo11A01 : IRunnable
 
         ThreadPool.QueueUserWorkItem(arg => Console.WriteLine("Hello World"));
         ThreadPool.QueueUserWorkItem(wcb);
-        ThreadPool.QueueUserWorkItem(routine);
+        ThreadPool.QueueUserWorkItem(doTask);
 
 
         // Wait one second for task completion
@@ -27,7 +27,7 @@ class Demo11A01 : IRunnable
     }
 
 
-    private void routine(object arg)
+    private void doTask(object arg)
     {
         Console.WriteLine("Hello Thread Pool");
     }

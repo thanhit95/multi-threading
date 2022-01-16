@@ -16,8 +16,8 @@ class Demo15A : IRunnable
     {
         mut = new Mutex();
 
-        var thFoo = new Thread(() => routine("foo"));
-        var thBar = new Thread(() => routine("bar"));
+        var thFoo = new Thread(() => doTask("foo"));
+        var thBar = new Thread(() => doTask("bar"));
 
         thFoo.Start();
         thBar.Start();
@@ -30,7 +30,7 @@ class Demo15A : IRunnable
     }
 
 
-    private void routine(string name)
+    private void doTask(string name)
     {
         mut.WaitOne();
 

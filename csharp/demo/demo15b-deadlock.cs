@@ -15,40 +15,40 @@ class Demo15B : IRunnable
 
     public void run()
     {
-        var foo = new Thread(() =>
+        var thFoo = new Thread(() =>
         {
             lock (resourceA)
             {
-                Console.WriteLine("foo entered resource A");
+                Console.WriteLine("foo acquired resource A");
                 Thread.Sleep(1000);
 
                 lock (resourceB)
                 {
-                    Console.WriteLine("foo entered resource B");
+                    Console.WriteLine("foo acquired resource B");
                 }
             }
         });
 
 
-        var bar = new Thread(() =>
+        var thBar = new Thread(() =>
         {
             lock (resourceB)
             {
-                Console.WriteLine("bar entered resource B");
+                Console.WriteLine("bar acquired resource B");
                 Thread.Sleep(1000);
 
                 lock (resourceA)
                 {
-                    Console.WriteLine("bar entered resource A");
+                    Console.WriteLine("bar acquired resource A");
                 }
             }
         });
 
 
-        foo.Start();
-        bar.Start();
-        foo.Join();
-        bar.Join();
+        thFoo.Start();
+        thBar.Start();
+        thFoo.Join();
+        thBar.Join();
 
 
         Console.WriteLine("You will never see this statement due to deadlock!");

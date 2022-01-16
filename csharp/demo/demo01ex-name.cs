@@ -11,19 +11,19 @@ class Demo01ExtraName : IRunnable
 {
     public void run()
     {
-        Thread thFoo = new Thread(routine)
+        Thread thFoo = new Thread(doTask)
         {
             Name = "foo"
         };
 
-        Thread thBar = new Thread(routine);
+        Thread thBar = new Thread(doTask);
         thBar.Name = "bar";
 
         thFoo.Start();
         thBar.Start();
     }
 
-    private void routine()
+    private void doTask()
     {
         Console.WriteLine($"My name is {Thread.CurrentThread.Name}");
     }

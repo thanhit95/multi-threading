@@ -15,22 +15,26 @@ class Demo12C01 : IRunnable
     {
         counter = 0;
 
-        var foo = new Thread(routine);
-        var bar = new Thread(routine);
+        var thFoo = new Thread(doTask);
+        var thBar = new Thread(doTask);
+        var thEgg = new Thread(doTask);
 
-        foo.Start();
-        bar.Start();
-        foo.Join();
-        bar.Join();
+        thFoo.Start();
+        thBar.Start();
+        thEgg.Start();
+
+        thFoo.Join();
+        thBar.Join();
+        thEgg.Join();
 
         Console.WriteLine("counter = " + counter);
         /*
-         * We are not sure that counter = 1000
+         * We are not sure that counter = 1500
          */
     }
 
 
-    private void routine()
+    private void doTask()
     {
         for (int i = 0; i < 500; ++i)
         {

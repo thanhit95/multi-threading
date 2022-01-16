@@ -11,13 +11,15 @@ using System.Threading;
 
 class Demo07 : IRunnable
 {
-    static volatile bool flagStop;
+    private volatile bool flagStop;
 
     public void run()
     {
         flagStop = false;
 
-        var th = new Thread(() => {
+        var th = new Thread(() =>
+        {
+
             while (true)
             {
                 if (flagStop)
@@ -27,12 +29,12 @@ class Demo07 : IRunnable
 
                 Thread.Sleep(1000);
             }
+
         });
 
         th.Start();
 
         Thread.Sleep(3000);
-
         flagStop = true;
     }
 }

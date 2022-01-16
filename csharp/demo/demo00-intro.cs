@@ -11,7 +11,7 @@ class Demo00 : IRunnable
 {
     public void run()
     {
-        Thread th = new Thread(threadFunc);
+        Thread th = new Thread(doTask);
 
         th.Start();
 
@@ -19,7 +19,7 @@ class Demo00 : IRunnable
             Console.Write("A");
     }
 
-    private void threadFunc()
+    private void doTask()
     {
         for (int i = 0; i < 300; ++i)
             Console.Write("B");

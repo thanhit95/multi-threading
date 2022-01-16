@@ -1,6 +1,6 @@
 ﻿/*
  * THREAD POOLS
- * Version A02: Argument passing
+ * Version A02: Passing arguments
  */
 using System;
 using System.Threading;
@@ -22,7 +22,7 @@ class Demo11A02 : IRunnable
             1
         );
         ThreadPool.QueueUserWorkItem(wcb, 2);
-        ThreadPool.QueueUserWorkItem(routine, 3);
+        ThreadPool.QueueUserWorkItem(doTask, 3);
 
 
         // Wait one second for task completion
@@ -30,7 +30,7 @@ class Demo11A02 : IRunnable
     }
 
 
-    private void routine(object arg)
+    private void doTask(object arg)
     {
         Console.WriteLine("Hello Thread Pool " + arg);
     }
