@@ -10,10 +10,10 @@ class Demo08 : IRunnable
 {
     public void run()
     {
-        int[] result = new int[2];
+        int resFoo = 0, resBar = 0;
 
-        var thFoo = new Thread(() => result[0] = doubleValue(5));
-        var thBar = new Thread(() => result[1] = doubleValue(80));
+        var thFoo = new Thread(() => resFoo = doubleValue(5));
+        var thBar = new Thread(() => resBar = doubleValue(80));
 
         thFoo.Start();
         thBar.Start();
@@ -22,8 +22,8 @@ class Demo08 : IRunnable
         thFoo.Join();
         thBar.Join();
 
-        Console.WriteLine(result[0]);
-        Console.WriteLine(result[1]);
+        Console.WriteLine(resFoo);
+        Console.WriteLine(resBar);
     }
 
 
