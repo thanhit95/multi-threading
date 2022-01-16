@@ -1,6 +1,6 @@
 ﻿/*
  * THREAD POOLS
- * Version B: Waiting for task completion by ManualResetEvent
+ * Version B: Waiting for task completion by AutoResetEvent
  */
 using System;
 using System.Threading;
@@ -17,12 +17,12 @@ class Demo11B : IRunnable
         // INIT
         var inp = new int[N];
         var result = new int[N];
-        var lstEvents = new AutoResetEvent[N];
+        var lstEvent = new AutoResetEvent[N];
 
         for (int i = 0; i < N; ++i)
         {
             inp[i] = i + 100;
-            lstEvents[i] = new AutoResetEvent(false);
+            lstEvent[i] = new AutoResetEvent(false);
         }
 
 
@@ -35,14 +35,14 @@ class Demo11B : IRunnable
                 {
                     int iarg = (int)arg;
                     result[index] = iarg * 2;
-                    lstEvents[index].Set();
+                    lstEvent[index].Set();
                 },
                 inp[i]
             );
         }
 
 
-        WaitHandle.WaitAll(lstEvents);
+        WaitHandle.WaitAll(lstEvent);
 
 
         // PRINT RESULTS
