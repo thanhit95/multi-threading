@@ -16,7 +16,7 @@ import java.util.stream.IntStream;
 public class AppC {
 
     public static void main(String[] args) {
-        var monitor = new MyMonitor<Integer>();
+        var monitor = new ProdConsMonitor<Integer>();
         Queue<Integer> queue = new LinkedList<>();
 
 
@@ -38,7 +38,7 @@ public class AppC {
     }
 
 
-    private static void producer(MyMonitor<Integer> monitor, int startValue) {
+    private static void producer(ProdConsMonitor<Integer> monitor, int startValue) {
         int i = 1;
 
         for (;; ++i) {
@@ -52,7 +52,7 @@ public class AppC {
     }
 
 
-    private static void consumer(MyMonitor<Integer> monitor) {
+    private static void consumer(ProdConsMonitor<Integer> monitor) {
         for (;;) {
             try {
                 int data = monitor.remove();
@@ -69,7 +69,7 @@ public class AppC {
 
 
 
-class MyMonitor<T> {
+class ProdConsMonitor<T> {
     private Queue<T> queue;
     private int maxQueueSize;
 
@@ -77,9 +77,9 @@ class MyMonitor<T> {
     private Object condEmpty = new Object();
 
 
-    public void init(int maxQueueSize, Queue<T> q ) {
+    public void init(int maxQueueSize, Queue<T> queue) {
         this.maxQueueSize = maxQueueSize;
-        this.queue = q;
+        this.queue = queue;
     }
 
 
