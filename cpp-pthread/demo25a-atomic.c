@@ -39,7 +39,7 @@ int main() {
         ret = pthread_join(lstTid[i], NULL);
     }
 
-    // Unpredictable result
+    // unpredictable result
     printf("counter = %d \n", counter);
     return 0;
 }

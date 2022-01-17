@@ -2,7 +2,7 @@
 PASSING ARGUMENTS
 Version A01: The problem
 
-The id in statement "hello pthread with id..." might be DUPLICATED !!!
+The id in statement "hello pthread with id..." might be DUPLICATED!!!
 Reason: Passing the address of variable i,
         so that all threads use a same value of i.
 */

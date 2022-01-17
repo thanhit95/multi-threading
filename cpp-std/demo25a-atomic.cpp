@@ -35,7 +35,7 @@ int main() {
         th.join();
     }
 
-    // Unpredictable result
+    // unpredictable result
     cout << "counter = " << counter << endl;
     return 0;
 }

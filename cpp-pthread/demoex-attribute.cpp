@@ -29,7 +29,7 @@ int main() {
     int ret = 0;
 
 
-    // initialize and set thread joinable
+    // Initialize and set thread joinable
     pthread_attr_init(&attr);
     pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE); // PTHREAD_CREATE_JOINABLE or PTHREAD_CREATE_DETACHED
 

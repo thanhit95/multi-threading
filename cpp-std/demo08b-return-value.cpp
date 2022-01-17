@@ -30,7 +30,7 @@ int main() {
 
     auto th = std::thread(doubleValue, 5, std::ref(prom));
 
-    // block until prom.set_value() executes
+    // Block until prom.set_value() executes
     int result = fut.get();
 
     cout << result << endl;

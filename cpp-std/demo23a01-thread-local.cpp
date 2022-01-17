@@ -1,8 +1,7 @@
 /*
 THREAD-LOCAL STORAGE
 Introduction
-
-The basic way to use thread-local storage
+    The basic way to use thread-local storage
 */
 
 

@@ -21,7 +21,7 @@ void* doTask(void* arg) {
 
     cout << name << " acquired resource" << endl;
 
-    // pthread_mutex_unlock(&mut); // forget this statement ==> deadlock
+    // pthread_mutex_unlock(&mut); // Forget this statement ==> deadlock
 
     pthread_exit(nullptr);
     return nullptr;

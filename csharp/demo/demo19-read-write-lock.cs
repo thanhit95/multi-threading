@@ -34,7 +34,7 @@ class Demo19 : IRunnable
                 int timeWait = arg[ rand.Next(arg.Length) ];
                 Thread.Sleep(1000 * timeWait);
 
-                // should catch exception
+                // Should catch exception
                 rwlk.AcquireReaderLock(1000);
 
                 Console.WriteLine("read: " + Resource.value);
@@ -51,7 +51,7 @@ class Demo19 : IRunnable
                 int timeWait = arg[ rand.Next(arg.Length) ];
                 Thread.Sleep(1000 * timeWait);
 
-                // should catch exception
+                // Should catch exception
                 rwlk.AcquireWriterLock(1000);
 
                 Resource.value = rand.Next(100);

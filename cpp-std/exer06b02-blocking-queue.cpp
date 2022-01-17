@@ -50,7 +50,7 @@ public:
             std::unique_lock<std::mutex> lk(mutFull);
 
             while (capacity == (int)q.size()) {
-                // queue is full, must wait for 'take'
+                // Queue is full, must wait for 'take'
                 condFull.wait(lk);
             }
         }
@@ -71,7 +71,7 @@ public:
             std::unique_lock<std::mutex> lk(mutEmpty);
 
             while (0 == q.size()) {
-                // queue is empty, must wait for 'put'
+                // Queue is empty, must wait for 'put'
                 condEmpty.wait(lk);
             }
         }

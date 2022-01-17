@@ -20,7 +20,7 @@ public class AppA {
 
     @SuppressWarnings("unused")
     private static void doHeavyTask() {
-        // do a heavy task, which takes a little time
+        // Do a heavy task, which takes a little time
         long sum = 0;
         for (int i = 0; i < 2000000000; ++i)
             sum += i;

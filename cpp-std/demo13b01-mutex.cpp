@@ -1,7 +1,7 @@
 /*
 MUTEXES
 
-Without synchronization (by a mutex), we are not sure that result = 30000
+Without synchronization (by a mutex), we are not sure that result = 30000.
 
 std::lock_guard is a class template, which implements the RAII for mutex.
 It wraps the mutex inside it’s object and locks the attached mutex in its constructor.

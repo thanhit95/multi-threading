@@ -21,7 +21,7 @@ void doTask(std::string name) {
 
     cout << name << " acquired resource" << endl;
 
-    // mut.unlock(); // forget this statement ==> deadlock
+    // mut.unlock(); // Forget this statement ==> deadlock
 }
 
 

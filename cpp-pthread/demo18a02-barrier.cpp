@@ -63,7 +63,7 @@ int main() {
     }
 
 
-    // thread with userName = "amet" shall be FREEZED
+    // Thread with userName = "amet" shall be FREEZED
 
 
     for (auto&& tid : lstTid) {

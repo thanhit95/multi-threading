@@ -39,7 +39,7 @@ int main() {
     thDiv3.join();
 
 
-    // result = sum of a (i.e. count numbers of true values in a)
+    // result = sum of a (i.e. counting numbers of true values in a)
     int result = std::accumulate(a.begin(), a.end(), 0);
 
 

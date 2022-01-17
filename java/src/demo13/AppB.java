@@ -2,8 +2,7 @@
  * MUTEXES
  *
  * A binary semaphore can be used as a mutex.
- *
- * Without synchronization (by a mutex), we are not sure that result = 30000
+ * Without synchronization (by a mutex), we are not sure that result = 30000.
  */
 
 package demo13;

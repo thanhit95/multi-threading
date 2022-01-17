@@ -36,7 +36,7 @@ void doTask() {
 
     lk.unlock();
 
-    // do something...
+    // Do something...
 }
 
 

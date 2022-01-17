@@ -27,7 +27,7 @@ void* doTask(void* arg) {
 
 
 int main() {
-    atomic_store(&counter, 0); // assign counter = 0
+    atomic_store(&counter, 0); // Assign counter = 0
 
     pthread_t lstTid[1000];
     int ret = 0;

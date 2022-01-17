@@ -35,7 +35,7 @@ private:
 
 public:
     void update(int value, int numDiv) {
-        // synchronize whole function
+        // Synchronize whole function
         std::unique_lock<std::mutex> lk(mut);
 
         if (this->numDiv < numDiv) {

@@ -19,7 +19,7 @@ private:
 
 
 public:
-    // should disable copy/move constructors, copy/move assignment operators
+    // Should disable copy/move constructors, copy/move assignment operators
 
 
     void init(int* pCounter) {

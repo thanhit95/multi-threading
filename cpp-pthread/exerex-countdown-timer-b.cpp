@@ -50,7 +50,7 @@ int main() {
 
 
     if (ret = pthread_timedjoin_np(tid, nullptr, &ts)) {
-        ret = pthread_cancel(tid);  // kill thread
+        ret = pthread_cancel(tid);  // Kill thread
         cout << "\n\nTIMEOUT!!!" << endl;
     }
     else {

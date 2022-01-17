@@ -1,7 +1,7 @@
 ﻿/*
  * MUTEXES
  *
- * Without synchronization (by a mutex), we are not sure that result = 30000
+ * Without synchronization (by a mutex), we are not sure that result = 30000.
  */
 using System;
 using System.Collections.Generic;

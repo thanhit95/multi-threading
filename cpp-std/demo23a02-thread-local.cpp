@@ -1,8 +1,7 @@
 /*
 THREAD-LOCAL STORAGE
 Introduction
-
-The smart-pointer way to use thread-local storage
+    The smart-pointer way to use thread-local storage
 */
 
 

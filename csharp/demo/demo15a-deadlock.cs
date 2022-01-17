@@ -36,6 +36,6 @@ class Demo15A : IRunnable
 
         Console.WriteLine(name + " acquired resource");
 
-        // mut.ReleaseMutex(); // forget this statement ==> deadlock
+        // mut.ReleaseMutex(); // Forget this statement ==> deadlock
     }
 }

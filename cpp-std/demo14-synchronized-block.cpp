@@ -7,7 +7,7 @@ To demonstate synchronized blocks, I use std::unique_lock (or std::lock_guard, s
 Now, let's see the code:
     {
         std::unique_lock lk(mut);
-        // do something in the critical section
+        // Do something in the critical section
     }
 
 The code block above is protected by a lock/mutex. That means it is synchronized on thread execution.

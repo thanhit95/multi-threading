@@ -37,7 +37,7 @@ public class AppA {
 
         System.out.println(name + " acquired resource");
 
-        // mutex.release(); // forget this statement ==> deadlock
+        // mutex.release(); // Forget this statement ==> deadlock
     }
 
 }

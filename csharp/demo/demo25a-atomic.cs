@@ -28,7 +28,7 @@ class Demo25A : IRunnable
         lstTh.ForEach(th => th.Join());
 
 
-        // Unpredictable result
+        // unpredictable result
         Console.WriteLine("counter = " + Global.counter);
     }
 

@@ -47,7 +47,7 @@ public class AppA02 {
         }).start());
 
 
-        // thread with userName = "amet" shall be FREEZED
+        // Thread with userName = "amet" shall be FREEZED
     }
 
 

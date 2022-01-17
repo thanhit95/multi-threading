@@ -19,7 +19,7 @@ class Demo02A : IRunnable
     }
 
     private void doHeavyTask() {
-        // do a heavy task, which takes a little time
+        // Do a heavy task, which takes a little time
         for (int i = 0; i < 2000000000; ++i);
 
         Console.WriteLine("Done!");

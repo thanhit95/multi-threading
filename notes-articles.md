@@ -27,7 +27,7 @@ Consider this snippet in a concurrent environment:
 boolean isStopped = false;
 
 while (!isStopped) {
-    // do some kind of work
+    // Do some kind of work
 }
 ```
 

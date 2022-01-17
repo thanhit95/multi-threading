@@ -28,7 +28,7 @@ int main() {
 
         // or...
         // auto th = std::thread(doTask, i);
-        // lstTh.push_back(std::move(th)); // because std::thread does not have copy constructors
+        // lstTh.push_back(std::move(th)); // Because std::thread does not have copy constructors
     }
 
 

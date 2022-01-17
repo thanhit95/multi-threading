@@ -36,7 +36,7 @@ public class App {
 
             System.out.println("read: " + Resource.value);
 
-            rwlock.readLock().unlock(); // should be protected by try...finally...
+            rwlock.readLock().unlock(); // Should be protected by try...finally...
 
         })).limit(NUM_THREADS_READ).toList();
 
@@ -51,7 +51,7 @@ public class App {
             Resource.value = rand.nextInt(100);
             System.out.println("write: " + Resource.value);
 
-            rwlock.writeLock().unlock(); // should be protected by try...finally...
+            rwlock.writeLock().unlock(); // Should be protected by try...finally...
 
         })).limit(NUM_THREADS_WRITE).toList();
 

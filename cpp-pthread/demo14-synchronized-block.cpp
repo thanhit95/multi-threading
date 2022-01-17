@@ -7,7 +7,7 @@ To demonstate synchronized blocks, I implement the class LockGuard.
 Now, let's see the code:
     {
         LockGuard lk(&mutex);
-        // do something in the critical section
+        // Do something in the critical section
     }
 
 When go to the end of the code block, lk object shall execute it's destructor and release mutex.
@@ -34,7 +34,7 @@ private:
 
 public:
     LockGuard(pthread_mutex_t *mut) {
-        this->mut = mut; // assume that mut != nullptr
+        this->mut = mut; // Assume that mut != nullptr
         pthread_mutex_lock(this->mut);
     }
 

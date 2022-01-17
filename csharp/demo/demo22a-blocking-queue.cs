@@ -18,7 +18,7 @@ class Demo22A : IRunnable
         new Thread(() => producer(queue)).Start();
         new Thread(() => consumer(queue)).Start();
 
-        // should call queue.Dispose();
+        // Should call queue.Dispose();
     }
 
 

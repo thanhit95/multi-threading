@@ -26,10 +26,10 @@ void* func(void* arg) {
 int main() {
     pthread_t tid;
 
-    signal(SIGSEGV, signalHandler); // register signal handler before going multithread
+    signal(SIGSEGV, signalHandler); // Register signal handler before going multithread
 
     pthread_create(&tid, nullptr, func, nullptr);
-    sleep(1); // leave time for initialization
+    sleep(1); // Leave time for initialization
 
     pthread_kill(tid, SIGSEGV);
 

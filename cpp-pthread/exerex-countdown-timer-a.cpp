@@ -77,7 +77,7 @@ int main() {
         cout << "\nYou completed before the deadline." << endl;
     }
     else {
-        ret = pthread_cancel(tid);  // kill thread
+        ret = pthread_cancel(tid);  // Kill thread
         cout << "\n\nTIMEOUT!!!" << endl;
     }
 
