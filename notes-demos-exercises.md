@@ -14,6 +14,7 @@ I am sorry that generated table of contents contains too many uppercase stuff...
   - [DESCRIPTION](#description)
   - [TABLE OF CONTENTS](#table-of-contents)
   - [DEMOSTRATIONS](#demostrations)
+    - [DEMO 00 - INTRODUCTION TO MULTITHREADING](#demo-00---introduction-to-multithreading)
     - [DEMO 01 - HELLO](#demo-01---hello)
     - [DEMO 02 - THREAD JOINS](#demo-02---thread-joins)
     - [DEMO 03 - PASSING ARGUMENTS](#demo-03---passing-arguments)
@@ -74,15 +75,21 @@ I am sorry that generated table of contents contains too many uppercase stuff...
 
 ## DEMOSTRATIONS
 
+### DEMO 00 - INTRODUCTION TO MULTITHREADING
+
+Just run the code several times and see results: The results are not the same!!!
+
+This is because threads execute concurrently. The operating system shall care the order of thread execution. Depend on current state, the coressponding result varies.
+
 ### DEMO 01 - HELLO
 
-Hello multiple threading!!!
-
-You learn how to create a thread, and how to join a thread.
+You learn how to create a thread. That's all.
 
 &nbsp;
 
 ### DEMO 02 - THREAD JOINS
+
+When I say: "Thread X waits for thread Y to join". It means thread X shall wait for thread Y to complete, then thread X continues its execution.
 
 &nbsp;
 
@@ -99,17 +106,53 @@ You learn how to pass arguments to a thread:
 
 Making a thread sleep for a while.
 
+Note that thread sleep is:
+
+- Useful, when you want to wait for something to be ready.
+- Awful, when performance is important, you may waste a lot of resources while thread is asleep.
+
 &nbsp;
 
 ### DEMO 05 - GETTING THREAD'S ID
 
-Getting thread's id.
+Each thread has its own identification. The repo helps you get the thread's id.
 
 &nbsp;
 
 ### DEMO 06 - LIST OF MULTIPLE THREADS
 
 Handling a list of multiple threads.
+
+Be careful when you pass arguments to threads due to variable reference mechanism. In C/C++ you can forget this warning because variables are usually passed by values.
+
+For an example:
+
+```code
+function doTask(i) {
+
+}
+
+for (int i = 0; i < 3; ++i) {
+  Thread th = new Thread(doTask(i));
+  th.start();
+}
+```
+
+There is only one variable 'i' and its reference is passed into thread "doTask". In the end, all 3 threeads will receive i = 3 as the parameter.
+
+How to solve this problem? Just create new variables.
+
+```code
+function doTask(i) {
+
+}
+
+for (int i = 0; i < 3; ++i) {
+  int arg = i;
+  Thread th = new Thread(doTask(arg));
+  th.start();
+}
+```
 
 &nbsp;
 
@@ -118,13 +161,50 @@ Handling a list of multiple threads.
 Forcing a thread to terminate aka. "killing the thread".
 
 Sometimes, we want to force a thread to terminate (for convenient).
-However, for careful practice, the thread should terminate by itself, not by external factors.
+
+However, to be careful, the thread should terminate by itself, not by external factors. Assume that a thread is using resource or locking a mutex, and then it suddenly killed by external factors, so the harmful results are:
+
+- Resource may not be disposed/freed.
+- Mutex is not unlocked, which is strongly possible to leads to deadlock.
 
 &nbsp;
 
 ### DEMO 08 - GETTING RETURNED VALUES FROM THREADS
 
 You learn how to return value from a thread, and how to use that value for future tasks.
+
+Please note that if you do not use a synchronized mechanism (e.g. thread join, mutex...) then the result may be incorrect. To be clear, let's see this:
+
+```code
+result = 0;
+
+function doTask() {
+  do something for a while;
+  result = 9;
+}
+
+th = new Thread(doTask);
+th.start();
+print(result);
+```
+
+We are not sure that result printed is 9, because at the time `print(result)` executes, `th` does not completes yet (`result = 9` are not executed).
+
+So, we need to wait for `th` to complete before printing the result.
+
+```code
+result = 0;
+
+function doTask() {
+  do something for a while;
+  result = 9;
+}
+
+th = new Thread(doTask);
+th.start();
+th.join(); // wait for th to complete to make sure result is set
+print(result);
+```
 
 &nbsp;
 
