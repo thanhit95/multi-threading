@@ -29,6 +29,7 @@ I am sorry that generated table of contents contains too many uppercase stuff...
     - [DEMO 12A - RACE CONDITIONS](#demo-12a---race-conditions)
     - [DEMO 12B - DATA RACES](#demo-12b---data-races)
     - [DEMO 12C - RACE CONDITIONS AND DATA RACES](#demo-12c---race-conditions-and-data-races)
+    - [IMPORTANT NOTES](#important-notes)
     - [DEMO 13 - MUTEXES](#demo-13---mutexes)
     - [DEMO 14 - SYNCHRONIZED BLOCKS](#demo-14---synchronized-blocks)
     - [DEMO 15 - DEADLOCK](#demo-15---deadlock)
@@ -248,11 +249,11 @@ For an example of N = 8, the integers that match the requirements are 2, 3, 6 an
 
 Of course, you can easily solve the problem by a single loop. However, we need to go deeper. There is another solution using "marking array".
 
-- Let ```a``` be array of boolean values. Initialize all elements in ```a``` by ```false```.
-- For ```i``` in range ```1``` to ```N```, if ```i``` is divisible by ```2``` or by ```3```, then ```a[i] = true```.
-- Finally, the result is now counting number of ```true``` in ```a```.
+- Let `a` be array of boolean values. Initialize all elements in `a` by `false`.
+- For `i` in range `1` to `N`, if `i` is divisible by `2` or by `3`, then assign `a[i] = true`.
+- Finally, the result is now counting number of `true` in `a`.
 
-With ```N = 8```, ```a[2], a[3], a[4], a[6], a[8]``` are marked by ```true```.
+With `N = 8`, `a[2], a[3], a[4], a[6], a[8]` are marked by `true`.
 
 &nbsp;
 
@@ -261,15 +262,15 @@ About the source code, there are two versions:
 - Version 01 uses traditional single threading to let you get started.
 
 - Version 02 uses multithreading.
-  - Thread ```markDiv2``` will mark ```true``` for all numbers divisible by 2.
-  - Thread ```markDiv3``` will mark ```true``` for all numbers divisible by 3.
-  - **The rule of threading tell us that ```a[6]``` might be accessed by both threads at the same time ==> DATA RACE**. However, in the end, ```a[6] = true``` is obvious, so the final result is still correct ==> not race condition.
+  - Thread `markDiv2` will mark `true` for all numbers divisible by 2.
+  - Thread `markDiv3` will mark `true` for all numbers divisible by 3.
+  - **The rule of threading tell us that `a[6]` might be accessed by both threads at the same time ==> DATA RACE**. However, in the end, `a[6] = true` is obvious, so the final result is still correct ==> not race condition.
 
 &nbsp;
 
 ### DEMO 12C - RACE CONDITIONS AND DATA RACES
 
-Many people are confused about race condition and data race.
+Many people are confused about race conditions and data races.
 
 - There is a case that race condition appears without data race. That is demo version A.
 - There is also a case that data race appears without race condition. That is demo version B.
@@ -278,8 +279,31 @@ Many people are confused about race condition and data race.
 
 Ususally, race condition happens together with data race. A race condition often occurs when two or more threads need to perform operations on the same memory area (data race) but the results of computations depends on the order in which these operations are performed.
 
-Concurrent accesses to shared resources can lead to unexpected or erroneous behavior, so parts of the program where the shared resource is accessed need to be protected in ways that avoid the concurrent access. This protected section is the critical section or critical region.
+Concurrent accesses to shared resources can lead to unexpected or erroneous behavior, so parts of the program where the shared resource is accessed need to be protected in ways that avoid the concurrent access. This protected section is the **critical section** or **critical region**.
 
+&nbsp;
+&nbsp;
+
+### IMPORTANT NOTES
+
+&nbsp;
+
+Race conditions (and data races) are essential contents when you learn multithreading. How to solve race conditions? There are several methods, which are divided into two types:
+
+|             | SYNCHRONIZATION | NON-SYNCHRONIZATION |
+| ----------- | --------------- | ------------------- |
+| Description | To block threads until a condition is satisfy | Not to block threads |
+| Techniques  | Mutex, synchronized block, semaphore, condition variable, barrier and latch | Atomic, thread-local storage, copy-on-write |
+| Pros        | - To give you in-depth controls<br>- To cooperate among threads | - Your app may improve performance<br>- You may avoid deadlock |
+| Cons        | Hard to control in complex synchronization |  |
+
+In practical, we mostly use mutexes, synchronized blocks and atomic operations.
+
+&nbsp;
+
+`------------------ End of important notes ------------------`
+
+&nbsp;
 &nbsp;
 
 ### DEMO 13 - MUTEXES
