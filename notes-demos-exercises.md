@@ -467,7 +467,7 @@ Application of thread-local storage:
 
 - Counter: Each thread does its own counting job. In the end, we can sum all the counters in threads.
 
-- Security: The random function often use an initialization seed. When multiple threads calling the random function, results may be the same for some threads. This may lead to security issues. Using synchronization of course solve this problem, but it is too overhead. In this case, using thread-local storage is great. Each thread use individual random function, which have different random seed.
+- Security: The random function often use an initialization seed. When multiple threads calling the random function, results may be the same for some threads. This may lead to security issues. Using synchronization of course solve this problem, but it is too overhead. In this case, using thread-local storage is great. Each thread use an individual random function, which has a different random seed.
 
 In the demo code, by using thread-local storage, each thread has its own counter. So, the counter in one thread is completely independent of each other.
 
@@ -475,7 +475,7 @@ In the demo code, by using thread-local storage, each thread has its own counter
 
 ### DEMO 24 & 25 - THE VOLATILE KEYWORD AND ATOMIC ACCESS
 
-Please read article "Volatile vs Atomic" for better understanding.
+Please read article "Volatile vs Atomic" in [notes-articles.md](notes-articles.md) for better understanding.
 
 &nbsp;
 
