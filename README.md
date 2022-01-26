@@ -2,7 +2,15 @@
 
 ## DESCRIPTION
 
-This repo shows my practice dealing with multi-threaded problems.
+This repo helps you to practise multithreading in a logical sequence, which is divided into several demonstrations.
+Plus, you could apply your learning better by doing exercises.
+
+The repo consists of two main sections:
+
+- "demo" (demostrations).
+- "exer" (exercises).
+
+If you find it helpful, please give me a star. Thank you.
 
 &nbsp;
 
