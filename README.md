@@ -10,6 +10,8 @@ The repo consists of two main sections:
 - "demo" (demostrations).
 - "exer" (exercises).
 
+All the demos (and exers) are really simple, easy to understand, even for difficult terms.
+
 If you find it helpful, please give me a star. Thank you.
 
 &nbsp;
