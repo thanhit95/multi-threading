@@ -288,16 +288,22 @@ Concurrent accesses to shared resources can lead to unexpected or erroneous beha
 
 &nbsp;
 
-Race conditions (and data races) are essential contents when you learn multithreading. How to solve race conditions? There are several methods, which are divided into two types:
+Race conditions (and data races) are essential contents when you learn multithreading. How to solve race conditions? There are several techniques, which are divided into two types: synchronization and non-synchronization.
 
 |             | SYNCHRONIZATION | NON-SYNCHRONIZATION |
 | ----------- | --------------- | ------------------- |
 | Description | To block threads until a condition is satisfy | Not to block threads |
+| Other names | Blocking | Non-blocking, lock-free |
 | Techniques  | Mutex, synchronized block, semaphore, condition variable, barrier and latch | Atomic, thread-local storage, copy-on-write |
 | Pros        | - To give you in-depth controls<br>- To cooperate among threads | - Your app may improve performance<br>- You may avoid deadlock |
-| Cons        | Hard to control in complex synchronization |  |
+| Cons        | - Hard to control in complex synchronization<br>- May be dangerous (when deadlock appears) |  |
 
-In practical, we mostly use mutexes, synchronized blocks and atomic operations.
+&nbsp;
+
+In practical:
+
+- We mostly use mutexes, synchronized blocks and atomic operations.
+- We usually combine sync and non-sync techniques.
 
 &nbsp;
 
@@ -459,11 +465,6 @@ There is a special type of the blocking queue, that is "synchronous queue". A sy
 &nbsp;
 
 ### DEMO 23 - THREAD-LOCAL STORAGE
-
-There are two main ways to solve the race condition & data race problem:
-
-- Way 1: Synchronization (mutex, semaphore, condition variable...).
-- Way 2: Non-synchronization / "*lock free*" (atomic, thread-local storage).
 
 In some cases, shared resources could be used individually for each thread. Every thread has its own copy of the shared resources. Therefore, race condition disappears.
 
