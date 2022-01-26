@@ -81,6 +81,8 @@ Just run the code several times and see results: The results are not the same!!!
 
 This is because threads execute concurrently. The operating system shall care the order of thread execution. Depend on current state, the coressponding result varies.
 
+&nbsp;
+
 ### DEMO 01 - HELLO
 
 You learn how to create a thread. That's all.
@@ -115,7 +117,7 @@ Note that thread sleep is:
 
 ### DEMO 05 - GETTING THREAD'S ID
 
-Each thread has its own identification. The repo helps you get the thread's id.
+Each thread has its own identification. This demo helps you learn how to get the thread's id.
 
 &nbsp;
 
@@ -133,12 +135,12 @@ function doTask(i) {
 }
 
 for (int i = 0; i < 3; ++i) {
-  Thread th = new Thread(doTask(i));
-  th.start();
+    th = new Thread(doTask(i));
+    th.start();
 }
 ```
 
-There is only one variable 'i' and its reference is passed into thread "doTask". In the end, all 3 threeads will receive i = 3 as the parameter.
+There is only one variable `i` and its reference is passed into thread `th`. In the end, all 3 threads will receive `i = 3` as the parameter.
 
 How to solve this problem? Just create new variables.
 
@@ -148,9 +150,9 @@ function doTask(i) {
 }
 
 for (int i = 0; i < 3; ++i) {
-  int arg = i;
-  Thread th = new Thread(doTask(arg));
-  th.start();
+    arg = i;
+    th = new Thread(doTask(arg));
+    th.start();
 }
 ```
 
@@ -162,10 +164,10 @@ Forcing a thread to terminate aka. "killing the thread".
 
 Sometimes, we want to force a thread to terminate (for convenient).
 
-However, to be careful, the thread should terminate by itself, not by external factors. Assume that a thread is using resource or locking a mutex, and then it suddenly killed by external factors, so the harmful results are:
+However, to be careful, the thread should terminate by itself, not by external factors. Assume that a thread is using resource or locking a mutex, and then it is suddenly killed by external factors, so the harmful results are:
 
 - Resource may not be disposed/freed.
-- Mutex is not unlocked, which is strongly possible to leads to deadlock.
+- Mutex is not unlocked, which is strongly possible to leads to the deadlock.
 
 &nbsp;
 
@@ -173,7 +175,7 @@ However, to be careful, the thread should terminate by itself, not by external f
 
 You learn how to return value from a thread, and how to use that value for future tasks.
 
-Please note that if you do not use a synchronized mechanism (e.g. thread join, mutex...) then the result may be incorrect. To be clear, let's see this:
+Please note that if you do not use a synchronization mechanism (e.g. thread join, mutex...) then the result may be incorrect. To be clear, let's see this:
 
 ```code
 result = 0;
@@ -188,7 +190,7 @@ th.start();
 print(result);
 ```
 
-We are not sure that result printed is 9, because at the time `print(result)` executes, `th` does not completes yet (`result = 9` are not executed).
+We are not sure that result printed is `9`, because at the time `print(result)` executes, `th` does not complete yet (`result = 9` are not executed).
 
 So, we need to wait for `th` to complete before printing the result.
 
