@@ -732,8 +732,28 @@ The result of dot(A, B) is the matrix:
 
 ### EX06 - BLOCKING QUEUE IMPLEMENTATION
 
+Blocking queues strongly relate to the producer-consumer problem:
+
+- The `enqueue` method is corresponding to the `produce` action, which creates an object and push it into the rear of the queue.
+- The `dequeue` method is corresponding to the `consume` action, which removes an object from the front of the queue.
+
+There are many methods to implement the producer-consumer problem and this is similar to implementation of the blocking queues.
+
 &nbsp;
 
 ### EX07 - THREAD POOL & EXECUTOR SERVICE IMPLEMENTATION
 
-&nbsp;
+To implement a thread pool, you need to focus on the worker function (the function that is executed by threads in the pool). For an idle thread:
+
+1. Pick a task (a job) in the queue.
+2. Do the task.
+
+Step 1 requires synchronization (by a blocking queue, a queue with mutex/synchronized block/condition variable...).
+
+It looks simple, but if we need to expand features for our thread pool, things start to get complicated. You may take care of synchronization everywhere:
+
+- When a task is dequeued.
+- When a task is done.
+- When all tasks are done.
+- When users want to shutdown thread pool.
+- ...
