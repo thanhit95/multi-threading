@@ -324,7 +324,12 @@ One can apply a mutex to protect a segment of memory ("critical region") from ot
 
 ### DEMO 14 - SYNCHRONIZED BLOCKS
 
-Update later.
+Synchronized blocks are the blocks of code which prevent executions of multiple threads, that means only one thread can execute a synchronized block at a time although multiple threads are running this block. A synchronized block can be made by using a mutex:
+
+- Lock the mutex at the begin of the block.
+- Unlock the mutex at the end of the block.
+
+In some programming languages, synchronized blocks are supported by default, such as Java and C#.
 
 &nbsp;
 
