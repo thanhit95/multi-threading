@@ -12,7 +12,7 @@ The repo consists of two main sections:
 
 All the demos (and exers) are really simple, easy to understand, even for difficult terms.
 
-If you find it helpful, please give me a star. Thank you.
+If you find it helpful, please give my repo a star. Thank you.
 
 &nbsp;
 
@@ -27,12 +27,16 @@ This repo is licensed under the [3-Clause BSD License](LICENSE.txt).
 
 &nbsp;
 
-## REPO STRUCTURE
+## LANGUAGES SUPPORTED
 
-- ```cpp-pthread```: C++ POSIX threading.
-- ```cpp-std```: C++ std threading.
-- ```csharp```: C# std threading.
-- ```java```: Java threading.
+| Directory name | Description            |
+| -------------- | ---------------------- |
+| `cpp-pthread`  | C++ 11 POSIX threading |
+| `cpp-std`      | C++ 20 std threading   |
+| `csharp`       | C# 7.3 with Dot Net 6  |
+| `java`         | Java JDK 17            |
+
+Special notes for C++ demos/exers: Please read the specified `readme.md` in corresponding directory.
 
 &nbsp;
 
