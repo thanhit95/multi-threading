@@ -294,9 +294,9 @@ Race conditions (and data races) are essential contents when you learn multithre
 | ----------- | --------------- | ------------------- |
 | Description | To block threads until a condition is satisfy | Not to block threads |
 | Other names | Blocking | Non-blocking, lock-free |
-| Techniques  | Mutex, synchronized block, semaphore, condition variable, barrier and latch | Atomic, thread-local storage, copy-on-write |
+| Techniques  | Mutex, synchronized block, semaphore, condition variable, barrier and latch | Atomic, thread-local storage |
 | Pros        | - To give you in-depth controls<br>- To cooperate among threads | - Your app may improve performance<br>- You may avoid deadlock |
-| Cons        | - Hard to control in complex synchronization<br>- May be dangerous (when deadlock appears) |  |
+| Cons        | - Hard to control in complex synchronization<br>- May be dangerous (when deadlock appears) | Usually too simple |
 
 &nbsp;
 
