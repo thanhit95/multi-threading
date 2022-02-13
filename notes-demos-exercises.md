@@ -314,11 +314,14 @@ In practical:
 
 ### DEMO 13 - MUTEXES
 
-Mutexes are used to prevent data inconsistencies due to race conditions.
+The mutex is the synchronization primitive used to prevent race conditions.
 
-Mutexes are used for serializing shared resources. Anytime a global resource is accessed by more than one thread the resource should have a Mutex associated with it.
+If a resource meets race conditions (i.e. it is access by more than one thread), we create a mutex associating with it:
 
-One can apply a mutex to protect a segment of memory ("critical region") from other threads. Mutexes can be applied only to threads in a single process and do not work between processes as do semaphores.
+- Lock the mutex before accessing the resource.
+- Release the mutex after accessing the resource.
+
+The code block between (lock-release) mutex action shall be executed by one thread at a time.
 
 &nbsp;
 
