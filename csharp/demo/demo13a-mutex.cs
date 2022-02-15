@@ -1,7 +1,5 @@
 ﻿/*
  * MUTEXES
- *
- * Without synchronization (by a mutex), we are not sure that result = 30000.
  */
 using System;
 using System.Collections.Generic;
@@ -17,7 +15,7 @@ class Demo13A : IRunnable
 
     public void run()
     {
-        const int NUM_THREADS = 3;
+        const int NUM_THREADS = 16;
 
         mut = new Mutex();
         counter = 0;
@@ -35,6 +33,7 @@ class Demo13A : IRunnable
         mut.Dispose();
 
         Console.WriteLine("counter = " + counter);
+        // We are sure that counter = 16000
     }
 
 
@@ -44,7 +43,7 @@ class Demo13A : IRunnable
 
         mut.WaitOne();
 
-        for (int i = 0; i < 10000; ++i)
+        for (int i = 0; i < 1000; ++i)
             ++counter;
 
         mut.ReleaseMutex();
