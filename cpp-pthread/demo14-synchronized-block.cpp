@@ -24,7 +24,7 @@ using namespace std;
 class LockGuard {
 
 private:
-    pthread_mutex_t *mut = nullptr;
+    pthread_mutex_t* mut = nullptr;
 
 private:
     LockGuard(const LockGuard&) = delete;
@@ -33,7 +33,7 @@ private:
     void operator=(const LockGuard&&) = delete;
 
 public:
-    LockGuard(pthread_mutex_t *mut) {
+    LockGuard(pthread_mutex_t* mut) {
         this->mut = mut; // Assume that mut != nullptr
         pthread_mutex_lock(this->mut);
     }
