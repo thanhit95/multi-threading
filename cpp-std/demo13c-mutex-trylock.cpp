@@ -36,20 +36,16 @@ int main() {
     constexpr int NUM_THREADS = 3;
     std::thread lstTh[NUM_THREADS];
 
-
     for (auto&& th : lstTh) {
         th = std::thread(doTask);
     }
-
 
     for (auto&& th : lstTh) {
         th.join();
     }
 
-
     cout << "counter = " << counter << endl;
     // counter can be 10000, 20000 or 30000
-
 
     return 0;
 }
