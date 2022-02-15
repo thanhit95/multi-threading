@@ -22,7 +22,7 @@ class Demo09 : IRunnable
 
 
         // If I comment this statement,
-        // the thread routine will be forced into terminating with main thread
+        // thFoo will be forced into terminating with main thread
         Thread.Sleep(3000);
 
 
