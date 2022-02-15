@@ -15,8 +15,9 @@ int counter = 0;
 
 
 void* increaseCounter(void*) {
-    for (int i = 0; i < 500; ++i) {
-        usleep(3);
+    sleep(1);
+
+    for (int i = 0; i < 1000; ++i) {
         counter += 1;
     }
 
@@ -27,19 +28,20 @@ void* increaseCounter(void*) {
 
 
 int main() {
-    pthread_t tidFoo, tidBar, tidEgg;
+    constexpr int NUM_THREADS = 16;
+    pthread_t lstTid[NUM_THREADS];
     int ret = 0;
 
-    ret = pthread_create(&tidFoo, nullptr, increaseCounter, nullptr);
-    ret = pthread_create(&tidBar, nullptr, increaseCounter, nullptr);
-    ret = pthread_create(&tidEgg, nullptr, increaseCounter, nullptr);
+    for (int i = 0; i < NUM_THREADS; ++i) {
+        ret = pthread_create(&lstTid[i], nullptr, increaseCounter, nullptr);
+    }
 
-    ret = pthread_join(tidFoo, nullptr);
-    ret = pthread_join(tidBar, nullptr);
-    ret = pthread_join(tidEgg, nullptr);
+    for (int i = 0; i < NUM_THREADS; ++i) {
+        ret = pthread_join(lstTid[i], nullptr);
+    }
 
     cout << "counter = " << counter << endl;
-    // We are not sure that counter = 1500
+    // We are NOT sure that counter = 16000
 
     return 0;
 }
