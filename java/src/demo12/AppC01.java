@@ -4,44 +4,44 @@
 
 package demo12;
 
+import java.util.stream.Stream;
+
 
 
 public class AppC01 {
 
     public static void main(String[] args) throws InterruptedException {
-        var thFoo = new WorkerThread();
-        var thBar = new WorkerThread();
-        var thEgg = new WorkerThread();
+        final int NUM_THREADS = 16;
 
-        thFoo.start();
-        thBar.start();
-        thEgg.start();
 
-        thFoo.join();
-        thBar.join();
-        thEgg.join();
+        var lstTh = Stream.generate(() -> new Thread(() -> {
 
-        System.out.println("counter = " + WorkerThread.counter);
+            try { Thread.sleep(1000); } catch (InterruptedException e) { }
+
+            for (int i = 0; i < 1000; ++i) {
+                Global.counter += 1;
+            }
+
+        })).limit(NUM_THREADS).toList();
+
+
+        for (var th : lstTh)
+            th.start();
+
+        for (var th : lstTh)
+            th.join();
+
+
+        System.out.println("counter = " + Global.counter);
         /*
-         * We are not sure that counter = 1500
+         * We are not sure that counter = 16000
          */
     }
 
-}
 
 
-
-class WorkerThread extends Thread {
-    static int counter = 0;
-
-
-    @Override
-    public void run() {
-        for (int i = 0; i < 500; ++i) {
-            try { Thread.sleep(3); }
-            catch (InterruptedException e) { }
-
-            counter += 1;
-        }
+    private static class Global {
+        public static int counter = 0;
     }
+
 }

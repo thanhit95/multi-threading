@@ -1,17 +1,14 @@
 /*
  * SYNCHRONIZED BLOCKS
- * Version B: Synchronized instance methods
+ * Version B02: Synchronized instance methods
  *
- * Synchronized methods have two effects:
+ * Assume there is a synchronized method "run" in object X:
+ * Multiple threads associating with X should synchronize (block) when they execute method "run".
  *
- * First, it is not possible for two invocations of synchronized methods on the same object to interleave.
- * When one thread is executing a synchronized method for an object,
- * all other threads that invoke synchronized methods for the same object block (suspend execution)
- * until the first thread is done with the object.
+ * If multiple threads associate with multiple objects (each thread ~ each object),
+ *      they will NOT SYNCHRONIZE when execute method "run".
  *
- * Second, when a synchronized method exits, it automatically establishes a happens-before relationship
- * with any subsequent invocation of a synchronized method for the same object.
- * This guarantees that changes to the state of the object are visible to all threads.
+ *      In demo code below, we create multiple Worker objects, so the problem happens.
  */
 
 package demo14;
@@ -20,14 +17,12 @@ import java.util.stream.IntStream;
 
 
 
-public class AppB01 {
+public class AppB02 {
 
     public static void main(String[] args) throws InterruptedException {
-        final int NUM_THREADS = 3;
+        final int NUM_THREADS = 16;
 
-
-        var lstTh = IntStream.range(0, NUM_THREADS).mapToObj(i -> new WorkerB01()).toList();
-
+        var lstTh = IntStream.range(0, NUM_THREADS).mapToObj(i -> new Worker()).toList();
 
         for (var th : lstTh)
             th.start();
@@ -35,27 +30,25 @@ public class AppB01 {
         for (var th : lstTh)
             th.join();
 
-
-        System.out.println("counter = " + WorkerB01.counter);
+        System.out.println("counter = " + Worker.counter);
         /*
-         * We are NOT sure that counter = 30000
+         * We are NOT sure that counter = 16000
          */
     }
 
-}
 
 
+    private static class Worker extends Thread {
+        public static int counter = 0;
 
-class WorkerB01 extends Thread {
-    public static int counter = 0;
+        @Override
+        public synchronized void run() {
+            try { Thread.sleep(500); } catch (InterruptedException e) { }
 
-
-    @Override
-    public synchronized void run() {
-        try { Thread.sleep(500); } catch (InterruptedException e) { }
-
-        for (int i = 0; i < 10000; ++i) {
-            ++counter;
+            for (int i = 0; i < 1000; ++i) {
+                ++counter;
+            }
         }
     }
+
 }

@@ -2,7 +2,7 @@
  * MUTEXES
  *
  * A binary semaphore can be used as a mutex.
- * Without synchronization (by a mutex), we are not sure that result = 30000.
+ * Without synchronization (by a mutex), we are not sure that counter = 16000.
  */
 
 package demo13;
@@ -15,11 +15,28 @@ import java.util.stream.Stream;
 public class AppB {
 
     public static void main(String[] args) throws InterruptedException {
-        final int NUM_THREADS = 3;
+        final int NUM_THREADS = 16;
 
-        var lstTh = Stream.generate(() -> new Thread(() -> doTask()))
-                .limit(NUM_THREADS)
-                .toList();
+
+        var lstTh = Stream.generate(() -> new Thread(() -> {
+
+            try {
+                Thread.sleep(1000);
+
+                Global.mutex.acquire();
+
+                for (int i = 0; i < 1000; ++i) {
+                    Global.counter += 1;
+                }
+
+                Global.mutex.release();
+            }
+            catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+        })).limit(NUM_THREADS).toList();
+
 
         for (var th : lstTh)
             th.start();
@@ -27,24 +44,8 @@ public class AppB {
         for (var th : lstTh)
             th.join();
 
+
         System.out.println("counter = " + Global.counter);
-    }
-
-
-    private static void doTask() {
-        try {
-            Thread.sleep(1000);
-
-            Global.mutex.acquire();
-
-            for (int i = 0; i < 10000; ++i)
-                ++Global.counter;
-
-            Global.mutex.release();
-        }
-        catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 
 

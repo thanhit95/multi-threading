@@ -1,6 +1,6 @@
 /*
  * SYNCHRONIZED BLOCKS
- * Version B: Synchronized instance methods
+ * Version B01: Synchronized instance methods
  */
 
 package demo14;
@@ -9,17 +9,14 @@ import java.util.stream.IntStream;
 
 
 
-public class AppB02 {
+public class AppB01 {
 
     public static void main(String[] args) throws InterruptedException {
-        final int NUM_THREADS = 3;
+        final int NUM_THREADS = 16;
 
-
-        var myTask = new WorkerB02();
-
+        var myTask = new MyTask();
 
         var lstTh = IntStream.range(0, NUM_THREADS).mapToObj(i -> new Thread(myTask)).toList();
-
 
         for (var th : lstTh)
             th.start();
@@ -27,27 +24,25 @@ public class AppB02 {
         for (var th : lstTh)
             th.join();
 
-
-        System.out.println("counter = " + WorkerB02.counter);
+        System.out.println("counter = " + MyTask.counter);
         /*
-         * We are sure that counter = 30000
+         * We are sure that counter = 16000
          */
     }
 
-}
 
 
+    private static class MyTask implements Runnable {
+        public static int counter = 0;
 
-class WorkerB02 implements Runnable {
-    public static int counter = 0;
+        @Override
+        public synchronized void run() {
+            try { Thread.sleep(500); } catch (InterruptedException e) { }
 
-
-    @Override
-    public synchronized void run() {
-        try { Thread.sleep(500); } catch (InterruptedException e) { }
-
-        for (int i = 0; i < 10000; ++i) {
-            ++counter;
+            for (int i = 0; i < 1000; ++i) {
+                ++counter;
+            }
         }
     }
+
 }
