@@ -73,20 +73,16 @@ int main() {
     pthread_t lstTid[NUM_THREADS];
     int ret = 0;
 
-
     for (auto&& tid : lstTid) {
         ret = pthread_create(&tid, nullptr, doTask, nullptr);
     }
-
 
     for (auto&& tid : lstTid) {
         ret = pthread_join(tid, nullptr);
     }
 
-
     cout << "counter = " << counter << endl;
     // counter can be 10000, 20000 or 30000
-
 
     ret = pthread_mutex_destroy(&mut);
     return 0;
