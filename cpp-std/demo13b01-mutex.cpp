@@ -1,8 +1,6 @@
 /*
 MUTEXES
 
-Without synchronization (by a mutex), we are not sure that result = 30000.
-
 std::lock_guard is a class template, which implements the RAII for mutex.
 It wraps the mutex inside it’s object and locks the attached mutex in its constructor.
 When it’s destructor is called it releases the mutex.
@@ -27,7 +25,7 @@ void doTask() {
 
     std::lock_guard<std::mutex> lk(mut);
 
-    for (int i = 0; i < 10000; ++i)
+    for (int i = 0; i < 1000; ++i)
         ++counter;
 
     // Once function exits, then destructor of lk object will be called.
@@ -37,20 +35,19 @@ void doTask() {
 
 
 int main() {
-    constexpr int NUM_THREADS = 3;
+    constexpr int NUM_THREADS = 16;
     std::thread lstTh[NUM_THREADS];
-
 
     for (auto&& th : lstTh) {
         th = std::thread(doTask);
     }
 
-
     for (auto&& th : lstTh) {
         th.join();
     }
 
-
     cout << "counter = " << counter << endl;
+    // We are sure that counter = 16000
+
     return 0;
 }

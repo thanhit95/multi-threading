@@ -15,8 +15,9 @@ int counter = 0;
 
 
 void increaseCounter() {
-    for (int i = 0; i < 500; ++i) {
-        std::this_thread::sleep_for(std::chrono::microseconds(3));
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+
+    for (int i = 0; i < 1000; ++i) {
         counter += 1;
     }
 }
@@ -24,16 +25,19 @@ void increaseCounter() {
 
 
 int main() {
-    auto thFoo = std::thread(increaseCounter);
-    auto thBar = std::thread(increaseCounter);
-    auto thEgg = std::thread(increaseCounter);
+    constexpr int NUM_THREADS = 16;
+    std::thread lstTh[NUM_THREADS];
 
-    thFoo.join();
-    thBar.join();
-    thEgg.join();
+    for (auto&& th : lstTh) {
+        th = std::thread(increaseCounter);
+    }
+
+    for (auto&& th : lstTh) {
+        th.join();
+    }
 
     cout << "counter = " << counter << endl;
-    // We are not sure that counter = 1500
+    // We are NOT sure that counter = 16000
 
     return 0;
 }
