@@ -15,7 +15,7 @@ class Demo14 : IRunnable
 
     public void run()
     {
-        const int NUM_THREADS = 3;
+        const int NUM_THREADS = 16;
 
         counter = 0;
 
@@ -30,6 +30,7 @@ class Demo14 : IRunnable
         lstTh.ForEach(th => th.Join());
 
         Console.WriteLine("counter = " + counter);
+        // We are sure that counter = 16000
     }
 
 
@@ -39,7 +40,7 @@ class Demo14 : IRunnable
 
         lock (theLock)
         {
-            for (int i = 0; i < 10000; ++i)
+            for (int i = 0; i < 1000; ++i)
                 ++counter;
         }
     }

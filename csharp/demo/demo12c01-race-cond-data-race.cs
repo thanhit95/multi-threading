@@ -2,6 +2,7 @@
  * RACE CONDITIONS AND DATA RACES
  */
 using System;
+using System.Collections.Generic;
 using System.Threading;
 
 
@@ -13,33 +14,30 @@ class Demo12C01 : IRunnable
 
     public void run()
     {
+        const int NUM_THREADS = 16;
+
         counter = 0;
 
-        var thFoo = new Thread(doTask);
-        var thBar = new Thread(doTask);
-        var thEgg = new Thread(doTask);
+        var lstTh = new List<Thread>();
 
-        thFoo.Start();
-        thBar.Start();
-        thEgg.Start();
+        for (int i = 0; i < NUM_THREADS; ++i)
+        {
+            lstTh.Add(new Thread(doTask));
+        }
 
-        thFoo.Join();
-        thBar.Join();
-        thEgg.Join();
+        lstTh.ForEach(th => th.Start());
+        lstTh.ForEach(th => th.Join());
 
         Console.WriteLine("counter = " + counter);
-        /*
-         * We are not sure that counter = 1500
-         */
+        // We are NOT sure that counter = 16000
     }
 
 
     private void doTask()
     {
-        for (int i = 0; i < 500; ++i)
-        {
-            Thread.Sleep(3);
-            counter += 1;
-        }
+        Thread.Sleep(1000);
+
+        for (int i = 0; i < 1000; ++i)
+            ++counter;
     }
 }

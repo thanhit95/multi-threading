@@ -22,7 +22,7 @@ class Demo16 : IRunnable
         monitor.init(counter);
 
 
-        const int NUM_THREADS = 3;
+        const int NUM_THREADS = 16;
         var lstTh = new List<Thread>();
 
         for (int i = 0; i < NUM_THREADS; ++i)
@@ -31,7 +31,7 @@ class Demo16 : IRunnable
             {
                 Thread.Sleep(1000);
 
-                for (int j = 0; j < 10000; ++j)
+                for (int j = 0; j < 1000; ++j)
                     monitor.increaseCounter();
             }));
         }
