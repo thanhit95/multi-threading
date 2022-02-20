@@ -34,14 +34,12 @@ int main() {
     constexpr int NUM_THREADS = 3;
     std::thread lstTh[NUM_THREADS];
 
-
     // tuple<userName, timeWait>
     tuple<string,int> lstArg[NUM_THREADS] = {
         { "lorem", 1 },
         { "ipsum", 2 },
         { "dolor", 3 }
     };
-
 
     for (int repeatCount = 0; repeatCount < 2; ++repeatCount) {
 
@@ -55,7 +53,6 @@ int main() {
         }
 
     }
-
 
     return 0;
 }

@@ -30,13 +30,10 @@ void doTask() {
 
 int main() {
     auto th = std::thread(doTask);
-
     /*
     The thread th shall meet deadlock.
     So, you will never get output "Second time the acquiring resource".
     */
-
     th.join();
-
     return 0;
 }

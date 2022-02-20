@@ -50,13 +50,11 @@ int main() {
 
     int ret = 0;
 
-
     for (auto&& tidFoo : lstTidFoo) {
         ret = pthread_create(&tidFoo, nullptr, foo, nullptr);
     }
 
     ret = pthread_create(&tidBar, nullptr, bar, nullptr);
-
 
     for (auto&& tidFoo : lstTidFoo) {
         ret = pthread_join(tidFoo, nullptr);
@@ -64,8 +62,8 @@ int main() {
 
     ret = pthread_join(tidBar, nullptr);
 
-
     ret = pthread_cond_destroy(&conditionVar);
     ret = pthread_mutex_destroy(&mut);
+
     return 0;
 }

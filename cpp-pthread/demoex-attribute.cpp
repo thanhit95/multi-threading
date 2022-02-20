@@ -28,17 +28,14 @@ int main() {
 
     int ret = 0;
 
-
     // Initialize and set thread joinable
     pthread_attr_init(&attr);
     pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE); // PTHREAD_CREATE_JOINABLE or PTHREAD_CREATE_DETACHED
-
 
     for (int i = 0; i < NUM_THREADS; ++i) {
         arg[i] = i;
         ret = pthread_create(&tid[i], &attr, doTask, &arg[i]);
     }
-
 
     void* status = nullptr;
 
@@ -47,9 +44,7 @@ int main() {
         cout << "completed thread id " << i << " with status " << status << endl;
     }
 
-
     ret = pthread_attr_destroy(&attr);
-
 
     return 0;
 }

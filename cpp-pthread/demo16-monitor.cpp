@@ -66,22 +66,17 @@ int main() {
 
     int ret = 0;
 
-
     monitor.init(&counter);
-
 
     for (auto&& tid : lstTid) {
         ret = pthread_create(&tid, nullptr, doTask, &monitor);
     }
 
-
     for (auto&& tid : lstTid) {
         ret = pthread_join(tid, nullptr);
     }
 
-
     monitor.destroy();
-
 
     cout << "counter = " << counter << endl;
     return 0;

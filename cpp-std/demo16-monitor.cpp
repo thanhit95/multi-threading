@@ -52,19 +52,15 @@ int main() {
     constexpr int NUM_THREADS = 16;
     std::thread lstTh[NUM_THREADS];
 
-
     monitor.init(&counter);
-
 
     for (auto&& th : lstTh) {
         th = std::thread(doTask, &monitor);
     }
 
-
     for (auto&& th : lstTh) {
         th.join();
     }
-
 
     cout << "counter = " << counter << endl;
     return 0;

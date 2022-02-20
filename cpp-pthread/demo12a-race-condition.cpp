@@ -37,7 +37,6 @@ int main() {
         ret = pthread_create(&lstTid[i], nullptr, doTask, &lstArg[i]);
     }
 
-
     for (auto&& tid : lstTid) {
         ret = pthread_join(tid, nullptr);
     }

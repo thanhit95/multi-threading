@@ -26,16 +26,13 @@ int main() {
     int lstArg[2];
     int ret = 0;
 
-
     for (int i = 0; i < 2; ++i) {
         lstArg[i] = i + 1;
         ret = pthread_create(&lstTid[i], nullptr, doTask, &lstArg[i]);
     }
 
-
     for (int i = 0; i < 2; ++i)
         ret = pthread_join(lstTid[i], nullptr);
-
 
     return 0;
 }

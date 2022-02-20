@@ -39,7 +39,6 @@ int main() {
     constexpr int NUM_THREADS = 4;
     std::thread lstTh[NUM_THREADS];
 
-
     // tuple<userName, timeWait>
     tuple<string,int> lstArg[NUM_THREADS] = {
         { "lorem", 1 },
@@ -48,17 +47,14 @@ int main() {
         { "amet", 10 }
     };
 
-
     for (int i = 0; i < NUM_THREADS; ++i) {
         auto&& arg = lstArg[i];
         lstTh[i] = std::thread(processRequest, std::get<0>(arg), std::get<1>(arg));
     }
 
-
     for (auto&& th : lstTh) {
         th.join();
     }
-
 
     return 0;
 }

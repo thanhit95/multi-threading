@@ -43,26 +43,21 @@ int main() {
     pthread_mutexattr_t attr;
     int ret = 0;
 
-
     ret = pthread_mutexattr_init(&attr);
     ret = pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_RECURSIVE);
     ret = pthread_mutex_init(&mut, &attr);
-
 
     for (int i = 0; i < NUM_THREADS; ++i) {
         lstArg[i] = char(i + 'A');
         ret = pthread_create(&lstTid[i], nullptr, doTask, &lstArg[i]);
     }
 
-
     for (auto&& tid : lstTid) {
         ret = pthread_join(tid, nullptr);
     }
 
-
     pthread_mutexattr_destroy(&attr);
     pthread_mutex_destroy(&mut);
-
 
     return 0;
 }

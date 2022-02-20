@@ -52,16 +52,13 @@ int main() {
     constexpr int NUM_TASKS = 3;
     Task task[NUM_TASKS];
 
-
     for (int i = 0; i < NUM_TASKS; ++i) {
         task[i].index = i;
     }
 
-
     for (int i = 0; i < NUM_TASKS; ++i) {
         task[i].start();
     }
-
 
     for (int i = 0; i < NUM_TASKS; ++i) {
         task[i].join();

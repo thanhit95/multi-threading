@@ -29,14 +29,11 @@ int main() {
     pthread_t lstTid[2];
     int ret = 0;
 
-
     for (int i = 0; i < 2; ++i)
         ret = pthread_create(&lstTid[i], nullptr, doTask, &i);
 
-
     for (int i = 0; i < 2; ++i)
         ret = pthread_join(lstTid[i], nullptr);
-
 
     return 0;
 }

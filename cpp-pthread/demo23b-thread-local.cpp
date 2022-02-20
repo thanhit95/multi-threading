@@ -42,17 +42,14 @@ int main() {
 
     int ret = 0;
 
-
     for (int i = 0; i < NUM_THREADS; ++i) {
         lstArg[i] = i;
         ret = pthread_create(&lstTid[i], nullptr, doTask, &lstArg[i]);
     }
 
-
     for (auto&& tid : lstTid) {
         ret = pthread_join(tid, nullptr);
     }
-
 
     cout << endl;
     return 0;

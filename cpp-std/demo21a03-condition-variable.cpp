@@ -40,20 +40,17 @@ int main() {
     constexpr int NUM_TH_FOO = 3;
     std::thread lstThFoo[NUM_TH_FOO];
 
-
     for (auto&& thFoo : lstThFoo) {
         thFoo = std::thread(foo);
     }
 
     auto thBar = std::thread(bar);
 
-
     for (auto&& thFoo : lstThFoo) {
         thFoo.join();
     }
 
     thBar.join();
-
 
     return 0;
 }

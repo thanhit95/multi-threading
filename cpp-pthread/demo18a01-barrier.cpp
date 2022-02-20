@@ -45,7 +45,6 @@ int main() {
     pthread_t lstTid[NUM_THREADS];
     int ret = 0;
 
-
     // tuple<userName, timeWait>
     tuple<string,int> lstArg[NUM_THREADS] = {
         { "lorem", 1 },
@@ -53,19 +52,15 @@ int main() {
         { "dolor", 3 },
     };
 
-
     ret = pthread_barrier_init(&syncPoint, nullptr, 3); // participant count = 3
-
 
     for (int i = 0; i < NUM_THREADS; ++i) {
         ret = pthread_create(&lstTid[i], nullptr, processRequest, &lstArg[i]);
     }
 
-
     for (auto&& tid : lstTid) {
         ret = pthread_join(tid, nullptr);
     }
-
 
     ret = pthread_barrier_destroy(&syncPoint);
     return 0;

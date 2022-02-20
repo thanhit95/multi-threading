@@ -32,16 +32,13 @@ int main() {
     vector<bool> a;
     a.resize(N + 1, false);
 
-
     auto thDiv2 = std::thread(markDiv2, std::ref(a), N);
     auto thDiv3 = std::thread(markDiv3, std::ref(a), N);
     thDiv2.join();
     thDiv3.join();
 
-
     // result = sum of a (i.e. counting numbers of true values in a)
     int result = std::accumulate(a.begin(), a.end(), 0);
-
 
     cout << "Number of integers that are divisible by 2 or 3 is: " << result << endl;
     return 0;

@@ -46,7 +46,6 @@ int main() {
     pthread_t lstTid[NUM_THREADS];
     int ret = 0;
 
-
     // tuple<userName, timeWait>
     tuple<string,int> lstArg[NUM_THREADS] = {
         { "lorem", 1 },
@@ -55,20 +54,16 @@ int main() {
         { "amet", 10 }
     };
 
-
     ret = pthread_barrier_init(&syncPointA, nullptr, 2);
     ret = pthread_barrier_init(&syncPointB, nullptr, 2);
-
 
     for (int i = 0; i < NUM_THREADS; ++i) {
         ret = pthread_create(&lstTid[i], nullptr, processRequest, &lstArg[i]);
     }
 
-
     for (auto&& tid : lstTid) {
         ret = pthread_join(tid, nullptr);
     }
-
 
     ret = pthread_barrier_destroy(&syncPointA);
     ret = pthread_barrier_destroy(&syncPointB);

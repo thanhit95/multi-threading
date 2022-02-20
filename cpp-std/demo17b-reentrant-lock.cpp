@@ -30,8 +30,6 @@ void doTask() {
 
 int main() {
     auto th = std::thread(doTask);
-
     th.join();
-
     return 0;
 }

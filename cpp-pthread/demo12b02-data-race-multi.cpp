@@ -42,15 +42,12 @@ int main() {
     pthread_t tidDiv2, tidDiv3;
     int ret = 0;
 
-
     a = (int*)calloc(sizeof(int), N + 1);
-
 
     ret = pthread_create(&tidDiv2, nullptr, markDiv2, nullptr);
     ret = pthread_create(&tidDiv3, nullptr, markDiv3, nullptr);
     ret = pthread_join(tidDiv2, nullptr);
     ret = pthread_join(tidDiv3, nullptr);
-
 
     int result = 0;
 
@@ -58,10 +55,8 @@ int main() {
         if (a[i])
             ++result;
 
-
     free(a);
     a = nullptr;
-
 
     cout << "Numbers of integers that are divisible by 2 or 3 is: " << result << endl;
     return 0;

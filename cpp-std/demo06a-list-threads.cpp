@@ -21,16 +21,13 @@ int main() {
 
     std::thread lstTh[NUM_THREADS];
 
-
     for (int i = 0; i < NUM_THREADS; ++i) {
         lstTh[i] = std::thread(doTask, i);
     }
 
-
     for (auto&& th : lstTh) {
         th.join();
     }
-
 
     cout << endl;
     return 0;
