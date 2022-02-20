@@ -36,7 +36,7 @@ void combineOnePackage() {
         std::this_thread::sleep_for(std::chrono::seconds(2));
 
         semSheet.release();
-        // Missing one statement: semSheet.release() ==> DEADLOCK.
+        // Missing one statement: semSheet.release() ==> deadlock
     }
 }
 
