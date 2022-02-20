@@ -15,6 +15,8 @@ using namespace std;
 std::mutex mut;
 std::condition_variable conditionVar;
 
+constexpr int NUM_TH_FOO = 3;
+
 
 
 void foo() {
@@ -37,7 +39,6 @@ void bar() {
 
 
 int main() {
-    constexpr int NUM_TH_FOO = 3;
     std::thread lstThFoo[NUM_TH_FOO];
 
     for (auto&& thFoo : lstThFoo) {

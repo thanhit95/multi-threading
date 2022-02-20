@@ -13,6 +13,8 @@ using namespace std;
 pthread_mutex_t mut = PTHREAD_MUTEX_INITIALIZER;
 pthread_cond_t conditionVar = PTHREAD_COND_INITIALIZER;
 
+constexpr int NUM_TH_FOO = 3;
+
 
 
 void* foo(void*) {
@@ -32,7 +34,7 @@ void* foo(void*) {
 
 
 void* bar(void*) {
-    for (int i = 0; i < 3; ++i) {
+    for (int i = 0; i < NUM_TH_FOO; ++i) {
         sleep(2);
         pthread_cond_signal(&conditionVar);
     }
@@ -44,8 +46,6 @@ void* bar(void*) {
 
 
 int main() {
-    constexpr int NUM_TH_FOO = 3;
-
     pthread_t lstTidFoo[NUM_TH_FOO];
     pthread_t tidBar;
 
