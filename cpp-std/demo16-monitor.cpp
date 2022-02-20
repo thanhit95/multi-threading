@@ -39,7 +39,7 @@ public:
 void doTask(Monitor* monitor) {
     std::this_thread::sleep_for(std::chrono::seconds(1));
 
-    for (int i = 0; i < 10000; ++i)
+    for (int i = 0; i < 1000; ++i)
         monitor->increaseCounter();
 }
 
@@ -49,7 +49,7 @@ int main() {
     int counter = 0;
     Monitor monitor;
 
-    constexpr int NUM_THREADS = 3;
+    constexpr int NUM_THREADS = 16;
     std::thread lstTh[NUM_THREADS];
 
 

@@ -16,14 +16,16 @@ public class App {
         var monitor = new MyMonitor();
         monitor.init(counter);
 
-        final int NUM_THREADS = 3;
+        final int NUM_THREADS = 16;
 
 
         var lstTh = IntStream.range(0, NUM_THREADS).mapToObj(t -> new Thread(() -> {
+
             try { Thread.sleep(1000); } catch (InterruptedException e) { }
 
-            for (int i = 0; i < 10000; ++i)
+            for (int i = 0; i < 1000; ++i)
                 monitor.increaseCounter();
+
         })).toList();
 
 
