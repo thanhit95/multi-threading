@@ -1,0 +1,25 @@
+'''
+THREAD POOLS
+Version B: Thread pools containing multiple threads
+'''
+
+import time
+from concurrent.futures import ThreadPoolExecutor
+
+
+
+def do_task(name):
+    print(f'Task {name} is starting')
+    time.sleep(3)
+    print(f'Task {name} is completed')
+
+
+
+NUM_TASKS = 5
+executor = ThreadPoolExecutor(max_workers=2)
+
+for i in range(NUM_TASKS):
+    task_name = chr(i + 65)
+    executor.submit(do_task, task_name)
+
+executor.shutdown(wait=True)
