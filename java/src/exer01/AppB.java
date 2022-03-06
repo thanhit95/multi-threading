@@ -15,11 +15,11 @@ public class AppB {
 
     public static void main(String[] args) throws InterruptedException {
         final int RANGE_START = 1;
-        final int RANGE_STOP = 100000;
+        final int RANGE_END = 100000;
         final int NUM_THREADS = 8;
 
 
-        var lstWorkerArg = prepareArg(RANGE_START, RANGE_STOP, NUM_THREADS);
+        var lstWorkerArg = prepareArg(RANGE_START, RANGE_END, NUM_THREADS);
         var lstWorkerRes = new ArrayList<WorkerResult>();
 
 

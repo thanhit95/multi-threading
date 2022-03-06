@@ -13,7 +13,7 @@ public class AppA {
 
     public static void main(String[] args) {
         final int RANGE_START = 1;
-        final int RANGE_STOP = 100000;
+        final int RANGE_END = 100000;
 
         int resValue = 0;
         int resNumDiv = 0;  // number of divisors of result
@@ -21,7 +21,7 @@ public class AppA {
         var tpStart = Instant.now();
 
 
-        for (int i = RANGE_START; i <= RANGE_STOP; ++i) {
+        for (int i = RANGE_START; i <= RANGE_END; ++i) {
             int numDiv = 0;
 
             for (int j = i / 2; j > 0; --j)

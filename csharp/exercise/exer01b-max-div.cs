@@ -13,10 +13,10 @@ class Exer01B : IRunnable
     public void run()
     {
         const int RANGE_START = 1;
-        const int RANGE_STOP = 100000;
+        const int RANGE_END = 100000;
         const int NUM_THREADS = 8;
 
-        var lstWorkerArg = prepareArg(RANGE_START, RANGE_STOP, NUM_THREADS);
+        var lstWorkerArg = prepareArg(RANGE_START, RANGE_END, NUM_THREADS);
         var lstWorkerRes = new List<WorkerResult>();
         var lstTh = new List<Thread>();
 

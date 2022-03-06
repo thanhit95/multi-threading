@@ -10,7 +10,7 @@ class Exer01A : IRunnable
     public void run()
     {
         const int RANGE_START = 1;
-        const int RANGE_STOP = 100000;
+        const int RANGE_END = 100000;
 
         int resValue = 0;
         int resNumDiv = 0;  // number of divisors of result
@@ -18,7 +18,7 @@ class Exer01A : IRunnable
         var tpStart = DateTime.Now;
 
 
-        for (int i = RANGE_START; i <= RANGE_STOP; ++i)
+        for (int i = RANGE_START; i <= RANGE_END; ++i)
         {
             int numDiv = 0;
 

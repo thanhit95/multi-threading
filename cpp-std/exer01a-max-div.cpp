@@ -11,7 +11,7 @@ using namespace std;
 
 int main() {
     constexpr int RANGE_START = 1;
-    constexpr int RANGE_STOP = 100000;
+    constexpr int RANGE_END = 100000;
 
     int resValue = 0;
     int resNumDiv = 0;  // number of divisors of result
@@ -19,7 +19,7 @@ int main() {
     auto tpStart = mylib::HiResClock::now();
 
 
-    for (int i = RANGE_START; i <= RANGE_STOP; ++i) {
+    for (int i = RANGE_START; i <= RANGE_END; ++i) {
         int numDiv = 0;
 
         for (int j = i / 2; j > 0; --j)

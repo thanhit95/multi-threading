@@ -97,7 +97,7 @@ void prepare(
 
 int main() {
     constexpr int RANGE_START = 1;
-    constexpr int RANGE_STOP = 100000;
+    constexpr int RANGE_END = 100000;
     constexpr int NUM_THREADS = 8;
 
     vector<std::thread> lstTh;
@@ -106,7 +106,7 @@ int main() {
     FinalResult finalRes;
 
 
-    prepare(RANGE_START, RANGE_STOP, NUM_THREADS, lstTh, lstWorkerArg);
+    prepare(RANGE_START, RANGE_END, NUM_THREADS, lstTh, lstWorkerArg);
 
 
     auto tpStart = mylib::HiResClock::now();
