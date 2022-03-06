@@ -65,14 +65,11 @@ int main() {
 
     queue<int> q;
 
-
     auto thProducer = std::thread(producer, &semFill, &semEmpty, &q);
     auto thConsumer = std::thread(consumer, &semFill, &semEmpty, &q);
 
-
     thProducer.join();
     thConsumer.join();
-
 
     return 0;
 }

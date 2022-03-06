@@ -110,14 +110,11 @@ int main() {
     GlobalArg argCon, argProA, argProB;
     int ret = 0;
 
-
     sem.init(0, 1);
-
 
     argCon = argProA = argProB = { &q, &sem, 0 };
     argProA.startValue = 0;
     argProB.startValue = 1000;
-
 
     ret = pthread_create(&tidProducerA, nullptr, producer, &argProA);
     ret = pthread_create(&tidProducerB, nullptr, producer, &argProB);
@@ -126,7 +123,6 @@ int main() {
     ret = pthread_join(tidProducerA, nullptr);
     ret = pthread_join(tidProducerB, nullptr);
     ret = pthread_join(tidConsumer, nullptr);
-
 
     sem.destroy();
     return 0;

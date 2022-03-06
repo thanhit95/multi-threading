@@ -103,9 +103,7 @@ int main() {
 
     int ret = 0;
 
-
     prepare(RANGE_START, RANGE_END, NUM_THREADS, lstTid, lstWorkerArg, lstWorkerRes);
-
 
     auto tpStart = mylib::HiResClock::now();
 
@@ -118,11 +116,9 @@ int main() {
         ret = pthread_join(tid, nullptr);
     }
 
-
     // for (auto&& res: lstWorkerRes) {
     //     cout << res.value << "  " << res.numDiv << endl;
     // }
-
 
     auto finalRes = *max_element(lstWorkerRes.begin(), lstWorkerRes.end(),
         [](const WorkerResult &lhs, const WorkerResult &rhs) -> bool {
@@ -132,7 +128,6 @@ int main() {
 
 
     auto timeElapsed = mylib::HiResClock::getTimeSpan(tpStart);
-
 
     cout << "The integer which has largest number of divisors is " << finalRes.value << endl;
     cout << "The largest number of divisor is " << finalRes.numDiv << endl;

@@ -105,9 +105,7 @@ int main() {
 
     FinalResult finalRes;
 
-
     prepare(RANGE_START, RANGE_END, NUM_THREADS, lstTh, lstWorkerArg);
-
 
     auto tpStart = mylib::HiResClock::now();
 
@@ -122,7 +120,6 @@ int main() {
 
 
     auto timeElapsed = mylib::HiResClock::getTimeSpan(tpStart);
-
 
     cout << "The integer which has largest number of divisors is " << finalRes.value << endl;
     cout << "The largest number of divisor is " << finalRes.numDiv << endl;

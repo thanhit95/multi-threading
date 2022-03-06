@@ -122,13 +122,10 @@ int main() {
     vector<WorkerArg> lstWorkerArg;
 
     FinalResult finalRes;
-
     int ret = 0;
-
 
     finalRes.init();
     prepare(RANGE_START, RANGE_END, NUM_THREADS, lstTid, lstWorkerArg, &finalRes);
-
 
     auto tpStart = mylib::HiResClock::now();
 
@@ -143,10 +140,7 @@ int main() {
 
 
     finalRes.destroy();
-
-
     auto timeElapsed = mylib::HiResClock::getTimeSpan(tpStart);
-
 
     cout << "The integer which has largest number of divisors is " << finalRes.value << endl;
     cout << "The largest number of divisor is " << finalRes.numDiv << endl;

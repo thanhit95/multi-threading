@@ -34,18 +34,15 @@ int main() {
     std::mutex chopstick[NUM_PHILOSOPHERS];
     std::thread lstTh[NUM_PHILOSOPHERS];
 
-
     // CREATE THREADS
     for (int i = 0; i < NUM_PHILOSOPHERS; ++i) {
         lstTh[i] = std::thread(doTaskPhilosopher, chopstick, NUM_PHILOSOPHERS, i);
     }
 
-
     // JOIN THREADS
     for (auto&& th : lstTh) {
         th.join();
     }
-
 
     return 0;
 }
