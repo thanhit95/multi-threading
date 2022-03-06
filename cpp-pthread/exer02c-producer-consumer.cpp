@@ -122,8 +122,7 @@ void* producer(void* argVoid) {
 template <typename T>
 void* consumer(void* argVoid) {
     auto monitor = (Monitor<T>*) argVoid;
-
-    int data = 0;
+    T data;
 
     for (;;) {
         data = monitor->remove();

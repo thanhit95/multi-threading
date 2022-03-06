@@ -25,7 +25,6 @@ struct ConsumerArg {
 
 void* producer(void* arg) {
     auto blkq = (BlockingQueue<int>*) arg;
-
     int i = 1;
 
     for (;; ++i) {

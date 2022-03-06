@@ -12,7 +12,6 @@ using namespace std;
 
 
 std::mutex mut;
-
 std::condition_variable conditionVar;
 
 int counter = 0;

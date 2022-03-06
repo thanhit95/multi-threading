@@ -17,7 +17,6 @@ using namespace mylib;
 
 void* producer(void* arg) {
     auto blkq = (BlockingQueue<int>*) arg;
-
     int i = 1;
 
     for (;; ++i) {
@@ -33,7 +32,6 @@ void* producer(void* arg) {
 
 void* consumer(void* arg) {
     auto blkq = (BlockingQueue<int>*) arg;
-
     int data = 0;
 
     for (;;) {

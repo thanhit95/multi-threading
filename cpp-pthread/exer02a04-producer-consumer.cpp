@@ -24,7 +24,6 @@ struct ProducerArg {
 
 void* producer(void* argVoid) {
     auto arg = (ProducerArg*) argVoid;
-
     int i = 1;
 
     for (;; ++i) {
@@ -39,7 +38,6 @@ void* producer(void* argVoid) {
 
 void* consumer(void* arg) {
     auto blkq = (BlockingQueue<int>*) arg;
-
     int data = 0;
 
     for (;;) {

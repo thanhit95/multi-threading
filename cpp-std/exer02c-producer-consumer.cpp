@@ -93,7 +93,7 @@ void producer(Monitor<T>* monitor, int startValue) {
 
 template <typename T>
 void consumer(Monitor<T>* monitor) {
-    T data = 0;
+    T data;
 
     for (;;) {
         data = monitor->remove();
