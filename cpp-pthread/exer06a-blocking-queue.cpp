@@ -44,8 +44,9 @@ public:
 
     T take() {
         sem_wait(&semTake);
+        T result = element;
         sem_post(&semPut);
-        return element;
+        return result;
     }
 
 };

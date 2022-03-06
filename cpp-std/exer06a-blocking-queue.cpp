@@ -36,8 +36,9 @@ public:
 
     T take() {
         semTake.acquire();
+        T result = element;
         semPut.release();
-        return element;
+        return result;
     }
 
 };
