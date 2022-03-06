@@ -35,6 +35,8 @@ This repo is licensed under the [3-Clause BSD License](LICENSE.txt).
 | `cpp-std`      | C++ 20 std threading   |
 | `csharp`       | C# 7.3 with Dot Net 6  |
 | `java`         | Java JDK 17            |
+| `java`         | Java JDK 17            |
+| `python`       | Python 3.10            |
 
 Special notes for C++ demos/exers: Please read the specified `readme.md` in corresponding directory.
 
