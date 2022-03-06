@@ -1,5 +1,6 @@
 /*
 FORCING A THREAD TO TERMINATE (i.e. killing the thread)
+Version B: Using pthread_cancel
 */
 
 

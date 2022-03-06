@@ -1,44 +1,34 @@
 /*
 FORCING A THREAD TO TERMINATE (i.e. killing the thread)
-
-Beside atomic variables, you can use the "volatile" specifier.
 */
 
 
 #include <iostream>
+#include <chrono>
 #include <thread>
-#include <atomic>
 using namespace std;
 
 
 
-std::atomic_bool flagStop;
+volatile bool isRunning;
 
 
 
 void doTask() {
-    while (1) {
-        if (flagStop.load())
-            break;
-
+    while (isRunning) {
         cout << "Running..." << endl;
-
-        std::this_thread::sleep_for(std::chrono::seconds(1));
+        std::this_thread::sleep_for(std::chrono::seconds(2));
     }
-
-    cout << "Done" << endl;
 }
 
 
 
 int main() {
-    flagStop.store(false);
-
+    isRunning = true;
     auto th = std::thread(doTask);
 
-    std::this_thread::sleep_for(std::chrono::seconds(3));
-
-    flagStop.store(true);
+    std::this_thread::sleep_for(std::chrono::seconds(6));
+    isRunning = false;
 
     th.join();
     return 0;
