@@ -21,16 +21,9 @@ template <typename T>
 class BlockingQueue {
 
 private:
-    /*
-    I use a lot of synchronization primitives to help you to understand.
-    In a practical context, please take a look at
-    the BlockingQueue implementation in "mylib-blockingqueue"
-    */
     std::condition_variable condEmpty;
     std::condition_variable condFull;
-    std::mutex mutEmpty;
-    std::mutex mutFull;
-    std::mutex mutQueue;
+    std::mutex mut;
 
     int capacity = 0;
     std::queue<T> q;
@@ -47,16 +40,13 @@ public:
 
     void put(const T& value) {
         {
-            std::unique_lock<std::mutex> lk(mutFull);
+            std::unique_lock<std::mutex> lk(mut);
 
             while (capacity == (int)q.size()) {
                 // Queue is full, must wait for 'take'
                 condFull.wait(lk);
             }
-        }
 
-        {
-            std::unique_lock<std::mutex> lk(mutQueue);
             q.push(value);
         }
 
@@ -68,16 +58,13 @@ public:
         T result;
 
         {
-            std::unique_lock<std::mutex> lk(mutEmpty);
+            std::unique_lock<std::mutex> lk(mut);
 
             while (0 == q.size()) {
                 // Queue is empty, must wait for 'put'
                 condEmpty.wait(lk);
             }
-        }
 
-        {
-            std::unique_lock<std::mutex> lk(mutQueue);
             result = q.front();
             q.pop();
         }
@@ -93,20 +80,21 @@ public:
 void producer(BlockingQueue<std::string>* blkQueue) {
     auto arr = { "nice", "to", "meet", "you" };
 
-    for (auto&& value : arr) {
-        cout << "Producer: " << value << endl;
-        blkQueue->put(value);
-        cout << "Producer: " << value << "\t\t\t[done]" << endl;
+    for (auto&& data : arr) {
+        cout << "Producer: " << data << endl;
+        blkQueue->put(data);
+        cout << "Producer: " << data << "\t\t\t[done]" << endl;
     }
 }
 
 
 
 void consumer(BlockingQueue<std::string>* blkQueue) {
+    std::string data;
     std::this_thread::sleep_for(std::chrono::seconds(5));
 
     for (int i = 0; i < 4; ++i) {
-        std::string data = blkQueue->take();
+        data = blkQueue->take();
         cout << "\tConsumer: " << data << endl;
 
         if (0 == i)

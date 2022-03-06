@@ -41,7 +41,7 @@ public class AppA {
 
 
     private static void consumer(BlockingQueue<String> queue) {
-        String data = "";
+        String data;
 
         try {
             for (int i = 0; i < 3; ++i) {

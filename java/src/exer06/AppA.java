@@ -22,10 +22,10 @@ public class AppA {
         String[] arr = { "lorem", "ipsum", "dolor" };
 
         try {
-            for (var value : arr) {
-                System.out.println("Producer: " + value);
-                queue.put(value);
-                System.out.println("Producer: " + value + "\t\t\t[done]");
+            for (var data : arr) {
+                System.out.println("Producer: " + data);
+                queue.put(data);
+                System.out.println("Producer: " + data + "\t\t\t[done]");
             }
         }
         catch (InterruptedException e) {
@@ -35,7 +35,7 @@ public class AppA {
 
 
     private static void consumer(MySynchronousQueue<String> queue) {
-        String data = "";
+        String data;
 
         try {
             Thread.sleep(5000);

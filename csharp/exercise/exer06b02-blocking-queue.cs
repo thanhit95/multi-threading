@@ -23,10 +23,10 @@ class Exer06B02 : IRunnable
     {
         string[] arr = { "nice", "to", "meet", "you" };
 
-        foreach (var value in arr)
+        foreach (var data in arr)
         {
-            queue.put(value);
-            Console.WriteLine($"Producer: {value}\t\t\t[done]");
+            queue.put(data);
+            Console.WriteLine($"Producer: {data}\t\t\t[done]");
         }
     }
 
@@ -75,7 +75,7 @@ class Exer06B02 : IRunnable
             {
                 while (capacity == queue.Count)
                 {
-                    // queue is full, must wait for 'take'
+                    // Queue is full, must wait for 'take'
                     Monitor.Wait(condFull);
                 }
             }
@@ -100,7 +100,7 @@ class Exer06B02 : IRunnable
             {
                 while (0 == queue.Count)
                 {
-                    // queue is empty, must wait for 'put'
+                    // Queue is empty, must wait for 'put'
                     Monitor.Wait(condEmpty);
                 }
             }

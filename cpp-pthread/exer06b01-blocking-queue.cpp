@@ -86,10 +86,10 @@ void* producer(void* arg) {
 
     auto arr = { "nice", "to", "meet", "you" };
 
-    for (auto&& value : arr) {
-        cout << "Producer: " << value << endl;
-        blkQueue->put(value);
-        cout << "Producer: " << value << "\t\t\t[done]" << endl;
+    for (auto&& data : arr) {
+        cout << "Producer: " << data << endl;
+        blkQueue->put(data);
+        cout << "Producer: " << data << "\t\t\t[done]" << endl;
     }
 
     pthread_exit(nullptr);
@@ -100,11 +100,12 @@ void* producer(void* arg) {
 
 void* consumer(void* arg) {
     auto blkQueue = (BlockingQueue<std::string>*) arg;
+    std::string data;
 
     sleep(5);
 
     for (int i = 0; i < 4; ++i) {
-        std::string data = blkQueue->take();
+        data = blkQueue->take();
         cout << "\tConsumer: " << data << endl;
 
         if (0 == i)

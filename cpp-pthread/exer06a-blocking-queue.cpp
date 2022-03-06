@@ -58,10 +58,10 @@ void* producer(void* arg) {
 
     auto arr = { "lorem", "ipsum", "foo" };
 
-    for (auto&& value : arr) {
-        cout << "Producer: " << value << endl;
-        syncQueue->put(value);
-        cout << "Producer: " << value << "\t\t\t[done]" << endl;
+    for (auto&& data : arr) {
+        cout << "Producer: " << data << endl;
+        syncQueue->put(data);
+        cout << "Producer: " << data << "\t\t\t[done]" << endl;
     }
 
     pthread_exit(nullptr);
@@ -72,11 +72,12 @@ void* producer(void* arg) {
 
 void* consumer(void* arg) {
     auto syncQueue = (SynchronousQueue<std::string>*) arg;
+    std::string data;
 
     sleep(5);
 
     for (int i = 0; i < 3; ++i) {
-        std::string data = syncQueue->take();
+        data = syncQueue->take();
         cout << "\tConsumer: " << data << endl;
     }
 

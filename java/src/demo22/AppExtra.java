@@ -36,7 +36,7 @@ public class AppExtra {
 
 
     private static void consumer(BlockingQueue<String> queue) {
-        String data = "";
+        String data;
 
         try {
             Thread.sleep(2000);

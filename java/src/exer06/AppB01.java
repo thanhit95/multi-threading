@@ -25,10 +25,10 @@ public class AppB01 {
         String[] arr = { "nice", "to", "meet", "you" };
 
         try {
-            for (var value : arr) {
-                System.out.println("Producer: " + value);
-                queue.put(value);
-                System.out.println("Producer: " + value + "\t\t\t[done]");
+            for (var data : arr) {
+                System.out.println("Producer: " + data);
+                queue.put(data);
+                System.out.println("Producer: " + data + "\t\t\t[done]");
             }
         }
         catch (InterruptedException e) {
@@ -38,7 +38,7 @@ public class AppB01 {
 
 
     private static void consumer(MyBlockingQueue<String> queue) {
-        String data = "";
+        String data;
 
         try {
             Thread.sleep(5000);

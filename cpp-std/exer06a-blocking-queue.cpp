@@ -48,20 +48,21 @@ public:
 void producer(SynchronousQueue<std::string>* syncQueue) {
     auto arr = { "lorem", "ipsum", "dolor" };
 
-    for (auto&& value : arr) {
-        cout << "Producer: " << value << endl;
-        syncQueue->put(value);
-        cout << "Producer: " << value << "\t\t\t[done]" << endl;
+    for (auto&& data : arr) {
+        cout << "Producer: " << data << endl;
+        syncQueue->put(data);
+        cout << "Producer: " << data << "\t\t\t[done]" << endl;
     }
 }
 
 
 
 void consumer(SynchronousQueue<std::string>* syncQueue) {
+    std::string data;
     std::this_thread::sleep_for(std::chrono::seconds(5));
 
     for (int i = 0; i < 3; ++i) {
-        std::string data = syncQueue->take();
+        data = syncQueue->take();
         cout << "\tConsumer: " << data << endl;
     }
 }

@@ -74,20 +74,21 @@ public:
 void producer(BlockingQueue<std::string>* blkQueue) {
     auto arr = { "nice", "to", "meet", "you" };
 
-    for (auto&& value : arr) {
-        cout << "Producer: " << value << endl;
-        blkQueue->put(value);
-        cout << "Producer: " << value << "\t\t\t[done]" << endl;
+    for (auto&& data : arr) {
+        cout << "Producer: " << data << endl;
+        blkQueue->put(data);
+        cout << "Producer: " << data << "\t\t\t[done]" << endl;
     }
 }
 
 
 
 void consumer(BlockingQueue<std::string>* blkQueue) {
+    std::string data;
     std::this_thread::sleep_for(std::chrono::seconds(5));
 
     for (int i = 0; i < 4; ++i) {
-        std::string data = blkQueue->take();
+        data = blkQueue->take();
         cout << "\tConsumer: " << data << endl;
 
         if (0 == i)

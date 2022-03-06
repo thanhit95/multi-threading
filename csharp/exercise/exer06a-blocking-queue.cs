@@ -21,11 +21,11 @@ class Exer06A : IRunnable
     {
         string[] arr = { "lorem", "ipsum", "dolor" };
 
-        foreach (var value in arr)
+        foreach (var data in arr)
         {
-            Console.WriteLine($"Producer: {value}");
-            queue.put(value);
-            Console.WriteLine($"Producer: {value}\t\t\t[done]");
+            Console.WriteLine($"Producer: {data}");
+            queue.put(data);
+            Console.WriteLine($"Producer: {data}\t\t\t[done]");
         }
     }
 
