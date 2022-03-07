@@ -1,6 +1,6 @@
 /*
 GETTING RETURNED VALUES FROM THREADS
-Version B: Using std::future
+Version B: Using std::future with the promise
 */
 
 
