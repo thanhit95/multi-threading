@@ -6,7 +6,6 @@ Version 01: Without multithreading
 
 #include <iostream>
 #include <cstdlib>
-#include <pthread.h>
 using namespace std;
 
 

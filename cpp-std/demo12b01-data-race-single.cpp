@@ -7,7 +7,6 @@ Version 01: Without multithreading
 #include <iostream>
 #include <vector>
 #include <numeric>
-#include <thread>
 using namespace std;
 
 
