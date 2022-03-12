@@ -122,34 +122,33 @@ private:
         auto&& counterTaskRunning = thisPtr->counterTaskRunning;
         auto&& forceThreadShutdown = thisPtr->forceThreadShutdown;
 
+        ITask* task = nullptr;
+
 
         for (;;) {
-            // WAIT FOR AN AVAILABLE PENDING TASK
-            std::unique_lock<std::mutex> lkPending(mutTaskPending);
+            {
+                // WAIT FOR AN AVAILABLE PENDING TASK
+                uniquelk lkPending(mutTaskPending);
 
-            while (0 == taskPending.size() && false == forceThreadShutdown) {
-                condTaskPending.wait(lkPending);
+                while (0 == taskPending.size() && false == forceThreadShutdown) {
+                    condTaskPending.wait(lkPending);
+                }
+
+                if (forceThreadShutdown) {
+                    // lkPending.unlock(); // remember this statement
+                    break;
+                }
+
+                // GET THE TASK FROM THE PENDING QUEUE
+                task = taskPending.front();
+                taskPending.pop();
+
+                ++counterTaskRunning;
             }
-
-            if (forceThreadShutdown) {
-                // lkPending.unlock(); // remember this statement
-                break;
-            }
-
-
-            // GET THE TASK FROM THE PENDING QUEUE
-            auto task = taskPending.front();
-            taskPending.pop();
-
-
-            ++counterTaskRunning;
-
-
-            lkPending.unlock();
-
 
             // DO THE TASK
             task->run();
+
             --counterTaskRunning;
         }
     }
