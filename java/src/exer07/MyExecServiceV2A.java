@@ -1,11 +1,8 @@
 /*
  * MY EXECUTOR SERVICE
  *
- * Version 2A:
- *   - Better synchronization.
- *   - Method "waitTaskDone":
- *       + uses a semaphore to synchronize.
- *       + does not consume CPU (compared to version 1).
+ * Version 2A: The executor service storing running tasks
+ * - Method "waitTaskDone" uses a semaphore to synchronize.
  */
 
 package exer07;
