@@ -1,5 +1,5 @@
 ﻿/*
- * ASYNCHRONOUS PROGRAMMING WITH FUTURE/TASK
+ * ASYNCHRONOUS PROGRAMMING WITH THE FUTURE/TASK
  *
  * The app takes about 1000 miliseconds to run
  * because all 3 tasks are running simultaneously.
