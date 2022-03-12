@@ -1,8 +1,7 @@
 /*
  * MY EXECUTOR SERVICE
  *
- * Version 1:
- * - Simple thread pool.
+ * Version 1A: Simple executor service
  * - Method "waitTaskDone" consumes CPU (due to bad synchronization).
  */
 
@@ -16,7 +15,7 @@ import java.util.stream.IntStream;
 
 
 
-public class MyExecServiceV1 {
+public class MyExecServiceV1A {
 
     private int numThreads = 0;
     private List<Thread> lstTh = new LinkedList<>();
@@ -93,7 +92,7 @@ public class MyExecServiceV1 {
 
 
 
-    private static void threadWorkerFunc(MyExecServiceV1 thisPtr) {
+    private static void threadWorkerFunc(MyExecServiceV1A thisPtr) {
         var taskPending = thisPtr.taskPending;
         var counterTaskRunning = thisPtr.counterTaskRunning;
 
