@@ -6,8 +6,8 @@ EXECUTOR SERVICE & THREAD POOL IMPLEMENTATION
 #include <iostream>
 #include <chrono>
 #include "exer07-exec-service-itask.hpp"
-// #include "exer07-exec-service-v1.hpp"
-// #include "exer07-exec-service-v2a.hpp"
+#include "exer07-exec-service-v1.hpp"
+#include "exer07-exec-service-v2a.hpp"
 #include "exer07-exec-service-v2b.hpp"
 
 
