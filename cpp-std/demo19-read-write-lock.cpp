@@ -14,18 +14,18 @@ using namespace std;
 
 
 volatile int resource = 0;
-auto rwlock = std::shared_mutex();
+auto rwmut = std::shared_mutex();
 
 
 
 void readFunc(int timeWait) {
     std::this_thread::sleep_for(std::chrono::seconds(timeWait));
 
-    rwlock.lock_shared();
+    rwmut.lock_shared();
 
     cout << "read: " << resource << endl;
 
-    rwlock.unlock_shared();
+    rwmut.unlock_shared();
 }
 
 
@@ -33,12 +33,12 @@ void readFunc(int timeWait) {
 void writeFunc(int timeWait) {
     std::this_thread::sleep_for(std::chrono::seconds(timeWait));
 
-    rwlock.lock();
+    rwmut.lock();
 
     resource = mylib::RandInt::get(100);
     cout << "write: " << resource << endl;
 
-    rwlock.unlock();
+    rwmut.unlock();
 }
 
 
