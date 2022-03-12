@@ -1,14 +1,14 @@
 /*
-THREAD POOL & EXECUTOR SERVICE IMPLEMENTATION
+EXECUTOR SERVICE & THREAD POOL IMPLEMENTATION
 */
 
 
 #include <iostream>
 #include <unistd.h>
-#include "exer07-thread-pool-itask.hpp"
-// #include "exer07-thread-pool-v1.hpp"
-// #include "exer07-thread-pool-v2a.hpp"
-#include "exer07-thread-pool-v2b.hpp"
+#include "exer07-exec-service-itask.hpp"
+// #include "exer07-exec-service-v1.hpp"
+// #include "exer07-exec-service-v2a.hpp"
+#include "exer07-exec-service-v2b.hpp"
 
 
 
@@ -31,8 +31,8 @@ int main() {
     constexpr int NUM_TASKS = 5;
 
 
-    ThreadPoolV2B threadPool;
-    threadPool.init(NUM_THREADS);
+    MyExecServiceV2B execService;
+    execService.init(NUM_THREADS);
 
 
     std::vector<MyTask> lstTask(NUM_TASKS);
@@ -42,16 +42,16 @@ int main() {
 
 
     for (auto&& task : lstTask)
-        threadPool.submit(&task);
+        execService.submit(&task);
 
     std::cout << "All tasks are submitted" << std::endl;
 
 
-    threadPool.waitTaskDone();
+    execService.waitTaskDone();
     std::cout << "All tasks are completed" << std::endl;
 
 
-    threadPool.shutdown();
+    execService.shutdown();
 
 
     return 0;

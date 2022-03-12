@@ -1,5 +1,5 @@
-#ifndef _EXER07_ITASK_HPP_
-#define _EXER07_ITASK_HPP_
+#ifndef _MY_EXEC_SERVICE_ITASK_HPP_
+#define _MY_EXEC_SERVICE_ITASK_HPP_
 
 
 
@@ -12,4 +12,4 @@ public:
 
 
 
-#endif // _EXER07_ITASK_HPP_
+#endif // _MY_EXEC_SERVICE_ITASK_HPP_

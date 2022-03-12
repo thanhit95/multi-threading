@@ -1,5 +1,5 @@
 /*
-MY THREAD POOL
+MY EXECUTOR SERVICE
 
 Version 2A:
 - Better synchronization.
@@ -10,8 +10,8 @@ Version 2A:
 
 
 
-#ifndef _MY_THREAD_POOL_V2A_HPP_
-#define _MY_THREAD_POOL_V2A_HPP_
+#ifndef _MY_EXEC_SERVICE_V2A_HPP_
+#define _MY_EXEC_SERVICE_V2A_HPP_
 
 
 
@@ -20,11 +20,11 @@ Version 2A:
 #include <queue>
 #include <pthread.h>
 #include <semaphore.h>
-#include "exer07-thread-pool-itask.hpp"
+#include "exer07-exec-service-itask.hpp"
 
 
 
-class ThreadPoolV2A {
+class MyExecServiceV2A {
 
 private:
     int numThreads = 0;
@@ -42,11 +42,11 @@ private:
 
 
 public:
-    ThreadPoolV2A() = default;
-    ThreadPoolV2A(const ThreadPoolV2A& other) = delete;
-    ThreadPoolV2A(const ThreadPoolV2A&& other) = delete;
-    void operator=(const ThreadPoolV2A& other) = delete;
-    void operator=(const ThreadPoolV2A&& other) = delete;
+    MyExecServiceV2A() = default;
+    MyExecServiceV2A(const MyExecServiceV2A& other) = delete;
+    MyExecServiceV2A(const MyExecServiceV2A&& other) = delete;
+    void operator=(const MyExecServiceV2A& other) = delete;
+    void operator=(const MyExecServiceV2A&& other) = delete;
 
 
     void init(int numThreads) {
@@ -126,7 +126,7 @@ public:
 
 private:
     static void* threadWorkerFunc(void* argVoid) {
-        auto thisPtr = (ThreadPoolV2A*) argVoid;
+        auto thisPtr = (MyExecServiceV2A*) argVoid;
 
         auto&& taskPending = thisPtr->taskPending;
         auto&& mutTaskPending = thisPtr->mutTaskPending;
@@ -186,4 +186,4 @@ private:
 
 
 
-#endif // _MY_THREAD_POOL_V2A_HPP_
+#endif // _MY_EXEC_SERVICE_V2A_HPP_
