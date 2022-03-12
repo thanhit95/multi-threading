@@ -26,6 +26,10 @@ Version 1:
 class MyExecServiceV1 {
 
 private:
+    using uniquelk = std::unique_lock<std::mutex>;
+
+
+private:
     int numThreads = 0;
     std::vector<std::thread> lstTh;
 
@@ -61,9 +65,10 @@ public:
 
 
     void submit(ITask* task) {
-        mutTaskPending.lock();
-        taskPending.push(task);
-        mutTaskPending.unlock();
+        {
+            uniquelk lk(mutTaskPending);
+            taskPending.push(task);
+        }
 
         condTaskPending.notify_one();
     }
@@ -73,13 +78,13 @@ public:
         bool done = false;
 
         for (;;) {
-            mutTaskPending.lock();
+            {
+                uniquelk lk(mutTaskPending);
 
-            if (0 == taskPending.size() && 0 == counterTaskRunning.load()) {
-                done = true;
+                if (0 == taskPending.size() && 0 == counterTaskRunning.load()) {
+                    done = true;
+                }
             }
-
-            mutTaskPending.unlock();
 
             if (done) {
                 break;
@@ -91,12 +96,11 @@ public:
 
 
     void shutdown() {
-        mutTaskPending.lock();
-
-        forceThreadShutdown = true;
-        std::queue<ITask*>().swap(taskPending);
-
-        mutTaskPending.unlock();
+        {
+            uniquelk lk(mutTaskPending);
+            forceThreadShutdown = true;
+            std::queue<ITask*>().swap(taskPending);
+        }
 
         condTaskPending.notify_all();
 

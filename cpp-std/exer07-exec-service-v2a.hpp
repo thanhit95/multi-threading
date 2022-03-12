@@ -70,9 +70,10 @@ public:
 
 
     void submit(ITask* task) {
-        mutTaskPending.lock();
-        taskPending.push(task);
-        mutTaskPending.unlock();
+        {
+            uniquelk lk(mutTaskPending);
+            taskPending.push(task);
+        }
 
         condTaskPending.notify_one();
     }
@@ -95,12 +96,11 @@ public:
 
 
     void shutdown() {
-        mutTaskPending.lock();
-
-        forceThreadShutdown = true;
-        std::queue<ITask*>().swap(taskPending);
-
-        mutTaskPending.unlock();
+        {
+            uniquelk lk(mutTaskPending);
+            forceThreadShutdown = true;
+            std::queue<ITask*>().swap(taskPending);
+        }
 
         condTaskPending.notify_all();
 
