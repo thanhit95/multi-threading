@@ -1,5 +1,5 @@
 ﻿/*
- * MY THREAD POOL
+ * MY EXECUTOR SERVICE
  *
  * Version 2A:
  *   - Better synchronization.
@@ -15,7 +15,7 @@ using System.Threading;
 
 namespace Exer07
 {
-    class MyThreadPoolV2A
+    class MyExecServiceV2A
     {
         private int numThreads = 0;
         private List<Thread> lstTh = new List<Thread>();
@@ -94,7 +94,7 @@ namespace Exer07
 
 
 
-        private static void threadWorkerFunc(MyThreadPoolV2A thisPtr)
+        private static void threadWorkerFunc(MyExecServiceV2A thisPtr)
         {
             ref var taskPending = ref thisPtr.taskPending;
             ref var taskRunning = ref thisPtr.taskRunning;

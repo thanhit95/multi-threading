@@ -1,5 +1,5 @@
 ﻿/*
- * THREAD POOLS
+ * EXECUTOR SERVICES AND THREAD POOLS
  * Version A02: System.Threading.ThreadPool
  *              Passing arguments
  */
@@ -34,6 +34,6 @@ class Demo11A02 : IRunnable
 
     private void doTask(object arg)
     {
-        Console.WriteLine($"Hello Thread Pool {arg}");
+        Console.WriteLine($"Hello the Executor Service {arg}");
     }
 }

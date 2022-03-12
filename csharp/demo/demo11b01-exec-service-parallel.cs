@@ -1,5 +1,5 @@
 /*
- * THREAD POOLS
+ * EXECUTOR SERVICES AND THREAD POOLS
  * Version B01: System.Threading.Tasks.Parallel
  *              Introduction
  */
@@ -31,6 +31,6 @@ class Demo11B01 : IRunnable
 
     private void doTask(int arg)
     {
-        Console.WriteLine($"Hello Thread Pool {arg}");
+        Console.WriteLine($"Hello the Executor Service {arg}");
     }
 }

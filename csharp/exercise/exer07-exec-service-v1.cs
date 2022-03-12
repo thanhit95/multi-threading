@@ -1,5 +1,5 @@
 ﻿/*
- * MY THREAD POOL
+ * MY EXECUTOR SERVICE
  *
  * Version 1:
  * - Simple thread pool.
@@ -13,7 +13,7 @@ using System.Threading;
 
 namespace Exer07
 {
-    class MyThreadPoolV1
+    class MyExecServiceV1
     {
         private int numThreads = 0;
         private List<Thread> lstTh = new List<Thread>();
@@ -89,7 +89,7 @@ namespace Exer07
 
 
 
-        private static void threadWorkerFunc(MyThreadPoolV1 thisPtr)
+        private static void threadWorkerFunc(MyExecServiceV1 thisPtr)
         {
             ref var taskPending = ref thisPtr.taskPending;
             ref var counterTaskRunning = ref thisPtr.counterTaskRunning;

@@ -1,5 +1,5 @@
 ﻿/*
- * THREAD POOL & EXECUTOR SERVICE IMPLEMENTATION
+ * EXECUTOR SERVICE & THREAD POOL IMPLEMENTATION
  */
 using System;
 using System.Collections.Generic;
@@ -17,8 +17,8 @@ namespace Exer07
             const int NUM_TASKS = 5;
 
 
-            var threadPool = new MyThreadPoolV2B();
-            threadPool.init(NUM_THREADS);
+            var execService = new MyExecServiceV2B();
+            execService.init(NUM_THREADS);
 
 
             var lstTask = new List<MyTask>();
@@ -27,15 +27,15 @@ namespace Exer07
                 lstTask.Add(new MyTask((char)('A' + i)));
 
 
-            lstTask.ForEach(task => threadPool.submit(task));
+            lstTask.ForEach(task => execService.submit(task));
             Console.WriteLine("All tasks are submitted");
 
 
-            threadPool.waitTaskDone();
+            execService.waitTaskDone();
             Console.WriteLine("All tasks are completed");
 
 
-            threadPool.shutdown();
+            execService.shutdown();
         }
     }
 
