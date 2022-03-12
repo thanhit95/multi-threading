@@ -1,15 +1,14 @@
 /*
 MY EXECUTOR SERVICE
 
-Version 1:
-- Simple thread pool.
-- Method "waitTaskDone" consumes CPU (due to bad synchronization).
+Version 1B: Simple executor service
+- Method "waitTaskDone" uses a condition variable to synchronize.
 */
 
 
 
-#ifndef _MY_EXEC_SERVICE_V1_HPP_
-#define _MY_EXEC_SERVICE_V1_HPP_
+#ifndef _MY_EXEC_SERVICE_V1B_HPP_
+#define _MY_EXEC_SERVICE_V1B_HPP_
 
 
 
@@ -18,12 +17,11 @@ Version 1:
 #include <thread>
 #include <mutex>
 #include <condition_variable>
-#include <atomic>
 #include "exer07-exec-service-itask.hpp"
 
 
 
-class MyExecServiceV1 {
+class MyExecServiceV1B {
 
 private:
     using uniquelk = std::unique_lock<std::mutex>;
@@ -37,17 +35,19 @@ private:
     std::mutex mutTaskPending;
     std::condition_variable condTaskPending;
 
-    std::atomic_int32_t counterTaskRunning;
+    int counterTaskRunning;
+    std::mutex mutTaskRunning;
+    std::condition_variable condTaskRunning;
 
     volatile bool forceThreadShutdown;
 
 
 public:
-    MyExecServiceV1() = default;
-    MyExecServiceV1(const MyExecServiceV1& other) = delete;
-    MyExecServiceV1(const MyExecServiceV1&& other) = delete;
-    void operator=(const MyExecServiceV1& other) = delete;
-    void operator=(const MyExecServiceV1&& other) = delete;
+    MyExecServiceV1B() = default;
+    MyExecServiceV1B(const MyExecServiceV1B& other) = delete;
+    MyExecServiceV1B(const MyExecServiceV1B&& other) = delete;
+    void operator=(const MyExecServiceV1B& other) = delete;
+    void operator=(const MyExecServiceV1B&& other) = delete;
 
 
     void init(int numThreads) {
@@ -55,7 +55,7 @@ public:
 
         this->numThreads = numThreads;
         lstTh.resize(numThreads);
-        counterTaskRunning.store(0);
+        counterTaskRunning = 0;
         forceThreadShutdown = false;
 
         for (auto&& th : lstTh) {
@@ -75,22 +75,18 @@ public:
 
 
     void waitTaskDone() {
-        bool done = false;
-
         for (;;) {
-            {
-                uniquelk lk(mutTaskPending);
+            uniquelk lkPending(mutTaskPending);
 
-                if (0 == taskPending.size() && 0 == counterTaskRunning.load()) {
-                    done = true;
-                }
-            }
+            if (0 == taskPending.size()) {
+                uniquelk lkRunning(mutTaskRunning);
 
-            if (done) {
+                while (counterTaskRunning > 0)
+                    condTaskRunning.wait(lkRunning);
+
+                // no pending task and no running task
                 break;
             }
-
-            std::this_thread::yield();
         }
     }
 
@@ -114,12 +110,15 @@ public:
 
 
 private:
-    static void threadWorkerFunc(MyExecServiceV1* thisPtr) {
+    static void threadWorkerFunc(MyExecServiceV1B* thisPtr) {
         auto&& taskPending = thisPtr->taskPending;
         auto&& mutTaskPending = thisPtr->mutTaskPending;
         auto&& condTaskPending = thisPtr->condTaskPending;
 
         auto&& counterTaskRunning = thisPtr->counterTaskRunning;
+        auto&& mutTaskRunning = thisPtr->mutTaskRunning;
+        auto&& condTaskRunning = thisPtr->condTaskRunning;
+
         auto&& forceThreadShutdown = thisPtr->forceThreadShutdown;
 
         ITask* task = nullptr;
@@ -149,7 +148,14 @@ private:
             // DO THE TASK
             task->run();
 
-            --counterTaskRunning;
+            {
+                uniquelk lkRunning(mutTaskRunning);
+                --counterTaskRunning;
+
+                if (0 == counterTaskRunning) {
+                    condTaskRunning.notify_one();
+                }
+            }
         }
     }
 
@@ -157,4 +163,4 @@ private:
 
 
 
-#endif // _MY_EXEC_SERVICE_V1_HPP_
+#endif // _MY_EXEC_SERVICE_V1B_HPP_
