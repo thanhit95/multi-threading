@@ -1,17 +1,17 @@
 /*
-MY THREAD POOL
+MY EXECUTOR SERVICE
 
-Version 2B:
+Version 2A:
 - Better synchronization.
 - Method "waitTaskDone":
-  + uses a condition variable to synchronize.
+  + uses a semaphore to synchronize.
   + does not consume CPU (compared to version 1).
 */
 
 
 
-#ifndef _MY_THREAD_POOL_V2B_HPP_
-#define _MY_THREAD_POOL_V2B_HPP_
+#ifndef _MY_EXEC_SERVICE_V2A_HPP_
+#define _MY_EXEC_SERVICE_V2A_HPP_
 
 
 
@@ -21,13 +21,15 @@ Version 2B:
 #include <thread>
 #include <mutex>
 #include <condition_variable>
-#include "exer07-thread-pool-itask.hpp"
+#include <semaphore>
+#include "exer07-exec-service-itask.hpp"
 
 
 
-class ThreadPoolV2B {
+class MyExecServiceV2A {
 
 private:
+    using cntsemaphore = std::counting_semaphore<>;
     using uniquelk = std::unique_lock<std::mutex>;
 
 
@@ -41,17 +43,17 @@ private:
 
     std::list<ITask*> taskRunning;
     std::mutex mutTaskRunning;
-    std::condition_variable condTaskRunning;
+    cntsemaphore counterTaskRunning = cntsemaphore(0);
 
     volatile bool forceThreadShutdown;
 
 
 public:
-    ThreadPoolV2B() = default;
-    ThreadPoolV2B(const ThreadPoolV2B& other) = delete;
-    ThreadPoolV2B(const ThreadPoolV2B&& other) = delete;
-    void operator=(const ThreadPoolV2B& other) = delete;
-    void operator=(const ThreadPoolV2B&& other) = delete;
+    MyExecServiceV2A() = default;
+    MyExecServiceV2A(const MyExecServiceV2A& other) = delete;
+    MyExecServiceV2A(const MyExecServiceV2A&& other) = delete;
+    void operator=(const MyExecServiceV2A& other) = delete;
+    void operator=(const MyExecServiceV2A&& other) = delete;
 
 
     void init(int numThreads) {
@@ -78,16 +80,15 @@ public:
 
     void waitTaskDone() {
         for (;;) {
-            uniquelk lkPending(mutTaskPending);
+            counterTaskRunning.acquire();
 
-            if (0 == taskPending.size()) {
+            {
+                uniquelk lkPending(mutTaskPending);
                 uniquelk lkRunning(mutTaskRunning);
 
-                while (taskRunning.size() > 0)
-                    condTaskRunning.wait(lkRunning);
-
-                // no pending task and no running task
-                break;
+                if (0 == taskPending.size() && 0 == taskRunning.size()) {
+                    break;
+                }
             }
         }
     }
@@ -113,14 +114,14 @@ public:
 
 
 private:
-    static void threadWorkerFunc(ThreadPoolV2B* thisPtr) {
+    static void threadWorkerFunc(MyExecServiceV2A* thisPtr) {
         auto&& taskPending = thisPtr->taskPending;
         auto&& mutTaskPending = thisPtr->mutTaskPending;
         auto&& condTaskPending = thisPtr->condTaskPending;
 
         auto&& taskRunning = thisPtr->taskRunning;
         auto&& mutTaskRunning = thisPtr->mutTaskRunning;
-        auto&& condTaskRunning = thisPtr->condTaskRunning;
+        auto&& counterTaskRunning = thisPtr->counterTaskRunning;
 
         auto&& forceThreadShutdown = thisPtr->forceThreadShutdown;
 
@@ -159,7 +160,7 @@ private:
             {
                 uniquelk lkRunning(mutTaskRunning);
                 taskRunning.remove(task);
-                condTaskRunning.notify_one();
+                counterTaskRunning.release();
             }
         }
     }
@@ -168,4 +169,4 @@ private:
 
 
 
-#endif // _MY_THREAD_POOL_V2B_HPP_
+#endif // _MY_EXEC_SERVICE_V2A_HPP_

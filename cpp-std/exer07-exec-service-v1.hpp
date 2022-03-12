@@ -1,5 +1,5 @@
 /*
-MY THREAD POOL
+MY EXECUTOR SERVICE
 
 Version 1:
 - Simple thread pool.
@@ -8,8 +8,8 @@ Version 1:
 
 
 
-#ifndef _MY_THREAD_POOL_V1_HPP_
-#define _MY_THREAD_POOL_V1_HPP_
+#ifndef _MY_EXEC_SERVICE_V1_HPP_
+#define _MY_EXEC_SERVICE_V1_HPP_
 
 
 
@@ -19,11 +19,11 @@ Version 1:
 #include <mutex>
 #include <condition_variable>
 #include <atomic>
-#include "exer07-thread-pool-itask.hpp"
+#include "exer07-exec-service-itask.hpp"
 
 
 
-class ThreadPoolV1 {
+class MyExecServiceV1 {
 
 private:
     int numThreads = 0;
@@ -39,11 +39,11 @@ private:
 
 
 public:
-    ThreadPoolV1() = default;
-    ThreadPoolV1(const ThreadPoolV1& other) = delete;
-    ThreadPoolV1(const ThreadPoolV1&& other) = delete;
-    void operator=(const ThreadPoolV1& other) = delete;
-    void operator=(const ThreadPoolV1&& other) = delete;
+    MyExecServiceV1() = default;
+    MyExecServiceV1(const MyExecServiceV1& other) = delete;
+    MyExecServiceV1(const MyExecServiceV1&& other) = delete;
+    void operator=(const MyExecServiceV1& other) = delete;
+    void operator=(const MyExecServiceV1&& other) = delete;
 
 
     void init(int numThreads) {
@@ -110,7 +110,7 @@ public:
 
 
 private:
-    static void threadWorkerFunc(ThreadPoolV1* thisPtr) {
+    static void threadWorkerFunc(MyExecServiceV1* thisPtr) {
         auto&& taskPending = thisPtr->taskPending;
         auto&& mutTaskPending = thisPtr->mutTaskPending;
         auto&& condTaskPending = thisPtr->condTaskPending;
@@ -154,4 +154,4 @@ private:
 
 
 
-#endif // _MY_THREAD_POOL_V1_HPP_
+#endif // _MY_EXEC_SERVICE_V1_HPP_
