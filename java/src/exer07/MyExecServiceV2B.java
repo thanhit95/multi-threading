@@ -1,5 +1,5 @@
 /*
- * MY THREAD POOL
+ * MY EXECUTOR SERVICE
  *
  * Version 2B:
  *   - Better synchronization.
@@ -17,7 +17,7 @@ import java.util.stream.IntStream;
 
 
 
-public class MyThreadPoolV2B {
+public class MyExecServiceV2B {
 
     private int numThreads = 0;
     private List<Thread> lstTh = new LinkedList<>();
@@ -119,7 +119,7 @@ public class MyThreadPoolV2B {
 
 
 
-    private static void threadWorkerFunc(MyThreadPoolV2B thisPtr) {
+    private static void threadWorkerFunc(MyExecServiceV2B thisPtr) {
         var taskPending = thisPtr.taskPending;
         var taskRunning = thisPtr.taskRunning;
         Runnable task = null;

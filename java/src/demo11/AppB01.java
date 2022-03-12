@@ -1,6 +1,6 @@
 /*
- * THREAD POOLS
- * Version B01: Thread pools containing multiple threads - FixedThreadPool
+ * EXECUTOR SERVICES AND THREAD POOLS
+ * Version B01: The executor service containing multiple threads - FixedThreadPool
  */
 
 package demo11;

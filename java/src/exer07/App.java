@@ -1,5 +1,5 @@
 /*
- * THREAD POOL & EXECUTOR SERVICE IMPLEMENTATION
+ * EXECUTOR SERVICE & THREAD POOL IMPLEMENTATION
  */
 
 package exer07;
@@ -15,8 +15,8 @@ public class App {
         final int NUM_TASKS = 5;
 
 
-        var threadPool = new MyThreadPoolV2B();
-        threadPool.init(NUM_THREADS);
+        var execService = new MyExecServiceV2B();
+        execService.init(NUM_THREADS);
 
 
         var lstTask = new ArrayList<MyTask>();
@@ -25,15 +25,15 @@ public class App {
             lstTask.add(new MyTask((char)('A' + i)));
 
 
-        lstTask.forEach(task -> threadPool.submit(task));
+        lstTask.forEach(task -> execService.submit(task));
         System.out.println("All tasks are submitted");
 
 
-        threadPool.waitTaskDone();
+        execService.waitTaskDone();
         System.out.println("All tasks are completed");
 
 
-        threadPool.shutdown();
+        execService.shutdown();
     }
 
 

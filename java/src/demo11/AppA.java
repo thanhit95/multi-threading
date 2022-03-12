@@ -1,6 +1,6 @@
 /*
- * THREAD POOLS
- * Version A: Thread pools containing a single thread
+ * EXECUTOR SERVICES AND THREAD POOLS
+ * Version A: The executor service (of which thread pool) containing a single thread
  *
  * Note: The single thread executor is ideal for creating an event loop.
  */
@@ -20,7 +20,7 @@ public class AppA {
         executor.submit(() -> System.out.println("Hello World"));
         executor.submit(() -> System.out.println("Hello Multithreading"));
 
-        Runnable rnn = () -> System.out.println("Hello Thread Pool");
+        Runnable rnn = () -> System.out.println("Hello the Executor Service");
         executor.submit(rnn);
 
         executor.shutdown();

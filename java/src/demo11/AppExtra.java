@@ -1,5 +1,5 @@
 /*
- * THREAD POOLS
+ * EXECUTOR SERVICES AND THREAD POOLS
  * Demo extra: The fork/join pool
  *
  * ForkJoinPool is the central part of the fork/join framework introduced in Java 7.

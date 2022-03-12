@@ -1,6 +1,6 @@
 /*
- * THREAD POOLS
- * Version C02: Thread pools and Future objects - Getting started
+ * EXECUTOR SERVICES AND THREAD POOLS
+ * Version C02: The executor service and Future objects - Getting started
  */
 
 package demo11;

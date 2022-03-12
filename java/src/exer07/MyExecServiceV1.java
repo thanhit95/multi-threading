@@ -1,5 +1,5 @@
 /*
- * MY THREAD POOL
+ * MY EXECUTOR SERVICE
  *
  * Version 1:
  * - Simple thread pool.
@@ -16,7 +16,7 @@ import java.util.stream.IntStream;
 
 
 
-public class MyThreadPoolV1 {
+public class MyExecServiceV1 {
 
     private int numThreads = 0;
     private List<Thread> lstTh = new LinkedList<>();
@@ -93,7 +93,7 @@ public class MyThreadPoolV1 {
 
 
 
-    private static void threadWorkerFunc(MyThreadPoolV1 thisPtr) {
+    private static void threadWorkerFunc(MyExecServiceV1 thisPtr) {
         var taskPending = thisPtr.taskPending;
         var counterTaskRunning = thisPtr.counterTaskRunning;
 
