@@ -1,5 +1,5 @@
 ﻿/*
- * ASYNCHRONOUS PROGRAMMING WITH FUTURE/TASK
+ * ASYNCHRONOUS PROGRAMMING WITH THE FUTURE/TASK
  *
  * The app takes about 3000 miliseconds to run
  * because each method "Task.Wait" pauses app until the task finishes.
