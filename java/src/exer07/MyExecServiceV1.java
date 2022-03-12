@@ -84,7 +84,7 @@ public class MyExecServiceV1 {
                 th.join();
 
             numThreads = 0;
-            lstTh.clear();
+//          lstTh.clear();
         }
         catch (InterruptedException e) {
             e.printStackTrace();

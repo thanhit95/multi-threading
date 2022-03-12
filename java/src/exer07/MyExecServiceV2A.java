@@ -90,7 +90,7 @@ public class MyExecServiceV2A {
                 th.join();
 
             numThreads = 0;
-            lstTh.clear();
+//          lstTh.clear();
             taskRunning.clear();
 
             counterTaskRunning.release(counterTaskRunning.availablePermits());

@@ -109,7 +109,7 @@ public class MyExecServiceV2B {
                 th.join();
 
             numThreads = 0;
-            lstTh.clear();
+//          lstTh.clear();
             taskRunning.clear();
         }
         catch (InterruptedException e) {
