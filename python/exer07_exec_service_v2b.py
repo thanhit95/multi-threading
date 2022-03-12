@@ -1,5 +1,5 @@
 '''
-MY THREAD POOL
+MY EXECUTOR SERVICE
 
 Version 2B:
 - Better synchronization.
@@ -9,11 +9,11 @@ Version 2B:
 '''
 
 import threading
-from exer07_thread_pool_itask import ITask
+from exer07_exec_service_itask import ITask
 
 
 
-class ThreadPoolV2B:
+class MyExecServiceV2B:
     def __init__(self, num_threads: int):
         self.shutdown()
         self.__num_threads = num_threads
@@ -28,7 +28,7 @@ class ThreadPoolV2B:
 
         for _ in range(self.__num_threads):
             self.__lstth.append(
-                threading.Thread(target=ThreadPoolV2B.__thread_worker_func, args=(self,))
+                threading.Thread(target=MyExecServiceV2B.__thread_worker_func, args=(self,))
             )
 
         for th in self.__lstth:
@@ -69,7 +69,7 @@ class ThreadPoolV2B:
 
 
     @staticmethod
-    def __thread_worker_func(selfptr: 'ThreadPoolV2B'):
+    def __thread_worker_func(selfptr: 'MyExecServiceV2B'):
         task_pending = selfptr.__task_pending
         lk_task_pending = selfptr.__lk_task_pending
         cond_task_pending = selfptr.__cond_task_pending

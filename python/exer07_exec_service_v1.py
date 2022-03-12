@@ -1,19 +1,18 @@
 '''
-MY THREAD POOL
+MY EXECUTOR SERVICE
 
-Version 2A:
-- Better synchronization.
-- Method "wait_task_done":
-  + uses a semaphore to synchronize.
-  + does not consume CPU (compared to version 1).
+Version 1:
+- Simple thread pool.
+- Method "wait_task_done" consumes CPU (due to bad synchronization).
 '''
 
+import time
 import threading
-from exer07_thread_pool_itask import ITask
+from exer07_exec_service_itask import ITask
 
 
 
-class ThreadPoolV2A:
+class MyExecServiceV1:
     def __init__(self, num_threads: int):
         self.shutdown()
         self.__num_threads = num_threads
@@ -21,14 +20,14 @@ class ThreadPoolV2A:
         self.__task_pending = []
         self.__lk_task_pending = threading.Lock()
         self.__cond_task_pending = threading.Condition(self.__lk_task_pending)
-        self.__task_running = []
-        self.__lk_task_running = threading.Lock()
-        self.__counter_task_running = threading.Semaphore(0)
         self.__force_thread_shutdown = False
+
+        with self.__lk_task_pending:
+            self.__counter_task_running = 0
 
         for _ in range(self.__num_threads):
             self.__lstth.append(
-                threading.Thread(target=ThreadPoolV2A.__thread_worker_func, args=(self,))
+                threading.Thread(target=MyExecServiceV1.__thread_worker_func, args=(self,))
             )
 
         for th in self.__lstth:
@@ -42,12 +41,16 @@ class ThreadPoolV2A:
 
 
     def wait_task_done(self):
+        done = False
         while True:
-            self.__counter_task_running.acquire()
+            with self.__lk_task_pending:
+                if len(self.__task_pending) == 0 and self.__counter_task_running == 0:
+                    done = True
 
-            with self.__lk_task_pending, self.__lk_task_running:
-                if len(self.__task_pending) == 0 and len(self.__task_running) == 0:
-                    break
+            if done:
+                break
+
+            time.sleep(0.5)
 
 
     def shutdown(self):
@@ -66,14 +69,10 @@ class ThreadPoolV2A:
 
 
     @staticmethod
-    def __thread_worker_func(selfptr: 'ThreadPoolV2A'):
+    def __thread_worker_func(selfptr: 'MyExecServiceV1'):
         task_pending = selfptr.__task_pending
         lk_task_pending = selfptr.__lk_task_pending
         cond_task_pending = selfptr.__cond_task_pending
-
-        task_running = selfptr.__task_running
-        lk_task_running = selfptr.__lk_task_running
-        counter_task_running = selfptr.__counter_task_running
 
         while True:
             with lk_task_pending:
@@ -87,15 +86,10 @@ class ThreadPoolV2A:
 
                 # GET THE TASK FROM THE PENDING QUEUE
                 task = task_pending.pop(0)
-
-                # PUSH IT TO THE RUNNING QUEUE
-                with lk_task_running:
-                    task_running.append(task)
+                selfptr.__counter_task_running += 1
 
             # DO THE TASK
             task.run()
 
-            # REMOVE IT FROM THE RUNNING QUEUE
-            with lk_task_running:
-                task_running.remove(task)
-                counter_task_running.release()
+            with lk_task_pending:
+                selfptr.__counter_task_running -= 1

@@ -1,6 +1,6 @@
 '''
-THREAD POOLS
-Version A: Thread pools containing a single thread
+EXECUTOR SERVICES AND THREAD POOLS
+Version A: The executor service (of which thread pool) containing a single thread
 '''
 
 from concurrent.futures import ThreadPoolExecutor
@@ -8,7 +8,7 @@ from concurrent.futures import ThreadPoolExecutor
 
 
 def do_task():
-    print('Hello Thread Pool')
+    print('Hello the Executor Service')
 
 
 

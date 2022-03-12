@@ -1,15 +1,13 @@
 '''
-THREAD POOLS
-Version C02: Thread pools and Future objects
+EXECUTOR SERVICES AND THREAD POOLS
+Version C01: The executor service and Future objects
 '''
 
-import time
 from concurrent.futures import ThreadPoolExecutor
 
 
 
 def get_squared(x):
-    time.sleep(3)
     return x * x
 
 
@@ -17,8 +15,8 @@ def get_squared(x):
 executor = ThreadPoolExecutor(max_workers=1)
 
 future = executor.submit(get_squared, 7)
+# print(future.done())
 
-print('Calculating...')
 print(future.result())
 
 executor.shutdown(wait=True)

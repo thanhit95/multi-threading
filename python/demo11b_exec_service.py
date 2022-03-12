@@ -1,6 +1,6 @@
 '''
-THREAD POOLS
-Version B: Thread pools containing multiple threads
+EXECUTOR SERVICES AND THREAD POOLS
+Version B: The executor service containing multiple threads
 '''
 
 import time

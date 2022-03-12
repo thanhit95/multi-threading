@@ -1,12 +1,12 @@
 '''
-THREAD POOL & EXECUTOR SERVICE IMPLEMENTATION
+EXECUTOR SERVICE & THREAD POOL IMPLEMENTATION
 '''
 
 import time
-from exer07_thread_pool_itask import ITask
-from exer07_thread_pool_v1 import ThreadPoolV1
-from exer07_thread_pool_v2a import ThreadPoolV2A
-from exer07_thread_pool_v2b import ThreadPoolV2B
+from exer07_exec_service_itask import ITask
+from exer07_exec_service_v1 import MyExecServiceV1
+from exer07_exec_service_v2a import MyExecServiceV2A
+from exer07_exec_service_v2b import MyExecServiceV2B
 
 
 
@@ -24,16 +24,16 @@ class MyTask(ITask):
 NUM_THREADS = 2
 NUM_TASKS = 5
 
-thread_pool = ThreadPoolV2B(NUM_THREADS)
+exec_service = MyExecServiceV2B(NUM_THREADS)
 
 lsttask = [MyTask(chr(i + 65)) for i in range(NUM_TASKS)]
 
 for task in lsttask:
-    thread_pool.submit(task)
+    exec_service.submit(task)
 
 print('All tasks are submitted')
 
-thread_pool.wait_task_done()
+exec_service.wait_task_done()
 print('All tasks are completed')
 
-thread_pool.shutdown()
+exec_service.shutdown()
