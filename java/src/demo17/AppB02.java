@@ -1,6 +1,6 @@
 /*
  * REENTRANT LOCKS (RECURSIVE MUTEXES)
- * Version B02: A slightly hard example
+ * Version B02: A multithreaded app example
  */
 
 package demo17;

@@ -1,6 +1,6 @@
 /*
 REENTRANT LOCKS (RECURSIVE MUTEXES)
-Version C: A slightly hard example
+Version C: A multithreaded app example
 */
 
 

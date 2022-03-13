@@ -1,6 +1,6 @@
 /*
  * REENTRANT LOCKS (RECURSIVE MUTEXES)
- * Version A: A slightly hard example
+ * Version A: A multithreaded app example
  */
 using System;
 using System.Collections.Generic;
