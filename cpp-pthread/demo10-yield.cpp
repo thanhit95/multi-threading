@@ -4,7 +4,8 @@ THREAD YIELDING
 
 
 #include <iostream>
-#include <thread>
+#include <sched.h>
+#include <pthread.h>
 #include <chrono>
 #include "../cpp-std/mylib-time.hpp"
 using namespace std;
@@ -23,7 +24,8 @@ void littleSleep(int us) {
     int ret = 0;
 
     do {
-        ret = pthread_yield();
+        // ret = pthread_yield();
+        ret = sched_yield();
     }
     while (hrclock::now() < tpEnd);
 }

@@ -1,8 +1,7 @@
 /*
 MY EXECUTOR SERVICE
 
-Version 1:
-- Simple thread pool.
+Version 1A: Simple executor service
 - Method "waitTaskDone" consumes CPU (due to bad synchronization).
 */
 
@@ -17,6 +16,7 @@ Version 1:
 #include <queue>
 #include <atomic>
 #include <pthread.h>
+#include <sched.h>
 #include "exer07-exec-service-itask.hpp"
 
 
@@ -86,7 +86,8 @@ public:
                 break;
             }
 
-            pthread_yield();
+            // pthread_yield();
+            sched_yield();
         }
     }
 
