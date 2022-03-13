@@ -62,7 +62,8 @@ class Exer03A : IRunnable
         Console.WriteLine("Read " + data);
 
         // Decrease reader count
-        lock (Global.mutReaderCount) {
+        lock (Global.mutReaderCount)
+        {
             Global.readerCount -= 1;
 
             if (0 == Global.readerCount)

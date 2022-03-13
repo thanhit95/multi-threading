@@ -80,7 +80,8 @@ namespace Exer07
 
         public void shutdown()
         {
-            lock (taskPending) {
+            lock (taskPending)
+            {
                 forceThreadShutdown = true;
                 taskPending.Clear();
                 Monitor.PulseAll(taskPending);
@@ -105,7 +106,8 @@ namespace Exer07
             for (; ; )
             {
                 // WAIT FOR AN AVAILABLE PENDING TASK
-                lock (taskPending) {
+                lock (taskPending)
+                {
                     while (0 == taskPending.Count && false == thisPtr.forceThreadShutdown)
                     {
                         Monitor.Wait(taskPending);
@@ -125,7 +127,8 @@ namespace Exer07
                 // DO THE TASK
                 task.run();
 
-                lock (lkTaskRunning) {
+                lock (lkTaskRunning)
+                {
                     --counterTaskRunning;
 
                     if (0 == counterTaskRunning) {

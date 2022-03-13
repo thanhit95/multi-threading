@@ -8,8 +8,7 @@
 
 
 
-namespace mylib
-{
+namespace mylib {
 
 
 

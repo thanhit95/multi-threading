@@ -58,8 +58,10 @@ namespace Exer07
             {
                 counterTaskRunning.Wait();
 
-                lock (taskPending) {
-                    lock (taskRunning) {
+                lock (taskPending)
+                {
+                    lock (taskRunning)
+                    {
                         if (0 == taskPending.Count && 0 == taskRunning.Count
                             /* && 0 == counterTaskRunning.CurrentCount */
                         )
@@ -73,7 +75,8 @@ namespace Exer07
 
         public void shutdown()
         {
-            lock (taskPending) {
+            lock (taskPending)
+            {
                 forceThreadShutdown = true;
                 taskPending.Clear();
                 Monitor.PulseAll(taskPending);
@@ -101,7 +104,8 @@ namespace Exer07
 
             for (; ; )
             {
-                lock (taskPending) {
+                lock (taskPending)
+                {
                     // WAIT FOR AN AVAILABLE PENDING TASK
                     while (0 == taskPending.Count && false == thisPtr.forceThreadShutdown)
                     {
@@ -117,7 +121,8 @@ namespace Exer07
                     task = taskPending.Dequeue();
 
                     // PUSH IT TO THE RUNNING QUEUE
-                    lock (taskRunning) {
+                    lock (taskRunning)
+                    {
                         taskRunning.Add(task);
                     }
                 }
@@ -126,7 +131,8 @@ namespace Exer07
                 task.run();
 
                 // REMOVE IT FROM THE RUNNING QUEUE
-                lock (taskRunning) {
+                lock (taskRunning)
+                {
                     taskRunning.Remove(task);
                 }
 
