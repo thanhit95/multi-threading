@@ -7,8 +7,8 @@ Version 1A: Simple executor service
 
 
 
-#ifndef _MY_EXEC_SERVICE_V1_HPP_
-#define _MY_EXEC_SERVICE_V1_HPP_
+#ifndef _MY_EXEC_SERVICE_V1A_HPP_
+#define _MY_EXEC_SERVICE_V1A_HPP_
 
 
 
@@ -21,7 +21,7 @@ Version 1A: Simple executor service
 
 
 
-class MyExecServiceV1 {
+class MyExecServiceV1A {
 
 private:
     int numThreads = 0;
@@ -37,11 +37,11 @@ private:
 
 
 public:
-    MyExecServiceV1() = default;
-    MyExecServiceV1(const MyExecServiceV1& other) = delete;
-    MyExecServiceV1(const MyExecServiceV1&& other) = delete;
-    void operator=(const MyExecServiceV1& other) = delete;
-    void operator=(const MyExecServiceV1&& other) = delete;
+    MyExecServiceV1A() = default;
+    MyExecServiceV1A(const MyExecServiceV1A& other) = delete;
+    MyExecServiceV1A(const MyExecServiceV1A&& other) = delete;
+    void operator=(const MyExecServiceV1A& other) = delete;
+    void operator=(const MyExecServiceV1A&& other) = delete;
 
 
     void init(int numThreads) {
@@ -116,7 +116,7 @@ public:
 
 private:
     static void* threadWorkerFunc(void* argVoid) {
-        auto thisPtr = (MyExecServiceV1*) argVoid;
+        auto thisPtr = (MyExecServiceV1A*) argVoid;
 
         auto&& taskPending = thisPtr->taskPending;
         auto&& mutTaskPending = thisPtr->mutTaskPending;
@@ -161,4 +161,4 @@ private:
 
 
 
-#endif // _MY_EXEC_SERVICE_V1_HPP_
+#endif // _MY_EXEC_SERVICE_V1A_HPP_
