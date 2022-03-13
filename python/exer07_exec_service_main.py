@@ -4,7 +4,8 @@ EXECUTOR SERVICE & THREAD POOL IMPLEMENTATION
 
 import time
 from exer07_exec_service_itask import ITask
-from exer07_exec_service_v1 import MyExecServiceV1
+from exer07_exec_service_v1a import MyExecServiceV1A
+from exer07_exec_service_v1b import MyExecServiceV1B
 from exer07_exec_service_v2a import MyExecServiceV2A
 from exer07_exec_service_v2b import MyExecServiceV2B
 

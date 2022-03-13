@@ -1,9 +1,8 @@
 '''
 MY EXECUTOR SERVICE
 
-Version 1:
-- Simple thread pool.
-- Method "wait_task_done" consumes CPU (due to bad synchronization).
+Version 1A: Simple executor service
+- Method "waitTaskDone" consumes CPU (due to bad synchronization).
 '''
 
 import time
@@ -12,7 +11,7 @@ from exer07_exec_service_itask import ITask
 
 
 
-class MyExecServiceV1:
+class MyExecServiceV1A:
     def __init__(self, num_threads: int):
         self.shutdown()
         self.__num_threads = num_threads
@@ -27,7 +26,7 @@ class MyExecServiceV1:
 
         for _ in range(self.__num_threads):
             self.__lstth.append(
-                threading.Thread(target=MyExecServiceV1.__thread_worker_func, args=(self,))
+                threading.Thread(target=MyExecServiceV1A.__thread_worker_func, args=(self,))
             )
 
         for th in self.__lstth:
@@ -69,7 +68,7 @@ class MyExecServiceV1:
 
 
     @staticmethod
-    def __thread_worker_func(selfptr: 'MyExecServiceV1'):
+    def __thread_worker_func(selfptr: 'MyExecServiceV1A'):
         task_pending = selfptr.__task_pending
         lk_task_pending = selfptr.__lk_task_pending
         cond_task_pending = selfptr.__cond_task_pending

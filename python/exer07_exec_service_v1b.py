@@ -1,7 +1,7 @@
 '''
 MY EXECUTOR SERVICE
 
-Version 2B: The executor service storing running tasks
+Version 1B: Simple executor service
 - Method "waitTaskDone" uses a condition variable to synchronize.
 '''
 
@@ -10,22 +10,25 @@ from exer07_exec_service_itask import ITask
 
 
 
-class MyExecServiceV2B:
+class MyExecServiceV1B:
     def __init__(self, num_threads: int):
         self.shutdown()
         self.__num_threads = num_threads
         self.__lstth = []
+
         self.__task_pending = []
         self.__lk_task_pending = threading.Lock()
         self.__cond_task_pending = threading.Condition(self.__lk_task_pending)
-        self.__task_running = []
+
+        self.__counter_task_running = 0
         self.__lk_task_running = threading.Lock()
         self.__cond_task_running = threading.Condition(self.__lk_task_running)
+
         self.__force_thread_shutdown = False
 
         for _ in range(self.__num_threads):
             self.__lstth.append(
-                threading.Thread(target=MyExecServiceV2B.__thread_worker_func, args=(self,))
+                threading.Thread(target=MyExecServiceV1B.__thread_worker_func, args=(self,))
             )
 
         for th in self.__lstth:
@@ -43,7 +46,7 @@ class MyExecServiceV2B:
             with self.__lk_task_pending:
                 if len(self.__task_pending) == 0:
                     with self.__lk_task_running:
-                        while len(self.__task_running) > 0:
+                        while self.__counter_task_running > 0:
                             self.__cond_task_running.wait()
 
                         # no pending task and no running task
@@ -66,12 +69,11 @@ class MyExecServiceV2B:
 
 
     @staticmethod
-    def __thread_worker_func(selfptr: 'MyExecServiceV2B'):
+    def __thread_worker_func(selfptr: 'MyExecServiceV1B'):
         task_pending = selfptr.__task_pending
         lk_task_pending = selfptr.__lk_task_pending
         cond_task_pending = selfptr.__cond_task_pending
 
-        task_running = selfptr.__task_running
         lk_task_running = selfptr.__lk_task_running
         cond_task_running = selfptr.__cond_task_running
 
@@ -87,15 +89,13 @@ class MyExecServiceV2B:
 
                 # GET THE TASK FROM THE PENDING QUEUE
                 task = task_pending.pop(0)
-
-                # PUSH IT TO THE RUNNING QUEUE
-                with lk_task_running:
-                    task_running.append(task)
+                selfptr.__counter_task_running += 1
 
             # DO THE TASK
             task.run()
 
-            # REMOVE IT FROM THE RUNNING QUEUE
             with lk_task_running:
-                task_running.remove(task)
-                cond_task_running.notify()
+                selfptr.__counter_task_running -= 1
+
+                if selfptr.__counter_task_running == 0:
+                    cond_task_running.notify()
