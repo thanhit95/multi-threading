@@ -1,3 +1,18 @@
+/******************************************************
+*
+* File name:    mylib-time.hpp
+*
+* Author:       Name:   Thanh Nguyen
+*               Email:  thanh.it1995(at)gmail(dot)com
+*
+* License:      3-Clause BSD License
+*
+* Description:  The time utility in C++11 std
+*
+******************************************************/
+
+
+
 #ifndef _MYLIB_TIME_HPP_
 #define _MYLIB_TIME_HPP_
 

@@ -1,8 +1,21 @@
+/******************************************************
+*
+* File name:    mylib-exec-service.hpp
+*
+* Author:       Name:   Thanh Nguyen
+*               Email:  thanh.it1995(at)gmail(dot)com
+*
+* License:      3-Clause BSD License
+*
+* Description:  The executor service implementation in C++11 std threading
+*
+******************************************************/
+
+
+
 /*
-MYLIB - EXECUTOR SERVICE
 Copy code from "MyExecServiceV1B"
 */
-
 
 
 #ifndef _MYLIB_EXEC_SERVICE_V1B_HPP_
