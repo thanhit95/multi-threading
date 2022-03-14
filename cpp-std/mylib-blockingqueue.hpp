@@ -64,7 +64,7 @@ public:
     }
 
 
-    // returns false if queue is empty, otherwise returns true and assign the result
+    // returns false if queue is empty, otherwise returns true and assigns the result
     bool peek(T& result) const {
         uniquelk lk(mut);
 
