@@ -33,7 +33,10 @@ using sysclock = chro::system_clock;
 
 
 class HiResClock {
+
+private:
     using stdhrc = chro::high_resolution_clock;
+
 
 public:
     static inline stdhrc::time_point now()
@@ -63,7 +66,8 @@ public:
         auto res = HiResClock::getTimeSpan<duType>(tpBefore, tpCurrent);
         return res;
     }
-};
+
+}; // HiResClock
 
 
 
