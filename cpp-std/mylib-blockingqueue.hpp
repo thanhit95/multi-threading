@@ -4,7 +4,6 @@
 
 
 #include <queue>
-#include <stdexcept>
 #include <mutex>
 #include <condition_variable>
 
@@ -65,7 +64,7 @@ public:
     }
 
 
-    // return false if queue is empty, otherwise return true and assign the result
+    // returns false if queue is empty, otherwise returns true and assign the result
     bool peek(T& result) const {
         uniquelk lk(mut);
 
