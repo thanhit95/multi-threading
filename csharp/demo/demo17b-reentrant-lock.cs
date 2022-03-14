@@ -44,11 +44,11 @@ class Demo17B : IRunnable
 
             lock (lk)
             {
-                Console.WriteLine($"First time {name} acquiring the lock");
+                Console.WriteLine($"First time {name} acquiring the resource");
 
                 lock (lk)
                 {
-                    Console.WriteLine($"Second time {name} acquiring the lock");
+                    Console.WriteLine($"Second time {name} acquiring the resource");
                 }
             }
         }

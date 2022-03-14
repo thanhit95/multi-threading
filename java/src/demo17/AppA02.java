@@ -35,10 +35,10 @@ public class AppA02 {
             try { Thread.sleep(1000); } catch (InterruptedException e) { }
 
             lk.lock();
-            System.out.println("First time %c acquiring the lock".formatted(name));
+            System.out.println("First time %c acquiring the resource".formatted(name));
 
             lk.lock();
-            System.out.println("Second time %c acquiring the lock".formatted(name));
+            System.out.println("Second time %c acquiring the resource".formatted(name));
 
             lk.unlock();
             lk.unlock();
