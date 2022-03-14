@@ -32,8 +32,7 @@ int main() {
     constexpr int NUM_TASKS = 5;
 
 
-    auto execService = MyExecServiceV2B();
-    execService.init(NUM_THREADS);
+    MyExecServiceV1A execService(NUM_THREADS);
 
 
     auto lstTask = std::vector<MyTask>(NUM_TASKS);

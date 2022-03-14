@@ -39,15 +39,20 @@ private:
 
 
 public:
-    MyExecServiceV2A() = default;
+    MyExecServiceV2A(int numThreads) {
+        init(numThreads);
+    }
+
+
     MyExecServiceV2A(const MyExecServiceV2A& other) = delete;
     MyExecServiceV2A(const MyExecServiceV2A&& other) = delete;
     void operator=(const MyExecServiceV2A& other) = delete;
     void operator=(const MyExecServiceV2A&& other) = delete;
 
 
+private:
     void init(int numThreads) {
-        shutdown();
+        // shutdown();
 
         mutTaskPending = PTHREAD_MUTEX_INITIALIZER;
         condTaskPending = PTHREAD_COND_INITIALIZER;
@@ -65,6 +70,7 @@ public:
     }
 
 
+public:
     void submit(ITask* task) {
         pthread_mutex_lock(&mutTaskPending);
         taskPending.push(task);

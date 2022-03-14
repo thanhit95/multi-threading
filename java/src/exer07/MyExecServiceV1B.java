@@ -14,7 +14,7 @@ import java.util.stream.IntStream;
 
 
 
-public class MyExecServiceV1B {
+public final class MyExecServiceV1B {
 
     private int numThreads = 0;
     private List<Thread> lstTh = new LinkedList<>();
@@ -28,8 +28,14 @@ public class MyExecServiceV1B {
 
 
 
-    public void init(int inpNumThreads) {
-        shutdown();
+    public MyExecServiceV1B(int numThreads) {
+        init(numThreads);
+    }
+
+
+
+    private void init(int inpNumThreads) {
+//      shutdown();
 
         numThreads = inpNumThreads;
         counterTaskRunning = 0;

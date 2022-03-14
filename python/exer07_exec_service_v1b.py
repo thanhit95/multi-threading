@@ -12,7 +12,7 @@ from exer07_exec_service_itask import ITask
 
 class MyExecServiceV1B:
     def __init__(self, num_threads: int):
-        self.shutdown()
+        # self.shutdown()
         self.__num_threads = num_threads
         self.__lstth = []
 

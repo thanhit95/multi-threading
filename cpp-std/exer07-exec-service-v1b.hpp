@@ -43,15 +43,20 @@ private:
 
 
 public:
-    MyExecServiceV1B() = default;
+    MyExecServiceV1B(int numThreads) {
+        init(numThreads);
+    }
+
+
     MyExecServiceV1B(const MyExecServiceV1B& other) = delete;
     MyExecServiceV1B(const MyExecServiceV1B&& other) = delete;
     void operator=(const MyExecServiceV1B& other) = delete;
     void operator=(const MyExecServiceV1B&& other) = delete;
 
 
+private:
     void init(int numThreads) {
-        shutdown();
+        // shutdown();
 
         this->numThreads = numThreads;
         lstTh.resize(numThreads);
@@ -64,6 +69,7 @@ public:
     }
 
 
+public:
     void submit(ITask* task) {
         {
             uniquelk lk(mutTaskPending);

@@ -24,9 +24,15 @@ namespace Exer07
 
 
 
-        public void init(int inpNumThreads)
+        public MyExecServiceV1A(int numThreads) {
+            init(numThreads);
+        }
+
+
+
+        private void init(int inpNumThreads)
         {
-            shutdown();
+            // shutdown();
 
             numThreads = inpNumThreads;
             Interlocked.Exchange(ref counterTaskRunning, 0);

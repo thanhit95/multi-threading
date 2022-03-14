@@ -26,9 +26,15 @@ namespace Exer07
 
 
 
-        public void init(int inpNumThreads)
+        public MyExecServiceV1B(int numThreads) {
+            init(numThreads);
+        }
+
+
+
+        private void init(int inpNumThreads)
         {
-            shutdown();
+            // shutdown();
 
             numThreads = inpNumThreads;
             counterTaskRunning = 0;

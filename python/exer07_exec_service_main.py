@@ -25,7 +25,7 @@ class MyTask(ITask):
 NUM_THREADS = 2
 NUM_TASKS = 5
 
-exec_service = MyExecServiceV2B(NUM_THREADS)
+exec_service = MyExecServiceV1A(NUM_THREADS)
 
 lsttask = [MyTask(chr(i + 65)) for i in range(NUM_TASKS)]
 

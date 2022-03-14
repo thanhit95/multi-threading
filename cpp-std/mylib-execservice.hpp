@@ -18,8 +18,8 @@ Copy code from "MyExecServiceV1B"
 */
 
 
-#ifndef _MYLIB_EXEC_SERVICE_V1B_HPP_
-#define _MYLIB_EXEC_SERVICE_V1B_HPP_
+#ifndef _MYLIB_EXEC_SERVICE_HPP_
+#define _MYLIB_EXEC_SERVICE_HPP_
 
 
 
@@ -62,15 +62,20 @@ private:
 
 
 public:
-    ExecService() = default;
+    ExecService(int numThreads) {
+        init(numThreads);
+    }
+
+
     ExecService(const ExecService& other) = delete;
     ExecService(const ExecService&& other) = delete;
     void operator=(const ExecService& other) = delete;
     void operator=(const ExecService&& other) = delete;
 
 
+private:
     void init(int numThreads) {
-        shutdown();
+        // shutdown();
 
         this->numThreads = numThreads;
         lstTh.resize(numThreads);
@@ -83,6 +88,7 @@ public:
     }
 
 
+public:
     void submit(taskFunc task) {
         {
             uniquelk lk(mutTaskPending);
@@ -184,4 +190,4 @@ private:
 
 
 
-#endif // _MY_EXEC_SERVICE_V1B_HPP_
+#endif // _MYLIB_EXEC_SERVICE_HPP_
