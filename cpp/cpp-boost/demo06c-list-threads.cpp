@@ -1,6 +1,6 @@
 /*
 LIST OF MULTIPLE THREADS
-Version B: Using the std::vector
+Version C: Using the boost::thread_group
 */
 
 
