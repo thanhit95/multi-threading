@@ -5,10 +5,9 @@ Solution for the first readers-writers problem
 
 
 #include <iostream>
-#include <cstdlib>
-#include <ctime>
 #include <boost/chrono.hpp>
 #include <boost/thread.hpp>
+#include "mylib-random.hpp"
 using namespace std;
 
 
@@ -28,7 +27,7 @@ void doTaskWriter(GlobalData* g, int timeDelay) {
 
     g->mutResource.lock();
 
-    g->resource = rand() % 100;
+    g->resource = mylib::RandInt::get(100);
     cout << "Write " << g->resource << endl;
 
     g->mutResource.unlock();
@@ -67,9 +66,6 @@ void doTaskReader(GlobalData* g, int timeDelay) {
 
 
 int main() {
-    srand(time((time_t*)0));
-
-
     GlobalData globalData;
     globalData.resource = 0;
     globalData.readerCount = 0;
@@ -85,13 +81,13 @@ int main() {
     // CREATE THREADS
     for (int i = 0; i < NUM_READERS; ++i) {
         lstThReader.add_thread(new boost::thread(
-            doTaskReader, &globalData, rand() % 3
+            doTaskReader, &globalData, mylib::RandInt::get(3)
         ));
     }
 
     for (int i = 0; i < NUM_WRITERS; ++i) {
         lstThWriter.add_thread(new boost::thread(
-            doTaskWriter, &globalData, rand() % 3
+            doTaskWriter, &globalData, mylib::RandInt::get(3)
         ));
     }
 

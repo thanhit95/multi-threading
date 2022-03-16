@@ -4,11 +4,10 @@ READ-WRITE LOCKS
 
 
 #include <iostream>
-#include <ctime>
-#include <cstdlib>
 #include <numeric>
 #include <boost/chrono.hpp>
 #include <boost/thread.hpp>
+#include "mylib-random.hpp"
 using namespace std;
 
 
@@ -36,7 +35,7 @@ void writeFunc(int timeWait) {
     boost::lock_guard<boost::shared_mutex> lk(rwmut);
     // boost::unique_lock<boost::shared_mutex> lk(rwmut);
 
-    resource = rand() % 100;
+    resource = mylib::RandInt::get(100);
     cout << "write: " << resource << endl;
 
     // lk.unlock();
@@ -54,9 +53,6 @@ int main() {
     int lstArg[NUM_ARGS];
 
 
-    srand(time((time_t*)0));
-
-
     // INITIALIZE
     for (int i = 0; i < NUM_ARGS; ++i) {
         lstArg[i] = i;
@@ -65,7 +61,7 @@ int main() {
 
     // CREATE THREADS
     for (int i = 0; i < NUM_THREADS_READ; ++i) {
-        int arg = lstArg[ rand() % NUM_ARGS ];
+        int arg = lstArg[ mylib::RandInt::get(NUM_ARGS) ];
 
         lstThRead.add_thread(new boost::thread(
             readFunc, arg
@@ -73,7 +69,7 @@ int main() {
     }
 
     for (int i = 0; i < NUM_THREADS_WRITE; ++i) {
-        int arg = lstArg[ rand() % NUM_ARGS ];
+        int arg = lstArg[ mylib::RandInt::get(NUM_ARGS) ];
 
         lstThWrite.add_thread(new boost::thread(
             writeFunc, arg
