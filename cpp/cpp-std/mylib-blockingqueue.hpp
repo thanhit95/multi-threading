@@ -19,6 +19,7 @@
 
 
 #include <queue>
+#include <thread>
 #include <mutex>
 #include <condition_variable>
 
@@ -61,6 +62,17 @@ public:
     void operator=(const BlockingQueue&& other) = delete;
 
 
+    bool empty() const {
+        return q.empty();
+    }
+
+
+    size_t size() const {
+        return q.size();
+    }
+
+
+    // sync enqueue
     void put(const T& value) {
         uniquelk lk(mut);
         condFull.wait(lk, [&] { return q.size() < capacity; });
@@ -69,6 +81,7 @@ public:
     }
 
 
+    // sync dequeue
     T take() {
         uniquelk lk(mut);
         condEmpty.wait(lk, [&] { return !q.empty(); });
@@ -79,10 +92,17 @@ public:
     }
 
 
+    // async enqueue
+    void add(const T& value) {
+        // Note: For asynchronous operations, we should use a long-live background thread
+        // instead of using a temporary thread
+        std::thread(&BlockingQueue<T>::put, this, value).detach();
+    }
+
+
     // returns false if queue is empty, otherwise returns true and assigns the result
     bool peek(T& result) const {
-        uniquelk lk(mut);
-
+        // uniquelk lk(mut);
         if (q.empty()) {
             return false;
         }
@@ -92,13 +112,9 @@ public:
     }
 
 
-    bool empty() const {
-        return q.empty();
-    }
-
-
-    size_t size() const {
-        return q.size();
+    void clear() {
+        uniquelk lk(mut);
+        std::queue<T>().swap(q);
     }
 
 }; // BlockingQueue

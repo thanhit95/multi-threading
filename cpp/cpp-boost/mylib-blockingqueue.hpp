@@ -54,6 +54,17 @@ private:
 
 
 public:
+    bool empty() const {
+        return q.empty();
+    }
+
+
+    size_t size() const {
+        return q.size();
+    }
+
+
+    // sync enqueue
     void put(const T& value) {
         uniquelk lk(mut);
 
@@ -66,6 +77,7 @@ public:
     }
 
 
+    // sync dequeue
     T take() {
         uniquelk lk(mut);
 
@@ -78,6 +90,14 @@ public:
         condFull.notify_one();
 
         return result;
+    }
+
+
+    // async enqueue
+    void add(const T& value) {
+        // Note: For asynchronous operations, we should use a long-live background thread
+        // instead of using a temporary thread
+        boost::thread(&BlockingQueue<T>::put, this, value).detach();
     }
 
 
@@ -94,13 +114,12 @@ public:
     }
 
 
-    bool empty() const {
-        return q.empty();
-    }
+    void clear() {
+        uniquelk lk(mut);
 
-
-    size_t size() const {
-        return q.size();
+        while (false == q.empty()) {
+            q.pop();
+        }
     }
 
 }; // BlockingQueue
