@@ -37,17 +37,17 @@ private:
 
 public:
     RandInt() {
-        init(0, 1);
+        init(0, std::numeric_limits<int>::max());
     }
 
 
-    RandInt(int minValue, int maxValue) {
-        init(minValue, maxValue);
+    RandInt(int minValue, int maxValueInclusive) {
+        init(minValue, maxValueInclusive);
     }
 
 
-    void init(int minValue, int maxValue) {
-        dist = std::uniform_int_distribution<int>(minValue, maxValue);
+    void init(int minValue, int maxValueInclusive) {
+        dist = std::uniform_int_distribution<int>(minValue, maxValueInclusive);
         mt.seed(rd());
     }
 
@@ -63,7 +63,6 @@ public:
     RandInt& operator=(RandInt&& other) = default;
 
 
-
 // STATIC
 private:
     static RandInt publicRandInt;
@@ -77,7 +76,7 @@ public:
 
 
 
-RandInt RandInt::publicRandInt(1, std::numeric_limits<int>::max());
+RandInt RandInt::publicRandInt;
 
 
 
