@@ -3,6 +3,7 @@
 
 
 
+#include <limits>
 #include <queue>
 #include <boost/thread/mutex.hpp>
 #include <boost/thread/condition_variable.hpp>
@@ -33,12 +34,11 @@ private:
 
 
 public:
-    BlockingQueue(size_t capacity) : capacity(capacity) {
+    BlockingQueue() : capacity(std::numeric_limits<size_t>::max()) {
     }
 
 
-    BlockingQueue() {
-        this->capacity = 1;
+    BlockingQueue(size_t capacity) : capacity(capacity) {
     }
 
 

@@ -18,6 +18,7 @@
 
 
 
+#include <limits>
 #include <queue>
 #include <pthread.h>
 
@@ -49,11 +50,11 @@ private:
 
 
 public:
-    BlockingQueue(size_t capacity) : capacity(capacity) {
+    BlockingQueue() : capacity(std::numeric_limits<size_t>::max()) {
     }
 
 
-    BlockingQueue() : BlockingQueue(1) {
+    BlockingQueue(size_t capacity) : capacity(capacity) {
     }
 
 
