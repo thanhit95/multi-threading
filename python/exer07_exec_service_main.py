@@ -4,6 +4,8 @@ EXECUTOR SERVICE & THREAD POOL IMPLEMENTATION
 
 import time
 from exer07_exec_service_itask import ITask
+from exer07_exec_service_v0a import MyExecServiceV0A
+from exer07_exec_service_v0b import MyExecServiceV0B
 from exer07_exec_service_v1a import MyExecServiceV1A
 from exer07_exec_service_v1b import MyExecServiceV1B
 from exer07_exec_service_v2a import MyExecServiceV2A
@@ -25,7 +27,7 @@ class MyTask(ITask):
 NUM_THREADS = 2
 NUM_TASKS = 5
 
-exec_service = MyExecServiceV1A(NUM_THREADS)
+exec_service = MyExecServiceV0A(NUM_THREADS)
 
 lsttask = [MyTask(chr(i + 65)) for i in range(NUM_TASKS)]
 
