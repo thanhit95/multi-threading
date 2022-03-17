@@ -15,7 +15,7 @@ public class App {
         final int NUM_TASKS = 5;
 
 
-        var execService = new MyExecServiceV1A(NUM_THREADS);
+        var execService = new MyExecServiceV0B(NUM_THREADS);
 
 
         var lstTask = new ArrayList<MyTask>();
