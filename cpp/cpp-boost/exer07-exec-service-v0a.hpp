@@ -30,7 +30,7 @@ private:
 
 
 public:
-    MyExecServiceV0A(int numThreads) : taskPending(1000) {
+    MyExecServiceV0A(int numThreads) {
         init(numThreads);
     }
 
