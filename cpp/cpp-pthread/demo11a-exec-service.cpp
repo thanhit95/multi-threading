@@ -7,7 +7,7 @@ So, I use mylib::ExecService for this demonstration.
 
 
 #include <iostream>
-#include "../cpp-std/mylib-execservice.hpp"
+#include "mylib-execservice.hpp"
 using namespace std;
 
 
@@ -29,8 +29,7 @@ public:
 
 int main() {
     // INIT THE EXECUTOR SERVICE WITH 2 THREADS
-    auto execService = mylib::ExecService();
-    execService.init(2);
+    auto execService = mylib::ExecService(2);
 
 
     // SUBMIT

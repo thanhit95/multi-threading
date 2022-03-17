@@ -9,7 +9,7 @@ SOLUTION TYPE A: USING BLOCKING QUEUES
 #include <iostream>
 #include <thread>
 #include <chrono>
-#include "../cpp-std/mylib-blockingqueue.hpp"
+#include "mylib-blockingqueue.hpp"
 using namespace std;
 using namespace mylib;
 

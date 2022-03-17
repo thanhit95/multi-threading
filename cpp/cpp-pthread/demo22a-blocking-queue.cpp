@@ -11,7 +11,7 @@ So, I use mylib::BlockingQueue for this demonstration.
 #include <string>
 #include <unistd.h>
 #include <pthread.h>
-#include "../cpp-std/mylib-blockingqueue.hpp"
+#include "mylib-blockingqueue.hpp"
 using namespace std;
 using namespace mylib;
 
