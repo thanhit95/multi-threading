@@ -6,6 +6,8 @@ EXECUTOR SERVICE & THREAD POOL IMPLEMENTATION
 #include <iostream>
 #include <unistd.h>
 #include "exer07-exec-service-itask.hpp"
+#include "exer07-exec-service-v0a.hpp"
+#include "exer07-exec-service-v0b.hpp"
 #include "exer07-exec-service-v1a.hpp"
 #include "exer07-exec-service-v1b.hpp"
 #include "exer07-exec-service-v2a.hpp"
@@ -32,7 +34,7 @@ int main() {
     constexpr int NUM_TASKS = 5;
 
 
-    MyExecServiceV1A execService(NUM_THREADS);
+    MyExecServiceV0A execService(NUM_THREADS);
 
 
     std::vector<MyTask> lstTask(NUM_TASKS);
