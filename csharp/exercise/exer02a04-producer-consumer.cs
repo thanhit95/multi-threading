@@ -15,7 +15,7 @@ class Exer02A04 : IRunnable
 {
     public void run()
     {
-        var queue = new BlockingCollection<int>(1);
+        var queue = new BlockingCollection<int>(5);
 
         const int NUM_PRODUCERS = 3;
         const int NUM_CONSUMERS = 2;

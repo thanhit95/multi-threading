@@ -38,7 +38,7 @@ void consumer(BlockingQueue<int>* blkq) {
 
 
 int main() {
-    auto blkq = BlockingQueue<int>();
+    auto blkq = BlockingQueue<int>(5);
 
 
     constexpr int NUM_PRODUCERS = 3;

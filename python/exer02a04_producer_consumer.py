@@ -29,7 +29,7 @@ def consumer(q: Queue):
 
 
 
-blkq = Queue(maxsize=10)
+blkq = Queue(maxsize=5)
 NUM_PRODUCERS = 3
 NUM_CONSUMERS = 2
 

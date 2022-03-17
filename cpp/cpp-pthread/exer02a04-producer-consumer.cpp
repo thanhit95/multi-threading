@@ -53,7 +53,7 @@ void* consumer(void* arg) {
 
 
 int main() {
-    auto blkq = BlockingQueue<int>();
+    auto blkq = BlockingQueue<int>(5);
 
     constexpr int NUM_PRODUCERS = 3;
     constexpr int NUM_CONSUMERS = 2;

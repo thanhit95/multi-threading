@@ -38,7 +38,7 @@ void consumer(BlockingQueue<int>* blkq) {
 
 
 int main() {
-    BlockingQueue<int> blkq;
+    BlockingQueue<int> blkq(5);
 
 
     const int NUM_PRODUCERS = 3;

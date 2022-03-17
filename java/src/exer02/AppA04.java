@@ -7,7 +7,8 @@
 
 package exer02;
 
-import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 import java.util.stream.IntStream;
 
 
@@ -15,7 +16,7 @@ import java.util.stream.IntStream;
 public class AppA04 {
 
     public static void main(String[] args) {
-        var queue = new LinkedBlockingQueue<Integer>();
+        var queue = new ArrayBlockingQueue<Integer>(5);
 
 
         final int NUM_PRODUCERS = 3;
@@ -32,20 +33,30 @@ public class AppA04 {
     }
 
 
-    private static void producer(LinkedBlockingQueue<Integer> queue, int startValue) {
+    private static void producer(BlockingQueue<Integer> queue, int startValue) {
         int i = 1;
 
         for (;; ++i) {
-            queue.add(i + startValue);
+            try {
+                queue.put(i + startValue);
+            }
+            catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
 
-    private static void consumer(LinkedBlockingQueue<Integer> queue) {
+    private static void consumer(BlockingQueue<Integer> queue) {
         for (;;) {
-            int data = queue.remove();
-            System.out.println("Consumer " + data);
-            try { Thread.sleep(1000); } catch (InterruptedException e) { }
+            try {
+                int data = queue.take();
+                System.out.println("Consumer " + data);
+                Thread.sleep(1000);
+            }
+            catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
