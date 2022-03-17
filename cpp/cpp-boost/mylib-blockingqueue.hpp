@@ -33,8 +33,7 @@ private:
 
 
 public:
-    BlockingQueue(size_t capacity) {
-        this->capacity = capacity;
+    BlockingQueue(size_t capacity) : capacity(capacity) {
     }
 
 
