@@ -17,7 +17,7 @@ namespace Exer07
             const int NUM_TASKS = 5;
 
 
-            var execService = new MyExecServiceV1A(NUM_THREADS);
+            var execService = new MyExecServiceV0A(NUM_THREADS);
 
 
             var lstTask = new List<MyTask>();
