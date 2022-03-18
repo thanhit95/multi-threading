@@ -82,25 +82,26 @@ public final class MyExecServiceV2A {
 
 
     public void shutdown() {
-        try {
-            synchronized (taskPending) {
-                forceThreadShutdown = true;
-                taskPending.clear();
-                taskPending.notifyAll();
-            }
+        synchronized (taskPending) {
+            forceThreadShutdown = true;
+            taskPending.clear();
+            taskPending.notifyAll();
+        }
 
-            for (var th : lstTh)
+        for (var th : lstTh) {
+            try {
                 th.join();
-
-            numThreads = 0;
-//          lstTh.clear();
-            taskRunning.clear();
-
-            counterTaskRunning.release(counterTaskRunning.availablePermits());
+            }
+            catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
-        catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
+        numThreads = 0;
+//      lstTh.clear();
+        taskRunning.clear();
+
+        counterTaskRunning.release(counterTaskRunning.availablePermits());
     }
 
 

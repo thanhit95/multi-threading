@@ -84,22 +84,23 @@ public final class MyExecServiceV1A {
 
 
     public void shutdown() {
-        try {
-            synchronized (taskPending) {
-                forceThreadShutdown = true;
-                taskPending.clear();
-                taskPending.notifyAll();
-            }
+        synchronized (taskPending) {
+            forceThreadShutdown = true;
+            taskPending.clear();
+            taskPending.notifyAll();
+        }
 
-            for (var th : lstTh)
+        for (var th : lstTh) {
+            try {
                 th.join();
+            }
+            catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
 
-            numThreads = 0;
-//          lstTh.clear();
-        }
-        catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        numThreads = 0;
+//      lstTh.clear();
     }
 
 
