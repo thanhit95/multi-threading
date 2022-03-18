@@ -17,7 +17,7 @@ void doTask() {
 
 
 int main() {
-    std::thread th(doTask);
+    std::thread th(&doTask);
 
     cout << "Hello from main thread" << endl;
 

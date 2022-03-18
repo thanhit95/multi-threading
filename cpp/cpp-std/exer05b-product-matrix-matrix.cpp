@@ -66,7 +66,7 @@ void getProduct(const matrix& matA, const matrix& matB, matrix& result) {
             auto&& v = matBT[j].data();
             auto&& sizeVector = sizeColA;
 
-            lstTh[iSca] = std::thread(getScalarProduct, u, v, sizeVector, &result[i][j]);
+            lstTh[iSca] = std::thread(&getScalarProduct, u, v, sizeVector, &result[i][j]);
             ++iSca;
         }
     }

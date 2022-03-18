@@ -47,8 +47,8 @@ void consumer(BlockingQueue<string>* blkQueue) {
 int main() {
     auto blkQueue = BlockingQueue<string>(2); // blocking queue with capacity = 2
 
-    auto thProducer = std::thread(producer, &blkQueue);
-    auto thConsumer = std::thread(consumer, &blkQueue);
+    auto thProducer = std::thread(&producer, &blkQueue);
+    auto thConsumer = std::thread(&consumer, &blkQueue);
 
     thProducer.join();
     thConsumer.join();

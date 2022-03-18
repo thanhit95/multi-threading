@@ -21,7 +21,7 @@ void doTask(string name) {
 
 
 int main() {
-    auto thFoo = std::thread(doTask, "foo");
+    auto thFoo = std::thread(&doTask, "foo");
 
     thFoo.join();
 

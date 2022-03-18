@@ -72,8 +72,8 @@ void consumer(SynchronousQueue<std::string>* syncQueue) {
 int main() {
     SynchronousQueue<std::string> syncQueue;
 
-    auto thProducer = std::thread(producer, &syncQueue);
-    auto thConsumer = std::thread(consumer, &syncQueue);
+    auto thProducer = std::thread(&producer, &syncQueue);
+    auto thConsumer = std::thread(&consumer, &syncQueue);
 
     thProducer.join();
     thConsumer.join();

@@ -50,9 +50,9 @@ void makeChassis() {
 
 
 int main() {
-    auto thTireA = std::thread(makeTire);
-    auto thTireB = std::thread(makeTire);
-    auto thChassis = std::thread(makeChassis);
+    auto thTireA = std::thread(&makeTire);
+    auto thTireB = std::thread(&makeTire);
+    auto thChassis = std::thread(&makeChassis);
 
     thTireA.join();
     thTireB.join();

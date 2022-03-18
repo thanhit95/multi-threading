@@ -49,7 +49,7 @@ int main() {
     cout << "START!!!" << endl << endl;
 
 
-    auto th = std::thread(doUserInput, buffer, &cv);
+    auto th = std::thread(&doUserInput, buffer, &cv);
 
 
     if (waitForTime(SECONDS, cv, mut)) {

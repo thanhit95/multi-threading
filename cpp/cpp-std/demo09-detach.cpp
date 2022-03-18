@@ -21,7 +21,7 @@ void foo() {
 
 
 int main() {
-    auto thFoo = std::thread(foo);
+    auto thFoo = std::thread(&foo);
     thFoo.detach();
 
 

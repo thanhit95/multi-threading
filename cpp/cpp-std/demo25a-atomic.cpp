@@ -28,7 +28,7 @@ int main() {
     vector<std::thread> lstTh;
 
     for (int i = 0; i < 1000; ++i) {
-        lstTh.push_back(std::thread(doTask));
+        lstTh.push_back(std::thread(&doTask));
     }
 
     for (auto&& th : lstTh) {

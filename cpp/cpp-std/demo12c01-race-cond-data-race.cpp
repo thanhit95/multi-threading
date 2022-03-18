@@ -29,7 +29,7 @@ int main() {
     std::thread lstTh[NUM_THREADS];
 
     for (auto&& th : lstTh) {
-        th = std::thread(increaseCounter);
+        th = std::thread(&increaseCounter);
     }
 
     for (auto&& th : lstTh) {

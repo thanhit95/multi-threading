@@ -49,7 +49,7 @@ int main() {
 
     for (int i = 0; i < NUM_THREADS; ++i) {
         auto&& arg = lstArg[i];
-        lstTh[i] = std::thread(processRequest, std::get<0>(arg), std::get<1>(arg));
+        lstTh[i] = std::thread(&processRequest, std::get<0>(arg), std::get<1>(arg));
     }
 
     for (auto&& th : lstTh) {

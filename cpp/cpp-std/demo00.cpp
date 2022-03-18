@@ -18,7 +18,7 @@ void doTask() {
 
 
 int main() {
-    std::thread th(doTask);
+    std::thread th(&doTask);
 
     for (int i = 0; i < 300; ++i)
         cout << "A";

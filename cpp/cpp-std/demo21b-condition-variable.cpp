@@ -67,8 +67,8 @@ void egg() {
 
 
 int main() {
-    auto thFoo = std::thread(foo);
-    auto thEgg = std::thread(egg);
+    auto thFoo = std::thread(&foo);
+    auto thEgg = std::thread(&egg);
 
     thFoo.join();
     thEgg.join();

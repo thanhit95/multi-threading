@@ -36,7 +36,7 @@ int main() {
 
     // CREATE THREADS
     for (int i = 0; i < NUM_PHILOSOPHERS; ++i) {
-        lstTh[i] = std::thread(doTaskPhilosopher, chopstick, NUM_PHILOSOPHERS, i);
+        lstTh[i] = std::thread(&doTaskPhilosopher, chopstick, NUM_PHILOSOPHERS, i);
     }
 
     // JOIN THREADS

@@ -64,9 +64,9 @@ int main() {
 
     queue<int> q;
 
-    auto thProducerA = std::thread(producer, &semFill, &semEmpty, &q, 0);
-    auto thProducerB = std::thread(producer, &semFill, &semEmpty, &q, 1000);
-    auto thConsumer = std::thread(consumer, &semFill, &semEmpty, &q);
+    auto thProducerA = std::thread(&producer, &semFill, &semEmpty, &q, 0);
+    auto thProducerB = std::thread(&producer, &semFill, &semEmpty, &q, 1000);
+    auto thConsumer = std::thread(&consumer, &semFill, &semEmpty, &q);
 
     thProducerA.join();
     thProducerB.join();

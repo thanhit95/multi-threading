@@ -32,8 +32,8 @@ int main() {
     vector<bool> a;
     a.resize(N + 1, false);
 
-    auto thDiv2 = std::thread(markDiv2, std::ref(a), N);
-    auto thDiv3 = std::thread(markDiv3, std::ref(a), N);
+    auto thDiv2 = std::thread(&markDiv2, std::ref(a), N);
+    auto thDiv3 = std::thread(&markDiv3, std::ref(a), N);
     thDiv2.join();
     thDiv3.join();
 

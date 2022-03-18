@@ -36,8 +36,8 @@ void bar() {
 
 
 int main() {
-    auto thFoo = std::thread(foo);
-    auto thBar = std::thread(bar);
+    auto thFoo = std::thread(&foo);
+    auto thBar = std::thread(&bar);
 
     thFoo.join();
     thBar.join();

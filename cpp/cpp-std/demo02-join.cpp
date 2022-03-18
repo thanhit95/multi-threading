@@ -19,7 +19,7 @@ void doHeavyTask() {
 
 
 int main() {
-    std::thread th(doHeavyTask);
+    std::thread th(&doHeavyTask);
 
     th.join();
 

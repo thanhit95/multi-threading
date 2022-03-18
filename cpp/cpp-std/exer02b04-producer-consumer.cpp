@@ -74,11 +74,11 @@ int main() {
 
     // CREATE THREADS
     for (int i = 0; i < NUM_PRODUCERS; ++i) {
-        lstThProducer[i] = std::thread(producer, &semFill, &semEmpty, &q, i * 1000);
+        lstThProducer[i] = std::thread(&producer, &semFill, &semEmpty, &q, i * 1000);
     }
 
     for (auto&& th : lstThConsumer) {
-        th = std::thread(consumer, &semFill, &semEmpty, &q);
+        th = std::thread(&consumer, &semFill, &semEmpty, &q);
     }
 
 

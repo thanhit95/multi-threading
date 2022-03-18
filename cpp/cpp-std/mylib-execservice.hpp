@@ -83,7 +83,7 @@ private:
         forceThreadShutdown = false;
 
         for (auto&& th : lstTh) {
-            th = std::thread(threadWorkerFunc, this);
+            th = std::thread(&threadWorkerFunc, this);
         }
     }
 

@@ -62,12 +62,12 @@ int main() {
     // CREATE THREADS
     for (auto&& th : lstThRead) {
         int arg = lstArg[ mylib::RandInt::get(NUM_ARGS) ];
-        th = std::thread(readFunc, arg);
+        th = std::thread(&readFunc, arg);
     }
 
     for (auto&& th : lstThWrite) {
         int arg = lstArg[ mylib::RandInt::get(NUM_ARGS) ];
-        th = std::thread(writeFunc, arg);
+        th = std::thread(&writeFunc, arg);
     }
 
 

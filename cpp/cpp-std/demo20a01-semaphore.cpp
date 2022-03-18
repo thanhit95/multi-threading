@@ -37,9 +37,9 @@ void combineOnePackage() {
 
 
 int main() {
-    auto thMakeSheetA = std::thread(makeOneSheet);
-    auto thMakeSheetB = std::thread(makeOneSheet);
-    auto thCombinePackage = std::thread(combineOnePackage);
+    auto thMakeSheetA = std::thread(&makeOneSheet);
+    auto thMakeSheetB = std::thread(&makeOneSheet);
+    auto thCombinePackage = std::thread(&combineOnePackage);
 
     thMakeSheetA.join();
     thMakeSheetB.join();

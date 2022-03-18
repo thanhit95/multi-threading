@@ -55,7 +55,7 @@ int main() {
     monitor.init(&counter);
 
     for (auto&& th : lstTh) {
-        th = std::thread(doTask, &monitor);
+        th = std::thread(&doTask, &monitor);
     }
 
     for (auto&& th : lstTh) {

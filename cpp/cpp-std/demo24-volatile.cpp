@@ -25,7 +25,7 @@ void doTask() {
 
 int main() {
     isRunning = true;
-    auto th = std::thread(doTask);
+    auto th = std::thread(&doTask);
 
     std::this_thread::sleep_for(std::chrono::seconds(6));
     isRunning = false;

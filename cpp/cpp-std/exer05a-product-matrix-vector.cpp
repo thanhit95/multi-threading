@@ -30,7 +30,7 @@ void getProduct(const matrix& mat, const vectord& vec, vectord& result) {
     for (int i = 0; i < sizeRowMat; ++i) {
         auto&& u = mat[i].data();
         auto&& v = vec.data();
-        lstTh[i] = std::thread(getScalarProduct, u, v, sizeVec, &result[i]);
+        lstTh[i] = std::thread(&getScalarProduct, u, v, sizeVec, &result[i]);
     }
 
     for (auto&& th : lstTh) {

@@ -35,8 +35,8 @@ int main() {
 
     // auto thFoo = std::thread(doTask, a); // error
 
-    auto thFoo = std::thread(doTask, std::ref(a));
-    auto thBar = std::thread(doTask, std::ref(b));
+    auto thFoo = std::thread(&doTask, std::ref(a));
+    auto thBar = std::thread(&doTask, std::ref(b));
 
     thFoo.join();
     thBar.join();

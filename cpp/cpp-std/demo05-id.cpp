@@ -18,8 +18,8 @@ void doTask() {
 
 
 int main() {
-    auto thFoo = std::thread(doTask);
-    auto thBar = std::thread(doTask);
+    auto thFoo = std::thread(&doTask);
+    auto thBar = std::thread(&doTask);
 
     cout << "foo's id: " << thFoo.get_id() << endl;
     cout << "bar's id: " << thBar.get_id() << endl;

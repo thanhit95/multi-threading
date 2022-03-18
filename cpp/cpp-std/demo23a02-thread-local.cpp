@@ -40,7 +40,7 @@ int main() {
 
     // Child thread gets value
     // Expected output: "NOT SET"
-    auto th = std::thread(doTask);
+    auto th = std::thread(&doTask);
     th.join();
 
     return 0;

@@ -36,7 +36,7 @@ int main() {
     std::thread lstTh[NUM_THREADS];
 
     for (int i = 0; i < NUM_THREADS; ++i) {
-        lstTh[i] = std::thread(doTask, char(i + 'A'));
+        lstTh[i] = std::thread(&doTask, char(i + 'A'));
     }
 
     for (auto&& th : lstTh) {

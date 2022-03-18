@@ -91,11 +91,11 @@ int main() {
 
     // CREATE THREADS
     for (auto&& th: lstThReader) {
-        th = std::thread(doTaskReader, &globalData, mylib::RandInt::get(3));
+        th = std::thread(&doTaskReader, &globalData, mylib::RandInt::get(3));
     }
 
     for (auto&& th: lstThWriter) {
-        th = std::thread(doTaskWriter, &globalData, mylib::RandInt::get(3));
+        th = std::thread(&doTaskWriter, &globalData, mylib::RandInt::get(3));
     }
 
 

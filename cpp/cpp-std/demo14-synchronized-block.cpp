@@ -47,7 +47,7 @@ int main() {
     std::thread lstTh[NUM_THREADS];
 
     for (auto&& th : lstTh) {
-        th = std::thread(doTask);
+        th = std::thread(&doTask);
     }
 
     for (auto&& th : lstTh) {

@@ -17,7 +17,7 @@ void doTask(char const* message, int number) {
 
 
 int main() {
-    std::thread th(doTask, "Good day", 19);
+    std::thread th(&doTask, "Good day", 19);
     th.join();
     return 0;
 }

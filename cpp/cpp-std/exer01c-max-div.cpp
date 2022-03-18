@@ -111,7 +111,7 @@ int main() {
 
 
     for (int i = 0; i < NUM_THREADS; ++i) {
-        lstTh[i] = std::thread(workerFunc, &lstWorkerArg[i], &finalRes);
+        lstTh[i] = std::thread(&workerFunc, &lstWorkerArg[i], &finalRes);
     }
 
     for (auto&& th : lstTh) {

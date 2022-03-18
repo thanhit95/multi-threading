@@ -23,10 +23,10 @@ int main() {
     vector<std::thread> lstTh;
 
     for (int i = 0; i < NUM_THREADS; ++i) {
-        lstTh.push_back(std::thread(doTask, i));
+        lstTh.push_back(std::thread(&doTask, i));
 
         // or...
-        // auto th = std::thread(doTask, i);
+        // auto th = std::thread(&doTask, i);
         // lstTh.push_back(std::move(th)); // Because std::thread does not have copy constructors
     }
 

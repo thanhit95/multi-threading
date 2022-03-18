@@ -101,8 +101,8 @@ void consumer(BlockingQueue<std::string>* blkQueue) {
 int main() {
     BlockingQueue<std::string> blkQueue(2); // capacity = 2
 
-    auto thProducer = std::thread(producer, &blkQueue);
-    auto thConsumer = std::thread(consumer, &blkQueue);
+    auto thProducer = std::thread(&producer, &blkQueue);
+    auto thConsumer = std::thread(&consumer, &blkQueue);
 
     thProducer.join();
     thConsumer.join();

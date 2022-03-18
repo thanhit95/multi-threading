@@ -25,9 +25,9 @@ void squareValue(int arg, int& res) {
 int main() {
     int result[3];
 
-    auto thFoo = std::thread(doubleValue, 5, &result[0]);
-    auto thBar = std::thread(doubleValue, 80, &result[1]);
-    auto thEgg = std::thread(squareValue, 7, std::ref(result[2]));
+    auto thFoo = std::thread(&doubleValue, 5, &result[0]);
+    auto thBar = std::thread(&doubleValue, 80, &result[1]);
+    auto thEgg = std::thread(&squareValue, 7, std::ref(result[2]));
 
     thFoo.join();
     thBar.join();

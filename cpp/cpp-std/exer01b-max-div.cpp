@@ -99,7 +99,7 @@ int main() {
 
 
     for (int i = 0; i < NUM_THREADS; ++i) {
-        lstTh[i] = std::thread(workerFunc, &lstWorkerArg[i], &lstWorkerRes[i]);
+        lstTh[i] = std::thread(&workerFunc, &lstWorkerArg[i], &lstWorkerRes[i]);
     }
 
     for (auto&& th : lstTh) {

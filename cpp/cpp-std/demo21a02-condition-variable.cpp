@@ -43,10 +43,10 @@ int main() {
     std::thread lstThFoo[NUM_TH_FOO];
 
     for (auto&& thFoo : lstThFoo) {
-        thFoo = std::thread(foo);
+        thFoo = std::thread(&foo);
     }
 
-    auto thBar = std::thread(bar);
+    auto thBar = std::thread(&bar);
 
     for (auto&& thFoo : lstThFoo) {
         thFoo.join();

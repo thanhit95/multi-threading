@@ -28,7 +28,7 @@ int main() {
     auto prom = std::promise<int>();
     auto fut = prom.get_future(); // fut is std::future<int>
 
-    auto th = std::thread(doubleValue, 5, std::ref(prom));
+    auto th = std::thread(&doubleValue, 5, std::ref(prom));
 
     // Block until prom.set_value() executes
     int result = fut.get();

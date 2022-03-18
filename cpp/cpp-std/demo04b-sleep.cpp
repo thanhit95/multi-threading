@@ -32,8 +32,8 @@ int main() {
     cout << "foo will sleep until " << mylib::getTimePointStr(tpWakeUpFoo) << endl;
     cout << "bar will sleep until " << mylib::getTimePointStr(tpWakeUpBar) << endl;
 
-    auto thFoo = std::thread(doTask, "foo", tpWakeUpFoo);
-    auto thBar = std::thread(doTask, "bar", tpWakeUpBar);
+    auto thFoo = std::thread(&doTask, "foo", tpWakeUpFoo);
+    auto thBar = std::thread(&doTask, "bar", tpWakeUpBar);
 
     thFoo.join();
     thBar.join();
