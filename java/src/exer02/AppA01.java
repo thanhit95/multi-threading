@@ -7,6 +7,7 @@
 
 package exer02;
 
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 
@@ -20,7 +21,7 @@ public class AppA01 {
     }
 
 
-    private static void producer(LinkedBlockingQueue<Integer> queue) {
+    private static void producer(BlockingQueue<Integer> queue) {
         int i = 1;
 
         for (;; ++i) {
@@ -35,7 +36,7 @@ public class AppA01 {
     }
 
 
-    private static void consumer(LinkedBlockingQueue<Integer> queue) {
+    private static void consumer(BlockingQueue<Integer> queue) {
         for (;;) {
             try {
                 int data = queue.take();
