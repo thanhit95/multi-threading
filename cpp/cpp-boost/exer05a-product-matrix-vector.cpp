@@ -31,7 +31,7 @@ void getProduct(const matrix& mat, const vectord& vec, vectord& result) {
 
     for (int i = 0; i < sizeRowMat; ++i) {
         lstTh.add_thread(new boost::thread(
-            getScalarProduct, mat[i].data(), vec.data(), sizeVec, &result[i]
+            &getScalarProduct, mat[i].data(), vec.data(), sizeVec, &result[i]
         ));
     }
 

@@ -23,11 +23,11 @@ int main() {
     string b = "dolor amet";
 
     // We should use boost:ref to pass references
-    boost::thread thFoo(doTask, boost::ref(a));
-    boost::thread thBar(doTask, boost::ref(b));
+    boost::thread thFoo(&doTask, boost::ref(a));
+    boost::thread thBar(&doTask, boost::ref(b));
 
-    // boost::thread thFoo(doTask, a);
-    // boost::thread thBar(doTask, b);
+    // boost::thread thFoo(&doTask, a);
+    // boost::thread thBar(&doTask, b);
 
     thFoo.join();
     thBar.join();

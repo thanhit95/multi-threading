@@ -21,7 +21,7 @@ void foo() {
 
 
 int main() {
-    boost::thread thFoo(foo);
+    boost::thread thFoo(&foo);
     thFoo.detach();
 
 

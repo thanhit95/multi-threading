@@ -53,9 +53,9 @@ void makeChassis() {
 
 
 int main() {
-    boost::thread thTireA(makeTire);
-    boost::thread thTireB(makeTire);
-    boost::thread thChassis(makeChassis);
+    boost::thread thTireA(&makeTire);
+    boost::thread thTireB(&makeTire);
+    boost::thread thChassis(&makeChassis);
 
     thTireA.join();
     thTireB.join();

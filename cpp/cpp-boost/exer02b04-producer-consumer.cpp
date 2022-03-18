@@ -71,13 +71,13 @@ int main() {
     // CREATE THREADS
     for (int i = 0; i < NUM_PRODUCERS; ++i) {
         lstThProducer.add_thread(new boost::thread(
-            producer, &semFill, &semEmpty, &q, i * 1000
+            &producer, &semFill, &semEmpty, &q, i * 1000
         ));
     }
 
     for (int i = 0; i < NUM_CONSUMERS; ++i) {
         lstThConsumer.add_thread(new boost::thread(
-            consumer, &semFill, &semEmpty, &q
+            &consumer, &semFill, &semEmpty, &q
         ));
     }
 

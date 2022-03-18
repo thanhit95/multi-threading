@@ -35,7 +35,7 @@ int main() {
     boost::thread_group lstTh;
 
     for (int i = 0; i < NUM_THREADS; ++i) {
-        lstTh.add_thread(new boost::thread(doTask, char(i + 'A')));
+        lstTh.add_thread(new boost::thread(&doTask, char(i + 'A')));
     }
 
     lstTh.join_all();

@@ -28,7 +28,7 @@ int main() {
     vector<threadptr> lstTh;
 
     for (int i = 0; i < NUM_THREADS; ++i) {
-        threadptr ptr = boost::make_shared<boost::thread>(doTask, i);
+        threadptr ptr = boost::make_shared<boost::thread>(&doTask, i);
         lstTh.push_back(ptr);
     }
 

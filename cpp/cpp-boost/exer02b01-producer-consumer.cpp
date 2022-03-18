@@ -61,8 +61,8 @@ int main() {
 
     queue<int> q;
 
-    boost::thread thProducer(producer, &semFill, &semEmpty, &q);
-    boost::thread thConsumer(consumer, &semFill, &semEmpty, &q);
+    boost::thread thProducer(&producer, &semFill, &semEmpty, &q);
+    boost::thread thConsumer(&consumer, &semFill, &semEmpty, &q);
 
     thProducer.join();
     thConsumer.join();

@@ -19,7 +19,7 @@ void doHeavyTask() {
 
 
 int main() {
-    boost::thread th(doHeavyTask);
+    boost::thread th(&doHeavyTask);
 
     th.join();
 

@@ -64,7 +64,7 @@ int main() {
         int arg = lstArg[ mylib::RandInt::get(NUM_ARGS) ];
 
         lstThRead.add_thread(new boost::thread(
-            readFunc, arg
+            &readFunc, arg
         ));
     }
 
@@ -72,7 +72,7 @@ int main() {
         int arg = lstArg[ mylib::RandInt::get(NUM_ARGS) ];
 
         lstThWrite.add_thread(new boost::thread(
-            writeFunc, arg
+            &writeFunc, arg
         ));
     }
 

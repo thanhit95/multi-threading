@@ -47,8 +47,8 @@ void bar() {
 
 
 int main() {
-    boost::thread thFoo(foo);
-    boost::thread thBar(bar);
+    boost::thread thFoo(&foo);
+    boost::thread thBar(&bar);
 
     thFoo.join();
     thBar.join();

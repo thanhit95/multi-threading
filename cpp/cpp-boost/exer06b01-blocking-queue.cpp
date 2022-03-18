@@ -97,8 +97,8 @@ void consumer(BlockingQueue<std::string>* blkQueue) {
 int main() {
     BlockingQueue<std::string> blkQueue(2); // capacity = 2
 
-    boost::thread thProducer(producer, &blkQueue);
-    boost::thread thConsumer(consumer, &blkQueue);
+    boost::thread thProducer(&producer, &blkQueue);
+    boost::thread thConsumer(&consumer, &blkQueue);
 
     thProducer.join();
     thConsumer.join();

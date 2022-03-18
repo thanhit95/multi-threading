@@ -25,7 +25,7 @@ void doTask() {
 
 int main() {
     isRunning = true;
-    boost::thread th(doTask);
+    boost::thread th(&doTask);
 
     boost::this_thread::sleep_for(boost::chrono::seconds(6));
     isRunning = false;

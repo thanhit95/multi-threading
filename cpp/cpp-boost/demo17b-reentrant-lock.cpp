@@ -28,7 +28,7 @@ void doTask() {
 
 
 int main() {
-    boost::thread th(doTask);
+    boost::thread th(&doTask);
     th.join();
     return 0;
 }

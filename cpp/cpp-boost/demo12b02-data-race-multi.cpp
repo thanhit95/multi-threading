@@ -33,8 +33,8 @@ int main() {
     vector<bool> a;
     a.resize(N + 1, false);
 
-    boost::thread thDiv2(markDiv2, boost::ref(a), N);
-    boost::thread thDiv3(markDiv3, boost::ref(a), N);
+    boost::thread thDiv2(&markDiv2, boost::ref(a), N);
+    boost::thread thDiv3(&markDiv3, boost::ref(a), N);
     thDiv2.join();
     thDiv3.join();
 

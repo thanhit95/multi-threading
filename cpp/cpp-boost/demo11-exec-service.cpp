@@ -28,7 +28,7 @@ int main() {
 
     for (int i = 0; i < NUM_TASKS; ++i) {
         char name = char(i + 'A');
-        boost::asio::post(pool, boost::bind(doTask, name));
+        boost::asio::post(pool, boost::bind(&doTask, name));
     }
 
     pool.join();

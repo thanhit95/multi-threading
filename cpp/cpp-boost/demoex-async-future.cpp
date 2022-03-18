@@ -26,19 +26,19 @@ void doTaskC(boost::promise<int> & prom) {
 
 int main() {
     // future from a packaged_task (C++11)
-    boost::packaged_task<int> task(doTaskA);                // wrap the function
+    boost::packaged_task<int> task(&doTaskA);               // wrap the function
     boost::unique_future<int> fut1 = task.get_future();     // get a future
     boost::thread th(boost::move(task));                    // launch on a thread
 
 
     // future from an async()
-    boost::unique_future<int> fut2 = boost::async(boost::launch::async, doTaskB);
+    boost::unique_future<int> fut2 = boost::async(boost::launch::async, &doTaskB);
 
 
     // future from a promise
     boost::promise<int> prom;
     boost::unique_future<int> fut3 = prom.get_future();
-    boost::thread(doTaskC, boost::ref(prom)).detach();
+    boost::thread(&doTaskC, boost::ref(prom)).detach();
 
 
     std::cout << "Waiting..." << std::endl;

@@ -66,8 +66,8 @@ void egg() {
 
 
 int main() {
-    boost::thread thFoo(foo);
-    boost::thread thEgg(egg);
+    boost::thread thFoo(&foo);
+    boost::thread thEgg(&egg);
 
     thFoo.join();
     thEgg.join();

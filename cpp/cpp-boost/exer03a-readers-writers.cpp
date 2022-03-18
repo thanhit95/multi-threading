@@ -81,13 +81,13 @@ int main() {
     // CREATE THREADS
     for (int i = 0; i < NUM_READERS; ++i) {
         lstThReader.add_thread(new boost::thread(
-            doTaskReader, &globalData, mylib::RandInt::get(3)
+            &doTaskReader, &globalData, mylib::RandInt::get(3)
         ));
     }
 
     for (int i = 0; i < NUM_WRITERS; ++i) {
         lstThWriter.add_thread(new boost::thread(
-            doTaskWriter, &globalData, mylib::RandInt::get(3)
+            &doTaskWriter, &globalData, mylib::RandInt::get(3)
         ));
     }
 

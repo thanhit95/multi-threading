@@ -46,9 +46,9 @@ void combineOnePackage() {
 
 
 int main() {
-    boost::thread thMakeSheetA(makeOneSheet);
-    boost::thread thMakeSheetB(makeOneSheet);
-    boost::thread thCombinePackage(combineOnePackage);
+    boost::thread thMakeSheetA(&makeOneSheet);
+    boost::thread thMakeSheetB(&makeOneSheet);
+    boost::thread thCombinePackage(&combineOnePackage);
 
     thMakeSheetA.join();
     thMakeSheetB.join();

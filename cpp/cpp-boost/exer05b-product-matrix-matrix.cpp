@@ -66,7 +66,7 @@ void getProduct(const matrix& matA, const matrix& matB, matrix& result) {
             int sizeVector = sizeColA;
 
             lstTh.add_thread(new boost::thread(
-                getScalarProduct, matA[i].data(), matBT[j].data(), sizeVector, &result[i][j]
+                &getScalarProduct, matA[i].data(), matBT[j].data(), sizeVector, &result[i][j]
             ));
         }
     }

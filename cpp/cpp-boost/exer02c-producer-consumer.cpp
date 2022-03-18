@@ -122,11 +122,11 @@ int main() {
 
     // CREATE THREADS
     for (int i = 0; i < NUM_PRODUCERS; ++i) {
-        lstThProducer.add_thread(new boost::thread(producer<int>, &monitor, i * 1000));
+        lstThProducer.add_thread(new boost::thread(&producer<int>, &monitor, i * 1000));
     }
 
     for (int i = 0; i < NUM_CONSUMERS; ++i) {
-        lstThConsumer.add_thread(new boost::thread(consumer<int>, &monitor));
+        lstThConsumer.add_thread(new boost::thread(&consumer<int>, &monitor));
     }
 
 

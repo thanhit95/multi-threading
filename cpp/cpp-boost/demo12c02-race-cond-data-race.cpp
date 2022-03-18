@@ -44,8 +44,8 @@ int main() {
     sysclock::time_point tpNow = sysclock::now();
     sysclock::time_point tpWakeUp = tpNow + boost::chrono::seconds(1);
 
-    boost::thread thA(doTaskA, tpWakeUp);
-    boost::thread thB(doTaskB, tpWakeUp);
+    boost::thread thA(&doTaskA, tpWakeUp);
+    boost::thread thB(&doTaskB, tpWakeUp);
 
     thA.join();
     thB.join();

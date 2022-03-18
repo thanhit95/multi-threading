@@ -117,7 +117,7 @@ int main() {
 
 
     for (int i = 0; i < NUM_THREADS; ++i) {
-        lstTh.add_thread(new boost::thread(workerFunc, &lstWorkerArg[i], &finalRes));
+        lstTh.add_thread(new boost::thread(&workerFunc, &lstWorkerArg[i], &finalRes));
     }
 
     lstTh.join_all();

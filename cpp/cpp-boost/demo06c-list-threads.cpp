@@ -23,8 +23,8 @@ int main() {
     boost::thread_group lstTh;
 
     for (int i = 0; i < NUM_THREADS; ++i) {
-        lstTh.add_thread(new boost::thread(doTask, i));
-        // lstTh.create_thread(boost::bind(doTask, i));
+        lstTh.add_thread(new boost::thread(&doTask, i));
+        // lstTh.create_thread(boost::bind(&doTask, i));
     }
 
     lstTh.join_all();

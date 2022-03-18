@@ -17,7 +17,7 @@ void doTask() {
 
 
 int main() {
-    boost::thread th(doTask);
+    boost::thread th(&doTask);
 
     cout << "Hello from main thread" << endl;
 

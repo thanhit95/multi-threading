@@ -26,9 +26,9 @@ void squareValue(int arg, int& res) {
 int main() {
     int result[3];
 
-    boost::thread thFoo(doubleValue, 5, &result[0]);
-    boost::thread thBar(doubleValue, 80, &result[1]);
-    boost::thread thEgg(squareValue, 7, boost::ref(result[2]));
+    boost::thread thFoo(&doubleValue, 5, &result[0]);
+    boost::thread thBar(&doubleValue, 80, &result[1]);
+    boost::thread thEgg(&squareValue, 7, boost::ref(result[2]));
 
     thFoo.join();
     thBar.join();

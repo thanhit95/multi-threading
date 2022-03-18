@@ -22,8 +22,8 @@ void doTask(const string& msg) {
 
 
 int main() {
-    boost::thread thFoo(doTask, "foo");
-    boost::thread thBar(doTask, "bar");
+    boost::thread thFoo(&doTask, "foo");
+    boost::thread thBar(&doTask, "bar");
 
     thFoo.join();
     thBar.join();

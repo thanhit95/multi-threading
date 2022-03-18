@@ -60,9 +60,9 @@ int main() {
 
     queue<int> q;
 
-    boost::thread thProducerA(producer, &semFill, &semEmpty, &q, 0);
-    boost::thread thProducerB(producer, &semFill, &semEmpty, &q, 1000);
-    boost::thread thConsumer(consumer, &semFill, &semEmpty, &q);
+    boost::thread thProducerA(&producer, &semFill, &semEmpty, &q, 0);
+    boost::thread thProducerB(&producer, &semFill, &semEmpty, &q, 1000);
+    boost::thread thConsumer(&consumer, &semFill, &semEmpty, &q);
 
     thProducerA.join();
     thProducerB.join();

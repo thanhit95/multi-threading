@@ -36,7 +36,7 @@ int main() {
     // CREATE THREADS
     for (int i = 0; i < NUM_PHILOSOPHERS; ++i) {
         lstTh.add_thread(new boost::thread(
-            doTaskPhilosopher, chopstick, NUM_PHILOSOPHERS, i
+            &doTaskPhilosopher, chopstick, NUM_PHILOSOPHERS, i
         ));
     }
 

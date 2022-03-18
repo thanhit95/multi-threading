@@ -54,7 +54,7 @@ int main() {
     monitor.init(&counter);
 
     for (int i = 0; i < NUM_THREADS; ++i) {
-        lstTh.add_thread(new boost::thread(doTask, &monitor));
+        lstTh.add_thread(new boost::thread(&doTask, &monitor));
     }
 
     lstTh.join_all();

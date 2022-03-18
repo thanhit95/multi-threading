@@ -40,10 +40,10 @@ int main() {
     boost::thread_group lstThFoo;
 
     for (int i = 0; i < NUM_TH_FOO; ++i) {
-        lstThFoo.add_thread(new boost::thread(foo));
+        lstThFoo.add_thread(new boost::thread(&foo));
     }
 
-    boost::thread thBar(bar);
+    boost::thread thBar(&bar);
 
     lstThFoo.join_all();
     thBar.join();

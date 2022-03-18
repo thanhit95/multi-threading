@@ -28,7 +28,7 @@ void doTask() {
 
 
 int main() {
-    boost::thread th(doTask);
+    boost::thread th(&doTask);
     /*
     The thread th shall meet deadlock.
     So, you will never get output "Second time the acquiring resource".

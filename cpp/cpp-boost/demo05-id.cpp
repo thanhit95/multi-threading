@@ -18,8 +18,8 @@ void doTask() {
 
 
 int main() {
-    boost::thread thFoo(doTask);
-    boost::thread thBar(doTask);
+    boost::thread thFoo(&doTask);
+    boost::thread thBar(&doTask);
 
     cout << "foo's id: " << thFoo.get_id() << endl;
     cout << "bar's id: " << thBar.get_id() << endl;

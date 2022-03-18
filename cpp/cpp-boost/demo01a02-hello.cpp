@@ -17,7 +17,7 @@ void doTask(char const* message, int number) {
 
 
 int main() {
-    boost::thread th(doTask, "Good day", 19);
+    boost::thread th(&doTask, "Good day", 19);
     th.join();
     return 0;
 }

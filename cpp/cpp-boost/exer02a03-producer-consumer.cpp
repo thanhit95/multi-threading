@@ -41,9 +41,9 @@ void consumer(string name, BlockingQueue<int>* blkq) {
 int main() {
     BlockingQueue<int> blkq;
 
-    boost::thread thProducer(producer, &blkq);
-    boost::thread thConsumerFoo(consumer, "foo", &blkq);
-    boost::thread thConsumerBar(consumer, "bar", &blkq);
+    boost::thread thProducer(&producer, &blkq);
+    boost::thread thConsumerFoo(&consumer, "foo", &blkq);
+    boost::thread thConsumerBar(&consumer, "bar", &blkq);
 
     thProducer.join();
     thConsumerFoo.join();

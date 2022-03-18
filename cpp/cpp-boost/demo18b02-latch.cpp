@@ -51,7 +51,7 @@ int main() {
         for (int i = 0; i < NUM_THREADS; ++i) {
             tuplestrint & arg = lstArg[i];
             lstTh.add_thread(new boost::thread(
-                processRequest, boost::get<0>(arg), boost::get<1>(arg)
+                &processRequest, boost::get<0>(arg), boost::get<1>(arg)
             ));
         }
 

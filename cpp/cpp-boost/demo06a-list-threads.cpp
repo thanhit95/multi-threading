@@ -22,7 +22,7 @@ int main() {
     boost::thread lstTh[NUM_THREADS];
 
     for (int i = 0; i < NUM_THREADS; ++i) {
-        lstTh[i] = boost::thread(doTask, i);
+        lstTh[i] = boost::thread(&doTask, i);
     }
 
     for (int i = 0; i < NUM_THREADS; ++i) {

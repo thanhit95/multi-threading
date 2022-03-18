@@ -45,8 +45,8 @@ void consumer(BlockingQueue<string>* blkQueue) {
 int main() {
     BlockingQueue<string> blkQueue;
 
-    boost::thread thProducer(producer, &blkQueue);
-    boost::thread thConsumer(consumer, &blkQueue);
+    boost::thread thProducer(&producer, &blkQueue);
+    boost::thread thConsumer(&consumer, &blkQueue);
 
     thProducer.join();
     thConsumer.join();

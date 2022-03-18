@@ -40,8 +40,8 @@ void doTaskBanana() {
 
 
 int main() {
-    boost::thread thApple(doTaskApple);
-    boost::thread thBanana(doTaskBanana);
+    boost::thread thApple(&doTaskApple);
+    boost::thread thBanana(&doTaskBanana);
 
     thApple.join();
     thBanana.join();

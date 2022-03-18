@@ -30,8 +30,8 @@ void doTask(int a, double b, string c, char const* d, Point e) {
 
 
 int main() {
-    boost::thread thFoo(doTask, 1, 2, "red", "red", Point(0, 0));
-    boost::thread thBar(doTask, 3, 4, "blue", "blue", Point(9, 9));
+    boost::thread thFoo(&doTask, 1, 2, "red", "red", Point(0, 0));
+    boost::thread thBar(&doTask, 3, 4, "blue", "blue", Point(9, 9));
 
     thFoo.join();
     thBar.join();

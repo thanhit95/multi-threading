@@ -50,7 +50,7 @@ private:
         this->numThreads = numThreads;
 
         for (int i = 0; i < numThreads; ++i) {
-            lstTh.add_thread(new boost::thread(threadWorkerFunc, this));
+            lstTh.add_thread(new boost::thread(&threadWorkerFunc, this));
         }
     }
 
