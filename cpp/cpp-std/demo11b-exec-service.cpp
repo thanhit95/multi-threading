@@ -17,8 +17,7 @@ int main() {
     constexpr int NUM_THREADS = 2;
     constexpr int NUM_TASKS = 5;
 
-    auto execService = mylib::ExecService();
-    execService.init(NUM_THREADS);
+    auto execService = mylib::ExecService(NUM_THREADS);
 
     for (int i = 0; i < NUM_TASKS; ++i) {
         execService.submit([=] {

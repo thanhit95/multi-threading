@@ -29,8 +29,7 @@ public:
 
 int main() {
     // INIT THE EXECUTOR SERVICE WITH 2 THREADS
-    auto execService = mylib::ExecService();
-    execService.init(2);
+    auto execService = mylib::ExecService(2);
 
 
     // SUBMIT
