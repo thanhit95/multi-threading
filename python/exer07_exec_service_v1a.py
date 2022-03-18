@@ -2,7 +2,7 @@
 MY EXECUTOR SERVICE
 
 Version 1A: Simple executor service
-- Method "waitTaskDone" consumes CPU (due to bad synchronization).
+- Method "waitTaskDone" invokes thread sleeps in loop (which can cause performance problems).
 '''
 
 import time
@@ -49,7 +49,7 @@ class MyExecServiceV1A:
             if done:
                 break
 
-            time.sleep(0.5)
+            time.sleep(1)
 
 
     def shutdown(self):

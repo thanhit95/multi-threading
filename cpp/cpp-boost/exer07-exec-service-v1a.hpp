@@ -2,7 +2,7 @@
 MY EXECUTOR SERVICE
 
 Version 1A: Simple executor service
-- Method "waitTaskDone" consumes CPU (due to bad synchronization).
+- Method "waitTaskDone" invokes thread sleeps in loop (which can cause performance problems).
 */
 
 
@@ -14,6 +14,7 @@ Version 1A: Simple executor service
 
 #include <vector>
 #include <queue>
+#include <boost/chrono.hpp>
 #include <boost/thread.hpp>
 #include "exer07-exec-service-itask.hpp"
 
@@ -95,7 +96,8 @@ public:
                 break;
             }
 
-            boost::this_thread::yield();
+            boost::this_thread::sleep_for(boost::chrono::seconds(1));
+            // boost::this_thread::yield();
         }
     }
 

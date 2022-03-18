@@ -60,10 +60,14 @@ public final class MyExecServiceV0B {
     public void waitTaskDone() {
         // This ExecService is too simple,
         // so there is no good implementation for waitTaskDone()
-
-        // Note: Bad implementation
-        while (!taskPending.isEmpty() || counterTaskRunning.get() > 0) {
-            Thread.yield(); // or sleep for a while...
+        try {
+            while (!taskPending.isEmpty() || counterTaskRunning.get() > 0) {
+                Thread.sleep(1000);
+                // Thread.yield();
+            }
+        }
+        catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 

@@ -2,7 +2,7 @@
  * MY EXECUTOR SERVICE
  *
  * Version 1A: Simple executor service
- * - Method "waitTaskDone" consumes CPU (due to bad synchronization).
+ * - Method "waitTaskDone" invokes thread sleeps in loop (which can cause performance problems).
  */
 using System;
 using System.Collections.Generic;
@@ -74,7 +74,8 @@ namespace Exer07
                 if (done)
                     break;
 
-                Thread.Yield();
+                Thread.Sleep(1000);
+                // Thread.Yield();
             }
         }
 

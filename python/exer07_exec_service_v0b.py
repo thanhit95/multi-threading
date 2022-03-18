@@ -42,7 +42,6 @@ class MyExecServiceV0B:
     def wait_task_done(self):
         # This ExecService is too simple,
         # so there is no good implementation for waitTaskDone()
-        # Note: Bad implementation
         while self.__task_pending.qsize() > 0 or self.__counter_task_running > 0:
             time.sleep(1)
 

@@ -62,13 +62,12 @@ namespace Exer07
         {
             // This ExecService is too simple,
             // so there is no good implementation for waitTaskDone()
-
-            // Note: Bad implementation
             while (
                 taskPending.Count > 0 ||
                 Interlocked.CompareExchange(ref counterTaskRunning, 0, 0) > 0
             ) {
-                Thread.Yield(); // or sleep for a while...
+                Thread.Sleep(1000);
+                // Thread.Yield();
             }
         }
 

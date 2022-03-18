@@ -2,7 +2,7 @@
  * MY EXECUTOR SERVICE
  *
  * Version 1A: Simple executor service
- * - Method "waitTaskDone" consumes CPU (due to bad synchronization).
+ * - Method "waitTaskDone" invokes thread sleeps in loop (which can cause performance problems).
  */
 
 package exer07;
@@ -61,17 +61,23 @@ public final class MyExecServiceV1A {
     public void waitTaskDone() {
         boolean done = false;
 
-        for (;;) {
-            synchronized (taskPending) {
-                if (taskPending.isEmpty() && 0 == counterTaskRunning.get()) {
-                    done = true;
+        try {
+            for (;;) {
+                synchronized (taskPending) {
+                    if (taskPending.isEmpty() && 0 == counterTaskRunning.get()) {
+                        done = true;
+                    }
                 }
+
+                if (done)
+                    break;
+
+                Thread.sleep(1000);
+                // Thread.yield();
             }
-
-            if (done)
-                break;
-
-            Thread.yield();
+        }
+        catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 

@@ -2,7 +2,7 @@
 MY EXECUTOR SERVICE
 
 Version 1A: Simple executor service
-- Method "waitTaskDone" consumes CPU (due to bad synchronization).
+- Method "waitTaskDone" invokes thread sleeps in loop (which can cause performance problems).
 */
 
 
@@ -15,8 +15,8 @@ Version 1A: Simple executor service
 #include <vector>
 #include <queue>
 #include <atomic>
+#include <unistd.h>
 #include <pthread.h>
-#include <sched.h>
 #include "exer07-exec-service-itask.hpp"
 
 
@@ -92,8 +92,9 @@ public:
                 break;
             }
 
+            sleep(1);
             // pthread_yield();
-            sched_yield();
+            // sched_yield();
         }
     }
 

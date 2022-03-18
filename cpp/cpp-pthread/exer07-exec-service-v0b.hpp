@@ -15,8 +15,8 @@ Version 0B: The easiest executor service
 
 #include <vector>
 #include <atomic>
+#include <unistd.h>
 #include <pthread.h>
-#include <sched.h>
 #include "mylib-blockingqueue.hpp"
 #include "exer07-exec-service-itask.hpp"
 
@@ -73,11 +73,10 @@ public:
     void waitTaskDone() {
         // This ExecService is too simple,
         // so there is no good implementation for waitTaskDone()
-
-        // Note: Bad implementation
         while (taskPending.size() > 0 || counterTaskRunning.load() > 0) {
+            sleep(1);
             // pthread_yield();
-            sched_yield(); // or sleep for a while...
+            // sched_yield();
         }
     }
 
