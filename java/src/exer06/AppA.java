@@ -53,8 +53,8 @@ public class AppA {
 
 
     private static class MySynchronousQueue<T> {
-        private Semaphore semPut = new Semaphore(1);
-        private Semaphore semTake = new Semaphore(0);
+        private final Semaphore semPut = new Semaphore(1);
+        private final Semaphore semTake = new Semaphore(0);
         private T element = null;
 
 

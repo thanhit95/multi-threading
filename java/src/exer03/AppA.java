@@ -86,8 +86,8 @@ public class AppA {
 
 
     private static class Global {
-        public static Semaphore mutResource = new Semaphore(1);
-        public static Object mutReaderCount = new Object();
+        public static final Semaphore mutResource = new Semaphore(1);
+        public static final Object mutReaderCount = new Object();
 
         public static volatile int resource = 0;
         public static int readerCount = 0;

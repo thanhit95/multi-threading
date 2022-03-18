@@ -20,7 +20,7 @@ public class AppB {
 
 
         var lstWorkerArg = prepareArg(RANGE_START, RANGE_END, NUM_THREADS);
-        var lstWorkerRes = new ArrayList<WorkerResult>();
+        final var lstWorkerRes = new ArrayList<WorkerResult>();
 
 
         var lstWorker = lstWorkerArg.stream().map(arg -> new Thread(() -> {

@@ -90,10 +90,10 @@ public class AppB {
 
 
     private static class Global {
-        public static Object mutServiceQueue = new Object();
+        public static final Object mutServiceQueue = new Object();
 
-        public static Semaphore mutResource = new Semaphore(1);
-        public static Object mutReaderCount = new Object();
+        public static final Semaphore mutResource = new Semaphore(1);
+        public static final Object mutReaderCount = new Object();
 
         public static volatile int resource = 0;
         public static int readerCount = 0;

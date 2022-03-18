@@ -18,7 +18,7 @@ public class AppB {
 
 
 class Global {
-    public static Object conditionVar = new Object();
+    public static final Object conditionVar = new Object();
 
     public static int counter = 0;
 

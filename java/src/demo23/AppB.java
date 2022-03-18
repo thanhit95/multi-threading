@@ -45,7 +45,8 @@ public class AppB {
 
 
     private static class MyTask {
-        private static ThreadLocal<Counter> thlCounter = ThreadLocal.withInitial(() -> new Counter());
+        private static final ThreadLocal<Counter> thlCounter
+                = ThreadLocal.withInitial(() -> new Counter());
 
         public static int getCounter() {
             return thlCounter.get().value;

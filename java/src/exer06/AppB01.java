@@ -61,11 +61,11 @@ public class AppB01 {
 
 
     private static class MyBlockingQueue<T> {
-        private Semaphore semRemain = null;
-        private Semaphore semFill = null;
+        private final Semaphore semRemain;
+        private final Semaphore semFill;
 
         private int capacity = 0;
-        private Queue<T> queue = null;
+        private final Queue<T> queue;
 
 
         public MyBlockingQueue(int capacity) {
@@ -93,7 +93,7 @@ public class AppB01 {
 
 
         public T take() throws InterruptedException {
-            T result = null;
+            T result;
             semFill.acquire();
 
             synchronized (queue) {

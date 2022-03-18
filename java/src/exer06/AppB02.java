@@ -60,11 +60,11 @@ public class AppB02 {
 
 
     private static class MyBlockingQueue<T> {
-        private Object condEmpty = new Object();
-        private Object condFull = new Object();
+        private final Object condEmpty = new Object();
+        private final Object condFull = new Object();
 
         private int capacity = 0;
-        private Queue<T> queue = null;
+        private final Queue<T> queue;
 
 
         public MyBlockingQueue(int capacity) {
@@ -95,10 +95,10 @@ public class AppB02 {
 
 
         public T take() throws InterruptedException {
-            T result = null;
+            T result;
 
             synchronized (condEmpty) {
-                while (0 == queue.size()) {
+                while (queue.isEmpty()) {
                     // Queue is empty, must wait for 'put'
                     condEmpty.wait();
                 }
