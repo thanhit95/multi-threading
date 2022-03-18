@@ -64,9 +64,9 @@ int main() {
     ret = sem_init(&semTire, 0, 4);
     ret = sem_init(&semChassis, 0, 0);
 
-    ret = pthread_create(&tidTireA, nullptr, makeTire, nullptr);
-    ret = pthread_create(&tidTireB, nullptr, makeTire, nullptr);
-    ret = pthread_create(&tidChassis, nullptr, makeChassis, nullptr);
+    ret = pthread_create(&tidTireA, nullptr, &makeTire, nullptr);
+    ret = pthread_create(&tidTireB, nullptr, &makeTire, nullptr);
+    ret = pthread_create(&tidChassis, nullptr, &makeChassis, nullptr);
 
     ret = pthread_join(tidTireA, nullptr);
     ret = pthread_join(tidTireB, nullptr);

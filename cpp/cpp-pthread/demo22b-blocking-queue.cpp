@@ -60,8 +60,8 @@ int main() {
 
     int ret = 0;
 
-    ret = pthread_create(&tidProducer, nullptr, producer, &blkQueue);
-    ret = pthread_create(&tidConsumer, nullptr, consumer, &blkQueue);
+    ret = pthread_create(&tidProducer, nullptr, &producer, &blkQueue);
+    ret = pthread_create(&tidConsumer, nullptr, &consumer, &blkQueue);
 
     ret = pthread_join(tidProducer, nullptr);
     ret = pthread_join(tidConsumer, nullptr);

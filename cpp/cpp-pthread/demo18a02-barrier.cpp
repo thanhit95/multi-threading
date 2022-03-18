@@ -56,7 +56,7 @@ int main() {
     ret = pthread_barrier_init(&syncPoint, nullptr, 2); // participant count = 2
 
     for (int i = 0; i < NUM_THREADS; ++i) {
-        ret = pthread_create(&lstTid[i], nullptr, processRequest, &lstArg[i]);
+        ret = pthread_create(&lstTid[i], nullptr, &processRequest, &lstArg[i]);
     }
 
     // Thread with userName = "amet" shall be FREEZED

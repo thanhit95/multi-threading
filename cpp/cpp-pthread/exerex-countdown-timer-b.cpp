@@ -42,7 +42,7 @@ int main() {
     cout << "START!!!" << endl << endl;
 
 
-    ret = pthread_create(&tid, nullptr, userInputFunc, nullptr);
+    ret = pthread_create(&tid, nullptr, &userInputFunc, nullptr);
 
 
     clock_gettime(CLOCK_REALTIME, &ts);

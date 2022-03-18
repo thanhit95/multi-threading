@@ -24,7 +24,7 @@ int main() {
     pthread_t tid;
     int ret = 0;
 
-    ret = pthread_create(&tid, nullptr, doTask, nullptr);
+    ret = pthread_create(&tid, nullptr, &doTask, nullptr);
 
     for (int i = 0; i < 300; ++i)
         cout << "A";

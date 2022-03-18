@@ -41,7 +41,7 @@ int main() {
     arg.y = -2.4;
     arg.z = "lorem ipsum";
 
-    ret = pthread_create(&tid, nullptr, doTask, &arg);
+    ret = pthread_create(&tid, nullptr, &doTask, &arg);
     ret = pthread_join(tid, nullptr);
 
     return 0;

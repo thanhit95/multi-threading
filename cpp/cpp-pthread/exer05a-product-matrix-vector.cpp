@@ -34,7 +34,7 @@ void getProduct(const matrix& mat, const vectord& vec, vectord& result) {
         auto&& v = vec.data();
         lstArg[i] = { u, v, sizeVec, &result[i] };
 
-        ret = pthread_create(&lstTid[i], nullptr, workerScalarProduct, &lstArg[i]);
+        ret = pthread_create(&lstTid[i], nullptr, &workerScalarProduct, &lstArg[i]);
     }
 
     for (auto&& tid : lstTid) {

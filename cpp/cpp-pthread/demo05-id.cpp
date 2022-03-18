@@ -24,8 +24,8 @@ int main() {
     pthread_t tidFoo, tidBar;
     int ret = 0;
 
-    ret = pthread_create(&tidFoo, nullptr, doTask, nullptr);
-    ret = pthread_create(&tidBar, nullptr, doTask, nullptr);
+    ret = pthread_create(&tidFoo, nullptr, &doTask, nullptr);
+    ret = pthread_create(&tidBar, nullptr, &doTask, nullptr);
 
     cout << "foo's id = " << tidFoo << endl;
     cout << "bar's id = " << tidBar << endl;

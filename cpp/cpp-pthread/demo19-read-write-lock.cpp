@@ -89,12 +89,12 @@ int main() {
     // CREATE THREADS
     for (auto&& tid : lstTidRead) {
         int argIndex = mylib::RandInt::get(NUM_ARGS);
-        ret = pthread_create(&tid, nullptr, readFunc, &lstArg[argIndex]);
+        ret = pthread_create(&tid, nullptr, &readFunc, &lstArg[argIndex]);
     }
 
     for (auto&& tid : lstTidWrite) {
         int argIndex = mylib::RandInt::get(NUM_ARGS);
-        ret = pthread_create(&tid, nullptr, writeFunc, &lstArg[argIndex]);
+        ret = pthread_create(&tid, nullptr, &writeFunc, &lstArg[argIndex]);
     }
 
 

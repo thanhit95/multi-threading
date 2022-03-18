@@ -58,7 +58,7 @@ int main() {
     ret = pthread_barrier_init(&syncPointB, nullptr, 2);
 
     for (int i = 0; i < NUM_THREADS; ++i) {
-        ret = pthread_create(&lstTid[i], nullptr, processRequest, &lstArg[i]);
+        ret = pthread_create(&lstTid[i], nullptr, &processRequest, &lstArg[i]);
     }
 
     for (auto&& tid : lstTid) {

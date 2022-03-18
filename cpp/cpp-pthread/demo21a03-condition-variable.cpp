@@ -51,10 +51,10 @@ int main() {
     int ret = 0;
 
     for (auto&& tidFoo : lstTidFoo) {
-        ret = pthread_create(&tidFoo, nullptr, foo, nullptr);
+        ret = pthread_create(&tidFoo, nullptr, &foo, nullptr);
     }
 
-    ret = pthread_create(&tidBar, nullptr, bar, nullptr);
+    ret = pthread_create(&tidBar, nullptr, &bar, nullptr);
 
     for (auto&& tidFoo : lstTidFoo) {
         ret = pthread_join(tidFoo, nullptr);

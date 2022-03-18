@@ -160,11 +160,11 @@ int main() {
 
     // CREATE THREADS
     for (int i = 0; i < NUM_PRODUCERS; ++i) {
-        ret = pthread_create(&lstTidProducer[i], nullptr, producer<int>, &argPro[i]);
+        ret = pthread_create(&lstTidProducer[i], nullptr, &producer<int>, &argPro[i]);
     }
 
     for (int i = 0; i < NUM_CONSUMERS; ++i) {
-        ret = pthread_create(&lstTidConsumer[i], nullptr, consumer<int>, &monitor);
+        ret = pthread_create(&lstTidConsumer[i], nullptr, &consumer<int>, &monitor);
     }
 
 

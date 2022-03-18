@@ -70,7 +70,7 @@ int main() {
     cout << "START!!!" << endl << endl;
 
 
-    ret = pthread_create(&tid, nullptr, funcUserInput, nullptr);
+    ret = pthread_create(&tid, nullptr, &funcUserInput, nullptr);
 
 
     if (waitForTime(SECONDS)) {

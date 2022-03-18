@@ -30,7 +30,7 @@ int main() {
     int ret = 0;
 
     for (int i = 0; i < 2; ++i)
-        ret = pthread_create(&lstTid[i], nullptr, doTask, &i);
+        ret = pthread_create(&lstTid[i], nullptr, &doTask, &i);
 
     for (int i = 0; i < 2; ++i)
         ret = pthread_join(lstTid[i], nullptr);

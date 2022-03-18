@@ -46,8 +46,8 @@ int main() {
     pthread_t tidA, tidB;
     int ret = 0;
 
-    ret = pthread_create(&tidA, nullptr, doTaskA, nullptr);
-    ret = pthread_create(&tidB, nullptr, doTaskB, nullptr);
+    ret = pthread_create(&tidA, nullptr, &doTaskA, nullptr);
+    ret = pthread_create(&tidB, nullptr, &doTaskB, nullptr);
 
     ret = pthread_join(tidA, nullptr);
     ret = pthread_join(tidB, nullptr);

@@ -11,7 +11,7 @@ using namespace std;
 
 
 
-int *a = nullptr;
+int* a = nullptr;
 int N = 0;
 
 
@@ -44,8 +44,8 @@ int main() {
 
     a = (int*)calloc(sizeof(int), N + 1);
 
-    ret = pthread_create(&tidDiv2, nullptr, markDiv2, nullptr);
-    ret = pthread_create(&tidDiv3, nullptr, markDiv3, nullptr);
+    ret = pthread_create(&tidDiv2, nullptr, &markDiv2, nullptr);
+    ret = pthread_create(&tidDiv3, nullptr, &markDiv3, nullptr);
     ret = pthread_join(tidDiv2, nullptr);
     ret = pthread_join(tidDiv3, nullptr);
 

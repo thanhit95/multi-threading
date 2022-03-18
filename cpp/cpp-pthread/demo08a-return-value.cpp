@@ -36,7 +36,7 @@ int main() {
 
     arg = { 80, &result };
 
-    ret = pthread_create(&tid, nullptr, doubleValue, &arg);
+    ret = pthread_create(&tid, nullptr, &doubleValue, &arg);
     ret = pthread_join(tid, nullptr);
 
     cout << result << endl;

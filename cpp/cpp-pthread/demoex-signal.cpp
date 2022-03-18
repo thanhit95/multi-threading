@@ -28,7 +28,7 @@ int main() {
 
     signal(SIGSEGV, signalHandler); // Register signal handler before going multithread
 
-    pthread_create(&tid, nullptr, func, nullptr);
+    pthread_create(&tid, nullptr, &func, nullptr);
     sleep(1); // Leave time for initialization
 
     pthread_kill(tid, SIGSEGV);

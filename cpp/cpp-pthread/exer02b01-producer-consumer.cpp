@@ -111,8 +111,8 @@ int main() {
 
     sem.init(0, 1);
 
-    ret = pthread_create(&tidProducer, nullptr, producer, &arg);
-    ret = pthread_create(&tidConsumer, nullptr, consumer, &arg);
+    ret = pthread_create(&tidProducer, nullptr, &producer, &arg);
+    ret = pthread_create(&tidConsumer, nullptr, &consumer, &arg);
 
     ret = pthread_join(tidProducer, nullptr);
     ret = pthread_join(tidConsumer, nullptr);

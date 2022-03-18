@@ -24,7 +24,7 @@ public:
 
 
     int start() {
-        int ret = pthread_create(&tid, nullptr, work, (void*)this);
+        int ret = pthread_create(&tid, nullptr, &work, (void*)this);
         return ret;
     }
 

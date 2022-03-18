@@ -83,8 +83,8 @@ int main() {
     pthread_t tidFoo, tidEgg;
     int ret = 0;
 
-    ret = pthread_create(&tidFoo, nullptr, foo, nullptr);
-    ret = pthread_create(&tidEgg, nullptr, egg, nullptr);
+    ret = pthread_create(&tidFoo, nullptr, &foo, nullptr);
+    ret = pthread_create(&tidEgg, nullptr, &egg, nullptr);
 
     ret = pthread_join(tidFoo, nullptr);
     ret = pthread_join(tidEgg, nullptr);

@@ -47,7 +47,7 @@ private:
         lstTh.resize(numThreads);
 
         for (auto&& th : lstTh) {
-            pthread_create(&th, nullptr, threadWorkerFunc, this);
+            pthread_create(&th, nullptr, &threadWorkerFunc, this);
         }
     }
 

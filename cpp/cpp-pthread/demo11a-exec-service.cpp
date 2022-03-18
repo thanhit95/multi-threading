@@ -35,7 +35,7 @@ int main() {
     // SUBMIT
     execService.submit([] { cout << "Hello World" << endl; });
 
-    execService.submit(doTask);
+    execService.submit(&doTask);
 
     execService.submit(MyFunctor());
 

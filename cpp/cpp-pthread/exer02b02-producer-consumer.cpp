@@ -116,9 +116,9 @@ int main() {
     argProA.startValue = 0;
     argProB.startValue = 1000;
 
-    ret = pthread_create(&tidProducerA, nullptr, producer, &argProA);
-    ret = pthread_create(&tidProducerB, nullptr, producer, &argProB);
-    ret = pthread_create(&tidConsumer, nullptr, consumer, &argCon);
+    ret = pthread_create(&tidProducerA, nullptr, &producer, &argProA);
+    ret = pthread_create(&tidProducerB, nullptr, &producer, &argProB);
+    ret = pthread_create(&tidConsumer, nullptr, &consumer, &argCon);
 
     ret = pthread_join(tidProducerA, nullptr);
     ret = pthread_join(tidProducerB, nullptr);

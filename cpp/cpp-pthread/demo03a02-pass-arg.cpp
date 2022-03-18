@@ -28,7 +28,7 @@ int main() {
 
     for (int i = 0; i < 2; ++i) {
         lstArg[i] = i + 1;
-        ret = pthread_create(&lstTid[i], nullptr, doTask, &lstArg[i]);
+        ret = pthread_create(&lstTid[i], nullptr, &doTask, &lstArg[i]);
     }
 
     for (int i = 0; i < 2; ++i)

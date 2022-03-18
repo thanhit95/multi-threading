@@ -32,7 +32,7 @@ int main() {
     int ret = 0;
 
     for (int i = 0; i < 1000; ++i) {
-        ret = pthread_create(&lstTid[i], NULL, doTask, NULL);
+        ret = pthread_create(&lstTid[i], NULL, &doTask, NULL);
     }
 
     for (int i = 0; i < 1000; ++i) {

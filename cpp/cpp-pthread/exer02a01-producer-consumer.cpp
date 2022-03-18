@@ -51,8 +51,8 @@ int main() {
 
     int ret = 0;
 
-    ret = pthread_create(&tidProducer, nullptr, producer, &blkq);
-    ret = pthread_create(&tidConsumer, nullptr, consumer, &blkq);
+    ret = pthread_create(&tidProducer, nullptr, &producer, &blkq);
+    ret = pthread_create(&tidConsumer, nullptr, &consumer, &blkq);
 
     ret = pthread_join(tidProducer, nullptr);
     ret = pthread_join(tidConsumer, nullptr);

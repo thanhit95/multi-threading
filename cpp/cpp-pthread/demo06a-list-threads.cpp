@@ -31,7 +31,7 @@ int main() {
 
     for (int i = 0; i < NUM_THREADS; ++i) {
         lstArg[i] = i;
-        ret = pthread_create(&lstTid[i], nullptr, doTask, &lstArg[i]);
+        ret = pthread_create(&lstTid[i], nullptr, &doTask, &lstArg[i]);
     }
 
     for (auto&& tid : lstTid) {

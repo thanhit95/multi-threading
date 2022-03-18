@@ -55,9 +55,9 @@ int main() {
     ret = sem_init(&semPackage, 0, 0);
     ret = sem_init(&semSheet, 0, 2);
 
-    ret = pthread_create(&tidMakeSheetA, nullptr, makeOneSheet, nullptr);
-    ret = pthread_create(&tidMakeSheetB, nullptr, makeOneSheet, nullptr);
-    ret = pthread_create(&tidCombinePackage, nullptr, combineOnePackage, nullptr);
+    ret = pthread_create(&tidMakeSheetA, nullptr, &makeOneSheet, nullptr);
+    ret = pthread_create(&tidMakeSheetB, nullptr, &makeOneSheet, nullptr);
+    ret = pthread_create(&tidCombinePackage, nullptr, &combineOnePackage, nullptr);
 
     ret = pthread_join(tidMakeSheetA, nullptr);
     ret = pthread_join(tidMakeSheetB, nullptr);

@@ -65,9 +65,9 @@ int main() {
     ConsumerArg argFoo = { "foo", &blkq };
     ConsumerArg argBar = { "bar", &blkq };
 
-    ret = pthread_create(&tidProducer, nullptr, producer, &blkq);
-    ret = pthread_create(&tidConsumerFoo, nullptr, consumer, &argFoo);
-    ret = pthread_create(&tidConsumerBar, nullptr, consumer, &argBar);
+    ret = pthread_create(&tidProducer, nullptr, &producer, &blkq);
+    ret = pthread_create(&tidConsumerFoo, nullptr, &consumer, &argFoo);
+    ret = pthread_create(&tidConsumerBar, nullptr, &consumer, &argBar);
 
     ret = pthread_join(tidProducer, nullptr);
     ret = pthread_join(tidConsumerFoo, nullptr);

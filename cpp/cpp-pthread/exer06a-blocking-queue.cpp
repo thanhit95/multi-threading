@@ -93,8 +93,8 @@ int main() {
     pthread_t tidProducer, tidConsumer;
     int ret = 0;
 
-    ret = pthread_create(&tidProducer, nullptr, producer, &syncQueue);
-    ret = pthread_create(&tidConsumer, nullptr, consumer, &syncQueue);
+    ret = pthread_create(&tidProducer, nullptr, &producer, &syncQueue);
+    ret = pthread_create(&tidConsumer, nullptr, &consumer, &syncQueue);
 
     ret = pthread_join(tidProducer, nullptr);
     ret = pthread_join(tidConsumer, nullptr);

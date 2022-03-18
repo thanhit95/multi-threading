@@ -33,7 +33,7 @@ int main() {
     // arg = std::make_tuple( 10, -2.4, "lorem ipsum" );
     arg = { 10, -2.4, "lorem ipsum" };
 
-    ret = pthread_create(&tid, nullptr, doTask, &arg);
+    ret = pthread_create(&tid, nullptr, &doTask, &arg);
     ret = pthread_join(tid, nullptr);
 
     return 0;

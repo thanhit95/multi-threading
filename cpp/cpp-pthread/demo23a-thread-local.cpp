@@ -34,7 +34,7 @@ int main() {
 
     // Child thread gets value
     // Expected output: 123
-    ret = pthread_create(&tid, nullptr, doTask, nullptr);
+    ret = pthread_create(&tid, nullptr, &doTask, nullptr);
     ret = pthread_join(tid, nullptr);
 
     return 0;

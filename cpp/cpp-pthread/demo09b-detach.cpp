@@ -33,7 +33,7 @@ int main() {
     pthread_t tidFoo;
     int ret = 0;
 
-    ret = pthread_create(&tidFoo, nullptr, foo, nullptr);
+    ret = pthread_create(&tidFoo, nullptr, &foo, nullptr);
 
     sleep(3);
 

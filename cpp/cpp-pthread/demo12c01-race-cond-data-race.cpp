@@ -33,7 +33,7 @@ int main() {
     int ret = 0;
 
     for (int i = 0; i < NUM_THREADS; ++i) {
-        ret = pthread_create(&lstTid[i], nullptr, increaseCounter, nullptr);
+        ret = pthread_create(&lstTid[i], nullptr, &increaseCounter, nullptr);
     }
 
     for (int i = 0; i < NUM_THREADS; ++i) {

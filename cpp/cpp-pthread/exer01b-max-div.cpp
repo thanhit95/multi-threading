@@ -109,7 +109,7 @@ int main() {
 
 
     for (int i = 0; i < NUM_THREADS; ++i) {
-        ret = pthread_create(&lstTid[i], nullptr, workerFunc, &lstWorkerArg[i]);
+        ret = pthread_create(&lstTid[i], nullptr, &workerFunc, &lstWorkerArg[i]);
     }
 
     for (auto&& tid : lstTid) {

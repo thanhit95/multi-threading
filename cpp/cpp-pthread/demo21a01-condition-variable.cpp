@@ -45,8 +45,8 @@ int main() {
     pthread_t tidFoo, tidBar;
     int ret = 0;
 
-    ret = pthread_create(&tidFoo, nullptr, foo, nullptr);
-    ret = pthread_create(&tidBar, nullptr, bar, nullptr);
+    ret = pthread_create(&tidFoo, nullptr, &foo, nullptr);
+    ret = pthread_create(&tidBar, nullptr, &bar, nullptr);
 
     ret = pthread_join(tidFoo, nullptr);
     ret = pthread_join(tidBar, nullptr);

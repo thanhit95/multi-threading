@@ -28,7 +28,7 @@ int main() {
     int *result = nullptr;
     int ret = 0;
 
-    ret = pthread_create(&tid, nullptr, doubleValue, &arg);
+    ret = pthread_create(&tid, nullptr, &doubleValue, &arg);
     ret = pthread_join(tid, (void**)&result);
 
     cout << (*result) << endl;

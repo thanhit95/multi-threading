@@ -72,7 +72,7 @@ void getProduct(const matrix& matA, const matrix& matB, matrix& result) {
             lstArg[iSca] = { u, v, sizeVector, &result[i][j] };
 
             ret = pthread_create(&lstTid[iSca], nullptr,
-                                 workerScalarProduct, &lstArg[iSca]);
+                                 &workerScalarProduct, &lstArg[iSca]);
 
             ++iSca;
         }

@@ -25,7 +25,7 @@ int main() {
     pthread_t tid;
     int ret = 0;
 
-    ret = pthread_create(&tid, nullptr, doHeavyTask, nullptr);
+    ret = pthread_create(&tid, nullptr, &doHeavyTask, nullptr);
 
     ret = pthread_join(tid, nullptr);
 

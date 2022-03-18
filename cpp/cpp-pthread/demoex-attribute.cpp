@@ -34,7 +34,7 @@ int main() {
 
     for (int i = 0; i < NUM_THREADS; ++i) {
         arg[i] = i;
-        ret = pthread_create(&tid[i], &attr, doTask, &arg[i]);
+        ret = pthread_create(&tid[i], &attr, &doTask, &arg[i]);
     }
 
     void* status = nullptr;

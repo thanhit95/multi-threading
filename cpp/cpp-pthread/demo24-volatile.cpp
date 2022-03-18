@@ -31,7 +31,7 @@ int main() {
     int ret = 0;
 
     isRunning = true;
-    ret = pthread_create(&tid, nullptr, doTask, nullptr);
+    ret = pthread_create(&tid, nullptr, &doTask, nullptr);
 
     sleep(6);
     isRunning = false;

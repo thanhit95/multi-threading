@@ -37,7 +37,7 @@ int main() {
     int ret = 0;
 
     for (auto&& tid : lstTid) {
-        ret = pthread_create(&tid, nullptr, doTask, nullptr);
+        ret = pthread_create(&tid, nullptr, &doTask, nullptr);
     }
 
     for (auto&& tid : lstTid) {

@@ -69,7 +69,7 @@ int main() {
     monitor.init(&counter);
 
     for (auto&& tid : lstTid) {
-        ret = pthread_create(&tid, nullptr, doTask, &monitor);
+        ret = pthread_create(&tid, nullptr, &doTask, &monitor);
     }
 
     for (auto&& tid : lstTid) {

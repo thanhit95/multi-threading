@@ -118,11 +118,11 @@ int main() {
 
     // CREATE THREADS
     for (int i = 0; i < NUM_READERS; ++i) {
-        ret = pthread_create(&lstTidReader[i], nullptr, doTaskReader, &argReader[i]);
+        ret = pthread_create(&lstTidReader[i], nullptr, &doTaskReader, &argReader[i]);
     }
 
     for (int i = 0; i < NUM_WRITERS; ++i) {
-        ret = pthread_create(&lstTidWriter[i], nullptr, doTaskWriter, &argWriter[i]);
+        ret = pthread_create(&lstTidWriter[i], nullptr, &doTaskWriter, &argWriter[i]);
     }
 
 

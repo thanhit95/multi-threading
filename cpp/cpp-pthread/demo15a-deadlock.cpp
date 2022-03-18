@@ -33,8 +33,8 @@ int main() {
     pthread_t tidFoo, tidBar;
     int ret = 0;
 
-    ret = pthread_create(&tidFoo, nullptr, doTask, (void*)"foo");
-    ret = pthread_create(&tidBar, nullptr, doTask, (void*)"bar");
+    ret = pthread_create(&tidFoo, nullptr, &doTask, (void*)"foo");
+    ret = pthread_create(&tidBar, nullptr, &doTask, (void*)"bar");
 
     ret = pthread_join(tidFoo, nullptr);
     ret = pthread_join(tidBar, nullptr);
