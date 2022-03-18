@@ -19,8 +19,8 @@ public final class MyExecServiceV2B {
     private int numThreads = 0;
     private List<Thread> lstTh = new LinkedList<>();
 
-    private Queue<Runnable> taskPending = new LinkedList<>();
-    private Queue<Runnable> taskRunning = new LinkedList<>();
+    private final Queue<Runnable> taskPending = new LinkedList<>();
+    private final Queue<Runnable> taskRunning = new LinkedList<>();
 
     private volatile boolean forceThreadShutdown = false;
 
@@ -81,9 +81,9 @@ public final class MyExecServiceV2B {
         try {
             for (;;) {
                 synchronized (taskPending) {
-                    if (0 == taskPending.size()) {
+                    if (taskPending.isEmpty()) {
                         synchronized (taskRunning) {
-                            while (taskRunning.size() > 0)
+                            while (!taskRunning.isEmpty())
                                 taskRunning.wait();
 
                             // no pending task and no running task
@@ -125,13 +125,13 @@ public final class MyExecServiceV2B {
     private static void threadWorkerFunc(MyExecServiceV2B thisPtr) {
         var taskPending = thisPtr.taskPending;
         var taskRunning = thisPtr.taskRunning;
-        Runnable task = null;
+        Runnable task;
 
         try {
             for (;;) {
                 synchronized (taskPending) {
                     // WAIT FOR AN AVAILABLE PENDING TASK
-                    while (0 == taskPending.size() && false == thisPtr.forceThreadShutdown) {
+                    while (taskPending.isEmpty() && false == thisPtr.forceThreadShutdown) {
                         taskPending.wait();
                     }
 

@@ -2,7 +2,7 @@
  * BLOCKING QUEUES
  * VersionC: Introduction to SynchronousQueue
  *
- * The SynchronousQueue is simply the BlockingQueue with capacity = 0.
+ * The SynchronousQueue is simply the BlockingQueue with zero capacity.
  * Therefore, each insert operation must wait for a corresponding remove operation by another thread,
  *            and vice versa.
  */

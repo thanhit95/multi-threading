@@ -19,10 +19,10 @@ public final class MyExecServiceV1B {
     private int numThreads = 0;
     private List<Thread> lstTh = new LinkedList<>();
 
-    private Queue<Runnable> taskPending = new LinkedList<>();
+    private final Queue<Runnable> taskPending = new LinkedList<>();
 
     private int counterTaskRunning;
-    private Object lkTaskRunning = new Object();
+    private final Object lkTaskRunning = new Object();
 
     private volatile boolean forceThreadShutdown = false;
 
@@ -62,7 +62,7 @@ public final class MyExecServiceV1B {
     public void waitTaskDone() {
         for (;;) {
             synchronized (taskPending) {
-                if (0 == taskPending.size()) {
+                if (taskPending.isEmpty()) {
                     synchronized (lkTaskRunning) {
                         try {
                             while (counterTaskRunning > 0) {
@@ -108,13 +108,13 @@ public final class MyExecServiceV1B {
         var taskPending = thisPtr.taskPending;
         var lkTaskRunning = thisPtr.lkTaskRunning;
 
-        Runnable task = null;
+        Runnable task;
 
         try {
             for (;;) {
                 // WAIT FOR AN AVAILABLE PENDING TASK
                 synchronized (taskPending) {
-                    while (0 == taskPending.size() && false == thisPtr.forceThreadShutdown) {
+                    while (taskPending.isEmpty() && false == thisPtr.forceThreadShutdown) {
                         taskPending.wait();
                     }
 

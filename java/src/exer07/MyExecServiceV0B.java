@@ -22,8 +22,8 @@ public final class MyExecServiceV0B {
     private int numThreads = 0;
     private List<Thread> lstTh = new LinkedList<>();
 
-    private BlockingQueue<Runnable> taskPending = new LinkedBlockingQueue<>();
-    private AtomicInteger counterTaskRunning = new AtomicInteger();
+    private final BlockingQueue<Runnable> taskPending = new LinkedBlockingQueue<>();
+    private final AtomicInteger counterTaskRunning = new AtomicInteger();
 
     private volatile boolean forceThreadShutdown = false;
 
@@ -62,7 +62,7 @@ public final class MyExecServiceV0B {
         // so there is no good implementation for waitTaskDone()
 
         // Note: Bad implementation
-        while (taskPending.size() > 0 || counterTaskRunning.get() > 0) {
+        while (!taskPending.isEmpty() || counterTaskRunning.get() > 0) {
             Thread.yield(); // or sleep for a while...
         }
     }
@@ -94,7 +94,7 @@ public final class MyExecServiceV0B {
 
 
     private static void threadWorkerFunc(MyExecServiceV0B thisPtr) {
-        Runnable task = null;
+        Runnable task;
 
         try {
             for (;;) {

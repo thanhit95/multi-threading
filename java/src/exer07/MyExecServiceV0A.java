@@ -19,7 +19,7 @@ public final class MyExecServiceV0A {
 
     private int numThreads = 0;
     private List<Thread> lstTh = new LinkedList<>();
-    private BlockingQueue<Runnable> taskPending = new LinkedBlockingQueue<>();
+    private final BlockingQueue<Runnable> taskPending = new LinkedBlockingQueue<>();
 
 
 
@@ -69,7 +69,7 @@ public final class MyExecServiceV0A {
 
 
     private static void threadWorkerFunc(MyExecServiceV0A thisPtr) {
-        Runnable task = null;
+        Runnable task;
 
         try {
             for (;;) {

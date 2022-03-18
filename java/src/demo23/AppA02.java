@@ -27,7 +27,8 @@ public class AppA02 {
 
 
     private static class MyTask {
-        private static ThreadLocal<String> data = ThreadLocal.withInitial(() -> "NOT SET");
+        private static final ThreadLocal<String> data
+                = ThreadLocal.withInitial(() -> "NOT SET");
 
         public static String get() {
             return data.get();

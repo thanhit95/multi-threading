@@ -13,7 +13,7 @@ import java.util.concurrent.Future;
 
 public class AppB04 {
 
-    private static ExecutorService executor = Executors.newFixedThreadPool(5);
+    private static final ExecutorService executor = Executors.newFixedThreadPool(5);
 
 
     public static void main(String[] args) throws InterruptedException, ExecutionException {

@@ -20,10 +20,10 @@ public final class MyExecServiceV2A {
     private int numThreads = 0;
     private List<Thread> lstTh = new LinkedList<>();
 
-    private Queue<Runnable> taskPending = new LinkedList<>();
-    private Queue<Runnable> taskRunning = new LinkedList<>();
+    private final Queue<Runnable> taskPending = new LinkedList<>();
+    private final Queue<Runnable> taskRunning = new LinkedList<>();
 
-    private Semaphore counterTaskRunning = new Semaphore(0);
+    private final Semaphore counterTaskRunning = new Semaphore(0);
 
     private volatile boolean forceThreadShutdown = false;
 
@@ -70,8 +70,8 @@ public final class MyExecServiceV2A {
 
             synchronized (taskPending) {
                 synchronized (taskRunning) {
-                    if (0 == taskPending.size() && 0 == taskRunning.size()
-                                                /* && 0 == counterTaskRunning.availablePermits() */
+                    if (taskPending.isEmpty() && taskRunning.isEmpty()
+                        /* && 0 == counterTaskRunning.availablePermits() */
                     )
                         break;
                 }
@@ -110,13 +110,13 @@ public final class MyExecServiceV2A {
         var taskRunning = thisPtr.taskRunning;
         var counterTaskRunning = thisPtr.counterTaskRunning;
 
-        Runnable task = null;
+        Runnable task;
 
         try {
             for (;;) {
                 synchronized (taskPending) {
                     // WAIT FOR AN AVAILABLE PENDING TASK
-                    while (0 == taskPending.size() && false == thisPtr.forceThreadShutdown) {
+                    while (taskPending.isEmpty() && false == thisPtr.forceThreadShutdown) {
                         taskPending.wait();
                     }
 

@@ -6,7 +6,7 @@ import java.text.NumberFormat;
 
 public class MyUtil {
 
-    private static NumberFormat nf;
+    private static final NumberFormat nf;
 
 
     static {
@@ -28,7 +28,7 @@ public class MyUtil {
 
 
     public static double[][] getTransposeMatrix(double[][] input) {
-        double[][] output = null;
+        double[][] output;
 
         int numRow = input.length;
         int numCol = input[0].length;

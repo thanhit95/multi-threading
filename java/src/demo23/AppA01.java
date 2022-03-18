@@ -25,7 +25,7 @@ public class AppA01 {
 
 
     private static class MyTask {
-        private static ThreadLocal<String> data = new ThreadLocal<>();
+        private static final ThreadLocal<String> data = new ThreadLocal<>();
 
         public static String get() {
             // If this is first time getting data
