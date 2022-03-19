@@ -22,8 +22,8 @@ void doTaskPhilosopher(std::mutex chopstick[], int numPhilo, int idPhilo) {
 
     cout << "Philosopher #" << i << " is eating the rice" << endl;
 
-    chopstick[i].unlock();
     chopstick[(i + 1) % n].unlock();
+    chopstick[i].unlock();
 }
 
 

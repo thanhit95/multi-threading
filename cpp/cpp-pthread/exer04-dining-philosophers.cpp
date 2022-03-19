@@ -32,8 +32,8 @@ void* doTaskPhilosopher(void *argVoid) {
 
     cout << "Philosopher #" << i << " is eating the rice" << endl;
 
-    pthread_mutex_unlock(&chopstick[i]);
     pthread_mutex_unlock(&chopstick[(i + 1) % n]);
+    pthread_mutex_unlock(&chopstick[i]);
 
     pthread_exit(nullptr);
     return nullptr;
