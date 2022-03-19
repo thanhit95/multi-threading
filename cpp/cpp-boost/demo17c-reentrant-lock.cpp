@@ -30,6 +30,24 @@ void doTask(char name) {
 
 
 
+void doTaskUsingSyncBlock(char name) {
+    typedef boost::unique_lock<boost::recursive_mutex> uniquelk;
+
+    boost::this_thread::sleep_for(boost::chrono::seconds(1));
+
+    {
+        uniquelk(mut);
+        cout << "First time " << name << " acquiring the resource" << endl;
+
+        {
+            uniquelk(mut);
+            cout << "Second time " << name << " acquiring the resource" << endl;
+        }
+    }
+}
+
+
+
 int main() {
     const int NUM_THREADS = 3;
     boost::thread_group lstTh;

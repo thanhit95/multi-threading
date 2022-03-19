@@ -9,7 +9,7 @@ import java.util.stream.IntStream;
 
 
 
-public class App {
+public class AppA {
 
     public static void main(String[] args) {
         final int NUM_PHILOSOPHERS = 5;

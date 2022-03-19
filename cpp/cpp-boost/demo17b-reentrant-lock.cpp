@@ -27,6 +27,20 @@ void doTask() {
 
 
 
+void doTaskUsingSyncBlock() {
+    typedef boost::unique_lock<boost::recursive_mutex> uniquelk;
+
+    uniquelk(mut);
+    cout << "First time acquiring the resource" << endl;
+
+    {
+        uniquelk(mut);
+        cout << "Second time acquiring the resource" << endl;
+    }
+}
+
+
+
 int main() {
     boost::thread th(&doTask);
     th.join();

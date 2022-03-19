@@ -28,6 +28,20 @@ void doTask() {
 
 
 
+void doTaskUsingSyncBlock() {
+    using uniquelk = std::unique_lock<std::recursive_mutex>;
+
+    uniquelk(mut);
+    cout << "First time acquiring the resource" << endl;
+
+    {
+        uniquelk(mut);
+        cout << "Second time acquiring the resource" << endl;
+    }
+}
+
+
+
 int main() {
     auto th = std::thread(&doTask);
     th.join();

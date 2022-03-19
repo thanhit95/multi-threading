@@ -7,7 +7,7 @@ using System.Threading;
 
 
 
-class Exer04 : IRunnable
+class Exer04A : IRunnable
 {
     public void run()
     {

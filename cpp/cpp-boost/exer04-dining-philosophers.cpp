@@ -27,6 +27,21 @@ void doTaskPhilosopher(boost::mutex chopstick[], int numPhilo, int idPhilo) {
 
 
 
+void doTaskPhilosopherUsingSyncBlock(boost::mutex chopstick[], int numPhilo, int idPhilo) {
+    int n = numPhilo;
+    int i = idPhilo;
+
+    boost::this_thread::sleep_for(boost::chrono::seconds(1));
+
+    {
+        boost::unique_lock<boost::mutex> ( chopstick[i] );
+        boost::unique_lock<boost::mutex> ( chopstick[(i + 1) % n] );
+        cout << "Philosopher #" << i << " is eating the rice" << endl;
+    }
+}
+
+
+
 int main() {
     const int NUM_PHILOSOPHERS = 5;
 

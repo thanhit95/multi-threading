@@ -28,6 +28,21 @@ void doTaskPhilosopher(std::mutex chopstick[], int numPhilo, int idPhilo) {
 
 
 
+void doTaskPhilosopherUsingSyncBlock(std::mutex chopstick[], int numPhilo, int idPhilo) {
+    int n = numPhilo;
+    int i = idPhilo;
+
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+
+    {
+        std::unique_lock<std::mutex> ( chopstick[i] );
+        std::unique_lock<std::mutex> ( chopstick[(i + 1) % n] );
+        cout << "Philosopher #" << i << " is eating the rice" << endl;
+    }
+}
+
+
+
 int main() {
     constexpr int NUM_PHILOSOPHERS = 5;
 

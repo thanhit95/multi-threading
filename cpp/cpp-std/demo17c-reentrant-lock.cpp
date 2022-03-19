@@ -31,6 +31,24 @@ void doTask(char name) {
 
 
 
+void doTaskUsingSyncBlock(char name) {
+    using uniquelk = std::unique_lock<std::recursive_mutex>;
+
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+
+    {
+        uniquelk(mut);
+        cout << "First time " << name << " acquiring the resource" << endl;
+
+        {
+            uniquelk(mut);
+            cout << "Second time " << name << " acquiring the resource" << endl;
+        }
+    }
+}
+
+
+
 int main() {
     constexpr int NUM_THREADS = 3;
     std::thread lstTh[NUM_THREADS];
