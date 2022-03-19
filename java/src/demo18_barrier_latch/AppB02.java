@@ -2,9 +2,7 @@
  * BARRIERS
  * Version B: Count-down latches
  *
- * Notes:
- * - CyclicBarrier maintains a count of threads whereas CountDownLatch maintains a count of tasks.
- * - CountDownLatch in Java is different from that one in C++.
+ * Main thread waits for 3 child threads to get enough data to progress.
  */
 
 package demo18_barrier_latch;
@@ -17,47 +15,38 @@ import java.util.concurrent.CountDownLatch;
 public class AppB02 {
 
     public static void main(String[] args) throws InterruptedException {
-        var syncPoint = new CountDownLatch(3); // participant count = 3
-
-
         var lstArg = List.of(
-                new ThreadArg("lorem", 1),
-                new ThreadArg("ipsum", 2),
-                new ThreadArg("dolor", 3)
+                new ThreadArg("Send request to egg.net to get data", 6),
+                new ThreadArg("Send request to foo.org to get data", 2),
+                new ThreadArg("Send request to bar.com to get data", 4)
         );
 
 
-        for (int repeatCount = 0; repeatCount < 2; ++repeatCount) {
-            var lstTh = lstArg.stream().map(arg -> new Thread(() -> {
-
-                try {
-                    Thread.sleep(1000 * arg.timeWait);
-
-                    System.out.println("Get request from " + arg.userName);
-
-                    syncPoint.countDown();
-
-                    syncPoint.await();
-
-                    System.out.println("Done " + arg.userName);
-                }
-                catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-            })).toList();
+        var syncPoint = new CountDownLatch(lstArg.size());
 
 
-            for (var th : lstTh)
-                th.start();
+        lstArg.forEach(arg -> new Thread(() -> {
+            try {
+                Thread.sleep(1000 * arg.timeWait);
 
-            for (var th : lstTh)
-                th.join();
-        }
+                System.out.println(arg.message);
+                syncPoint.countDown();
+
+                Thread.sleep(8000);
+                System.out.println("Cleanup");
+            }
+            catch (InterruptedException e) {
+            }
+        }).start());
+
+
+        syncPoint.await();
+
+        System.out.println("\nNow we has enough data to progress to next step\n");
     }
 
 
 
-    private record ThreadArg(String userName, int timeWait) { }
+    private record ThreadArg(String message, int timeWait) { }
 
 }

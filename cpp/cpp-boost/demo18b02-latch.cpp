@@ -1,7 +1,8 @@
 /*
 BARRIERS
 Version B: Count-down latches
-ERROR WHEN RUN
+
+Main thread waits for 3 child threads to get enough data to progress.
 */
 
 
@@ -17,47 +18,45 @@ using namespace std;
 
 typedef boost::tuple<string,int> tuplestrint;
 
-boost::latch syncPoint(3); // participant count = 3
+const int NUM_THREADS = 3;
+boost::latch syncPoint(NUM_THREADS);
 
 
 
-void processRequest(string userName, int timeWait) {
+void doTask(string message, int timeWait) {
     boost::this_thread::sleep_for(boost::chrono::seconds(timeWait));
 
-    cout << "Get request from " << userName << endl;
+    cout << message << endl;
+    syncPoint.count_down();
 
-    syncPoint.count_down_and_wait();
-    // syncPoint.count_down();
-    // syncPoint.wait();
-
-    cout << "Done " << userName << endl;
+    boost::this_thread::sleep_for(boost::chrono::seconds(8));
+    cout << "Cleanup" << endl;
 }
 
 
 
 int main() {
-    const int NUM_THREADS = 3;
     boost::thread_group lstTh;
 
-    // tuple<userName, timeWait>
+    // tuple<message, timeWait>
     tuplestrint lstArg[NUM_THREADS] = {
-        tuplestrint("lorem", 1),
-        tuplestrint("ipsum", 2),
-        tuplestrint("dolor", 3)
+        tuplestrint("Send request to egg.net to get data", 6),
+        tuplestrint("Send request to foo.org to get data", 2),
+        tuplestrint("Send request to bar.com to get data", 4)
     };
 
-    for (int repeatCount = 0; repeatCount < 2; ++repeatCount) {
+    for (int i = 0; i < NUM_THREADS; ++i) {
+        tuplestrint & arg = lstArg[i];
 
-        for (int i = 0; i < NUM_THREADS; ++i) {
-            tuplestrint & arg = lstArg[i];
-            lstTh.add_thread(new boost::thread(
-                &processRequest, boost::get<0>(arg), boost::get<1>(arg)
-            ));
-        }
-
-        lstTh.join_all();
-
+        lstTh.add_thread(new boost::thread(
+            &doTask, boost::get<0>(arg), boost::get<1>(arg)
+        ));
     }
+
+    syncPoint.wait();
+    cout << "\nNow we has enough data to progress to next step\n" << endl;
+
+    lstTh.join_all();
 
     return 0;
 }

@@ -25,9 +25,9 @@ void processRequest(string userName, int timeWait) {
 
     cout << "Get request from " << userName << endl;
 
-    syncPoint.count_down_and_wait();
-    // syncPoint.count_down();
-    // syncPoint.wait();
+    syncPoint.count_down();
+    syncPoint.wait();
+    // syncPoint.count_down_and_wait();
 
     cout << "Done " << userName << endl;
 }

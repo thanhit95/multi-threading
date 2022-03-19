@@ -1,6 +1,8 @@
 /*
 BARRIERS
 Version B: Count-down latches
+
+Main thread waits for 3 child threads to get enough data to progress.
 */
 
 
@@ -14,44 +16,43 @@ using namespace std;
 
 
 
-auto syncPoint = std::latch(3); // participant count = 3
+constexpr int NUM_THREADS = 3;
+auto syncPoint = std::latch(NUM_THREADS);
 
 
 
-void processRequest(string userName, int timeWait) {
+void doTask(string message, int timeWait) {
     std::this_thread::sleep_for(std::chrono::seconds(timeWait));
 
-    cout << "Get request from " << userName << endl;
+    cout << message << endl;
+    syncPoint.count_down();
 
-    syncPoint.arrive_and_wait();
-
-    cout << "Done " << userName << endl;
+    std::this_thread::sleep_for(std::chrono::seconds(8));
+    cout << "Cleanup" << endl;
 }
 
 
 
 int main() {
-    constexpr int NUM_THREADS = 3;
     std::thread lstTh[NUM_THREADS];
 
-    // tuple<userName, timeWait>
+    // tuple<message, timeWait>
     tuple<string,int> lstArg[NUM_THREADS] = {
-        { "lorem", 1 },
-        { "ipsum", 2 },
-        { "dolor", 3 }
+        { "Send request to egg.net to get data", 6 },
+        { "Send request to foo.org to get data", 2 },
+        { "Send request to bar.com to get data", 4 }
     };
 
-    for (int repeatCount = 0; repeatCount < 2; ++repeatCount) {
+    for (int i = 0; i < NUM_THREADS; ++i) {
+        auto&& arg = lstArg[i];
+        lstTh[i] = std::thread(&doTask, std::get<0>(arg), std::get<1>(arg));
+    }
 
-        for (int i = 0; i < NUM_THREADS; ++i) {
-            auto&& arg = lstArg[i];
-            lstTh[i] = std::thread(&processRequest, std::get<0>(arg), std::get<1>(arg));
-        }
+    syncPoint.wait();
+    cout << "\nNow we has enough data to progress to next step\n" << endl;
 
-        for (auto&& th : lstTh) {
-            th.join();
-        }
-
+    for (auto&& th : lstTh) {
+        th.join();
     }
 
     return 0;
