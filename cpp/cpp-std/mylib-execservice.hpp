@@ -103,7 +103,7 @@ public:
         for (;;) {
             uniquelk lkPending(mutTaskPending);
 
-            if (0 == taskPending.size()) {
+            if (taskPending.empty()) {
                 uniquelk lkRunning(mutTaskRunning);
 
                 condTaskRunning.wait(lkRunning, [&] { return counterTaskRunning <= 0; });

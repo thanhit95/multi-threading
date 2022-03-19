@@ -90,7 +90,7 @@ public:
                 uniquelk lkPending(mutTaskPending);
                 uniquelk lkRunning(mutTaskRunning);
 
-                if (0 == taskPending.size() && 0 == taskRunning.size()) {
+                if (taskPending.empty() && taskRunning.empty()) {
                     break;
                 }
             }
@@ -136,7 +136,7 @@ private:
                 // WAIT FOR AN AVAILABLE PENDING TASK
                 uniquelk lkPending(mutTaskPending);
 
-                while (0 == taskPending.size() && false == forceThreadShutdown) {
+                while (taskPending.empty() && false == forceThreadShutdown) {
                     condTaskPending.wait(lkPending);
                 }
 
