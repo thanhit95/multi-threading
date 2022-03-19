@@ -1,5 +1,5 @@
 /*
-BARRIERS
+BARRIERS AND LATCHES
 Version B: Count-down latches
 */
 

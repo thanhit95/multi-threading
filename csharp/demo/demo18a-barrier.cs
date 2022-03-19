@@ -1,5 +1,5 @@
 ﻿/*
- * BARRIERS
+ * BARRIERS AND LATCHES
  */
 using System;
 using System.Collections.Generic;

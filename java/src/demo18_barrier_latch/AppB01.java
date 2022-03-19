@@ -1,6 +1,10 @@
 /*
- * BARRIERS
+ * BARRIERS AND LATCHES
  * Version B: Count-down latches
+ *
+ * Notes:
+ * - CyclicBarrier maintains a count of threads whereas CountDownLatch maintains a count of tasks.
+ * - CountDownLatch in Java is different from that one in C++.
  */
 
 package demo18_barrier_latch;
@@ -31,7 +35,6 @@ public class AppB01 {
                 System.out.println("Get request from " + arg.userName);
 
                 syncPoint.countDown();
-
                 syncPoint.await();
 
                 System.out.println("Done " + arg.userName);

@@ -1,5 +1,5 @@
 '''
-BARRIERS
+BARRIERS AND LATCHES
 '''
 
 import time

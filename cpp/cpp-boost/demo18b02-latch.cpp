@@ -1,5 +1,5 @@
 /*
-BARRIERS
+BARRIERS AND LATCHES
 Version B: Count-down latches
 
 Main thread waits for 3 child threads to get enough data to progress.
