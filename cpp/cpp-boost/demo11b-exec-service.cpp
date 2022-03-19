@@ -12,10 +12,10 @@ using namespace std;
 
 
 
-void doTask(char name) {
-    cout << "Task " << name << " is starting" << endl;
+void doTask(char id) {
+    cout << "Task " << id << " is starting" << endl;
     boost::this_thread::sleep_for(boost::chrono::seconds(3));
-    cout << "Task " << name << " is completed" << endl;
+    cout << "Task " << id << " is completed" << endl;
 }
 
 
@@ -27,12 +27,15 @@ int main() {
     boost::asio::thread_pool pool(NUM_THREADS);
 
     for (int i = 0; i < NUM_TASKS; ++i) {
-        char name = char(i + 'A');
-        boost::asio::post(pool, boost::bind(&doTask, name));
+        boost::asio::post(pool, boost::bind(&doTask, 'A' + i));
     }
 
-    pool.join();
+    cout << "All tasks are submitted" << endl;
 
-    // pool.stop();
+    pool.join();
+    cout << "All tasks are completed" << endl;
+
+    pool.stop();
+
     return 0;
 }
