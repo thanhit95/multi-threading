@@ -82,7 +82,7 @@ public:
         for (;;) {
             pthread_mutex_lock(&mutTaskPending);
 
-            if (0 == taskPending.size() && 0 == counterTaskRunning.load()) {
+            if (taskPending.empty() && 0 == counterTaskRunning.load()) {
                 done = true;
             }
 
@@ -137,7 +137,7 @@ private:
             // WAIT FOR AN AVAILABLE PENDING TASK
             pthread_mutex_lock(&mutTaskPending);
 
-            while (0 == taskPending.size() and false == forceThreadShutdown) {
+            while (taskPending.empty() and false == forceThreadShutdown) {
                 pthread_cond_wait(&condTaskPending, &mutTaskPending);
             }
 

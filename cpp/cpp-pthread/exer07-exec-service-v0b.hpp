@@ -73,7 +73,7 @@ public:
     void waitTaskDone() {
         // This ExecService is too simple,
         // so there is no good implementation for waitTaskDone()
-        while (taskPending.size() > 0 || counterTaskRunning.load() > 0) {
+        while (false == taskPending.empty() || counterTaskRunning.load() > 0) {
             sleep(1);
             // pthread_yield();
             // sched_yield();

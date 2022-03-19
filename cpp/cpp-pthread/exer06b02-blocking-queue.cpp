@@ -48,7 +48,7 @@ public:
 
         ret = pthread_mutex_lock(&mut);
 
-        while (capacity == q.size()) {
+        while ((int)q.size() >= capacity) {
             // Queue is full, must wait for 'take'
             ret = pthread_cond_wait(&condFull, &mut);
         }
@@ -66,7 +66,7 @@ public:
 
         ret = pthread_mutex_lock(&mut);
 
-        while (0 == q.size()) {
+        while (q.empty()) {
             // Queue is empty, must wait for 'put'
             ret = pthread_cond_wait(&condEmpty, &mut);
         }
