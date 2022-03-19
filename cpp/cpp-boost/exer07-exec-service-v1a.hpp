@@ -60,7 +60,7 @@ private:
         // shutdown();
 
         this->numThreads = numThreads;
-        counterTaskRunning.store(0);
+        counterTaskRunning = 0;
         forceThreadShutdown = false;
 
         for (int i = 0; i < numThreads; ++i) {
@@ -87,7 +87,7 @@ public:
             {
                 uniquelk lk(mutTaskPending);
 
-                if (taskPending.empty() && 0 == counterTaskRunning.load()) {
+                if (taskPending.empty() && 0 == counterTaskRunning) {
                     done = true;
                 }
             }

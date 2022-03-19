@@ -57,7 +57,7 @@ private:
 
         this->numThreads = numThreads;
         lstTh.resize(numThreads);
-        counterTaskRunning.store(0);
+        counterTaskRunning = 0;
         forceThreadShutdown = false;
 
         for (auto&& th : lstTh) {
@@ -82,7 +82,7 @@ public:
         for (;;) {
             pthread_mutex_lock(&mutTaskPending);
 
-            if (taskPending.empty() && 0 == counterTaskRunning.load()) {
+            if (taskPending.empty() && 0 == counterTaskRunning) {
                 done = true;
             }
 

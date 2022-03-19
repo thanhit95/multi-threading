@@ -75,7 +75,7 @@ public:
     void waitTaskDone() {
         // This ExecService is too simple,
         // so there is no good implementation for waitTaskDone()
-        while (false == taskPending.empty() || counterTaskRunning.load() > 0) {
+        while (false == taskPending.empty() || counterTaskRunning > 0) {
             boost::this_thread::sleep_for(boost::chrono::seconds(1));
             // boost::this_thread::yield();
         }

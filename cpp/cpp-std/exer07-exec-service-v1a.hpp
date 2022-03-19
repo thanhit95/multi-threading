@@ -60,7 +60,7 @@ private:
 
         this->numThreads = numThreads;
         lstTh.resize(numThreads);
-        counterTaskRunning.store(0);
+        counterTaskRunning = 0;
         forceThreadShutdown = false;
 
         for (auto&& th : lstTh) {
@@ -87,7 +87,7 @@ public:
             {
                 uniquelk lk(mutTaskPending);
 
-                if (taskPending.empty() && 0 == counterTaskRunning.load()) {
+                if (taskPending.empty() && 0 == counterTaskRunning) {
                     done = true;
                 }
             }

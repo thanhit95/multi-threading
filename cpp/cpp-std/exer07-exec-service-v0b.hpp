@@ -74,7 +74,7 @@ public:
     void waitTaskDone() {
         // This ExecService is too simple,
         // so there is no good implementation for waitTaskDone()
-        while (false == taskPending.empty() || counterTaskRunning.load() > 0) {
+        while (false == taskPending.empty() || counterTaskRunning > 0) {
             std::this_thread::sleep_for(std::chrono::seconds(1));
             // std::this_thread::yield();
         }
