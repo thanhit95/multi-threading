@@ -78,7 +78,7 @@ public class AppB02 {
 
         public void put(T value) throws InterruptedException {
             synchronized (condFull) {
-                while (capacity == queue.size()) {
+                while (queue.size() >= capacity) {
                     // Queue is full, must wait for 'take'
                     condFull.wait();
                 }

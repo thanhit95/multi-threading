@@ -60,11 +60,11 @@ public final class MyExecServiceV2B {
 //        try {
 //            for (;;) {
 //                synchronized (taskRunning) {
-//                    while (taskRunning.size() > 0)
+//                    while (!taskRunning.isEmpty())
 //                        taskRunning.wait();
 //
 //                    synchronized (taskPending) {
-//                        if (0 == taskPending.size())
+//                        if (taskPending.isEmpty())
 //                            break;
 //                    }
 //                }
