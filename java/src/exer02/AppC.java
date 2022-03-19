@@ -89,7 +89,9 @@ class ProdConsMonitor<T> {
                 condFull.wait();
             }
 
-            queue.add(item);
+            synchronized (queue) {
+                queue.add(item);
+            }
         }
 
         synchronized (condEmpty) {
@@ -108,7 +110,9 @@ class ProdConsMonitor<T> {
                 condEmpty.wait();
             }
 
-            item = queue.remove();
+            synchronized (queue) {
+                item = queue.remove();
+            }
         }
 
         synchronized (condFull) {

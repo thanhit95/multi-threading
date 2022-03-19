@@ -73,16 +73,16 @@ class Exer06B02 : IRunnable
         {
             lock (condFull)
             {
-                while (capacity == queue.Count)
+                while (queue.Count >= capacity)
                 {
                     // Queue is full, must wait for 'take'
                     Monitor.Wait(condFull);
                 }
-            }
 
-            lock (queue)
-            {
-                queue.Enqueue(value);
+                lock (queue)
+                {
+                    queue.Enqueue(value);
+                }
             }
 
             lock (condEmpty)
@@ -103,11 +103,11 @@ class Exer06B02 : IRunnable
                     // Queue is empty, must wait for 'put'
                     Monitor.Wait(condEmpty);
                 }
-            }
 
-            lock (queue)
-            {
-                result = queue.Dequeue();
+                lock (queue)
+                {
+                    result = queue.Dequeue();
+                }
             }
 
             lock (condFull)

@@ -91,7 +91,10 @@ class Exer02C : IRunnable
                 while (queue.Count == maxQueueSize)
                     Monitor.Wait(condFull);
 
-                queue.Enqueue(item);
+                lock (queue)
+                {
+                    queue.Enqueue(item);
+                }
             }
 
             lock (condEmpty)
@@ -111,7 +114,10 @@ class Exer02C : IRunnable
                 while (queue.Count == 0)
                     Monitor.Wait(condEmpty);
 
-                item = queue.Dequeue();
+                lock (queue)
+                {
+                    item = queue.Dequeue();
+                }
             }
 
             lock (condFull)

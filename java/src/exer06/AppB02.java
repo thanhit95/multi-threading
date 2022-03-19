@@ -82,10 +82,10 @@ public class AppB02 {
                     // Queue is full, must wait for 'take'
                     condFull.wait();
                 }
-            }
 
-            synchronized (queue) {
-                queue.add(value);
+                synchronized (queue) {
+                    queue.add(value);
+                }
             }
 
             synchronized (condEmpty) {
@@ -102,10 +102,10 @@ public class AppB02 {
                     // Queue is empty, must wait for 'put'
                     condEmpty.wait();
                 }
-            }
 
-            synchronized (queue) {
-                result = queue.remove();
+                synchronized (queue) {
+                    result = queue.remove();
+                }
             }
 
             synchronized (condFull) {
