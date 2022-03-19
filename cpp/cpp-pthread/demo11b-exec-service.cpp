@@ -22,16 +22,16 @@ int main() {
     for (int i = 0; i < NUM_TASKS; ++i) {
         execService.submit([=] {
             char id = 'A' + i;
-            std::cout << "Task " << id << " is starting" << std::endl;
+            cout << "Task " << id << " is starting" << endl;
             sleep(3);
-            std::cout << "Task " << id << " is completed" << std::endl;
+            cout << "Task " << id << " is completed" << endl;
         });
     }
 
-    std::cout << "All tasks are submitted" << std::endl;
+    cout << "All tasks are submitted" << endl;
 
     execService.waitTaskDone();
-    std::cout << "All tasks are completed" << std::endl;
+    cout << "All tasks are completed" << endl;
 
     execService.shutdown();
 
