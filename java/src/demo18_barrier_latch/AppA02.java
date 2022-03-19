@@ -31,11 +31,9 @@ public class AppA02 {
                 Thread.sleep(1000 * arg.timeWait);
 
                 System.out.println("Get request from " + arg.userName);
-
                 syncPoint.await();
 
                 System.out.println("Process request for " + arg.userName);
-
                 syncPoint.await();
 
                 System.out.println("Done " + arg.userName);

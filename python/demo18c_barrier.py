@@ -16,11 +16,9 @@ def process_request(user_name: str, time_wait: int):
     time.sleep(time_wait)
 
     print(f'Get request from {user_name}')
-
     sync_point_a.wait()
 
     print(f'Process request for {user_name}')
-
     sync_point_b.wait()
 
     print(f'Done {user_name}')

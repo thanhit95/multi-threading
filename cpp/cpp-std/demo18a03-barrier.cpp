@@ -23,11 +23,9 @@ void processRequest(string userName, int timeWait) {
     std::this_thread::sleep_for(std::chrono::seconds(timeWait));
 
     cout << "Get request from " << userName << endl;
-
     syncPointA.arrive_and_wait();
 
     cout << "Process request for " << userName << endl;
-
     syncPointB.arrive_and_wait();
 
     cout << "Done " << userName << endl;

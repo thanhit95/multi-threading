@@ -27,11 +27,9 @@ class Demo18A : IRunnable
             Thread.Sleep(1000 * arg.timeWait);
 
             Console.WriteLine("Get request from " + arg.userName);
-
             syncPoint.SignalAndWait();
 
             Console.WriteLine("Process request for " + arg.userName);
-
             syncPoint.SignalAndWait();
 
             Console.WriteLine("Done " + arg.userName);

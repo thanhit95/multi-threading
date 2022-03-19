@@ -23,11 +23,9 @@ void processRequest(string userName, int timeWait) {
     boost::this_thread::sleep_for(boost::chrono::seconds(timeWait));
 
     cout << "Get request from " << userName << endl;
-
     syncPoint.count_down_and_wait();
 
     cout << "Process request for " << userName << endl;
-
     syncPoint.count_down_and_wait();
 
     cout << "Done " << userName << endl;

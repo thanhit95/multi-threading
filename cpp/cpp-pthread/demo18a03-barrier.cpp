@@ -26,11 +26,9 @@ void* processRequest(void* argVoid) {
     sleep(timeWait);
 
     cout << "Get request from " << userName << endl;
-
     pthread_barrier_wait(&syncPointA);
 
     cout << "Process request for " << userName << endl;
-
     pthread_barrier_wait(&syncPointB);
 
     cout << "Done " << userName << endl;
