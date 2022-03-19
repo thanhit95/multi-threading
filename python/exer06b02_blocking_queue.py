@@ -22,7 +22,7 @@ class BlockingQueue:
 
     def put(self, value):
         with self.__lk:
-            while self.__capacity == len(self.__q):
+            while len(self.__q) >= self.__capacity:
                 self.__cond_full.wait()
 
             self.__q.append(value)
