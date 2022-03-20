@@ -1,5 +1,6 @@
 ﻿/*
  * BARRIERS AND LATCHES
+ * Version A: Barriers
  */
 using System;
 using System.Collections.Generic;
@@ -7,17 +8,18 @@ using System.Threading;
 
 
 
-class Demo18A : IRunnable
+class Demo18A03 : IRunnable
 {
     public void run()
     {
-        var syncPoint = new Barrier(participantCount: 3);
+        var syncPointA = new Barrier(participantCount: 2);
+        var syncPointB = new Barrier(participantCount: 2);
+
 
         var lstArg = new List<ThreadArg>
         {
             new ThreadArg{ userName = "lorem", timeWait = 1 },
-            new ThreadArg{ userName = "ipsum", timeWait = 2 },
-            new ThreadArg{ userName = "dolor", timeWait = 3 }
+            new ThreadArg{ userName = "ipsum", timeWait = 3 }
         };
 
 
@@ -27,10 +29,12 @@ class Demo18A : IRunnable
             Thread.Sleep(1000 * arg.timeWait);
 
             Console.WriteLine("Get request from " + arg.userName);
-            syncPoint.SignalAndWait();
+            syncPointA.SignalAndWait();
+
+            Thread.Sleep(4000);
 
             Console.WriteLine("Process request for " + arg.userName);
-            syncPoint.SignalAndWait();
+            syncPointB.SignalAndWait();
 
             Console.WriteLine("Done " + arg.userName);
 
