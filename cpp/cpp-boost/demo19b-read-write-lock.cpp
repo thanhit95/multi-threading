@@ -17,8 +17,8 @@ boost::shared_mutex rwmut;
 
 
 
-void readFunc(int timeWait) {
-    boost::this_thread::sleep_for(boost::chrono::seconds(timeWait));
+void readFunc(int waitTime) {
+    boost::this_thread::sleep_for(boost::chrono::seconds(waitTime));
 
     boost::shared_lock<boost::shared_mutex> lk(rwmut);
 
@@ -29,8 +29,8 @@ void readFunc(int timeWait) {
 
 
 
-void writeFunc(int timeWait) {
-    boost::this_thread::sleep_for(boost::chrono::seconds(timeWait));
+void writeFunc(int waitTime) {
+    boost::this_thread::sleep_for(boost::chrono::seconds(waitTime));
 
     boost::lock_guard<boost::shared_mutex> lk(rwmut);
     // boost::unique_lock<boost::shared_mutex> lk(rwmut);

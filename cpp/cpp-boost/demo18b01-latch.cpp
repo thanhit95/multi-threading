@@ -20,8 +20,8 @@ boost::latch syncPoint(3); // participant count = 3
 
 
 
-void processRequest(string userName, int timeWait) {
-    boost::this_thread::sleep_for(boost::chrono::seconds(timeWait));
+void processRequest(string userName, int waitTime) {
+    boost::this_thread::sleep_for(boost::chrono::seconds(waitTime));
 
     cout << "Get request from " << userName << endl;
 
@@ -38,7 +38,7 @@ int main() {
     const int NUM_THREADS = 3;
     boost::thread_group lstTh;
 
-    // tuple<userName, timeWait>
+    // tuple<userName, waitTime>
     tuplestrint lstArg[NUM_THREADS] = {
         tuplestrint("lorem", 1),
         tuplestrint("ipsum", 2),

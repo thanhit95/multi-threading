@@ -18,8 +18,8 @@ auto rwmut = std::shared_mutex();
 
 
 
-void readFunc(int timeWait) {
-    std::this_thread::sleep_for(std::chrono::seconds(timeWait));
+void readFunc(int waitTime) {
+    std::this_thread::sleep_for(std::chrono::seconds(waitTime));
 
     std::shared_lock lk(rwmut);
 
@@ -30,8 +30,8 @@ void readFunc(int timeWait) {
 
 
 
-void writeFunc(int timeWait) {
-    std::this_thread::sleep_for(std::chrono::seconds(timeWait));
+void writeFunc(int waitTime) {
+    std::this_thread::sleep_for(std::chrono::seconds(waitTime));
 
     std::lock_guard lk(rwmut);
     // std::unique_lock lk(rwmut);

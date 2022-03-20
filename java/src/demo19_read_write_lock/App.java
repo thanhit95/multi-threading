@@ -29,8 +29,8 @@ public class App {
 
         var lstThRead = Stream.generate(() -> new Thread(() -> {
 
-            int timeWait = lstArg[ rand.nextInt(lstArg.length) ];
-            try { Thread.sleep(1000 * timeWait);} catch (InterruptedException e) { }
+            int waitTime = lstArg[ rand.nextInt(lstArg.length) ];
+            try { Thread.sleep(1000 * waitTime);} catch (InterruptedException e) { }
 
             rwlock.readLock().lock();
 
@@ -43,8 +43,8 @@ public class App {
 
         var lstThWrite = Stream.generate(() -> new Thread(() -> {
 
-            int timeWait = lstArg[ rand.nextInt(lstArg.length) ];
-            try { Thread.sleep(1000 * timeWait);} catch (InterruptedException e) { }
+            int waitTime = lstArg[ rand.nextInt(lstArg.length) ];
+            try { Thread.sleep(1000 * waitTime);} catch (InterruptedException e) { }
 
             rwlock.writeLock().lock();
 

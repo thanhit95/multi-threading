@@ -18,8 +18,8 @@ auto syncPoint = std::barrier(3); // participant count = 3
 
 
 
-void processRequest(string userName, int timeWait) {
-    std::this_thread::sleep_for(std::chrono::seconds(timeWait));
+void processRequest(string userName, int waitTime) {
+    std::this_thread::sleep_for(std::chrono::seconds(waitTime));
 
     cout << "Get request from " << userName << endl;
     syncPoint.arrive_and_wait();
@@ -36,7 +36,7 @@ int main() {
     constexpr int NUM_THREADS = 3;
     std::thread lstTh[NUM_THREADS];
 
-    // tuple<userName, timeWait>
+    // tuple<userName, waitTime>
     tuple<string,int> lstArg[NUM_THREADS] = {
         { "lorem", 1 },
         { "ipsum", 2 },

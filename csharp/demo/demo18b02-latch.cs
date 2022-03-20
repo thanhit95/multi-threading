@@ -16,9 +16,9 @@ class Demo18B02 : IRunnable
     {
         var lstArg = new List<ThreadArg>
         {
-            new ThreadArg{ message = "Send request to egg.net to get data", timeWait = 6 },
-            new ThreadArg{ message = "Send request to foo.org to get data", timeWait = 2 },
-            new ThreadArg{ message = "Send request to bar.com to get data", timeWait = 4 }
+            new ThreadArg{ message = "Send request to egg.net to get data", waitTime = 6 },
+            new ThreadArg{ message = "Send request to foo.org to get data", waitTime = 2 },
+            new ThreadArg{ message = "Send request to bar.com to get data", waitTime = 4 }
         };
 
 
@@ -28,7 +28,7 @@ class Demo18B02 : IRunnable
         lstArg.ForEach(arg => new Thread(() =>
         {
 
-            Thread.Sleep(1000 * arg.timeWait);
+            Thread.Sleep(1000 * arg.waitTime);
 
             Console.WriteLine(arg.message);
             syncPoint.Signal();
@@ -48,6 +48,6 @@ class Demo18B02 : IRunnable
     class ThreadArg
     {
         public string message;
-        public int timeWait;
+        public int waitTime;
     }
 }

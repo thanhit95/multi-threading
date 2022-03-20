@@ -21,8 +21,8 @@ auto syncPoint = std::latch(NUM_THREADS);
 
 
 
-void doTask(string message, int timeWait) {
-    std::this_thread::sleep_for(std::chrono::seconds(timeWait));
+void doTask(string message, int waitTime) {
+    std::this_thread::sleep_for(std::chrono::seconds(waitTime));
 
     cout << message << endl;
     syncPoint.count_down();
@@ -36,7 +36,7 @@ void doTask(string message, int timeWait) {
 int main() {
     std::thread lstTh[NUM_THREADS];
 
-    // tuple<message, timeWait>
+    // tuple<message, waitTime>
     tuple<string,int> lstArg[NUM_THREADS] = {
         { "Send request to egg.net to get data", 6 },
         { "Send request to foo.org to get data", 2 },

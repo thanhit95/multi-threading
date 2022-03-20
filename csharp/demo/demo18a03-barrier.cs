@@ -18,15 +18,15 @@ class Demo18A03 : IRunnable
 
         var lstArg = new List<ThreadArg>
         {
-            new ThreadArg{ userName = "lorem", timeWait = 1 },
-            new ThreadArg{ userName = "ipsum", timeWait = 3 }
+            new ThreadArg{ userName = "lorem", waitTime = 1 },
+            new ThreadArg{ userName = "ipsum", waitTime = 3 }
         };
 
 
         lstArg.ForEach(arg => new Thread(() =>
         {
 
-            Thread.Sleep(1000 * arg.timeWait);
+            Thread.Sleep(1000 * arg.waitTime);
 
             Console.WriteLine("Get request from " + arg.userName);
             syncPointA.SignalAndWait();
@@ -46,6 +46,6 @@ class Demo18A03 : IRunnable
     class ThreadArg
     {
         public string userName;
-        public int timeWait;
+        public int waitTime;
     }
 }

@@ -14,8 +14,8 @@ from mylib_latch import CountDownLatch
 
 
 
-def do_task(message: str, time_wait: int):
-    time.sleep(time_wait)
+def do_task(message: str, wait_time: int):
+    time.sleep(wait_time)
 
     print(message)
     sync_point.count_down()

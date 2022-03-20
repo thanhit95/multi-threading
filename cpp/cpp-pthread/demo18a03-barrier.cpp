@@ -21,9 +21,9 @@ pthread_barrier_t syncPointB;
 void* processRequest(void* argVoid) {
     auto arg = *(tuple<string,int>*) argVoid;
     string userName = std::get<0>(arg);
-    int timeWait = std::get<1>(arg);
+    int waitTime = std::get<1>(arg);
 
-    sleep(timeWait);
+    sleep(waitTime);
 
     cout << "Get request from " << userName << endl;
     pthread_barrier_wait(&syncPointA);
@@ -44,7 +44,7 @@ int main() {
     pthread_t lstTid[NUM_THREADS];
     int ret = 0;
 
-    // tuple<userName, timeWait>
+    // tuple<userName, waitTime>
     tuple<string,int> lstArg[NUM_THREADS] = {
         { "lorem", 1 },
         { "ipsum", 3 },

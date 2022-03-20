@@ -37,8 +37,8 @@ pthread_rwlock_t rwlock = PTHREAD_RWLOCK_INITIALIZER;
 
 
 void* readFunc(void* arg) {
-    auto timeWait = *(int*) arg;
-    sleep(timeWait);
+    auto waitTime = *(int*) arg;
+    sleep(waitTime);
 
     pthread_rwlock_rdlock(&rwlock);
 
@@ -53,8 +53,8 @@ void* readFunc(void* arg) {
 
 
 void* writeFunc(void* arg) {
-    auto timeWait = *(int*) arg;
-    sleep(timeWait);
+    auto waitTime = *(int*) arg;
+    sleep(waitTime);
 
     pthread_rwlock_wrlock(&rwlock);
 

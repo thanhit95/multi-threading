@@ -29,7 +29,7 @@ public class AppA03 {
         lstArg.forEach(arg -> new Thread(() -> {
 
             try {
-                Thread.sleep(1000 * arg.timeWait);
+                Thread.sleep(1000 * arg.waitTime);
 
                 System.out.println("Get request from " + arg.userName);
                 syncPointA.await();
@@ -48,6 +48,6 @@ public class AppA03 {
 
 
 
-    private record ThreadArg(String userName, int timeWait) { }
+    private record ThreadArg(String userName, int waitTime) { }
 
 }

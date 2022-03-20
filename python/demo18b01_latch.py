@@ -12,8 +12,8 @@ from mylib_latch import CountDownLatch
 
 
 
-def process_request(user_name: str, time_wait: int):
-    time.sleep(time_wait)
+def process_request(user_name: str, wait_time: int):
+    time.sleep(wait_time)
 
     print(f'Get request from {user_name}')
 

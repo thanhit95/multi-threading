@@ -31,12 +31,12 @@ void* funcUserInput(void*) {
 /*
 Return true if no timeout. Otherwise, return false.
 */
-bool waitForTime(const int timeWait) {
+bool waitForTime(const int waitTime) {
     int ret = 0;
 
     timespec ts;
     clock_gettime(CLOCK_REALTIME, &ts);
-    ts.tv_sec += timeWait;
+    ts.tv_sec += waitTime;
 
     pthread_mutex_lock(&mut);
 

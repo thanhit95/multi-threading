@@ -16,17 +16,17 @@ resource = 0
 
 
 
-def read_func(time_wait):
-    time.sleep(time_wait)
+def read_func(wait_time):
+    time.sleep(wait_time)
 
     with rwlock.readlock():
         print(f'read: {resource}')
 
 
 
-def write_func(time_wait):
+def write_func(wait_time):
     global resource
-    time.sleep(time_wait)
+    time.sleep(wait_time)
 
     with rwlock.writelock():
         resource = random.randint(0, 99)

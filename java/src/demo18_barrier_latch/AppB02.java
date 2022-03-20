@@ -27,7 +27,7 @@ public class AppB02 {
 
         lstArg.forEach(arg -> new Thread(() -> {
             try {
-                Thread.sleep(1000 * arg.timeWait);
+                Thread.sleep(1000 * arg.waitTime);
 
                 System.out.println(arg.message);
                 syncPoint.countDown();
@@ -47,6 +47,6 @@ public class AppB02 {
 
 
 
-    private record ThreadArg(String message, int timeWait) { }
+    private record ThreadArg(String message, int waitTime) { }
 
 }

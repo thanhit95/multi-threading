@@ -27,9 +27,9 @@ mylib::CountDownLatch syncPoint(NUM_THREADS);
 void* doTask(void* argVoid) {
     auto arg = *(tuple<string,int>*) argVoid;
     string message = std::get<0>(arg);
-    int timeWait = std::get<1>(arg);
+    int waitTime = std::get<1>(arg);
 
-    sleep(timeWait);
+    sleep(waitTime);
 
     cout << message << endl;
     syncPoint.countDown();
@@ -47,7 +47,7 @@ int main() {
     pthread_t lstTid[NUM_THREADS];
     int ret = 0;
 
-    // tuple<message, timeWait>
+    // tuple<message, waitTime>
     tuple<string,int> lstArg[NUM_THREADS] = {
         { "Send request to egg.net to get data", 6 },
         { "Send request to foo.org to get data", 2 },

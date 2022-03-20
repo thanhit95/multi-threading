@@ -31,8 +31,8 @@ class Demo19 : IRunnable
         {
             lstThRead.Add(new Thread(() =>
             {
-                int timeWait = arg[ rand.Next(arg.Length) ];
-                Thread.Sleep(1000 * timeWait);
+                int waitTime = arg[ rand.Next(arg.Length) ];
+                Thread.Sleep(1000 * waitTime);
 
                 // Should catch exception
                 rwlk.AcquireReaderLock(1000);
@@ -48,8 +48,8 @@ class Demo19 : IRunnable
         {
             lstThWrite.Add(new Thread(() =>
             {
-                int timeWait = arg[ rand.Next(arg.Length) ];
-                Thread.Sleep(1000 * timeWait);
+                int waitTime = arg[ rand.Next(arg.Length) ];
+                Thread.Sleep(1000 * waitTime);
 
                 // Should catch exception
                 rwlk.AcquireWriterLock(1000);

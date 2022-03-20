@@ -23,8 +23,8 @@ boost::latch syncPoint(NUM_THREADS);
 
 
 
-void doTask(string message, int timeWait) {
-    boost::this_thread::sleep_for(boost::chrono::seconds(timeWait));
+void doTask(string message, int waitTime) {
+    boost::this_thread::sleep_for(boost::chrono::seconds(waitTime));
 
     cout << message << endl;
     syncPoint.count_down();
@@ -38,7 +38,7 @@ void doTask(string message, int timeWait) {
 int main() {
     boost::thread_group lstTh;
 
-    // tuple<message, timeWait>
+    // tuple<message, waitTime>
     tuplestrint lstArg[NUM_THREADS] = {
         tuplestrint("Send request to egg.net to get data", 6),
         tuplestrint("Send request to foo.org to get data", 2),
