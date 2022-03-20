@@ -54,7 +54,7 @@ int main() {
     }
 
     syncPoint.wait();
-    cout << "\nNow we has enough data to progress to next step\n" << endl;
+    cout << "\nNow we have enough data to progress to next step\n" << endl;
 
     lstTh.join_all();
 

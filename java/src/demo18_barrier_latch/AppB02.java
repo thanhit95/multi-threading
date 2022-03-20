@@ -42,7 +42,7 @@ public class AppB02 {
 
         syncPoint.await();
 
-        System.out.println("\nNow we has enough data to progress to next step\n");
+        System.out.println("\nNow we have enough data to progress to next step\n");
     }
 
 
