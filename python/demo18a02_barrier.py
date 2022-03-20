@@ -1,5 +1,6 @@
 '''
 BARRIERS AND LATCHES
+Version A: Barriers
 '''
 
 import time
@@ -7,7 +8,7 @@ import threading
 
 
 
-sync_point = threading.Barrier(parties=3)
+sync_point = threading.Barrier(parties=2)
 
 
 
@@ -26,8 +27,11 @@ def process_request(user_name: str, time_wait: int):
 
 lstarg = [
     ('lorem', 1),
-    ('ipsum', 2),
-    ('dolor', 3)
+    ('ipsum', 3),
+    ('dolor', 3),
+    ('amet', 10)
 ]
 
-_ = [ threading.Thread(target=process_request, args=arg).start() for arg in lstarg ]
+_ = [ threading.Thread(target=process_request, args=arg) for arg in lstarg ]
+
+# Thread with user_name = "amet" shall be FREEZED
