@@ -32,8 +32,9 @@ Usually in Linux/Unix environments, we shall use POSIX threading. This leads to 
 
 Additionally, if you use Boost:
 
-- Use option `-lboost_thread` for all code.
-- Use option `-lboost_chrono` for the code using boost::chrono.
+- `-lboost_thread` for all code.
+- `-lboost_chrono` for the code using boost::chrono.
+- `-lboost_random` for the code using boost::random.
 
 &nbsp;
 
