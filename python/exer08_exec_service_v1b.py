@@ -1,31 +1,34 @@
 '''
 MY EXECUTOR SERVICE
 
-Version 2A: The executor service storing running tasks
-- Method "waitTaskDone" uses a semaphore to synchronize.
+Version 1B: Simple executor service
+- Method "waitTaskDone" uses a condition variable to synchronize.
 '''
 
 import threading
-from exer07_exec_service_itask import ITask
+from exer08_exec_service_itask import ITask
 
 
 
-class MyExecServiceV2A:
+class MyExecServiceV1B:
     def __init__(self, num_threads: int):
         # self.shutdown()
         self.__num_threads = num_threads
         self.__lstth = []
+
         self.__task_pending = []
         self.__lk_task_pending = threading.Lock()
         self.__cond_task_pending = threading.Condition(self.__lk_task_pending)
-        self.__task_running = []
+
+        self.__counter_task_running = 0
         self.__lk_task_running = threading.Lock()
-        self.__counter_task_running = threading.Semaphore(0)
+        self.__cond_task_running = threading.Condition(self.__lk_task_running)
+
         self.__force_thread_shutdown = False
 
         for _ in range(self.__num_threads):
             self.__lstth.append(
-                threading.Thread(target=MyExecServiceV2A.__thread_worker_func, args=(self,))
+                threading.Thread(target=MyExecServiceV1B.__thread_worker_func, args=(self,))
             )
 
         for th in self.__lstth:
@@ -40,11 +43,14 @@ class MyExecServiceV2A:
 
     def wait_task_done(self):
         while True:
-            self.__counter_task_running.acquire()
+            with self.__lk_task_pending:
+                if len(self.__task_pending) == 0:
+                    with self.__lk_task_running:
+                        while self.__counter_task_running > 0:
+                            self.__cond_task_running.wait()
 
-            with self.__lk_task_pending, self.__lk_task_running:
-                if len(self.__task_pending) == 0 and len(self.__task_running) == 0:
-                    break
+                        # no pending task and no running task
+                        break
 
 
     def shutdown(self):
@@ -63,14 +69,13 @@ class MyExecServiceV2A:
 
 
     @staticmethod
-    def __thread_worker_func(selfptr: 'MyExecServiceV2A'):
+    def __thread_worker_func(selfptr: 'MyExecServiceV1B'):
         task_pending = selfptr.__task_pending
         lk_task_pending = selfptr.__lk_task_pending
         cond_task_pending = selfptr.__cond_task_pending
 
-        task_running = selfptr.__task_running
         lk_task_running = selfptr.__lk_task_running
-        counter_task_running = selfptr.__counter_task_running
+        cond_task_running = selfptr.__cond_task_running
 
         while True:
             with lk_task_pending:
@@ -84,15 +89,13 @@ class MyExecServiceV2A:
 
                 # GET THE TASK FROM THE PENDING QUEUE
                 task = task_pending.pop(0)
-
-                # PUSH IT TO THE RUNNING QUEUE
-                with lk_task_running:
-                    task_running.append(task)
+                selfptr.__counter_task_running += 1
 
             # DO THE TASK
             task.run()
 
-            # REMOVE IT FROM THE RUNNING QUEUE
             with lk_task_running:
-                task_running.remove(task)
-                counter_task_running.release()
+                selfptr.__counter_task_running -= 1
+
+                if selfptr.__counter_task_running == 0:
+                    cond_task_running.notify()
