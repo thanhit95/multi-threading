@@ -41,7 +41,7 @@ public class AppA {
 
             /*
              * synchronized (this) means that on "this" object,
-             *                    only and only one thread can excute the enclosed block at one time.
+             *                    only and only one thread can execute the enclosed block at one time.
              *
              * "this" is the monitor object, the code inside the block gets synchronized on the monitor object.
              * Simply put, only one thread per monitor object can execute inside that block of code.
