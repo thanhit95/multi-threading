@@ -1,8 +1,8 @@
 ﻿/*
  * MY EXECUTOR SERVICE
  *
- * Version 2A: The executor service storing running tasks
- * - Method "waitTaskDone" uses a semaphore to synchronize.
+ * Version 2B: The executor service storing running tasks
+ * - Method "waitTaskDone" uses a condition variable to synchronize.
  */
 using System;
 using System.Collections.Generic;
@@ -10,9 +10,9 @@ using System.Threading;
 
 
 
-namespace Exer07
+namespace Exer08
 {
-    class MyExecServiceV2A
+    class MyExecServiceV2B
     {
         private int numThreads = 0;
         private List<Thread> lstTh = new List<Thread>();
@@ -20,13 +20,11 @@ namespace Exer07
         private Queue<IRunnable> taskPending = new Queue<IRunnable>();
         private List<IRunnable> taskRunning = new List<IRunnable>();
 
-        private SemaphoreSlim counterTaskRunning = new SemaphoreSlim(0);
-
         private volatile bool forceThreadShutdown = false;
 
 
 
-        public MyExecServiceV2A(int numThreads) {
+        public MyExecServiceV2B(int numThreads) {
             init(numThreads);
         }
 
@@ -62,16 +60,18 @@ namespace Exer07
         {
             for (; ; )
             {
-                counterTaskRunning.Wait();
-
                 lock (taskPending)
                 {
-                    lock (taskRunning)
+                    if (0 == taskPending.Count)
                     {
-                        if (0 == taskPending.Count && 0 == taskRunning.Count
-                            /* && 0 == counterTaskRunning.CurrentCount */
-                        )
+                        lock (taskRunning)
+                        {
+                            while (taskRunning.Count > 0)
+                                Monitor.Wait(taskRunning);
+
+                            // no pending task and no running task
                             break;
+                        }
                     }
                 }
             }
@@ -93,19 +93,14 @@ namespace Exer07
             numThreads = 0;
             lstTh.Clear();
             taskRunning.Clear();
-
-            if (counterTaskRunning.CurrentCount > 0)
-                counterTaskRunning.Release(counterTaskRunning.CurrentCount);
         }
 
 
 
-        private static void threadWorkerFunc(MyExecServiceV2A thisPtr)
+        private static void threadWorkerFunc(MyExecServiceV2B thisPtr)
         {
             ref var taskPending = ref thisPtr.taskPending;
             ref var taskRunning = ref thisPtr.taskRunning;
-            ref var counterTaskRunning = ref thisPtr.counterTaskRunning;
-
             IRunnable task = null;
 
             for (; ; )
@@ -140,9 +135,8 @@ namespace Exer07
                 lock (taskRunning)
                 {
                     taskRunning.Remove(task);
+                    Monitor.PulseAll(taskRunning);
                 }
-
-                counterTaskRunning.Release();
             }
         }
     }

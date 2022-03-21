@@ -7,7 +7,7 @@ using System.Threading;
 
 
 
-namespace Exer07
+namespace Exer08
 {
     class MainApp : IRunnable
     {

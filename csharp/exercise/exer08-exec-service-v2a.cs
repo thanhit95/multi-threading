@@ -1,8 +1,8 @@
 ﻿/*
  * MY EXECUTOR SERVICE
  *
- * Version 1B: Simple executor service
- * - Method "waitTaskDone" uses a condition variable to synchronize.
+ * Version 2A: The executor service storing running tasks
+ * - Method "waitTaskDone" uses a semaphore to synchronize.
  */
 using System;
 using System.Collections.Generic;
@@ -10,23 +10,23 @@ using System.Threading;
 
 
 
-namespace Exer07
+namespace Exer08
 {
-    class MyExecServiceV1B
+    class MyExecServiceV2A
     {
         private int numThreads = 0;
         private List<Thread> lstTh = new List<Thread>();
 
         private Queue<IRunnable> taskPending = new Queue<IRunnable>();
+        private List<IRunnable> taskRunning = new List<IRunnable>();
 
-        private int counterTaskRunning = 0;
-        private object lkTaskRunning = new object();
+        private SemaphoreSlim counterTaskRunning = new SemaphoreSlim(0);
 
         private volatile bool forceThreadShutdown = false;
 
 
 
-        public MyExecServiceV1B(int numThreads) {
+        public MyExecServiceV2A(int numThreads) {
             init(numThreads);
         }
 
@@ -37,7 +37,6 @@ namespace Exer07
             // shutdown();
 
             numThreads = inpNumThreads;
-            counterTaskRunning = 0;
             forceThreadShutdown = false;
 
             for (int i = 0; i < numThreads; ++i)
@@ -63,20 +62,16 @@ namespace Exer07
         {
             for (; ; )
             {
+                counterTaskRunning.Wait();
+
                 lock (taskPending)
                 {
-                    if (0 == taskPending.Count)
+                    lock (taskRunning)
                     {
-                        lock (lkTaskRunning)
-                        {
-                            while (counterTaskRunning > 0)
-                            {
-                                Monitor.Wait(lkTaskRunning);
-                            }
-
-                            // no pending task and no running task
+                        if (0 == taskPending.Count && 0 == taskRunning.Count
+                            /* && 0 == counterTaskRunning.CurrentCount */
+                        )
                             break;
-                        }
                     }
                 }
             }
@@ -97,23 +92,27 @@ namespace Exer07
 
             numThreads = 0;
             lstTh.Clear();
+            taskRunning.Clear();
+
+            if (counterTaskRunning.CurrentCount > 0)
+                counterTaskRunning.Release(counterTaskRunning.CurrentCount);
         }
 
 
 
-        private static void threadWorkerFunc(MyExecServiceV1B thisPtr)
+        private static void threadWorkerFunc(MyExecServiceV2A thisPtr)
         {
             ref var taskPending = ref thisPtr.taskPending;
+            ref var taskRunning = ref thisPtr.taskRunning;
             ref var counterTaskRunning = ref thisPtr.counterTaskRunning;
-            ref var lkTaskRunning = ref thisPtr.lkTaskRunning;
 
             IRunnable task = null;
 
             for (; ; )
             {
-                // WAIT FOR AN AVAILABLE PENDING TASK
                 lock (taskPending)
                 {
+                    // WAIT FOR AN AVAILABLE PENDING TASK
                     while (0 == taskPending.Count && false == thisPtr.forceThreadShutdown)
                     {
                         Monitor.Wait(taskPending);
@@ -127,20 +126,23 @@ namespace Exer07
                     // GET THE TASK FROM THE PENDING QUEUE
                     task = taskPending.Dequeue();
 
-                    ++counterTaskRunning;
+                    // PUSH IT TO THE RUNNING QUEUE
+                    lock (taskRunning)
+                    {
+                        taskRunning.Add(task);
+                    }
                 }
 
                 // DO THE TASK
                 task.run();
 
-                lock (lkTaskRunning)
+                // REMOVE IT FROM THE RUNNING QUEUE
+                lock (taskRunning)
                 {
-                    --counterTaskRunning;
-
-                    if (0 == counterTaskRunning) {
-                        Monitor.Pulse(lkTaskRunning);
-                    }
+                    taskRunning.Remove(task);
                 }
+
+                counterTaskRunning.Release();
             }
         }
     }

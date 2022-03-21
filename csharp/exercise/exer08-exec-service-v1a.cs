@@ -1,8 +1,8 @@
 ﻿/*
  * MY EXECUTOR SERVICE
  *
- * Version 2B: The executor service storing running tasks
- * - Method "waitTaskDone" uses a condition variable to synchronize.
+ * Version 1A: Simple executor service
+ * - Method "waitTaskDone" invokes thread sleeps in loop (which can cause performance problems).
  */
 using System;
 using System.Collections.Generic;
@@ -10,21 +10,21 @@ using System.Threading;
 
 
 
-namespace Exer07
+namespace Exer08
 {
-    class MyExecServiceV2B
+    class MyExecServiceV1A
     {
         private int numThreads = 0;
         private List<Thread> lstTh = new List<Thread>();
 
         private Queue<IRunnable> taskPending = new Queue<IRunnable>();
-        private List<IRunnable> taskRunning = new List<IRunnable>();
+        private int counterTaskRunning = 0;
 
         private volatile bool forceThreadShutdown = false;
 
 
 
-        public MyExecServiceV2B(int numThreads) {
+        public MyExecServiceV1A(int numThreads) {
             init(numThreads);
         }
 
@@ -35,6 +35,7 @@ namespace Exer07
             // shutdown();
 
             numThreads = inpNumThreads;
+            Interlocked.Exchange(ref counterTaskRunning, 0);
             forceThreadShutdown = false;
 
             for (int i = 0; i < numThreads; ++i)
@@ -58,22 +59,23 @@ namespace Exer07
 
         public void waitTaskDone()
         {
+            bool done = false;
+
             for (; ; )
             {
                 lock (taskPending)
                 {
-                    if (0 == taskPending.Count)
+                    if (0 == taskPending.Count && 0 == counterTaskRunning)
                     {
-                        lock (taskRunning)
-                        {
-                            while (taskRunning.Count > 0)
-                                Monitor.Wait(taskRunning);
-
-                            // no pending task and no running task
-                            break;
-                        }
+                        done = true;
                     }
                 }
+
+                if (done)
+                    break;
+
+                Thread.Sleep(1000);
+                // Thread.Yield();
             }
         }
 
@@ -92,22 +94,22 @@ namespace Exer07
 
             numThreads = 0;
             lstTh.Clear();
-            taskRunning.Clear();
         }
 
 
 
-        private static void threadWorkerFunc(MyExecServiceV2B thisPtr)
+        private static void threadWorkerFunc(MyExecServiceV1A thisPtr)
         {
             ref var taskPending = ref thisPtr.taskPending;
-            ref var taskRunning = ref thisPtr.taskRunning;
+            ref var counterTaskRunning = ref thisPtr.counterTaskRunning;
+
             IRunnable task = null;
 
             for (; ; )
             {
+                // WAIT FOR AN AVAILABLE PENDING TASK
                 lock (taskPending)
                 {
-                    // WAIT FOR AN AVAILABLE PENDING TASK
                     while (0 == taskPending.Count && false == thisPtr.forceThreadShutdown)
                     {
                         Monitor.Wait(taskPending);
@@ -121,22 +123,12 @@ namespace Exer07
                     // GET THE TASK FROM THE PENDING QUEUE
                     task = taskPending.Dequeue();
 
-                    // PUSH IT TO THE RUNNING QUEUE
-                    lock (taskRunning)
-                    {
-                        taskRunning.Add(task);
-                    }
+                    Interlocked.Increment(ref counterTaskRunning);
                 }
 
                 // DO THE TASK
                 task.run();
-
-                // REMOVE IT FROM THE RUNNING QUEUE
-                lock (taskRunning)
-                {
-                    taskRunning.Remove(task);
-                    Monitor.PulseAll(taskRunning);
-                }
+                Interlocked.Decrement(ref counterTaskRunning);
             }
         }
     }
