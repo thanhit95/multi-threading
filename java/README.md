@@ -6,4 +6,4 @@ Multithreading in Java.
 
 ## PROJECT SPECIFICATIONS
 
-WARNING: Java-16 features.
+WARNING: Java-17 features.

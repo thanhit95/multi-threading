@@ -8,11 +8,11 @@ Multithreading in C++.
 
 ## PROJECT STRUCTURE
 
-| Directory name | Description           |
-| -------------- | --------------------- |
-| `cpp-std`      | C++20 std threading   |
-| `cpp-pthread`  | C++11 POSIX threading |
-| `cpp-boost`    | C++98 Boost threading |
+| Directory name | Description           | Notes |
+| -------------- | --------------------- | ----- |
+| `cpp-std`      | C++20 std threading   | Most source code files are in C++11. Some features require newer standard. |
+| `cpp-pthread`  | C++11 POSIX threading |       |
+| `cpp-boost`    | C++98 Boost threading |       |
 
 &nbsp;
 
