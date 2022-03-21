@@ -1,14 +1,14 @@
 /*
 MY EXECUTOR SERVICE
 
-Version 2A: The executor service storing running tasks
-- Method "waitTaskDone" uses a semaphore to synchronize.
+Version 2B: The executor service storing running tasks
+- Method "waitTaskDone" uses a condition variable to synchronize.
 */
 
 
 
-#ifndef _MY_EXEC_SERVICE_V2A_HPP_
-#define _MY_EXEC_SERVICE_V2A_HPP_
+#ifndef _MY_EXEC_SERVICE_V2B_HPP_
+#define _MY_EXEC_SERVICE_V2B_HPP_
 
 
 
@@ -18,15 +18,13 @@ Version 2A: The executor service storing running tasks
 #include <thread>
 #include <mutex>
 #include <condition_variable>
-#include <semaphore>
-#include "exer07-exec-service-itask.hpp"
+#include "exer08-exec-service-itask.hpp"
 
 
 
-class MyExecServiceV2A {
+class MyExecServiceV2B {
 
 private:
-    using cntsemaphore = std::counting_semaphore<>;
     using uniquelk = std::unique_lock<std::mutex>;
 
 
@@ -40,21 +38,21 @@ private:
 
     std::list<ITask*> taskRunning;
     std::mutex mutTaskRunning;
-    cntsemaphore counterTaskRunning = cntsemaphore(0);
+    std::condition_variable condTaskRunning;
 
     volatile bool forceThreadShutdown;
 
 
 public:
-    MyExecServiceV2A(int numThreads) {
+    MyExecServiceV2B(int numThreads) {
         init(numThreads);
     }
 
 
-    MyExecServiceV2A(const MyExecServiceV2A& other) = delete;
-    MyExecServiceV2A(const MyExecServiceV2A&& other) = delete;
-    void operator=(const MyExecServiceV2A& other) = delete;
-    void operator=(const MyExecServiceV2A&& other) = delete;
+    MyExecServiceV2B(const MyExecServiceV2B& other) = delete;
+    MyExecServiceV2B(const MyExecServiceV2B&& other) = delete;
+    void operator=(const MyExecServiceV2B& other) = delete;
+    void operator=(const MyExecServiceV2B&& other) = delete;
 
 
 private:
@@ -84,15 +82,16 @@ public:
 
     void waitTaskDone() {
         for (;;) {
-            counterTaskRunning.acquire();
+            uniquelk lkPending(mutTaskPending);
 
-            {
-                uniquelk lkPending(mutTaskPending);
+            if (taskPending.empty()) {
                 uniquelk lkRunning(mutTaskRunning);
 
-                if (taskPending.empty() && taskRunning.empty()) {
-                    break;
-                }
+                while (false == taskRunning.empty())
+                    condTaskRunning.wait(lkRunning);
+
+                // no pending task and no running task
+                break;
             }
         }
     }
@@ -117,14 +116,14 @@ public:
 
 
 private:
-    static void threadWorkerFunc(MyExecServiceV2A* thisPtr) {
+    static void threadWorkerFunc(MyExecServiceV2B* thisPtr) {
         auto&& taskPending = thisPtr->taskPending;
         auto&& mutTaskPending = thisPtr->mutTaskPending;
         auto&& condTaskPending = thisPtr->condTaskPending;
 
         auto&& taskRunning = thisPtr->taskRunning;
         auto&& mutTaskRunning = thisPtr->mutTaskRunning;
-        auto&& counterTaskRunning = thisPtr->counterTaskRunning;
+        auto&& condTaskRunning = thisPtr->condTaskRunning;
 
         auto&& forceThreadShutdown = thisPtr->forceThreadShutdown;
 
@@ -163,7 +162,7 @@ private:
             {
                 uniquelk lkRunning(mutTaskRunning);
                 taskRunning.remove(task);
-                counterTaskRunning.release();
+                condTaskRunning.notify_one();
             }
         }
     }
@@ -172,4 +171,4 @@ private:
 
 
 
-#endif // _MY_EXEC_SERVICE_V2A_HPP_
+#endif // _MY_EXEC_SERVICE_V2B_HPP_

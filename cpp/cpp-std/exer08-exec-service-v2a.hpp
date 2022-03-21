@@ -1,29 +1,32 @@
 /*
 MY EXECUTOR SERVICE
 
-Version 1B: Simple executor service
-- Method "waitTaskDone" uses a condition variable to synchronize.
+Version 2A: The executor service storing running tasks
+- Method "waitTaskDone" uses a semaphore to synchronize.
 */
 
 
 
-#ifndef _MY_EXEC_SERVICE_V1B_HPP_
-#define _MY_EXEC_SERVICE_V1B_HPP_
+#ifndef _MY_EXEC_SERVICE_V2A_HPP_
+#define _MY_EXEC_SERVICE_V2A_HPP_
 
 
 
 #include <vector>
+#include <list>
 #include <queue>
 #include <thread>
 #include <mutex>
 #include <condition_variable>
-#include "exer07-exec-service-itask.hpp"
+#include <semaphore>
+#include "exer08-exec-service-itask.hpp"
 
 
 
-class MyExecServiceV1B {
+class MyExecServiceV2A {
 
 private:
+    using cntsemaphore = std::counting_semaphore<>;
     using uniquelk = std::unique_lock<std::mutex>;
 
 
@@ -35,23 +38,23 @@ private:
     std::mutex mutTaskPending;
     std::condition_variable condTaskPending;
 
-    int counterTaskRunning;
+    std::list<ITask*> taskRunning;
     std::mutex mutTaskRunning;
-    std::condition_variable condTaskRunning;
+    cntsemaphore counterTaskRunning = cntsemaphore(0);
 
     volatile bool forceThreadShutdown;
 
 
 public:
-    MyExecServiceV1B(int numThreads) {
+    MyExecServiceV2A(int numThreads) {
         init(numThreads);
     }
 
 
-    MyExecServiceV1B(const MyExecServiceV1B& other) = delete;
-    MyExecServiceV1B(const MyExecServiceV1B&& other) = delete;
-    void operator=(const MyExecServiceV1B& other) = delete;
-    void operator=(const MyExecServiceV1B&& other) = delete;
+    MyExecServiceV2A(const MyExecServiceV2A& other) = delete;
+    MyExecServiceV2A(const MyExecServiceV2A&& other) = delete;
+    void operator=(const MyExecServiceV2A& other) = delete;
+    void operator=(const MyExecServiceV2A&& other) = delete;
 
 
 private:
@@ -60,7 +63,6 @@ private:
 
         this->numThreads = numThreads;
         lstTh.resize(numThreads);
-        counterTaskRunning = 0;
         forceThreadShutdown = false;
 
         for (auto&& th : lstTh) {
@@ -82,16 +84,15 @@ public:
 
     void waitTaskDone() {
         for (;;) {
-            uniquelk lkPending(mutTaskPending);
+            counterTaskRunning.acquire();
 
-            if (taskPending.empty()) {
+            {
+                uniquelk lkPending(mutTaskPending);
                 uniquelk lkRunning(mutTaskRunning);
 
-                while (counterTaskRunning > 0)
-                    condTaskRunning.wait(lkRunning);
-
-                // no pending task and no running task
-                break;
+                if (taskPending.empty() && taskRunning.empty()) {
+                    break;
+                }
             }
         }
     }
@@ -116,14 +117,14 @@ public:
 
 
 private:
-    static void threadWorkerFunc(MyExecServiceV1B* thisPtr) {
+    static void threadWorkerFunc(MyExecServiceV2A* thisPtr) {
         auto&& taskPending = thisPtr->taskPending;
         auto&& mutTaskPending = thisPtr->mutTaskPending;
         auto&& condTaskPending = thisPtr->condTaskPending;
 
-        auto&& counterTaskRunning = thisPtr->counterTaskRunning;
+        auto&& taskRunning = thisPtr->taskRunning;
         auto&& mutTaskRunning = thisPtr->mutTaskRunning;
-        auto&& condTaskRunning = thisPtr->condTaskRunning;
+        auto&& counterTaskRunning = thisPtr->counterTaskRunning;
 
         auto&& forceThreadShutdown = thisPtr->forceThreadShutdown;
 
@@ -148,19 +149,21 @@ private:
                 task = taskPending.front();
                 taskPending.pop();
 
-                ++counterTaskRunning;
+                // PUSH IT TO THE RUNNING QUEUE
+                {
+                    uniquelk lkRunning(mutTaskRunning);
+                    taskRunning.push_back(task);
+                }
             }
 
             // DO THE TASK
             task->run();
 
+            // REMOVE IT FROM THE RUNNING QUEUE
             {
                 uniquelk lkRunning(mutTaskRunning);
-                --counterTaskRunning;
-
-                if (0 == counterTaskRunning) {
-                    condTaskRunning.notify_one();
-                }
+                taskRunning.remove(task);
+                counterTaskRunning.release();
             }
         }
     }
@@ -169,4 +172,4 @@ private:
 
 
 
-#endif // _MY_EXEC_SERVICE_V1B_HPP_
+#endif // _MY_EXEC_SERVICE_V2A_HPP_

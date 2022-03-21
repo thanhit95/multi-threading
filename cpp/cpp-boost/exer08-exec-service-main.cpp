@@ -4,14 +4,15 @@ EXECUTOR SERVICE & THREAD POOL IMPLEMENTATION
 
 
 #include <iostream>
-#include <unistd.h>
-#include "exer07-exec-service-itask.hpp"
-#include "exer07-exec-service-v0a.hpp"
-#include "exer07-exec-service-v0b.hpp"
-#include "exer07-exec-service-v1a.hpp"
-#include "exer07-exec-service-v1b.hpp"
-#include "exer07-exec-service-v2a.hpp"
-#include "exer07-exec-service-v2b.hpp"
+#include <boost/chrono.hpp>
+#include <boost/thread.hpp>
+#include "exer08-exec-service-itask.hpp"
+#include "exer08-exec-service-v0a.hpp"
+#include "exer08-exec-service-v0b.hpp"
+#include "exer08-exec-service-v1a.hpp"
+#include "exer08-exec-service-v1b.hpp"
+#include "exer08-exec-service-v2a.hpp"
+#include "exer08-exec-service-v2b.hpp"
 
 
 
@@ -20,9 +21,9 @@ public:
     char id;
 
 public:
-    void run() override {
+    void run() {
         std::cout << "Task " << id << " is starting" << std::endl;
-        sleep(3);
+        boost::this_thread::sleep_for(boost::chrono::seconds(3));
         std::cout << "Task " << id << " is completed" << std::endl;
     }
 };
@@ -30,8 +31,8 @@ public:
 
 
 int main() {
-    constexpr int NUM_THREADS = 2;
-    constexpr int NUM_TASKS = 5;
+    const int NUM_THREADS = 2;
+    const int NUM_TASKS = 5;
 
 
     MyExecServiceV0A execService(NUM_THREADS);
@@ -43,8 +44,9 @@ int main() {
         lstTask[i].id = 'A' + i;
 
 
-    for (auto&& task : lstTask)
-        execService.submit(&task);
+    for (int i = 0; i < NUM_TASKS; ++i) {
+        execService.submit(&lstTask[i]);
+    }
 
     std::cout << "All tasks are submitted" << std::endl;
 

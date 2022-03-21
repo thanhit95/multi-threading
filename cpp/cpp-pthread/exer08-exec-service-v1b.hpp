@@ -2,26 +2,24 @@
 MY EXECUTOR SERVICE
 
 Version 1A: Simple executor service
-- Method "waitTaskDone" invokes thread sleeps in loop (which can cause performance problems).
+- Method "waitTaskDone" consumes CPU (due to bad synchronization).
 */
 
 
 
-#ifndef _MY_EXEC_SERVICE_V1A_HPP_
-#define _MY_EXEC_SERVICE_V1A_HPP_
+#ifndef _MY_EXEC_SERVICE_V1B_HPP_
+#define _MY_EXEC_SERVICE_V1B_HPP_
 
 
 
 #include <vector>
 #include <queue>
-#include <atomic>
-#include <unistd.h>
 #include <pthread.h>
-#include "exer07-exec-service-itask.hpp"
+#include "exer08-exec-service-itask.hpp"
 
 
 
-class MyExecServiceV1A {
+class MyExecServiceV1B {
 
 private:
     int numThreads = 0;
@@ -31,21 +29,23 @@ private:
     pthread_mutex_t mutTaskPending = PTHREAD_MUTEX_INITIALIZER;
     pthread_cond_t condTaskPending = PTHREAD_COND_INITIALIZER;
 
-    std::atomic_int32_t counterTaskRunning;
+    int counterTaskRunning;
+    pthread_mutex_t mutTaskRunning = PTHREAD_MUTEX_INITIALIZER;
+    pthread_cond_t condTaskRunning = PTHREAD_COND_INITIALIZER;
 
     volatile bool forceThreadShutdown;
 
 
 public:
-    MyExecServiceV1A(int numThreads) {
+    MyExecServiceV1B(int numThreads) {
         init(numThreads);
     }
 
 
-    MyExecServiceV1A(const MyExecServiceV1A& other) = delete;
-    MyExecServiceV1A(const MyExecServiceV1A&& other) = delete;
-    void operator=(const MyExecServiceV1A& other) = delete;
-    void operator=(const MyExecServiceV1A&& other) = delete;
+    MyExecServiceV1B(const MyExecServiceV1B& other) = delete;
+    MyExecServiceV1B(const MyExecServiceV1B&& other) = delete;
+    void operator=(const MyExecServiceV1B& other) = delete;
+    void operator=(const MyExecServiceV1B&& other) = delete;
 
 
 private:
@@ -54,6 +54,9 @@ private:
 
         mutTaskPending = PTHREAD_MUTEX_INITIALIZER;
         condTaskPending = PTHREAD_COND_INITIALIZER;
+
+        mutTaskRunning = PTHREAD_MUTEX_INITIALIZER;
+        condTaskRunning = PTHREAD_COND_INITIALIZER;
 
         this->numThreads = numThreads;
         lstTh.resize(numThreads);
@@ -82,8 +85,16 @@ public:
         for (;;) {
             pthread_mutex_lock(&mutTaskPending);
 
-            if (taskPending.empty() && 0 == counterTaskRunning) {
+            if (taskPending.empty()) {
+                pthread_mutex_lock(&mutTaskRunning);
+
+                while (counterTaskRunning > 0)
+                    pthread_cond_wait(&condTaskRunning, &mutTaskRunning);
+
+                // no pending task and no running task
                 done = true;
+
+                pthread_mutex_unlock(&mutTaskRunning);
             }
 
             pthread_mutex_unlock(&mutTaskPending);
@@ -91,10 +102,6 @@ public:
             if (done) {
                 break;
             }
-
-            sleep(1);
-            // pthread_yield();
-            // sched_yield();
         }
     }
 
@@ -118,18 +125,23 @@ public:
 
         pthread_mutex_destroy(&mutTaskPending);
         pthread_cond_destroy(&condTaskPending);
+        pthread_mutex_destroy(&mutTaskRunning);
+        pthread_cond_destroy(&condTaskRunning);
     }
 
 
 private:
     static void* threadWorkerFunc(void* argVoid) {
-        auto thisPtr = (MyExecServiceV1A*) argVoid;
+        auto thisPtr = (MyExecServiceV1B*) argVoid;
 
         auto&& taskPending = thisPtr->taskPending;
         auto&& mutTaskPending = thisPtr->mutTaskPending;
         auto&& condTaskPending = thisPtr->condTaskPending;
 
         auto&& counterTaskRunning = thisPtr->counterTaskRunning;
+        auto&& mutTaskRunning = thisPtr->mutTaskRunning;
+        auto&& condTaskRunning = thisPtr->condTaskRunning;
+
         auto&& forceThreadShutdown = thisPtr->forceThreadShutdown;
 
 
@@ -157,7 +169,14 @@ private:
             // DO THE TASK
             task->run();
 
+            pthread_mutex_lock(&mutTaskRunning);
+
             --counterTaskRunning;
+            if (0 == counterTaskRunning) {
+                pthread_cond_signal(&condTaskRunning);
+            }
+
+            pthread_mutex_unlock(&mutTaskRunning);
         }
 
         pthread_exit(nullptr);
@@ -168,4 +187,4 @@ private:
 
 
 
-#endif // _MY_EXEC_SERVICE_V1A_HPP_
+#endif // _MY_EXEC_SERVICE_V1B_HPP_

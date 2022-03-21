@@ -14,30 +14,27 @@ Version 1A: Simple executor service
 
 #include <vector>
 #include <queue>
-#include <chrono>
-#include <thread>
-#include <mutex>
-#include <condition_variable>
-#include <atomic>
-#include "exer07-exec-service-itask.hpp"
+#include <boost/chrono.hpp>
+#include <boost/thread.hpp>
+#include "exer08-exec-service-itask.hpp"
 
 
 
 class MyExecServiceV1A {
 
 private:
-    using uniquelk = std::unique_lock<std::mutex>;
+    typedef boost::unique_lock<boost::mutex> uniquelk;
 
 
 private:
-    int numThreads = 0;
-    std::vector<std::thread> lstTh;
+    int numThreads;
+    boost::thread_group lstTh;
 
     std::queue<ITask*> taskPending;
-    std::mutex mutTaskPending;
-    std::condition_variable condTaskPending;
+    boost::mutex mutTaskPending;
+    boost::condition_variable condTaskPending;
 
-    std::atomic_int32_t counterTaskRunning;
+    boost::atomic_int32_t counterTaskRunning;
 
     volatile bool forceThreadShutdown;
 
@@ -48,10 +45,14 @@ public:
     }
 
 
-    MyExecServiceV1A(const MyExecServiceV1A& other) = delete;
-    MyExecServiceV1A(const MyExecServiceV1A&& other) = delete;
-    void operator=(const MyExecServiceV1A& other) = delete;
-    void operator=(const MyExecServiceV1A&& other) = delete;
+private:
+    MyExecServiceV1A(const MyExecServiceV1A& other) : numThreads(0) { }
+    void operator=(const MyExecServiceV1A& other) { }
+
+#if __cplusplus >= 201103L || (defined(_MSC_VER) && _MSC_VER >= 1900)
+    MyExecServiceV1A(const MyExecServiceV1A&& other) : numThreads(0) { }
+    void operator=(const MyExecServiceV1A&& other) { }
+#endif
 
 
 private:
@@ -59,12 +60,11 @@ private:
         // shutdown();
 
         this->numThreads = numThreads;
-        lstTh.resize(numThreads);
         counterTaskRunning = 0;
         forceThreadShutdown = false;
 
-        for (auto&& th : lstTh) {
-            th = std::thread(&threadWorkerFunc, this);
+        for (int i = 0; i < numThreads; ++i) {
+            lstTh.add_thread(new boost::thread(&threadWorkerFunc, this));
         }
     }
 
@@ -96,8 +96,8 @@ public:
                 break;
             }
 
-            std::this_thread::sleep_for(std::chrono::seconds(1));
-            // std::this_thread::yield();
+            boost::this_thread::sleep_for(boost::chrono::seconds(1));
+            // boost::this_thread::yield();
         }
     }
 
@@ -106,30 +106,27 @@ public:
         {
             uniquelk lk(mutTaskPending);
             forceThreadShutdown = true;
-            std::queue<ITask*>().swap(taskPending);
+
+            while (false == taskPending.empty())
+                taskPending.pop();
         }
 
         condTaskPending.notify_all();
-
-        for (auto&& th : lstTh) {
-            th.join();
-        }
-
+        lstTh.join_all();
         numThreads = 0;
-        lstTh.clear();
     }
 
 
 private:
     static void threadWorkerFunc(MyExecServiceV1A* thisPtr) {
-        auto&& taskPending = thisPtr->taskPending;
-        auto&& mutTaskPending = thisPtr->mutTaskPending;
-        auto&& condTaskPending = thisPtr->condTaskPending;
+        std::queue<ITask*> & taskPending = thisPtr->taskPending;
+        boost::mutex & mutTaskPending = thisPtr->mutTaskPending;
+        boost::condition_variable & condTaskPending = thisPtr->condTaskPending;
 
-        auto&& counterTaskRunning = thisPtr->counterTaskRunning;
-        auto&& forceThreadShutdown = thisPtr->forceThreadShutdown;
+        boost::atomic_int32_t & counterTaskRunning = thisPtr->counterTaskRunning;
+        volatile bool & forceThreadShutdown = thisPtr->forceThreadShutdown;
 
-        ITask* task = nullptr;
+        ITask* task = 0;
 
 
         for (;;) {

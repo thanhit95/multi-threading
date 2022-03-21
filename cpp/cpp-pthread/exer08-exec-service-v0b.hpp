@@ -14,26 +14,27 @@ Version 0B: The easiest executor service
 
 
 #include <vector>
-#include <boost/chrono.hpp>
-#include <boost/thread.hpp>
+#include <atomic>
+#include <unistd.h>
+#include <pthread.h>
 #include "mylib-blockingqueue.hpp"
-#include "exer07-exec-service-itask.hpp"
+#include "exer08-exec-service-itask.hpp"
 
 
 
 class MyExecServiceV0B {
 
 private:
-    int numThreads;
-    boost::thread_group lstTh;
+    int numThreads = 0;
+    std::vector<pthread_t> lstTh;
 
     mylib::BlockingQueue<ITask*> taskPending;
-    boost::atomic_int32_t counterTaskRunning;
+    std::atomic_int32_t counterTaskRunning;
 
     volatile bool forceThreadShutdown;
 
     const class : ITask {
-        void run() { }
+        void run() override { }
     }
     emptyTask;
 
@@ -44,24 +45,21 @@ public:
     }
 
 
-private:
-    MyExecServiceV0B(const MyExecServiceV0B& other) : numThreads(0) { }
-    void operator=(const MyExecServiceV0B& other) { }
-
-#if __cplusplus >= 201103L || (defined(_MSC_VER) && _MSC_VER >= 1900)
-    MyExecServiceV0B(const MyExecServiceV0B&& other) : numThreads(0) { }
-    void operator=(const MyExecServiceV0B&& other) { }
-#endif
+    MyExecServiceV0B(const MyExecServiceV0B& other) = delete;
+    MyExecServiceV0B(const MyExecServiceV0B&& other) = delete;
+    void operator=(const MyExecServiceV0B& other) = delete;
+    void operator=(const MyExecServiceV0B&& other) = delete;
 
 
 private:
     void init(int numThreads) {
         this->numThreads = numThreads;
+        lstTh.resize(numThreads);
         counterTaskRunning = 0;
         forceThreadShutdown = false;
 
-        for (int i = 0; i < numThreads; ++i) {
-            lstTh.add_thread(new boost::thread(&threadWorkerFunc, this));
+        for (auto&& th : lstTh) {
+            pthread_create(&th, nullptr, &threadWorkerFunc, this);
         }
     }
 
@@ -76,8 +74,9 @@ public:
         // This ExecService is too simple,
         // so there is no good implementation for waitTaskDone()
         while (false == taskPending.empty() || counterTaskRunning > 0) {
-            boost::this_thread::sleep_for(boost::chrono::seconds(1));
-            // boost::this_thread::yield();
+            sleep(1);
+            // pthread_yield();
+            // sched_yield();
         }
     }
 
@@ -91,22 +90,26 @@ public:
             taskPending.put( (ITask* const) &emptyTask );
         }
 
-        lstTh.join_all();
+        for (auto&& th : lstTh) {
+            pthread_join(th, nullptr);
+        }
+
         numThreads = 0;
+        lstTh.clear();
     }
 
 
 private:
-    static void threadWorkerFunc(MyExecServiceV0B* thisPtr) {
-        mylib::BlockingQueue<ITask*> & taskPending = thisPtr->taskPending;
-        boost::atomic_int32_t & counterTaskRunning = thisPtr->counterTaskRunning;
-        volatile bool & forceThreadShutdown = thisPtr->forceThreadShutdown;
+    static void* threadWorkerFunc(void* argVoid) {
+        auto thisPtr = (MyExecServiceV0B*) argVoid;
 
-        ITask* task = 0;
+        auto&& taskPending = thisPtr->taskPending;
+        auto&& counterTaskRunning = thisPtr->counterTaskRunning;
+        auto&& forceThreadShutdown = thisPtr->forceThreadShutdown;
 
         for (;;) {
             // WAIT FOR AN AVAILABLE PENDING TASK
-            task = taskPending.take();
+            auto task = taskPending.take();
 
             // If shutdown() was called, then exit the function
             if (forceThreadShutdown) {
@@ -118,6 +121,9 @@ private:
             task->run();
             --counterTaskRunning;
         }
+
+        pthread_exit(nullptr);
+        return nullptr;
     }
 
 };

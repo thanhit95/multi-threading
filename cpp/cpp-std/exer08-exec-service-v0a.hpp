@@ -14,18 +14,18 @@ Version 0A: The easiest executor service
 
 #include <iostream>
 #include <vector>
-#include <boost/chrono.hpp>
-#include <boost/thread.hpp>
+#include <chrono>
+#include <thread>
 #include "mylib-blockingqueue.hpp"
-#include "exer07-exec-service-itask.hpp"
+#include "exer08-exec-service-itask.hpp"
 
 
 
 class MyExecServiceV0A {
 
 private:
-    int numThreads;
-    boost::thread_group lstTh;
+    int numThreads = 0;
+    std::vector<std::thread> lstTh;
     mylib::BlockingQueue<ITask*> taskPending;
 
 
@@ -35,22 +35,19 @@ public:
     }
 
 
-private:
-    MyExecServiceV0A(const MyExecServiceV0A& other) : numThreads(0) { }
-    void operator=(const MyExecServiceV0A& other) { }
-
-#if __cplusplus >= 201103L || (defined(_MSC_VER) && _MSC_VER >= 1900)
-    MyExecServiceV0A(const MyExecServiceV0A&& other) : numThreads(0) { }
-    void operator=(const MyExecServiceV0A&& other) { }
-#endif
+    MyExecServiceV0A(const MyExecServiceV0A& other) = delete;
+    MyExecServiceV0A(const MyExecServiceV0A&& other) = delete;
+    void operator=(const MyExecServiceV0A& other) = delete;
+    void operator=(const MyExecServiceV0A&& other) = delete;
 
 
 private:
     void init(int numThreads) {
         this->numThreads = numThreads;
+        lstTh.resize(numThreads);
 
-        for (int i = 0; i < numThreads; ++i) {
-            lstTh.add_thread(new boost::thread(&threadWorkerFunc, this));
+        for (auto&& th : lstTh) {
+            th = std::thread(&threadWorkerFunc, this);
         }
     }
 
@@ -64,7 +61,7 @@ public:
     void waitTaskDone() {
         // This ExecService is too simple,
         // so there is no implementation for waitTaskDone()
-        boost::this_thread::sleep_for(boost::chrono::seconds(11)); // fake behaviour
+        std::this_thread::sleep_for(std::chrono::seconds(11)); // fake behaviour
     }
 
 
@@ -73,14 +70,13 @@ public:
         // so there is no implementation for shutdown()
         std::cout << "No implementation for shutdown()." << std::endl;
         std::cout << "You need to exit the app manually." << std::endl;
-        lstTh.join_all();
     }
 
 
 private:
     static void threadWorkerFunc(MyExecServiceV0A* thisPtr) {
-        mylib::BlockingQueue<ITask*> & taskPending = thisPtr->taskPending;
-        ITask* task = 0;
+        auto&& taskPending = thisPtr->taskPending;
+        ITask* task = nullptr;
 
         for (;;) {
             // WAIT FOR AN AVAILABLE PENDING TASK
