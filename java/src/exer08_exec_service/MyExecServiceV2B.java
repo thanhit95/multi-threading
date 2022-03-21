@@ -1,21 +1,20 @@
 /*
  * MY EXECUTOR SERVICE
  *
- * Version 2A: The executor service storing running tasks
- * - Method "waitTaskDone" uses a semaphore to synchronize.
+ * Version 2B: The executor service storing running tasks
+ * - Method "waitTaskDone" uses a condition variable to synchronize.
  */
 
-package exer07_exec_service;
+package exer08_exec_service;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
-import java.util.concurrent.Semaphore;
 import java.util.stream.IntStream;
 
 
 
-public final class MyExecServiceV2A {
+public final class MyExecServiceV2B {
 
     private int numThreads = 0;
     private List<Thread> lstTh = new LinkedList<>();
@@ -23,13 +22,11 @@ public final class MyExecServiceV2A {
     private final Queue<Runnable> taskPending = new LinkedList<>();
     private final Queue<Runnable> taskRunning = new LinkedList<>();
 
-    private final Semaphore counterTaskRunning = new Semaphore(0);
-
     private volatile boolean forceThreadShutdown = false;
 
 
 
-    public MyExecServiceV2A(int numThreads) {
+    public MyExecServiceV2B(int numThreads) {
         init(numThreads);
     }
 
@@ -59,23 +56,45 @@ public final class MyExecServiceV2A {
 
 
 
-    public void waitTaskDone() {
-        for (;;) {
-            try {
-                counterTaskRunning.acquire();
-            }
-            catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+//    public void waitTaskDoneBad() {
+//        try {
+//            for (;;) {
+//                synchronized (taskRunning) {
+//                    while (!taskRunning.isEmpty())
+//                        taskRunning.wait();
+//
+//                    synchronized (taskPending) {
+//                        if (taskPending.isEmpty())
+//                            break;
+//                    }
+//                }
+//            }
+//        }
+//        catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
-            synchronized (taskPending) {
-                synchronized (taskRunning) {
-                    if (taskPending.isEmpty() && taskRunning.isEmpty()
-                        /* && 0 == counterTaskRunning.availablePermits() */
-                    )
-                        break;
+
+
+    public void waitTaskDone() {
+        try {
+            for (;;) {
+                synchronized (taskPending) {
+                    if (taskPending.isEmpty()) {
+                        synchronized (taskRunning) {
+                            while (!taskRunning.isEmpty())
+                                taskRunning.wait();
+
+                            // no pending task and no running task
+                            break;
+                        }
+                    }
                 }
             }
+        }
+        catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 
@@ -100,17 +119,13 @@ public final class MyExecServiceV2A {
         numThreads = 0;
 //      lstTh.clear();
         taskRunning.clear();
-
-        counterTaskRunning.release(counterTaskRunning.availablePermits());
     }
 
 
 
-    private static void threadWorkerFunc(MyExecServiceV2A thisPtr) {
+    private static void threadWorkerFunc(MyExecServiceV2B thisPtr) {
         var taskPending = thisPtr.taskPending;
         var taskRunning = thisPtr.taskRunning;
-        var counterTaskRunning = thisPtr.counterTaskRunning;
-
         Runnable task;
 
         try {
@@ -140,9 +155,8 @@ public final class MyExecServiceV2A {
                 // REMOVE IT FROM THE RUNNING QUEUE
                 synchronized (taskRunning) {
                     taskRunning.remove(task);
+                    taskRunning.notify();
                 }
-
-                counterTaskRunning.release();
             }
         }
         catch (InterruptedException e) {

@@ -5,7 +5,7 @@
  * - It uses a blocking queue as underlying mechanism.
  */
 
-package exer07_exec_service;
+package exer08_exec_service;
 
 import java.util.LinkedList;
 import java.util.List;

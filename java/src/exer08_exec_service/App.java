@@ -2,7 +2,7 @@
  * EXECUTOR SERVICE & THREAD POOL IMPLEMENTATION
  */
 
-package exer07_exec_service;
+package exer08_exec_service;
 
 import java.util.ArrayList;
 

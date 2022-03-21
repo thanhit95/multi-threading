@@ -1,11 +1,11 @@
 /*
  * MY EXECUTOR SERVICE
  *
- * Version 2B: The executor service storing running tasks
+ * Version 1B: Simple executor service
  * - Method "waitTaskDone" uses a condition variable to synchronize.
  */
 
-package exer07_exec_service;
+package exer08_exec_service;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -14,19 +14,21 @@ import java.util.stream.IntStream;
 
 
 
-public final class MyExecServiceV2B {
+public final class MyExecServiceV1B {
 
     private int numThreads = 0;
     private List<Thread> lstTh = new LinkedList<>();
 
     private final Queue<Runnable> taskPending = new LinkedList<>();
-    private final Queue<Runnable> taskRunning = new LinkedList<>();
+
+    private int counterTaskRunning;
+    private final Object lkTaskRunning = new Object();
 
     private volatile boolean forceThreadShutdown = false;
 
 
 
-    public MyExecServiceV2B(int numThreads) {
+    public MyExecServiceV1B(int numThreads) {
         init(numThreads);
     }
 
@@ -36,6 +38,7 @@ public final class MyExecServiceV2B {
 //      shutdown();
 
         numThreads = inpNumThreads;
+        counterTaskRunning = 0;
         forceThreadShutdown = false;
 
         lstTh = IntStream.range(0, numThreads)
@@ -56,45 +59,25 @@ public final class MyExecServiceV2B {
 
 
 
-//    public void waitTaskDoneBad() {
-//        try {
-//            for (;;) {
-//                synchronized (taskRunning) {
-//                    while (!taskRunning.isEmpty())
-//                        taskRunning.wait();
-//
-//                    synchronized (taskPending) {
-//                        if (taskPending.isEmpty())
-//                            break;
-//                    }
-//                }
-//            }
-//        }
-//        catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
-
-
     public void waitTaskDone() {
-        try {
-            for (;;) {
-                synchronized (taskPending) {
-                    if (taskPending.isEmpty()) {
-                        synchronized (taskRunning) {
-                            while (!taskRunning.isEmpty())
-                                taskRunning.wait();
+        for (;;) {
+            synchronized (taskPending) {
+                if (taskPending.isEmpty()) {
+                    synchronized (lkTaskRunning) {
+                        try {
+                            while (counterTaskRunning > 0) {
+                                lkTaskRunning.wait();
+                            }
 
                             // no pending task and no running task
                             break;
                         }
+                        catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }
-        }
-        catch (InterruptedException e) {
-            e.printStackTrace();
         }
     }
 
@@ -118,20 +101,20 @@ public final class MyExecServiceV2B {
 
         numThreads = 0;
 //      lstTh.clear();
-        taskRunning.clear();
     }
 
 
 
-    private static void threadWorkerFunc(MyExecServiceV2B thisPtr) {
+    private static void threadWorkerFunc(MyExecServiceV1B thisPtr) {
         var taskPending = thisPtr.taskPending;
-        var taskRunning = thisPtr.taskRunning;
+        var lkTaskRunning = thisPtr.lkTaskRunning;
+
         Runnable task;
 
         try {
             for (;;) {
+                // WAIT FOR AN AVAILABLE PENDING TASK
                 synchronized (taskPending) {
-                    // WAIT FOR AN AVAILABLE PENDING TASK
                     while (taskPending.isEmpty() && false == thisPtr.forceThreadShutdown) {
                         taskPending.wait();
                     }
@@ -143,19 +126,18 @@ public final class MyExecServiceV2B {
                     // GET THE TASK FROM THE PENDING QUEUE
                     task = taskPending.remove();
 
-                    // PUSH IT TO THE RUNNING QUEUE
-                    synchronized (taskRunning) {
-                        taskRunning.add(task);
-                    }
+                    ++thisPtr.counterTaskRunning;
                 }
 
                 // DO THE TASK
                 task.run();
 
-                // REMOVE IT FROM THE RUNNING QUEUE
-                synchronized (taskRunning) {
-                    taskRunning.remove(task);
-                    taskRunning.notify();
+                synchronized (lkTaskRunning) {
+                    --thisPtr.counterTaskRunning;
+
+                    if (0 == thisPtr.counterTaskRunning) {
+                        lkTaskRunning.notify();
+                    }
                 }
             }
         }

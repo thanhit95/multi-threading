@@ -1,43 +1,41 @@
 /*
  * MY EXECUTOR SERVICE
  *
- * Version 0B: The easiest executor service
- * - It uses a blocking queue as underlying mechanism.
- * - It supports waitTaskDone() and shutdown().
+ * Version 1A: Simple executor service
+ * - Method "waitTaskDone" invokes thread sleeps in loop (which can cause performance problems).
  */
 
-package exer07_exec_service;
+package exer08_exec_service;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
+import java.util.Queue;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
 
 
 
-public final class MyExecServiceV0B {
+public final class MyExecServiceV1A {
 
     private int numThreads = 0;
     private List<Thread> lstTh = new LinkedList<>();
 
-    private final BlockingQueue<Runnable> taskPending = new LinkedBlockingQueue<>();
+    private final Queue<Runnable> taskPending = new LinkedList<>();
     private final AtomicInteger counterTaskRunning = new AtomicInteger();
 
     private volatile boolean forceThreadShutdown = false;
 
-    private static final Runnable emptyTask = () -> { };
 
 
-
-    public MyExecServiceV0B(int numThreads) {
+    public MyExecServiceV1A(int numThreads) {
         init(numThreads);
     }
 
 
 
     private void init(int inpNumThreads) {
+//      shutdown();
+
         numThreads = inpNumThreads;
         counterTaskRunning.set(0);
         forceThreadShutdown = false;
@@ -52,16 +50,28 @@ public final class MyExecServiceV0B {
 
 
     public void submit(Runnable task) {
-        taskPending.add(task);
+        synchronized (taskPending) {
+            taskPending.add(task);
+            taskPending.notify();
+        }
     }
 
 
 
     public void waitTaskDone() {
-        // This ExecService is too simple,
-        // so there is no good implementation for waitTaskDone()
+        boolean done = false;
+
         try {
-            while (!taskPending.isEmpty() || counterTaskRunning.get() > 0) {
+            for (;;) {
+                synchronized (taskPending) {
+                    if (taskPending.isEmpty() && 0 == counterTaskRunning.get()) {
+                        done = true;
+                    }
+                }
+
+                if (done)
+                    break;
+
                 Thread.sleep(1000);
                 // Thread.yield();
             }
@@ -74,12 +84,10 @@ public final class MyExecServiceV0B {
 
 
     public void shutdown() {
-        forceThreadShutdown = true;
-        taskPending.clear();
-
-        // Invoke blocked threads by adding "empty" tasks
-        for (int i = 0; i < numThreads; ++i) {
-            taskPending.add(emptyTask);
+        synchronized (taskPending) {
+            forceThreadShutdown = true;
+            taskPending.clear();
+            taskPending.notifyAll();
         }
 
         for (var th : lstTh) {
@@ -97,23 +105,33 @@ public final class MyExecServiceV0B {
 
 
 
-    private static void threadWorkerFunc(MyExecServiceV0B thisPtr) {
+    private static void threadWorkerFunc(MyExecServiceV1A thisPtr) {
+        var taskPending = thisPtr.taskPending;
+        var counterTaskRunning = thisPtr.counterTaskRunning;
+
         Runnable task;
 
         try {
             for (;;) {
                 // WAIT FOR AN AVAILABLE PENDING TASK
-                task = thisPtr.taskPending.take();
+                synchronized (taskPending) {
+                    while (taskPending.isEmpty() && false == thisPtr.forceThreadShutdown) {
+                        taskPending.wait();
+                    }
 
-                // If shutdown() was called, then exit the function
-                if (thisPtr.forceThreadShutdown) {
-                    break;
+                    if (thisPtr.forceThreadShutdown) {
+                        break;
+                    }
+
+                    // GET THE TASK FROM THE PENDING QUEUE
+                    task = taskPending.remove();
+
+                    counterTaskRunning.getAndIncrement();
                 }
 
                 // DO THE TASK
-                thisPtr.counterTaskRunning.incrementAndGet();
                 task.run();
-                thisPtr.counterTaskRunning.decrementAndGet();
+                counterTaskRunning.getAndDecrement();
             }
         }
         catch (InterruptedException e) {
