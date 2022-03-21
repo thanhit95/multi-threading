@@ -786,7 +786,8 @@ BEFORE:
 
 
 AFTER:
-                                        thread join
+                                        Thread join
+                                        Synchronize
     Main thread  ------------------->----------------->
                  check_auth_user()           ^
                                              |
@@ -807,7 +808,7 @@ By running `check_auth_user()` and `process_files()` in parallel, we can increas
 
 **The second thing:**
 
-Function `process_files()` does not only read file, but it also writes log. After reading files, we can return file data to user immediately. *The "writting log" tasks could perform later*.
+Function `process_files()` not only **reads files** but also **writes logs**. After reading files, we can return file data to user immediately. *The "writting logs" tasks could perform later*.
 
 ```text
                          Synchronize
