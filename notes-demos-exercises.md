@@ -66,7 +66,8 @@ I am sorry that generated table of contents contains too many uppercase stuff...
       - [Version A: Matrix-vector multiplication](#version-a-matrix-vector-multiplication)
       - [Version B: Matrix-matrix production (dot product)](#version-b-matrix-matrix-production-dot-product)
     - [EX06 - BLOCKING QUEUE IMPLEMENTATION](#ex06---blocking-queue-implementation)
-    - [EX07 - THREAD POOL & EXECUTOR SERVICE IMPLEMENTATION](#ex07---thread-pool--executor-service-implementation)
+    - [EX07 - THE DATA SERVER PROBLEM](#ex07---the-data-server-problem)
+    - [EX08 - THREAD POOL & EXECUTOR SERVICE IMPLEMENTATION](#ex08---thread-pool--executor-service-implementation)
 
 &nbsp;
 
@@ -744,7 +745,84 @@ There are many methods to implement the producer-consumer problem and this is si
 
 &nbsp;
 
-### EX07 - THREAD POOL & EXECUTOR SERVICE IMPLEMENTATION
+### EX07 - THE DATA SERVER PROBLEM
+
+The internal data server of a company performs two main tasks for a request:
+
+- check_auth_user()
+- process_files()
+
+The pseudo code is:
+
+```pseudo
+function process_request():
+    if check_auth_user(), then:
+        list_file_data = process_files()
+        return list_file_data
+
+
+function check_auth_user():
+    check username, permissions, encryption...
+    return (true or false)
+
+
+function process_files():
+    read file data from disk
+    do some stuff...
+    write log
+    return file data
+```
+
+&nbsp;
+
+**The problem:** Usually, two tasks might take a long time. How can we improve the performance? Suppose this server serves internally for employees in company.
+
+We can assume that `check_auth_user()` usually returns true, so instead of waiting for a long time of `check_auth_user()`, we can run `process_files()` in parallel.
+
+```text
+BEFORE:
+    Main thread  ------------------->  ------------------->
+                 check_auth_user()     process_files()
+
+
+AFTER:
+                                        thread join
+    Main thread  ------------------->----------------->
+                 check_auth_user()           ^
+                                             |
+    Child thread ------------------->---------
+                 process_files()
+```
+
+&nbsp;
+
+**The most important & interesting things** is here:
+
+**The first thing:**
+
+- Checking for authorization is CPU bound (and maybe network bandwidth bound).
+- Processing files is disk bound.
+
+By running `check_auth_user()` and `process_files()` in parallel, we can increase the performance.
+
+**The second thing:**
+
+Function `process_files()` does not only read file, but it also writes log. After reading files, we can return file data to user immediately. *The "writting log" tasks could perform later*.
+
+```text
+                         Synchronize
+      ------------------------|----------------------------> Time
+ CPU  Check auth user         |             Do other tasks
+Disk  Read file               |             Write log
+                       User is authorized
+                      and files are loaded
+```
+
+Let's have a look at the code. I hope you could learn something good.
+
+&nbsp;
+
+### EX08 - THREAD POOL & EXECUTOR SERVICE IMPLEMENTATION
 
 To implement a thread pool, you need to focus on the worker function (the function that is executed by threads in the pool). For an idle thread:
 
