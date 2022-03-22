@@ -469,7 +469,7 @@ A blocking queue is a queue that blocks when you:
 - try to dequeue from it and the queue is empty, or...
 - try to enqueue items to it and the queue is already full.
 
-There is a special type of the blocking queue, that is "synchronous queue". A synchronous queue is a blocking queue with capacity = 0 (i.e. it does not store any value at all).
+"Synchronous queue" is usually a synonym of "blocking queue". In Java, a synchronous queue has zero capacity (i.e. it does not store any value at all).
 
 &nbsp;
 
