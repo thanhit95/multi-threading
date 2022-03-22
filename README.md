@@ -98,6 +98,54 @@ This is the roadmap for you, which is composed and researched carefully with all
 
 ---
 
+## INTRODUCTION TO MULTITHREADING
+
+### GETTING STARTED
+
+Bob sends four messages to Alice: `I love`, `you`, `not`, `her`.
+
+Surprisingly, Alice receives `I love`, `her`, `not`, `you` (That means "I love her not you"). So sad!
+
+```text
+TRADITIONAL (ONE THREAD)
+
+    ===========================================> Time
+
+                 Main thread
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
+      "I love"   "you"   "not"   "her"
+
+
+
+MULTITHREADING (FOUR THREADS)
+
+    ===========================================> Time
+
+    ~~~~~~~~~~~~>
+      "I love"
+
+                      ~~~~~~~~~~~~>
+                          "you"
+
+              ~~~~~~~~~~~~>
+                  "not"
+
+        ~~~~~~~~~~~~>
+            "her"
+```
+
+If you use multithreading or something similar, the context above is truly possible. The reason is that multithreading allows four messages to be sent in parallel, so message order is changed unpredictably when they come to Alice.
+
+In traditional simple application, there is only one thread (the "main thread"). If you apply multithreading then your app may have multiple threads (including the "main thread").
+
+By learning multithreading:
+
+- You get closer to the operating system.
+- You can understand various terms: concurrency, parallel, asynchronous, synchronization.
+- You have additional knowledge to learn asynchronous programming and parallel programming.
+
+So, why multithreading?
+
 ### WHY MULTITHREADING
 
 Multithreaded programs can improve performance compared to traditional simple programs (which use only a single thread).
