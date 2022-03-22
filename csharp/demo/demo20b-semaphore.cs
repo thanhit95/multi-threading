@@ -11,8 +11,8 @@ class Demo20B : IRunnable
 {
     public void run()
     {
-        var semTire = new Semaphore(4, 100);
-        var semChassis = new Semaphore(0, 100);
+        var semTire = new Semaphore(4, int.MaxValue);
+        var semChassis = new Semaphore(0, int.MaxValue);
 
 
         ThreadStart makeTire = () =>

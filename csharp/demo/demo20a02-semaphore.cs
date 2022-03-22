@@ -11,8 +11,8 @@ class Demo20A02 : IRunnable
 {
     public void run()
     {
-        var semPackage = new Semaphore(0, 8);
-        var semSheet = new Semaphore(2, 8);
+        var semPackage = new Semaphore(0, int.MaxValue);
+        var semSheet = new Semaphore(2, int.MaxValue);
 
 
         ThreadStart makeOneSheet = () =>

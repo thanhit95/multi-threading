@@ -45,8 +45,8 @@ class Exer06A : IRunnable
 
     class MySynchronousQueue<T>
     {
-        private Semaphore semPut = new Semaphore(1, 100);
-        private Semaphore semTake = new Semaphore(0, 100);
+        private Semaphore semPut = new Semaphore(1, int.MaxValue);
+        private Semaphore semTake = new Semaphore(0, int.MaxValue);
         private T element = default;
 
 

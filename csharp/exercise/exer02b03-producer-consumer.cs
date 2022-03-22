@@ -14,8 +14,8 @@ class Exer02B03 : IRunnable
 {
     public void run()
     {
-        var semFill = new Semaphore(0, 100);     // item produced
-        var semEmpty = new Semaphore(1, 100);    // remaining space in queue
+        var semFill = new Semaphore(0, int.MaxValue);     // item produced
+        var semEmpty = new Semaphore(1, int.MaxValue);    // remaining space in queue
 
         var queue = new Queue<int>();
 

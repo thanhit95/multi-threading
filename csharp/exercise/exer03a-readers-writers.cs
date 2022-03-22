@@ -74,7 +74,7 @@ class Exer03A : IRunnable
 
     class Global
     {
-        public static Semaphore mutResource = new Semaphore(1, 1);
+        public static Semaphore mutResource = new Semaphore(1, int.MaxValue);
         public static object mutReaderCount = new object();
 
         public static volatile int resource = 0;
