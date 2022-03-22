@@ -42,8 +42,6 @@ Special notes for C++ demos/exers: Please read the specified `readme.md` in corr
 
 &nbsp;
 
----
-
 ## THE NOTES AND ARTICLES
 
 The notes and articles are the additional resources for the source code, which guides you for better research, step by step. You may consider it the comment/description at the beginning of the source code.
@@ -75,8 +73,6 @@ There are 2 notes:
 **For your best result, I strongly recommend that you read [notes-demos-exercises.md](notes-demos-exercises.md) while enjoying source code (demos and exercises).**
 
 &nbsp;
-
----
 
 ## ROADMAP FOR THE LEARNERS
 
@@ -136,7 +132,7 @@ MULTITHREADING (FOUR THREADS)
 
 If you use multithreading or something similar, the context above is truly possible. The reason is that multithreading allows four messages to be sent in parallel, so message order is changed unpredictably when they come to Alice.
 
-In traditional simple application, there is only one thread (the "main thread"). If you apply multithreading then your app may have multiple threads (including the "main thread").
+In a traditional simple app, there is only one thread (the "main thread"). If you apply multithreading then your app may have multiple threads (including the "main thread").
 
 By learning multithreading:
 
@@ -183,8 +179,6 @@ Benefits of multithreading:
   - Thread synchronization functions can be used to provide enhanced process-to-process communication.
   - In addition, sharing large amounts of data through separate threads of execution within the same address space provides extremely high-bandwidth, low-latency communication between separate tasks within an application.
 
-In fact, multithreading is extremely important in the current software industry. It lets you do concurrency. It solves asynchronous problems.
-
 &nbsp;
 
 If you want to explore more articles, read here: [notes-articles.md](notes-articles.md).
@@ -199,8 +193,6 @@ Article references:
 &nbsp;
 
 ---
-
-&nbsp;
 
 ## REFERENCES
 
