@@ -76,6 +76,28 @@ There are 2 notes:
 
 &nbsp;
 
+---
+
+## ROADMAP FOR THE LEARNERS
+
+This is the roadmap for you, which is composed and researched carefully with all my heart. You should learn in the sequence listed below.
+
+**If you just want to learn the basis to understand the taste of multithreading:**
+
+- Demo: hello, join, pass arg, sleep, list-threads, race-condition, mutex, synchronized-block.
+- Exer: max-div.
+
+**If you are oriented to be a Software Developer:**
+
+- Demo: hello, join, pass arg, sleep, list-threads, terminate, return-value, exec-service, race-condition, mutex, synchronized-block, deadlock, blocking-queue, atomic.
+- Exer: max-div, producer-consumer, product-matrix, data-server.
+
+**If you really want to do an in-depth research:** Learn all!!!
+
+&nbsp;
+
+---
+
 ### WHY MULTITHREADING
 
 Multithreaded programs can improve performance compared to traditional simple programs (which use only a single thread).
