@@ -24,7 +24,7 @@ def check_auth_user():
 
 
 
-def process_files(lst_file_name: list, counter: Counter):
+def process_files(lst_file_name: list[str], counter: Counter):
     for file_name in lst_file_name:
         # Read file
         print('[ ReadFile ] Start', file_name)

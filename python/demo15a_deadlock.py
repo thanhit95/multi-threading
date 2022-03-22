@@ -11,7 +11,7 @@ mutex = threading.Lock()
 
 
 
-def do_task(name):
+def do_task(name: str):
     mutex.acquire()
     print(f'{name} acquired resource')
     # mutex.release() # Forget this statement ==> deadlock

@@ -11,7 +11,7 @@ lk = threading.Lock()
 
 
 
-def prepare_arg(rng_start: int, rng_end: int, num_threads: int) -> list:
+def prepare_arg(rng_start: int, rng_end: int, num_threads: int) -> list[dict]:
     rng_block = (rng_end - rng_start + 1) // num_threads
     rng_a = rng_start
     lst_arg = []
@@ -25,7 +25,7 @@ def prepare_arg(rng_start: int, rng_end: int, num_threads: int) -> list:
 
 
 
-def do_task(arg, lst_res: list):
+def do_task(arg: dict, lst_res: list[dict]):
     res_value = 0
     res_numdiv = 0
 

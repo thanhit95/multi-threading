@@ -16,7 +16,7 @@ class ReadWriteLock:
         self.__wlock = self.WriteLock(self)
 
 
-    def get_reader_count(self):
+    def get_reader_count(self) -> int:
         return self.__reader_count
 
 
@@ -44,11 +44,11 @@ class ReadWriteLock:
                 self.__lk_resource.release()
 
 
-    def readlock(self):
+    def readlock(self) -> 'ReadWriteLock.ReadLock':
         return self.__rlock
 
 
-    def writelock(self):
+    def writelock(self) -> 'ReadWriteLock.WriteLock':
         return self.__wlock
 
 

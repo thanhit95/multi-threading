@@ -12,7 +12,7 @@ final_res = { 'value': 0, 'numdiv': 0 }
 
 
 
-def prepare_arg(rng_start: int, rng_end: int, num_threads: int) -> list:
+def prepare_arg(rng_start: int, rng_end: int, num_threads: int) -> list[dict]:
     rng_block = (rng_end - rng_start + 1) // num_threads
     rng_a = rng_start
     lst_arg = []
@@ -26,7 +26,7 @@ def prepare_arg(rng_start: int, rng_end: int, num_threads: int) -> list:
 
 
 
-def do_task(arg):
+def do_task(arg: dict):
     res_value = 0
     res_numdiv = 0
 

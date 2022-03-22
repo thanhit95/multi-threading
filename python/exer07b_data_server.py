@@ -16,7 +16,7 @@ def check_auth_user():
 
 
 
-def process_files(lst_file_name: list, sem: threading.Semaphore):
+def process_files(lst_file_name: list[str], sem: threading.Semaphore):
     for file_name in lst_file_name:
         # Read file
         print('[ ReadFile ] Start', file_name)

@@ -7,7 +7,7 @@ import threading
 
 
 
-def do_task(index):
+def do_task(index: int):
     time.sleep(1)
     print(index, end='')
 

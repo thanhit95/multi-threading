@@ -8,7 +8,7 @@ from concurrent.futures import ThreadPoolExecutor
 
 
 
-def do_task(name):
+def do_task(name: str):
     print(f'Task {name} is starting')
     time.sleep(3)
     print(f'Task {name} is completed')

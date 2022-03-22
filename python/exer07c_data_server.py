@@ -17,7 +17,7 @@ def check_auth_user():
 
 
 
-def process_files(lst_file_name: list, latch: CountDownLatch):
+def process_files(lst_file_name: list[str], latch: CountDownLatch):
     for file_name in lst_file_name:
         # Read file
         print('[ ReadFile ] Start', file_name)

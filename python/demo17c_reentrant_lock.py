@@ -12,7 +12,7 @@ lock = threading.RLock()
 
 
 
-def do_task(name):
+def do_task(name: str):
     time.sleep(1)
     with lock:
         print(f'First time {name} acquiring the resource')

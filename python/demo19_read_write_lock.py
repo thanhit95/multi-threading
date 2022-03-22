@@ -16,7 +16,7 @@ resource = 0
 
 
 
-def read_func(wait_time):
+def read_func(wait_time: int):
     time.sleep(wait_time)
 
     with rwlock.readlock():
@@ -24,7 +24,7 @@ def read_func(wait_time):
 
 
 
-def write_func(wait_time):
+def write_func(wait_time: int):
     global resource
     time.sleep(wait_time)
 
