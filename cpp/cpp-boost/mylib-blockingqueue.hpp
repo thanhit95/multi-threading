@@ -1,3 +1,18 @@
+/******************************************************
+*
+* File name:    mylib-blockingqueue.hpp
+*
+* Author:       Name:   Thanh Nguyen
+*               Email:  thanh.it1995(at)gmail(dot)com
+*
+* License:      3-Clause BSD License
+*
+* Description:  The blocking queue implementation in C++98 Boost threading
+*
+******************************************************/
+
+
+
 #ifndef _MYLIB_BLOCKING_QUEUE_HPP_
 #define _MYLIB_BLOCKING_QUEUE_HPP_
 

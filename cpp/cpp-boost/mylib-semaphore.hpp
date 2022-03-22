@@ -1,3 +1,19 @@
+/******************************************************
+*
+* File name:    mylib-semaphore.hpp
+*
+* Author:       Name:   Thanh Nguyen
+*               Email:  thanh.it1995(at)gmail(dot)com
+*
+* License:      3-Clause BSD License
+*
+* Description:  The semaphore implementation in C++98 Boost threading
+*               This is just a simulation based on the condition variable
+*
+******************************************************/
+
+
+
 #ifndef _MYLIB_SEMAPHORE_HPP_
 #define _MYLIB_SEMAPHORE_HPP_
 
@@ -75,7 +91,7 @@ public:
 
 
     int getValue() const {
-        return value; // non-blocking
+        return value; // does not block
     }
 
 }; // Semaphore

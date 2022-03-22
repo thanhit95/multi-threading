@@ -1,3 +1,18 @@
+/******************************************************
+*
+* File name:    mylib-random.hpp
+*
+* Author:       Name:   Thanh Nguyen
+*               Email:  thanh.it1995(at)gmail(dot)com
+*
+* License:      3-Clause BSD License
+*
+* Description:  The random utility in C++98 Boost
+*
+******************************************************/
+
+
+
 #ifndef _MYLIB_RANDOM_HPP_
 #define _MYLIB_RANDOM_HPP_
 
