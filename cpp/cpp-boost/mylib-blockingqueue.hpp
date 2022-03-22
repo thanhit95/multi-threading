@@ -102,7 +102,7 @@ public:
 
     // returns false if queue is empty, otherwise returns true and assigns the result
     bool peek(T& result) const {
-        uniquelk lk(mut);
+        uniquelk(mut);
 
         if (q.empty()) {
             return false;
@@ -114,7 +114,7 @@ public:
 
 
     void clear() {
-        uniquelk lk(mut);
+        uniquelk(mut);
 
         while (false == q.empty()) {
             q.pop();

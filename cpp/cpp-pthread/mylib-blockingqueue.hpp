@@ -83,38 +83,38 @@ public:
 
     // sync enqueue
     void put(const T& value) {
-        int ret = 0;
+        int tmp = 0;
 
-        ret = pthread_mutex_lock(&mut);
+        tmp = pthread_mutex_lock(&mut);
 
         while (q.size() >= capacity) {
-            ret = pthread_cond_wait(&condFull, &mut);
+            tmp = pthread_cond_wait(&condFull, &mut);
         }
 
         q.push(value);
 
-        ret = pthread_mutex_unlock(&mut);
-        ret = pthread_cond_signal(&condEmpty);
+        tmp = pthread_mutex_unlock(&mut);
+        tmp = pthread_cond_signal(&condEmpty);
     }
 
 
     // sync dequeue
     T take() {
         T result;
-        int ret = 0;
+        int tmp = 0;
 
-        ret = pthread_mutex_lock(&mut);
+        tmp = pthread_mutex_lock(&mut);
 
         while (q.empty()) {
             // Queue is empty, must wait for 'put'
-            ret = pthread_cond_wait(&condEmpty, &mut);
+            tmp = pthread_cond_wait(&condEmpty, &mut);
         }
 
         result = q.front();
         q.pop();
 
-        ret = pthread_mutex_unlock(&mut);
-        ret = pthread_cond_signal(&condFull);
+        tmp = pthread_mutex_unlock(&mut);
+        tmp = pthread_cond_signal(&condFull);
 
         return result;
     }
@@ -125,28 +125,35 @@ public:
         // Note: For asynchronous operations, we should use a long-live background thread
         // instead of using a temporary thread
         pthread_t tid;
+        int tmp;
         auto arg = new PendingData(this, value);
-        pthread_create(&tid, nullptr, &BlockingQueue<T>::putPending, arg);
-        pthread_detach(tid);
+        tmp = pthread_create(&tid, nullptr, &BlockingQueue<T>::putPending, arg);
+        tmp = pthread_detach(tid);
     }
 
 
     // returns false if queue is empty, otherwise returns true and assigns the result
     bool peek(T& result) const {
-        if (q.empty()) {
-            return false;
+        bool ret = false;
+
+        int tmp;
+        tmp = pthread_mutex_lock(&mut);
+
+        if (false == q.empty()) {
+            result = q.front();
+            ret = true;
         }
 
-        result = q.front();
-        return true;
+        tmp = pthread_mutex_unlock(&mut);
+        return ret;
     }
 
 
     void clear() {
-        int ret;
-        ret = pthread_mutex_lock(&mut);
+        int tmp;
+        tmp = pthread_mutex_lock(&mut);
         std::queue<T>().swap(q);
-        ret = pthread_mutex_unlock(&mut);
+        tmp = pthread_mutex_unlock(&mut);
     }
 
 
