@@ -46,9 +46,9 @@ public class AppA {
     }
 
 
-    private static void doTaskWriter(int timeDelay) throws InterruptedException {
+    private static void doTaskWriter(int delayTime) throws InterruptedException {
         var rand = new Random();
-        Thread.sleep(1000 * timeDelay);
+        Thread.sleep(1000 * delayTime);
 
         Global.mutResource.acquire();
 
@@ -59,8 +59,8 @@ public class AppA {
     }
 
 
-    private static void doTaskReader(int timeDelay) throws InterruptedException {
-        Thread.sleep(1000 * timeDelay);
+    private static void doTaskReader(int delayTime) throws InterruptedException {
+        Thread.sleep(1000 * delayTime);
 
         // Increase reader count
         synchronized (Global.mutReaderCount) {

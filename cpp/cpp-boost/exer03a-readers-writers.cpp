@@ -22,8 +22,8 @@ struct GlobalData {
 
 
 
-void doTaskWriter(GlobalData* g, int timeDelay) {
-    boost::this_thread::sleep_for(boost::chrono::seconds(timeDelay));
+void doTaskWriter(GlobalData* g, int delayTime) {
+    boost::this_thread::sleep_for(boost::chrono::seconds(delayTime));
 
     g->mutResource.lock();
 
@@ -35,8 +35,8 @@ void doTaskWriter(GlobalData* g, int timeDelay) {
 
 
 
-void doTaskReader(GlobalData* g, int timeDelay) {
-    boost::this_thread::sleep_for(boost::chrono::seconds(timeDelay));
+void doTaskReader(GlobalData* g, int delayTime) {
+    boost::this_thread::sleep_for(boost::chrono::seconds(delayTime));
 
 
     // Increase reader count

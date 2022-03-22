@@ -30,10 +30,10 @@ class Exer03B : IRunnable
     }
 
 
-    private static void doTaskWriter(int timeDelay)
+    private static void doTaskWriter(int delayTime)
     {
         var rand = new Random();
-        Thread.Sleep(1000 * timeDelay);
+        Thread.Sleep(1000 * delayTime);
 
         lock (Global.mutServiceQueue)
         {
@@ -47,9 +47,9 @@ class Exer03B : IRunnable
     }
 
 
-    private void doTaskReader(int timeDelay)
+    private void doTaskReader(int delayTime)
     {
-        Thread.Sleep(1000 * timeDelay);
+        Thread.Sleep(1000 * delayTime);
 
         lock (Global.mutServiceQueue)
         {

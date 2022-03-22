@@ -23,8 +23,8 @@ struct GlobalData {
 
 
 
-void doTaskWriter(GlobalData* g, int timeDelay) {
-    std::this_thread::sleep_for(std::chrono::seconds(timeDelay));
+void doTaskWriter(GlobalData* g, int delayTime) {
+    std::this_thread::sleep_for(std::chrono::seconds(delayTime));
 
     g->mutResource.lock();
 
@@ -36,8 +36,8 @@ void doTaskWriter(GlobalData* g, int timeDelay) {
 
 
 
-void doTaskReader(GlobalData* g, int timeDelay) {
-    std::this_thread::sleep_for(std::chrono::seconds(timeDelay));
+void doTaskReader(GlobalData* g, int delayTime) {
+    std::this_thread::sleep_for(std::chrono::seconds(delayTime));
 
 
     // Increase reader count

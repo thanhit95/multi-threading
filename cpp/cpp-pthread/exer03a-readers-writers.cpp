@@ -24,7 +24,7 @@ struct GlobalData {
 
 struct ThreadArg {
     GlobalData* g;
-    int timeDelay;
+    int delayTime;
 };
 
 
@@ -33,7 +33,7 @@ void* doTaskWriter(void* argVoid) {
     auto arg = (ThreadArg*) argVoid;
     GlobalData* g = arg->g;
 
-    sleep(arg->timeDelay);
+    sleep(arg->delayTime);
 
     pthread_mutex_lock(&g->mutResource);
 
@@ -52,7 +52,7 @@ void* doTaskReader(void* argVoid) {
     auto arg = (ThreadArg*) argVoid;
     GlobalData* g = arg->g;
 
-    sleep(arg->timeDelay);
+    sleep(arg->delayTime);
 
 
     // Increase reader count
@@ -90,7 +90,7 @@ void* doTaskReader(void* argVoid) {
 void prepareArg(ThreadArg arg[], int numArg, GlobalData* g) {
     for (int i = 0; i < numArg; ++i) {
         arg[i].g = g;
-        arg[i].timeDelay = mylib::RandInt::get(3);
+        arg[i].delayTime = mylib::RandInt::get(3);
     }
 }
 

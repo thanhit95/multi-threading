@@ -19,8 +19,8 @@ class GlobalData:
 
 
 
-def do_task_writer(g: GlobalData, time_delay: int):
-    time.sleep(time_delay)
+def do_task_writer(g: GlobalData, delay_time: int):
+    time.sleep(delay_time)
 
     with g.lk_service_queue:
         g.lk_resource.acquire()
@@ -32,8 +32,8 @@ def do_task_writer(g: GlobalData, time_delay: int):
 
 
 
-def do_task_reader(g: GlobalData, time_delay: int):
-    time.sleep(time_delay)
+def do_task_reader(g: GlobalData, delay_time: int):
+    time.sleep(delay_time)
 
     with g.lk_service_queue:
         # Increase reader count
