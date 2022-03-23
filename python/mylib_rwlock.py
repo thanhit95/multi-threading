@@ -1,6 +1,18 @@
 '''
-MYLIB / READ-WRITE LOCK
+/******************************************************
+*
+* File name:    mylib_rwlock.py
+*
+* Author:       Name:   Thanh Nguyen
+*               Email:  thanh.it1995(at)gmail(dot)com
+*
+* License:      3-Clause BSD License
+*
+* Description:  The read-write lock implementation in Python 3
+*
+******************************************************/
 '''
+
 
 import threading
 
