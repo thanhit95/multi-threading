@@ -27,7 +27,7 @@ class CountDownLatch:
         self.__cond = threading.Condition()
 
 
-    def get_count(self):
+    def get_count(self) -> int:
         return self.__count
 
 
