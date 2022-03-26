@@ -289,21 +289,28 @@ Concurrent accesses to shared resources can lead to unexpected or erroneous beha
 
 &nbsp;
 
-Race conditions (and data races) are essential contents when you learn multithreading. How to solve race conditions? There are several techniques, which are divided into two types: synchronization and non-synchronization.
+Multithreading makes things run in parallel/concurrency. Therefore we need techniques that handle the control flow to:
+
+- make sure the app runs correctly, and
+- avoid race conditions.
+
+There are several techniques, which are divided into two types: synchronization and non-synchronization.
 
 |             | SYNCHRONIZATION | NON-SYNCHRONIZATION |
 | ----------- | --------------- | ------------------- |
 | Description | To block threads until a condition is satisfy | Not to block threads |
 | Other names | Blocking | Non-blocking, lock-free |
-| Techniques  | Mutex, synchronized block, semaphore, condition variable, barrier and latch | Atomic, thread-local storage |
-| Pros        | - To give you in-depth controls<br>- To cooperate among threads | - Your app may improve performance<br>- You may avoid deadlock |
+| Techniques  | - Low-level: Mutex, semaphore, condition variable<br>- High-level: Synchronized block, blocking queue, barrier and latch | Atomic, thread-local storage |
+| Pros        | - Give you in-depth controls<br>- Cooperate among threads | - App's performance may be better (compared to synchronization)<br>- Avoid deadlock |
 | Cons        | - Hard to control in complex synchronization<br>- May be dangerous (when deadlock appears) | Usually too simple |
 
 &nbsp;
 
+Please note that we cannot replace sync techniques by non-sync techniques and vice versa. Each technique has its use cases, strengths and weaknesses.
+
 In practical:
 
-- We mostly use mutexes, synchronized blocks and atomic operations.
+- We mostly use synchronized blocks, blocking queues, atomic operations and mutexes.
 - We usually combine sync and non-sync techniques.
 
 &nbsp;
