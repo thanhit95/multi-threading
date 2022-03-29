@@ -25,7 +25,7 @@ I am sorry that generated table of contents contains too many uppercase stuff...
     - [DEMO 08 - GETTING RETURNED VALUES FROM THREADS](#demo-08---getting-returned-values-from-threads)
     - [DEMO 09 - THREAD DETACHING](#demo-09---thread-detaching)
     - [DEMO 10 - THREAD YIELDING](#demo-10---thread-yielding)
-    - [DEMO 11 - THREAD POOLS](#demo-11---thread-pools)
+    - [DEMO 11 - EXECUTOR SERVICES AND THREAD POOLS](#demo-11---executor-services-and-thread-pools)
     - [DEMO 12A - RACE CONDITIONS](#demo-12a---race-conditions)
     - [DEMO 12B - DATA RACES](#demo-12b---data-races)
     - [DEMO 12C - RACE CONDITIONS AND DATA RACES](#demo-12c---race-conditions-and-data-races)
@@ -67,7 +67,7 @@ I am sorry that generated table of contents contains too many uppercase stuff...
       - [Version B: Matrix-matrix production (dot product)](#version-b-matrix-matrix-production-dot-product)
     - [EX06 - BLOCKING QUEUE IMPLEMENTATION](#ex06---blocking-queue-implementation)
     - [EX07 - THE DATA SERVER PROBLEM](#ex07---the-data-server-problem)
-    - [EX08 - THREAD POOL & EXECUTOR SERVICE IMPLEMENTATION](#ex08---thread-pool--executor-service-implementation)
+    - [EX08 - EXECUTOR SERVICE & THREAD POOL IMPLEMENTATION](#ex08---executor-service--thread-pool-implementation)
 
 &nbsp;
 
@@ -224,11 +224,21 @@ Yield is an action that occurs in a computer program during multithreading, of f
 
 &nbsp;
 
-### DEMO 11 - THREAD POOLS
+### DEMO 11 - EXECUTOR SERVICES AND THREAD POOLS
 
-You learn how to use thread pool and how thread pool works.
+You learn how to use the executor services (and thread pools) and how they works.
 
-A thread pool is a software design pattern for achieving concurrency of execution in a computer program. Often also called a replicated workers or worker-crew model, a thread pool maintains multiple threads waiting for tasks to be allocated for concurrent execution by the supervising program. By maintaining a pool of threads, the model increases performance and avoids latency in execution due to frequent creation and destruction of threads for short-lived tasks.
+From Wikipedia:
+
+> A thread pool is a software design pattern for achieving concurrency of execution in a computer program. Often also called a replicated workers or worker-crew model, a thread pool maintains multiple threads waiting for tasks to be allocated for concurrent execution by the supervising program. By maintaining a pool of threads, the model increases performance and avoids latency in execution due to frequent creation and destruction of threads for short-lived tasks.
+
+An executor service (or a thread-pool executor) includes:
+
+- A thread pool, and
+- Methods to manage this thread pool:
+  - `submit()`: Push tasks to thread pool
+  - `shutdown()`: Stop/join all threads in pool
+  - ...
 
 &nbsp;
 
@@ -830,9 +840,9 @@ Let's have a look at the code. I hope you could learn something good.
 
 &nbsp;
 
-### EX08 - THREAD POOL & EXECUTOR SERVICE IMPLEMENTATION
+### EX08 - EXECUTOR SERVICE & THREAD POOL IMPLEMENTATION
 
-To implement a thread pool, you need to focus on the worker function (the function that is executed by threads in the pool). For an idle thread:
+To implement an executor service, you need to focus on the worker function (the function that is executed by threads in the pool). For an idle thread:
 
 1. Pick a task (a job) in the queue.
 2. Do the task.
