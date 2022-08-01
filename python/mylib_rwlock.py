@@ -9,6 +9,7 @@
 * License:      3-Clause BSD License
 *
 * Description:  The read-write lock implementation in Python 3
+*               Underlying mechanism: The Mutex
 *
 ******************************************************/
 '''
