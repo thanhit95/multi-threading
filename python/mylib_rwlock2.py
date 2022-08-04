@@ -34,7 +34,7 @@ class ReadWriteLock:
 
     def acquire_write(self):
         with self.__cond:
-            self.__cond.wait_for(lambda: not self.__writer and self.__reader_count == 0)
+            self.__cond.wait_for(lambda: not self.__writer and self.__reader_count <= 0)
             self.__writer = True
 
 
@@ -53,7 +53,7 @@ class ReadWriteLock:
     def release_read(self):
         with self.__cond:
             self.__reader_count -= 1
-            if self.__reader_count == 0:
+            if self.__reader_count <= 0:
                 self.__cond.notify_all()
 
 
