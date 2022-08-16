@@ -29,14 +29,15 @@ This repo is licensed under the [3-Clause BSD License](LICENSE.txt).
 
 ## LANGUAGES SUPPORTED
 
-| Directory name | Description           |
-| -------------- | --------------------- |
-| `cpp-std`      | C++20 std threading   |
-| `cpp-pthread`  | C++11 POSIX threading |
-| `cpp-boost`    | C++98 Boost threading |
-| `csharp`       | C# 7.3 with Dot Net 6 |
-| `java`         | Java JDK 17           |
-| `python`       | Python 3.10           |
+| Directory name | Description                  |
+| -------------- | ---------------------------- |
+| `cpp-std`      | C++20 std threading          |
+| `cpp-pthread`  | C++11 POSIX threading        |
+| `cpp-boost`    | C++98 Boost threading        |
+| `csharp`       | C# 7.3 with Dot Net 6        |
+| `java`         | Java JDK 17                  |
+| `python`       | Python 3.10                  |
+| `js-nodejs`    | Javascript ES2019/Nodejs 18  |
 
 Special notes for C++ demos/exers: Please read the specified `readme.md` in corresponding directory.
 
