@@ -2,8 +2,7 @@
 MAXIMUM NUMBER OF DIVISORS
 */
 
-
-const hrtimeToNumber = hrtime => (hrtime[0] + (hrtime[1] / 1e9)).toFixed(6);
+import * as mylib from './mylib.js';
 
 
 const mainFunc = () => {
@@ -30,7 +29,7 @@ const mainFunc = () => {
       }
     }
 
-    const timeElapsed = hrtimeToNumber(process.hrtime(tpStart));
+    const timeElapsed = mylib.hrtimeToNumber(process.hrtime(tpStart));
 
     console.log('The integer which has largest number of divisors is', resValue);
     console.log('The largest number of divisor is', resNumDiv);

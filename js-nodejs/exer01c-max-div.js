@@ -79,9 +79,6 @@ const updateFinalResult = (mutex, finalRes, value, numDiv) => {
 };
 
 
-const hrtimeToNumber = hrtime => (hrtime[0] + (hrtime[1] / 1e9)).toFixed(6);
-
-
 const mainFunc = async () => {
   try {
 
@@ -105,7 +102,7 @@ const mainFunc = async () => {
     }
 
     await Promise.all(lstTh.map(([_,pr]) => pr));
-    const timeElapsed = hrtimeToNumber(process.hrtime(tpStart));
+    const timeElapsed = mylib.hrtimeToNumber(process.hrtime(tpStart));
 
     console.log('The integer which has largest number of divisors is', finalRes.value);
     console.log('The largest number of divisor is', finalRes.numDiv);
