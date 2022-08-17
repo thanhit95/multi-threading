@@ -5,6 +5,9 @@ import { Worker } from 'worker_threads';
 export const sleep = timems => new Promise(resolve => setTimeout(resolve, timems));
 
 
+export const hrtimeToNumber = hrtime => (hrtime[0] + (hrtime[1] / 1e9)).toFixed(6);
+
+
 export const createThread = (filename, input_args) => {
   const worker = new Worker(filename, { workerData: input_args });
   const prom = new Promise((resolve, reject) => {
