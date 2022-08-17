@@ -21,6 +21,9 @@ This thread is busy calculating hash result from request /?name=JohnnyTeo
 so it cannot serve the next request /history
 
 Your task is making /history "non-blocking" i.e. app can serve /history while doing its job of hashing.
+
+P/S: The problem idea is inspired by a great article at:
+https://www.digitalocean.com/community/tutorials/how-to-use-multithreading-in-node-js
 */
 
 import * as mylib from './mylib.js';
