@@ -1,7 +1,7 @@
 /*
 USERNAME HASH PROBLEM
 
-To make /history "non-blocking", run the app in 2 threads:
+To make /history "non-blocking", run app in 2 threads:
 - The main thread: Serves I/O HTTP requests
 - The worker thread: Does the Hash Task
 

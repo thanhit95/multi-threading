@@ -1,7 +1,7 @@
 /*
 USERNAME HASH PROBLEM
 
-This an app using expressJS framework to serve the "Username Hash Service". The app provides 2 APIs:
+This is an app using expressJS framework to serve "The Username Hash Service". The app provides 2 APIs:
 
 GET /?name=<UserName>
   Returns the <UserName> and the hashed value from <UserName>
@@ -20,7 +20,7 @@ The reason is Javascript by default runs in a single thread.
 This thread is busy calculating hash result from request /?name=JohnnyTeo
 so it cannot serve the next request /history
 
-Your task is making /history "non-blocking" i.e. app can serve /history while doing its job of hashing.
+Your task is making /history "non-blocking" i.e. app can serve /history while doing hashing job.
 
 P/S: The problem idea is inspired by a great article at:
 https://www.digitalocean.com/community/tutorials/how-to-use-multithreading-in-node-js

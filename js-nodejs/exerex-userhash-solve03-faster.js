@@ -2,8 +2,10 @@
 USERNAME HASH PROBLEM
 
 Each time users send requests to hash, threads are created.
-Creation of threads is not cheap.
-By using Execution Service/Thread Pool, threads can be reused for next tasks.
+Constantly taking requests and creating new threads is a matter of concern.
+
+By using Execution Service/Thread Pool, threads can be reused for next tasks/next requests
+(i.e. no more thread creation).
 */
 
 import * as mylib from './mylib.js';
