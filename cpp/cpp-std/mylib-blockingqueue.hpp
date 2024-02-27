@@ -102,7 +102,7 @@ public:
 
     // returns false if queue is empty, otherwise returns true and assigns the result
     bool peek(T& result) const {
-        uniquelk(mut);
+        uniquelk lk(mut);
         if (q.empty()) {
             return false;
         }
@@ -113,7 +113,7 @@ public:
 
 
     void clear() {
-        uniquelk(mut);
+        uniquelk lk(mut);
         std::queue<T>().swap(q);
     }
 

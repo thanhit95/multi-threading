@@ -37,11 +37,11 @@ void doTaskUsingSyncBlock(char name) {
     std::this_thread::sleep_for(std::chrono::seconds(1));
 
     {
-        uniquelk(mut);
+        uniquelk lk(mut);
         cout << "First time " << name << " acquiring the resource" << endl;
 
         {
-            uniquelk(mut);
+            uniquelk lk(mut);
             cout << "Second time " << name << " acquiring the resource" << endl;
         }
     }

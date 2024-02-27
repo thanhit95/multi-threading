@@ -31,11 +31,11 @@ void doTask() {
 void doTaskUsingSyncBlock() {
     using uniquelk = std::unique_lock<std::recursive_mutex>;
 
-    uniquelk(mut);
+    uniquelk lk(mut);
     cout << "First time acquiring the resource" << endl;
 
     {
-        uniquelk(mut);
+        uniquelk lk(mut);
         cout << "Second time acquiring the resource" << endl;
     }
 }
